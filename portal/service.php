@@ -23,8 +23,8 @@ if(isset($_GET['view'])){
 	if ($_GET['view'] == "list") {
 		if(isset($_GET['type'])) {
 			$hService -> getServicesType($_GET['type']);
-		} elseif(isset($_GET['status'])) {
-			$hService -> getServiceStatus($_GET['status'], $_SESSION['myCode']);
+		} elseif (isset($_GET['status'])) {
+			$hService -> getPendingService();
 		} else {
 			$hService -> getServices();
 		}
@@ -38,7 +38,7 @@ if (isset($_POST['update'])) {
 	$hService -> updateService($_POST['h_code']);
 }
 
-if (isset($_POST['register'])) {
+if (isset($_POST['create'])) {
 	$hService -> createService();
 }
 

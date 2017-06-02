@@ -57,6 +57,25 @@ if (isset($_GET['module'])) {
 		PRIMARY KEY(h_code)
 		)");
 
+		$services = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hservices (
+		h_alias VARCHAR(100),
+		h_author VARCHAR(12),
+		h_by VARCHAR(20), 
+		h_center VARCHAR(20),
+		h_code VARCHAR(16),
+		h_created DATE,
+		h_email VARCHAR(50),
+		h_key VARCHAR(100),
+		h_level VARCHAR(12),
+		h_link VARCHAR(100),
+		h_location VARCHAR(50),
+		h_notes TEXT,
+		h_status VARCHAR(20),
+		h_type VARCHAR(50),
+		h_updated DATE,
+		PRIMARY KEY(h_code)
+		)");
+
 		$hmessages = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hmessages(
 		h_alias VARCHAR(100),
 		h_author VARCHAR(20),

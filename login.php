@@ -58,6 +58,7 @@ if (isset($_POST['login']) && $_POST['user'] != "" && $_POST['password'] != "") 
       $_SESSION['myCap'] = $userDetails[0]['h_type'];
       $_SESSION['myLocation'] = $userDetails[0]['h_location'];
       $_SESSION['myAvatar'] = $userDetails[0]['h_avatar'];
+      $_SESSION['myGender'] = $userDetails[0]['h_gender'];
 
       header('Location: ./portal/user?view='.$_SESSION['myCode'].'&key='.$_SESSION['myAlias'].'');
       exit();

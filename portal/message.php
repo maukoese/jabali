@@ -16,8 +16,8 @@ if (isset($_GET['chat'])) {
 }
 
 if (isset($_GET['delete'])) {
-	mysqli_query($GLOBALS['conn'], "DELETE FROM hmessages WHERE id=".$_GET['delete']."");
-	header("location:javascript://history.go(-1)");
+	mysqli_query($GLOBALS['conn'], "DELETE FROM hmessages WHERE h_code='".$_GET['delete']."'");
+	$hMessage -> getMessages();
 }
 
 if (isset($_GET['edit']) && $_GET['view'] !=="") {
@@ -42,7 +42,7 @@ if (isset($_POST['create'])) {
 }
 
 ?>
-<a href="./message?create" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+<a href="./message?create=message" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
   <i class="material-icons">message</i></a>
 <?php
 include './footer.php';

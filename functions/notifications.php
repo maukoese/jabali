@@ -40,21 +40,21 @@ class _hNotifications {
     $h_for = $_POST['h_for'];
     $h_level = $_POST['h_level']; 
     $h_link = hPORTAL."notification?view=".$h_code;
-    $h_phone = $_POST['h_phone'];
     $h_status = "unread";
     $h_type = $_POST['h_type'];
 
-     if (mysqli_query($GLOBALS['conn'], "INSERT INTO hnotifications (h_alias, h_author, h_by, h_code, h_created, h_description, h_email, h_key, h_level, h_link, h_phone, h_status, h_type) 
-    VALUES ('".$h_alias."', '".$h_author."', '".$h_by."', '".$h_code."', '".$h_created."', '".$h_desc."', '".$h_email."', '".$h_key."', '".$h_level."', '".$h_phone."', '".$h_link."', '".$h_status."', '".$h_type."')")) {
+     if (mysqli_query($GLOBALS['conn'], "INSERT INTO hnotifications (h_alias, h_author, h_by, h_code, h_created, h_description, h_email, h_key, h_level, h_link, h_status, h_type) 
+    VALUES ('".$h_alias."', '".$h_author."', '".$h_by."', '".$h_code."', '".$h_created."', '".$h_desc."', '".$h_email."', '".$h_key."', '".$h_level."', '".$h_link."', '".$h_status."', '".$h_type."')")) {
        echo "<script type = \"text/javascript\">
                     alert(\"Notification Sent\");
                 </script>";
      } else {
-       echo "<script type = \"text/javascript\">
-                    alert(\"Notification Not Sent. \n
-                    Check and try again\");
-                </script>";
-     }
+        echo "Error: " . $sql . "<br>" . $GLOBALS['conn']->error;
+     //   echo "<script type = \"text/javascript\">
+     //                alert(\"Notification Not Sent. \n
+     //                Check and try again\");
+     //            </script>";
+      }
   }
 
   function deleteNotification($h_code) {}
@@ -66,25 +66,21 @@ class _hNotifications {
       <div style="margin:1%;" >
       <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>"><thead>
         <tr>
-        <th class="mdl-data-table__cell--non-numeric">MESSAGE</th>
-        <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
-        <th class="mdl-data-table__cell--non-numeric">PHONE</th>
+        <th class="mdl-data-table__cell--non-numeric">NOTIFICATION</th>
+        <th class="mdl-data-table__cell--non-numeric">SENDER</th>
         <th class="mdl-data-table__cell--non-numeric">SENT ON</th>
         <th class="mdl-data-table__cell--non-numeric">STATUS</th>
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
         </thead><?php
-      while ($notificationsDetails = mysqli_fetch_assoc($getNotificationsBy)){ ?>
+      while ($notificationsDetails = mysqli_fetch_assoc($getNotifications)){ ?>
         <tbody>
         <tr>
         <td class="mdl-data-table__cell--non-numeric">
           <?php show( $notificationsDetails['h_alias'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric">
-          <?php show( $notificationsDetails['h_email'] ); ?>
-        </td>
-        <td class="mdl-data-table__cell--non-numeric">
-          <?php show( $notificationsDetails['h_phone'] ); ?>
+          <?php show( $notificationsDetails['h_by'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric">
           <?php show( $notificationsDetails['h_created'] ); ?>
@@ -108,10 +104,10 @@ class _hNotifications {
       <div style="margin:1%;" >
       <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>"><thead>
         <tr>
-        <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
-        <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
-        <th class="mdl-data-table__cell--non-numeric">PHONE</th>
+        <th class="mdl-data-table__cell--non-numeric">NOTIFICATION</th>
+        <th class="mdl-data-table__cell--non-numeric">SENDER</th>
         <th class="mdl-data-table__cell--non-numeric">SENT ON</th>
+        <th class="mdl-data-table__cell--non-numeric">STATUS</th>
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
         </thead>
@@ -130,64 +126,62 @@ class _hNotifications {
     $getNotifications = mysqli_query($GLOBALS['conn'], "SELECT * FROM hnotifications ORDER BY h_created DESC");
     if($getNotifications -> num_rows > 0) {?>
       <div style="margin:1%;" >
-      <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>"><thead>
-        <tr>
-        <th class="mdl-data-table__cell--non-numeric">MESSAGE</th>
-        <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
-        <th class="mdl-data-table__cell--non-numeric">PHONE</th>
-        <th class="mdl-data-table__cell--non-numeric">SENT ON</th>
-        <th class="mdl-data-table__cell--non-numeric">STATUS</th>
-        <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
-        </tr>
-        </thead><?php
-      while ($notificationsDetails = mysqli_fetch_assoc($getNotifications)){ ?>
-        <tbody>
-        <tr>
-        <td class="mdl-data-table__cell--non-numeric">
-          <?php show( $notificationsDetails['h_alias'] ); ?>
-        </td>
-        <td class="mdl-data-table__cell--non-numeric">
-          <?php show( $notificationsDetails['h_email'] ); ?>
-        </td>
-        <td class="mdl-data-table__cell--non-numeric">
-          <?php show( $notificationsDetails['h_phone'] ); ?>
-        </td>
-        <td class="mdl-data-table__cell--non-numeric">
-          <?php show( $notificationsDetails['h_created'] ); ?>
-        </td>
-        <td class="mdl-data-table__cell--non-numeric">
-          <?php show( $notificationsDetails['h_status'] ); ?>
-        </td>
-        <td class="mdl-data-table__cell--non-numeric">
-        <a href="./notification?create=<?php show( $notificationsDetails['h_type'] ); ?>&code=<?php show( $notificationsDetails['h_author'] ); ?>" ><i class="material-icons">reply</i></a> 
-        <a href="./notification?view=<?php show( $notificationsDetails['h_code'] ); ?>" ><i class="material-icons">visibility</i></a> 
-        <a href="tel:<?php show( $notificationsDetails['h_phone'] ); ?>" ><i class="material-icons">phone</i></a> 
-        <!-- <a href="./notification?chat=<?php show( $notificationsDetails['h_author'] ); ?>" ><i class="material-icons">question_answer</i></a>  -->
-        <a href="./notification?delete=<?php show( $notificationsDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a>
-        </td>
-        </tr>
-        </tbody><?php 
-      } ?>
+        <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
+          <thead>
+            <tr>
+              <th class="mdl-data-table__cell--non-numeric">NOTIFICATION</th>
+              <th class="mdl-data-table__cell--non-numeric">BY</th>
+              <th class="mdl-data-table__cell--non-numeric">SENT ON</th>
+              <th class="mdl-data-table__cell--non-numeric">STATUS</th>
+              <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
+            </tr>
+          </thead><?php
+        while ($notificationsDetails = mysqli_fetch_assoc($getNotifications)){ ?>
+          <tbody>
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric">
+                <?php show( $notificationsDetails['h_alias'] ); ?>
+              </td>
+              <td class="mdl-data-table__cell--non-numeric">
+                <?php show( $notificationsDetails['h_by'] ); ?>
+              </td>
+              <td class="mdl-data-table__cell--non-numeric">
+                <?php show( $notificationsDetails['h_created'] ); ?>
+              </td>
+              <td class="mdl-data-table__cell--non-numeric">
+                <?php show( $notificationsDetails['h_status'] ); ?>
+              </td>
+              <td class="mdl-data-table__cell--non-numeric">
+              <a href="./notification?create=<?php show( $notificationsDetails['h_type'] ); ?>&code=<?php show( $notificationsDetails['h_author'] ); ?>" ><i class="material-icons">reply</i></a> 
+              <a href="./notification?view=<?php show( $notificationsDetails['h_code'] ); ?>" ><i class="material-icons">visibility</i></a> 
+              <a href="tel:<?php show( $notificationsDetails['h_phone'] ); ?>" ><i class="material-icons">phone</i></a> 
+              <!-- <a href="./notification?chat=<?php show( $notificationsDetails['h_author'] ); ?>" ><i class="material-icons">question_answer</i></a>  -->
+              <a href="./notification?delete=<?php show( $notificationsDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a>
+              </td>
+            </tr>
+          </tbody><?php 
+        } ?>
         </table>
-        </div><?php
+      </div><?php
     } else { ?>
       <div style="margin:1%;" >
-      <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>"><thead>
-        <tr>
-        <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
-        <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
-        <th class="mdl-data-table__cell--non-numeric">PHONE</th>
-        <th class="mdl-data-table__cell--non-numeric">SENT ON</th>
-        <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-        <td><p>No <?php show( ucfirst($type) ); ?>s Found</p></td>
-        </tr>
-        </tbody>
+        <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
+          <thead>
+            <tr>
+              <th class="mdl-data-table__cell--non-numeric">NOTIFICATION</th>
+              <th class="mdl-data-table__cell--non-numeric">BY</th>
+              <th class="mdl-data-table__cell--non-numeric">SENT ON</th>
+              <th class="mdl-data-table__cell--non-numeric">STATUS</th>
+              <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><p>No Notifications Found</p></td>
+            </tr>
+          </tbody>
         </table>
-        </div><?php
+      </div><?php
     }
   }
 

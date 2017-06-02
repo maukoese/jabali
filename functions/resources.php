@@ -319,21 +319,39 @@ class _hResources {
       ?>
       <a href="./resource?create=center" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
   <i class="material-icons">create</i></a>
-      <div class="mdl-grid">
+      <div class="mdl-grid" id="mdl-table">
         <div class="mdl-cell--12-col" >
           <form>
             <center>
             <div class="input-field">
             <i class="material-icons prefix">search</i>
-            <input type="text" placeholder="Search <?php show( "Resource" ); ?>">
+            <input type="text" placeholder="Search <?php show( "Resource" ); ?>" class="search" >
             </div></center>
-            </form>
+            
+          <script>
+            var options = {
+            valueNames: ["h_alias", "h_location", "h_created"]
+          },
+            documentTable = new List("mdl-table", options);
+
+          $($("th.sort")[0]).trigger("click", function() {
+            console.log("clicked");
+          });
+
+          $("input.search").on("keyup", function(e) {
+            if (e.keyCode === 27) {
+              $(e.currentTarget).val("");
+              documentTable.search("");
+            }
+          });
+          </script>
+          </form>
         </div>
       <div class="mdl-cell--12-col mdl-grid">
-      <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
+      <table id="mdl-table" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable sort mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
         <thead>
         <tr>
-        <th class="mdl-data-table__cell--non-numeric">NAME</th>
+        <th class="mdl-data-table__cell--non-numeric sort" data-sort="h_alias">NAME</th>
         <th class="mdl-data-table__cell--non-numeric">ADMIN EMAIL</th>
         <th class="mdl-data-table__cell--non-numeric">CONTACT PHONE</th>
         <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
@@ -352,9 +370,6 @@ class _hResources {
         </td>
         <td class="mdl-data-table__cell--non-numeric">
           <?php show( $resourcesDetails['h_phone'] ); ?>
-        </td>
-        <td class="mdl-data-table__cell--non-numeric">
-          <?php show( $resourcesDetails['h_center'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric">
           <?php show( ucwords($resourcesDetails['h_location']) ); ?>

@@ -52,29 +52,39 @@ class _hForms {
                       </form>
                   </div>
               </div>
-              <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-color--<?php primaryColor( $_SESSION['myCode']); ?> mdl-card">
-              <?php
-                  $getNotes = mysqli_query($GLOBALS['conn'], "SELECT * FROM hmessages");
-                  if ($getNotes -> num_rows >= 0) {
-                    echo '<div class="mdl-card__title">
-              <i class="material-icons">query_builder</i>
-                <span class="mdl-button">Recent Messages</span>
-              <div class="mdl-layout-spacer"></div>
-              </div>';
-                    while ($note = mysqli_fetch_assoc($getNotes)) {
-                      echo '<div class="mdl-card mdl-shadow--2dp mdl-card--expand">
-                          <h5>('.$note['h_created'].') '.$note['h_alias'].'</h5><br><blockquote class="center-align">'
-                          .$note['h_description'].'
-                          </blockquote>
-                          <div class="center-align"">
-                          <a href="./message?create=message&code='.$note['h_author']. '" ><i class="material-icons">reply</i></a> <a href="./message?view='.$note['h_code']. '" ><i class="material-icons">account_circle</i></a> <a href="tel:'.$note['h_phone']. '" ><i class="material-icons">phone</i></a> <a href="./message?chat='.$note['h_author']. '" ><i class="material-icons">mail_outline</i></a> <a href="./notification?delete='.$notificationsDetails['id'].'" ><i class="material-icons">delete</i></a>
-                          </div>
-                          </div><br>';
-                    }
+              <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-color--<?php primaryColor( $_SESSION['myCode']); ?> mdl-card"><?php
+                  $getNotes = mysqli_query($GLOBALS['conn'], "SELECT * FROM hmessages LIMIT 5");
+                  if ($getNotes -> num_rows >= 0) { ?>
+                    <div class="mdl-card__title">
+                    <i class="material-icons">query_builder</i>
+                      <span class="mdl-button">Recent Messages</span>
+                    <div class="mdl-layout-spacer"></div>
+                    </div>
+                    <div class="mdl-card__supporting-text">
+                      <ul class="collapsible popout" data-collapsible="accordion"><?php
+                          while ($note = mysqli_fetch_assoc($getNotes)) { ?>
+                          <li>
+                            <div class="collapsible-header"><i class="material-icons">label_outline</i>
+                              <span class="alignright">
+                                <a href="./message?create=message&code=<?php show( $note['h_author'] ); ?>" ><i class="material-icons">reply</i></a> 
+                                <a href="./message?view=<?php show( $note['h_code'] ); ?>" ><i class="material-icons">visibility</i></a> 
+                                <a href="tel:<?php show( $note['h_phone'] ); ?>" ><i class="material-icons">phone</i></a> 
+                                <a href="./message?chat=<?php show( $note['h_author'] ); ?>" ><i class="material-icons">question_answer</i></a> <a href="./notification?delete=<?php show( $notificationsDetails['id'] ); ?>" ><i class="material-icons">delete</i></a>
+                                </span><br>
+                                <b><?php show( $note['h_alias'] ); ?></b><span class="alignright"><?php
+                                show( $note['h_created'] ); ?></span>
+                            </div>
+                            <div class="collapsible-body">
+                                <span><?php
+                                show( $note['h_description'] ); ?></span>
+                            </div>
+                          </li><?php
+                          } ?>
+                    </ul>
+                    </div><?
                   } else {
                     echo "No Messages";
-                  }
-                ?>
+                  } ?>
               </div>
           </div><?php
   }
@@ -245,15 +255,15 @@ class _hForms {
         </div><?php
   }
 
-function notificationForm() {
-  $getUser = mysqli_query($GLOBALS['conn'], "SELECT * FROM husers WHERE h_code = '".$GET['create']."'");
-  $h_email = "";
-  if($getUser -> num_rows > 0) {
-      while ($userDeets = mysqli_fetch_assoc($getUser)){
-              $h_email = $userDeets['h_email'];
-          }
-  }
-    
+  function notificationForm() {
+    $getUser = mysqli_query($GLOBALS['conn'], "SELECT * FROM husers WHERE h_code = '".$GET['code']."'");
+    $h_email = "";
+    if($getUser -> num_rows > 0) {
+        while ($userDeets = mysqli_fetch_assoc($getUser)){
+                $userDeet[] = $userDeets;
+            }
+    }
+      
     ?><div class="mdl-grid">
             <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-card--expand mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
                 <div class="mdl-card__supporting-text mdl-card--expand">
@@ -287,32 +297,42 @@ function notificationForm() {
                     </form>
                 </div>
             </div>
-            <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-color--<?php primaryColor( $_SESSION['myCode']); ?> mdl-card mdl-shadow--2dp">
-            <?php
-                $getNotes = mysqli_query($GLOBALS['conn'], "SELECT * FROM hnotifications");
-                if ($getNotes -> num_rows > 0) {
-                  echo '<div class="mdl-card__title">
-        <i class="material-icons">notifications</i>
-          <span class="mdl-button">Recent Notifications</span>
-            <div class="mdl-layout-spacer">';
-                  while ($note = mysqli_fetch_assoc($getNotes)) {
-                    echo '<div class="mdl-card mdl-shadow--2dp mdl-card--expand">
-                        <h5>('.$note['h_created'].') '.$note['h_alias'].'</h5><br><blockquote class="center-align">'
-                        .$note['h_description'].'
-                        </blockquote>
-                        <div class="center-align"">
-                        <a href="./message?create='.$note['h_author']. '" ><i class="material-icons">reply</i></a> <a href="./message?view='.$note['h_code']. '" ><i class="material-icons">account_circle</i></a> <a href="tel:'.$note['h_phone']. '" ><i class="material-icons">phone</i></a> <a href="./message?chat='.$note['h_author']. '" ><i class="material-icons">mail_outline</i></a> <a href="./notification?delete='.$notificationsDetails['id'].'" ><i class="material-icons">delete</i></a>
-                        </div>
-                        </div><br>';
-                  }
-                } else {
+            <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-color--<?php primaryColor( $_SESSION['myCode']); ?> mdl-card mdl-shadow--2dp mdl-card--expand"><?php
+                  $getNotes = mysqli_query($GLOBALS['conn'], "SELECT * FROM hnotifications LIMIT 5");
+                  if ($getNotes -> num_rows >= 0) { ?>
+                    <div class="mdl-card__title">
+                    <i class="material-icons">query_builder</i>
+                      <span class="mdl-button">Recent Notifications</span>
+                    <div class="mdl-layout-spacer"></div>
+                    </div>
+                    <div class="mdl-card__supporting-text">
+                      <ul class="collapsible popout" data-collapsible="accordion"><?php
+                          while ($note = mysqli_fetch_assoc($getNotes)) { ?>
+                          <li>
+                            <div class="collapsible-header"><i class="material-icons">label_outline</i>
+                              <span class="alignright">
+                                <a href="./notification?create=note&code=<?php show( $note['h_author'] ); ?>" ><i class="material-icons">reply</i></a> 
+                                <a href="./notification?view=<?php show( $note['h_code'] ); ?>" ><i class="material-icons">visibility</i></a> 
+                                <a href="./message?chat=<?php show( $note['h_author'] ); ?>" ><i class="material-icons">question_answer</i></a> <a href="./notification?delete=<?php show( $note['h_code'] ); ?>" ><i class="material-icons">delete</i></a>
+                                </span><br>
+                                <b><?php show( $note['h_alias'] ); ?></b><span class="alignright"><?php
+                                show( $note['h_created'] ); ?></span>
+                            </div>
+                            <div class="collapsible-body">
+                                <span><?php
+                                show( $note['h_description'] ); ?></span>
+                            </div>
+                          </li><?php
+                          } ?>
+                    </ul>
+                    </div><?
+                  } else {
                   echo '<div class="mdl-card__title">
         <i class="material-icons">notifications_none</i>
           <span class="mdl-button">No Recent Notifications</span>
             <div class="mdl-layout-spacer">';
                 }
               ?>
-            </div>
         </div><?php
   }
 
@@ -598,28 +618,21 @@ function notificationForm() {
 
         ?><title>Create <?php show( ucfirst($_GET['create']) ); ?> [ <?php getOption('name'); ?> ]</title>
         <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
-        <form name="registerUser" method="POST" action="<?php show ( hPORTAL.'user?create' ); ?>" class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-grid">
-            <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
+        <form name="registerUser" method="POST" action="<?php show ( hPORTAL.'service?create' ); ?>" class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-grid">
+            <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone">
 
-              <div class="input-field inline">
+              <div class="input-field">
               <i class="material-icons prefix">label</i>
-              <input id="fname" name="fname" type="text" >
-              <label for="fname">First Name</label>
-              </div>
-                     
-              <div class="input-field inline">
-              <i class="material-icons prefix">label_outline</i>
-              <input id="lname" name="lname" type="text">
-              <label for="lname">Last Name</label>
-              </div>                            
+              <input id="h_alias" name="h_alias" type="text" value="Request for Service" >
+              <label for="h_alias">Subject</label>
+              </div> 
+
+              <input type="hidden" name="h_author" value="<?php show( $_SESSION['myCode'] ); ?>" >
+              <input type="hidden" name="h_by" value="<?php show( $_SESSION['myAlias'] ); ?>" >
 
               <div class="input-field inline mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
                 <i class="material-icons prefix">perm_identity</i>
-                 <input class="mdl-textfield__input" id="h_type" name="h_type" type="text" readonly tabIndex="-1" placeholder="<?php if (isset($_GET['create'])) {
-                   echo ucwords($_GET['create']);
-                  } else {
-                    echo 'Type';
-                  } ?>" >
+                 <input class="mdl-textfield__input" id="h_type" name="h_type" type="text" readonly tabIndex="-1" placeholder="<?php show( ucwords($_SESSION['myCap']) ); ?>" >
                    <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" for="h_type">
                      <li class="mdl-menu__item" data-val="doctor">Doctor</li>
                      <li class="mdl-menu__item" data-val="manager">Manager</li>
@@ -629,18 +642,18 @@ function notificationForm() {
                 </div>
 
                 <div class="input-field inline mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
-                  <i class="mdi mdi-gender-transgender prefix"></i>
-                   <input class="mdl-textfield__input" id="h_gender" name="h_gender" type="text" readonly tabIndex="-1" placeholder="Gender" >
+                  <i class="mdi mdi-adjust prefix"></i>
+                   <input class="mdl-textfield__input" id="h_gender" name="h_gender" type="text" readonly tabIndex="-1" placeholder="<?php show( ucwords($_GET['create']) ); ?>" >
                      <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" for="h_gender">
-                       <li class="mdl-menu__item" data-val="male">Male</li>
-                       <li class="mdl-menu__item" data-val="female">Female</li>
-                       <li class="mdl-menu__item" data-val="other">Other</li>
+                       <li class="mdl-menu__item" data-val="request">Request</li>
+                       <li class="mdl-menu__item" data-val="confirmation">Confirmation</li>
+                       <li class="mdl-menu__item" data-val="followup">Follow Up</li>
                      </ul>
                   </div>
 
               <div class="input-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
                 <i class="material-icons prefix">room</i>
-              <input class="mdl-textfield__input" type="text" id="counties" name="h_location" readonly tabIndex="-1" placeholder="Location">
+              <input class="mdl-textfield__input" type="text" id="counties" name="h_location" readonly tabIndex="-1" placeholder="<?php show( ucwords($_SESSION['myLocation']) ); ?>">
               <ul for="counties" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" style="max-height: 300px !important; overflow-y: auto;">
                   <?php 
                   $county_list = "baringo, bomet, bungoma, busia, elgeyo-marakwet, embu, garissa, homa bay, isiolo, kakamega, kajiado, kapenguria, kericho, kiambu, kilifi, kirinyanga, kisii, kisumu, kitui, kwale, laikipia, lamu, machakos, makueni, mandera, marsabit, meru, migori, mombasa, muranga, nairobi, nakuru, nandi, narok, nyamira, nyandarua, nyeri, ol kalou, samburu, siaya, taita-taveta, tana river, tharaka-nithi, trans-nzoia, turkana, uasin-gishu, vihiga, wajir, west pokot";
@@ -653,72 +666,37 @@ function notificationForm() {
               </ul>
               </div>
 
-              <div class="input-field inline">
+              <div class="input-field inline mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <i class="material-icons prefix">phone</i>
-              <input  id="h_phone" name="h_phone" type="text" >
+              <input  id="h_phone" name="h_phone" type="text" value="<?php show( $_SESSION['myPhone'] ); ?>">
               <label for="h_phone" class="center-align">Phone Number</label>
               </div>
 
 
-              <div class="input-field">
+              <div class="input-field inline mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <i class="material-icons prefix">local_hospital</i>
-              <input id="h_center" name="h_center" type="text" >
+              <input id="h_center" name="h_center" type="text" value="<?php show( $_SESSION['myCenter'] ); ?>">
               <label for="h_center">Center</label>
               </div>
 
-              <div class="input-field">
+              <div class="input-field inline mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <i class="material-icons prefix">mail</i>
-              <input class="validate" id="email" name="h_email" type="email" >
+              <input class="validate" id="email" name="h_email" type="email" value="<?php show( $_SESSION['myEmail'] ); ?>">
               <label for="email" data-error="wrong" data-success="right" class="center-align">Email Address</label>
-              </div>
-
-              <div class="input-field">
-                <i class="material-icons prefix">lock</i>
-              <input id="password" name=="h_password" type="text" >
-              <label for="password">Password</label>
               </div>
 
               <br>
             </div>
-            <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
-              <script>
-                 function chooseFile() {
-                    $("#fileInput").click();
-                 }
-              </script>                        
-              <div class="input-field inline">
-                <div style="height:0px;overflow:hidden">
-                  <input id="h_avatar" type="file" name="h_avatar" value="<?php show( hIMAGES.'placeholder.svg' ); ?>">
-                </div>
-                <img id="havatar" onclick="chooseFile();" src="<?php show( hIMAGES.'placeholder.svg' ); ?>" width="100%"></i>
-                </div>
-                <script>
-                     function chooseFile() {
-                        $("#h_avatar").click();
-                     }
-
-                     function readURL(input) {
-                      if (input.files && input.files[0]) {
-                          var reader = new FileReader();
-
-                          reader.onload = function (e) {
-                              $('#havatar')
-                                  .attr('src', e.target.result)
-                                  .width(150)
-                                  .height(200);
-                          };
-
-                          reader.readAsDataURL(input.files[0]);
-                      }
-                  }
-                  </script>
-
-              <div class="input-field center-align">
-                <input type="checkbox" id="remember-me" name="h_status" name="active"/>
-                <label for="remember-me">Activate Account</label>
+            <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone">                      
+              <div class="input-field">
+              <i class="mdi mdi-note-plus prefix"></i>
+              <textarea class="materialize-textarea col s12" rows="5" id="h_notes" name="h_notes" >
+                Add your notes here.
+              </textarea>
+              <script>CKEDITOR.replace( 'h_notes' );</script>
               </div>
 
-              <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" type="submit" style="margin-left: 150px;margin-top: 100px;" name="register"><i class="material-icons">save</i></button>  
+              <button class="mdl-button mdl-button--fab mdl-js-button mdl-js-ripple-effect" type="submit" style="margin-left: 150px;margin-top: 100px;" name="create"><i class="material-icons">send</i></button>  
           </div>
         </form>
         </div><?php

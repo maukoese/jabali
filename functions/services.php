@@ -11,7 +11,6 @@ class _hServices {
   var $h_custom; 
   var $h_desc; 
   var $h_email; 
-  var $h_fav; 
   var $h_key; 
   var $h_level; 
   var $h_link; 
@@ -19,11 +18,7 @@ class _hServices {
   var $h_notes; 
   var $h_phone; 
   var $h_reading; 
-  var $h_status; 
-  var $h_style; 
-  var $h_subtitle; 
-  var $h_tags; 
-  var $h_text; 
+  var $h_status;  
   var $h_type; 
   var $h_updated;
 
@@ -37,7 +32,7 @@ class _hServices {
 
     $h_alias = $_POST['h_alias'];
     $h_author = substr($hash, 20);
-    $h_avatar = $_POST['h_avatar'];
+    $h_by = $_POST['h_by'];
     $h_center = $_POST['h_center'];
     $h_code = substr($hash, 20);
     $h_created = date('Ymd');
@@ -46,19 +41,17 @@ class _hServices {
     $h_level = $_POST['h_level'];
     $h_link = hPORTAL."service?view=".$h_code;
     $h_location = strtolower( $_POST['h_location'] );
-    $h_notes = "Account created on ".$date;
-    $h_password = md5($_POST['h_password']);
-    $h_phone = $_POST['h_phone'];
+    $h_notes = $_POST['h_notes'];
     $h_status = "pending";
     $h_type = strtolower( $_POST['h_type'] );
 
-    if (mysqli_query($GLOBALS['conn'], "INSERT INTO hservices (h_alias, h_author, h_avatar, h_center, h_code, h_created, h_email, h_key, h_level, h_link, h_location, h_notes, h_phone, h_status, h_style, h_type) 
-    VALUES ('".$h_alias."', '".$h_author."', '".$h_avatar."', '".$h_center."', '".$h_code."', '".$h_created."', '".$h_email."', '".$h_key."', '".$h_level."', '".$h_link."', '".$h_location."', '".$h_notes."', '".$h_phone."', '".$h_status."', '".$h_type."')")) {
+    if (mysqli_query($GLOBALS['conn'], "INSERT INTO hservices (h_alias, h_author, h_by, h_center, h_code, h_created, h_email, h_key, h_level, h_link, h_location, h_notes, h_status, h_type) 
+    VALUES ('".$h_alias."', '".$h_author."', '".$h_by."', '".$h_center."', '".$h_code."', '".$h_created."', '".$h_email."', '".$h_key."', '".$h_level."', '".$h_link."', '".$h_location."', '".$h_notes."', '".$h_status."', '".$h_type."')")) {
       echo "<script type = \"text/javascript\">
                       alert(\"Service Created Successfully!\");
                   </script>";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Error: " .$GLOBALS['conn']->error;
     } 
 
   }
@@ -97,7 +90,7 @@ class _hServices {
                       alert(\"Service Updated Successfully!\");
                   </script>";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Error: " . $sql . "<br>" . $GLOBALS['conn']->error;
     }   
 
     $updateService = mysqli_query($GLOBALS['conn'], " h_var='".$h_var."', h_var='".$h_var."' WHERE h_code='".$h_code."'");
@@ -135,9 +128,8 @@ class _hServices {
       <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
         <thead>
         <tr>
-        <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
-        <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
-        <th class="mdl-data-table__cell--non-numeric">PHONE</th>
+        <th class="mdl-data-table__cell--non-numeric">REQUEST</th>
+        <th class="mdl-data-table__cell--non-numeric">BY</th>
         <th class="mdl-data-table__cell--non-numeric">CENTER</th>
         <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
@@ -148,13 +140,10 @@ class _hServices {
         <tbody>
         <tr>
         <td class="mdl-data-table__cell--non-numeric">
-          <?php show( $servicesDetails['h_servicename'] ); ?>
+          <?php show( $servicesDetails['h_alias'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric">
-          <?php show( $servicesDetails['h_email'] ); ?>
-        </td>
-        <td class="mdl-data-table__cell--non-numeric">
-          <?php show( $servicesDetails['h_phone'] ); ?>
+          <?php show( $servicesDetails['h_by'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric">
           <?php show( $servicesDetails['h_center'] ); ?>
@@ -178,9 +167,8 @@ class _hServices {
     } else {
         echo '<div style="margin:1%;" ><table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp"><thead>
         <tr>
-        <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
-        <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
-        <th class="mdl-data-table__cell--non-numeric">PHONE</th>
+        <th class="mdl-data-table__cell--non-numeric">REQUEST</th>
+        <th class="mdl-data-table__cell--non-numeric">BY</th>
         <th class="mdl-data-table__cell--non-numeric">CENTER</th>
         <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
@@ -198,12 +186,12 @@ class _hServices {
     }
   }
 
-  function getServiceStatus($status, $code) {?>
-  <title><?php show( ucfirst($status) ); ?>s List [ <?php getOption('name'); ?> ]</title><?php
-    $getServiceStatus = mysqli_query($GLOBALS['conn'], "SELECT * FROM hservices WHERE (h_status = '".$status."' AND h_for='".$code."')");
+  function getPendingService() { ?>
+  <title><?php show( "Pending Requests" ); ?> [ <?php getOption('name'); ?> ]</title><?php
+    $getServiceStatus = mysqli_query($GLOBALS['conn'], "SELECT * FROM hservices WHERE h_status = 'pending' AND h_type = 'request' AND h_author = '".$_SESSION['myCode']."'");
     if($getServiceStatus -> num_rows > 0) {
       ?>
-      <a href="./service?create=<?php show( $type ); ?>" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+      <a href="./service?create=request" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
   <i class="material-icons">create</i></a>
       <div class="mdl-grid">
         <div class="mdl-cell--12-col" >
@@ -218,9 +206,8 @@ class _hServices {
       <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
         <thead>
         <tr>
-        <th class="mdl-data-table__cell--non-numeric">SERVICE</th>
-        <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
-        <th class="mdl-data-table__cell--non-numeric">PHONE</th>
+        <th class="mdl-data-table__cell--non-numeric">REQUEST</th>
+        <th class="mdl-data-table__cell--non-numeric">BY</th>
         <th class="mdl-data-table__cell--non-numeric">CENTER</th>
         <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
@@ -234,10 +221,7 @@ class _hServices {
           <?php show( $servicesDetails['h_alias'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric">
-          <?php show( $servicesDetails['h_email'] ); ?>
-        </td>
-        <td class="mdl-data-table__cell--non-numeric">
-          <?php show( $servicesDetails['h_phone'] ); ?>
+          <?php show( $servicesDetails['h_by'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric">
           <?php show( $servicesDetails['h_center'] ); ?>
@@ -262,9 +246,8 @@ class _hServices {
       <div style="margin:1%;" >
       <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>"><thead>
         <tr>
-        <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
-        <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
-        <th class="mdl-data-table__cell--non-numeric">PHONE</th>
+        <th class="mdl-data-table__cell--non-numeric">REQUEST</th>
+        <th class="mdl-data-table__cell--non-numeric">BY</th>
         <th class="mdl-data-table__cell--non-numeric">CENTER</th>
         <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
@@ -272,7 +255,7 @@ class _hServices {
         </thead>
         <tbody>
         <tr>
-        <td><p> No <?php show( ucfirst($status) ); ?> Items Found</p></td>
+        <td><p> No <?php show( ucfirst($status) ); ?> Items Found <?php echo "Error: " . $GLOBALS['conn']->error; ?></p></td>
         </tr>
         </tbody>
         </table>
@@ -283,11 +266,11 @@ class _hServices {
 
   function getServices() {
       ?><title>All Services [ <?php getOption('name'); ?> ]</title><?php
-    $getServices = mysqli_query($GLOBALS['conn'], "SELECT * FROM hservices WHERE h_status = 'active' ORDER BY h_created DESC");
+    $getServices = mysqli_query($GLOBALS['conn'], "SELECT * FROM hservices ORDER BY h_created DESC");
 
     if($getServices -> num_rows > 0) {
       ?>
-      <a href="./service?create=patient" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+      <a href="./service?create=request" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
   <i class="material-icons">create</i></a>
       <div class="mdl-grid">
         <div class="mdl-cell--12-col" >
@@ -303,9 +286,8 @@ class _hServices {
       <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
         <thead>
         <tr>
-        <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
-        <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
-        <th class="mdl-data-table__cell--non-numeric">PHONE</th>
+        <th class="mdl-data-table__cell--non-numeric">REQUEST</th>
+        <th class="mdl-data-table__cell--non-numeric">BY</th>
         <th class="mdl-data-table__cell--non-numeric">CENTER</th>
         <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
@@ -316,13 +298,10 @@ class _hServices {
         <tbody>
         <tr>
         <td class="mdl-data-table__cell--non-numeric">
-          <?php show( $servicesDetails['h_servicename'] ); ?>
+          <?php show( $servicesDetails['h_alias'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric">
-          <?php show( $servicesDetails['h_email'] ); ?>
-        </td>
-        <td class="mdl-data-table__cell--non-numeric">
-          <?php show( $servicesDetails['h_phone'] ); ?>
+          <?php show( $servicesDetails['h_by'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric">
           <?php show( $servicesDetails['h_center'] ); ?>
@@ -347,9 +326,8 @@ class _hServices {
       <div style="margin:1%;" >
       <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>"><thead>
         <tr>
-        <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
-        <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
-        <th class="mdl-data-table__cell--non-numeric">PHONE</th>
+        <th class="mdl-data-table__cell--non-numeric">REQUEST</th>
+        <th class="mdl-data-table__cell--non-numeric">BY</th>
         <th class="mdl-data-table__cell--non-numeric">CENTER</th>
         <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>

@@ -97,46 +97,12 @@ $hSocial = new _hSocial();
     </script>
 
     <script>
-    $(document).ready(function($) {
-
-    $('.card__share > a').on('click', function(e){ 
-        e.preventDefault() // prevent default action - hash doesn't appear in url
-        $(this).parent().find( 'div' ).toggleClass( 'card__social_me--active' );
-        $(this).toggleClass('share-expanded');
-    });
-
-    });
-    </script>
-    <script>
     $(document).ready(function(){
         $("#hide").click(function(){
             $("modal").hide();
         });
         $("#show").click(function(){
             $("modal").show();
-        });
-    });
-    </script>
-    <script type="text/javascript">
-    $(document).ready(function(){
-        $('.search-box input[type="text"]').on("keyup input", function(){
-            /* Get input value on change */
-            var inputVal = $(this).val();
-            var resultDropdown = $(this).siblings(".result");
-            if(inputVal.length){
-                $.get("./search.php", {term: inputVal}).done(function(data){
-                    // Display the returned data in browser
-                    resultDropdown.html(data);
-                });
-            } else{
-                resultDropdown.empty();
-            }
-        });
-        
-        // Set search input value on click of result item
-        $(document).on("click", ".result p", function(){
-            $(this).parents(".search-box").find('input[type="text"]').val($(this).text());
-            $(this).parent(".result").empty();
         });
     });
     </script>
@@ -302,7 +268,7 @@ $hSocial = new _hSocial();
                     Pending Requests
                 </a>
                 <a class="mdl-navigation__link" href="./service?create=request">
-                    <i class="mdl-color-text--white material-icons" role="presentation">note_add</i>
+                    <i class="mdl-color-text--white material-icons" role="presentation">create</i>
                     Request Service
                 </a>
             </ul>
