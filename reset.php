@@ -2,13 +2,11 @@
 session_start();
 include 'header.php';
 
-if (isset($_POST['login'])) {
-    $email = $_POST['email'];
+if (isset($_POST['reset'])) {
     $password = $_POST['password'];
 
-  $conn = mysqli_connect( hDBHOST, hDBUSER, hDBPASS, hDBNAME );
   $sql = "SELECT * FROM hUsers WHERE h_email=".$email."";
-    $result = mysqli_query($conn, $sql);
+    $result = mysqli_query($GLOBALS['conn'], $sql);
     if( $result->num_rows > 0 ) {
       while ($row = mysqli_fetch_assoc($result)) {
 
@@ -55,8 +53,6 @@ if (isset($_POST['login'])) {
         <input name="password" id="password" type="password">
         <label for="password">Repeat Password</label>
         </div>
-
-        <input type="hidden" name="login"/>
 
         <div class="input-field">
         <button class="btn waves-effect waves-light" type="submit" name="action">RESET PASSWORD</button>

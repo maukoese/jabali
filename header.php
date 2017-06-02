@@ -15,10 +15,17 @@ $hArticle = new _hArticles();
 $hSocial = new _hSocial();
 ?>
 <!doctype html>
+<!--
+  Jabali Framework
+  © 2017 Mauko Maunde. All rights reserved.
+
+  Licensed under the MIT license (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at https://opensource.org/licenses/MIT
+-->
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
-
-    <link rel="icon" type="image/png" href="images/DB_16х16.png">
+    <link rel="shortcut icon" href="<?php echo hIMAGES; ?>marker.png">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">

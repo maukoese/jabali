@@ -5,7 +5,16 @@ include './header.php';
 
 if (isset($_POST['mystyle'])) {
     $theme = mysqli_real_escape_string($GLOBALS['conn'], $_POST['theme']);
-    mysqli_query($GLOBALS['conn'], "UPDATE husers SET h_style = '".$theme."'");
+    mysqli_query($GLOBALS['conn'], "UPDATE husers SET h_style = '".$theme."' WHERE h_code = '".$_SESSION['myCode']."'");
+}
+
+if (isset($_POST['mpesa'])) {
+    $date = date(Ymd);
+    mysqli_query($GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['merchant']."', h_updated = '".$date."' WHERE h_code='merchant'");
+    mysqli_query($GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['callback']."', h_updated = '".$date."'  WHERE h_code='callback'");
+    mysqli_query($GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['paybill']."', h_updated = '".$date."'  WHERE h_code='paybill'");
+    mysqli_query($GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['timestamp']."', h_updated = '".$date."'  WHERE h_code='timestamp'");
+    mysqli_query($GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['sag']."', h_updated = '".$date."'  WHERE h_code='sag'");
 }
 
 if (isset($_POST['preferences'])) {
@@ -29,28 +38,38 @@ if (isset($_GET['page'])) {
         <form name="optionForm" method="POST" action="">
 
                 <div class="input-field">
+                        <i class="material-icons prefix">label</i>
                     <input id="name" type="text" name="name" value="<?php getOption('name'); ?>">
                     <label for="name" data-error="wrong" data-success="right" class="center-align">Site Name </label>
                 </div>
 
                 <div class="input-field">
-                    <textarea id="description" name="description" cols="3" ><?php getOption("description"); ?></textarea>
+                        <i class="material-icons prefix">details</i>
+                    <textarea id="description" name="description" class="materialize-textarea col s12" ><?php getOption("description"); ?></textarea>
                     <label for="description" data-error="wrong" data-success="right" class="center-align">Site Description </label>
                 </div>
 
                 <div class="input-field">
+                        <i class="material-icons prefix">mail</i>
                     <input id="email" type="text" name="email" value="<?php getOption('email'); ?>">
-                    <label for="email" data-error="wrong" data-success="right" class="center-align">Admin Email </label>
+                    <label for="email" class="center-align">Admin Email </label>
                 </div>
 
                 <div class="input-field">
+                        <i class="material-icons prefix">copyright</i>
                     <input id="copyright" type="text" name="copyright" value="<?php getOption('copyright'); ?>">
-                    <label for="copyright" data-error="wrong" data-success="right" class="center-align">Footer Copyright </label>
+                    <label for="copyright"class="center-align">Footer Copyright </label>
+                </div>
+
+                <div class="input-field">
+                        <i class="mdi mdi-format-color-text prefix"></i>
+                    <input id="attribution" type="text" name="attribution" value="<?php getOption('attribution'); ?>">
+                    <label for="attribution"class="center-align">Footer Attribution </label>
                 </div>
 
         </div>
 
-        <div class=" mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-grid">
+        <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-grid">
         <script>
            function chooseHeader() {
               $("#header_logo").click();
@@ -61,7 +80,15 @@ if (isset($_GET['page'])) {
            }
         </script>
 
-                <div class="input-field inline mdl-cell mdl-cell--6-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp">
+                <div class="input-field inline mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp">
+                    <div style="height:0px;overflow:hidden">
+                        <input id="header_logo" type="file" name="header_logo" value="<?php getOption('header_logo'); ?>">
+                    </div>
+                    <img src="<?php show( hIMAGES."marker.png" ); ?>" width="50%" onclick="chooseHeader();">
+                    <label for="header_logo" data-error="wrong" data-success="right" class="center-align">Favicon <span><i class="material-icons">edit</i></span></label>
+                </div>
+
+                <div class="input-field inline mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp">
                     <div style="height:0px;overflow:hidden">
                         <input id="header_logo" type="file" name="header_logo" value="<?php getOption('header_logo'); ?>">
                     </div>
@@ -69,7 +96,7 @@ if (isset($_GET['page'])) {
                     <label for="header_logo" data-error="wrong" data-success="right" class="center-align">Header Logo (100x80px) <span><i class="material-icons">edit</i></span></label>
                 </div>
 
-                <div class="input-field inline mdl-cell mdl-cell--6-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp">
+                <div class="input-field inline mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp">
                     <div style="height:0px;overflow:hidden">
                     <input id="home_logo" type="file" name="home_logo" value="<?php getOption("home_logo"); ?>">
                     </div>
@@ -84,7 +111,7 @@ if (isset($_GET['page'])) {
             <div class=" mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
 
                 <div class="input-field">
-                    <textarea id="h_tos" name="tos" cols="3" ><?php getOption('tos'); ?></textarea>
+                    <textarea id="h_tos" name="tos" class="materialize-textarea col s12"><?php getOption('tos'); ?></textarea>
                             <script>CKEDITOR.replace( "h_tos" );</script>
                     <label for="h_tos" data-error="wrong" data-success="right" class="center-align">Terms of Service </label>
                 </div>
@@ -93,8 +120,7 @@ if (isset($_GET['page'])) {
             </div>
         </form>
         </div>
-            <?php
-        ?> </div>
+    </div>
     <?php
     } elseif ($_GET['page'] == "shop") {
         ?><title>Shop Options [ <?php getOption('name'); ?> ]</title>
@@ -108,35 +134,37 @@ if (isset($_GET['page'])) {
           <span class="mdl-button">M-PESA Settings</span>
         </div>
         <div class="mdl-card__supporting-text mdl-card--expand">
-                <span><b>Required Fields Are Marked *</b></span><br>
+                <span><b>Required Fields Are Marked <span style="color:red;">*</span></b></span><br>
 
                 <div class="input-field">
-                    <input id="merchant" type="text" name="merchant" value="<?php getOption('name'); ?>">
-                    <label for="merchant" data-error="wrong" data-success="right" class="center-align">Merchant Name *</label>
+                        <i class="material-icons prefix">label</i>
+                    <input id="merchant" type="text" name="merchant" value="<?php getOption('merchant'); ?>">
+                    <label for="merchant" data-error="wrong" data-success="right" class="center-align">Merchant Name <span style="color:red;">*</span></label>
                 </div>
 
                 <div class="input-field">
-                    <input id="endpoint" type="text" name="endpoint" value="<?php show( hROOT.'callback' ); ?>">
-                    <label for="endpoint" data-error="wrong" data-success="right" class="center-align">Callback URL *</label>
+                        <i class="material-icons prefix">public</i>
+                    <input id="callback" type="text" name="callback" value="<?php getOption('callback'); ?>">
+                    <label for="callback" data-error="wrong" data-success="right" class="center-align">Callback URL <span style="color:red;">*</span></label>
                 </div>
 
                 <div class="input-field">
+                        <i class="material-icons prefix">payment</i>
                     <input id="paybill" type="text" name="paybill" value="<?php getOption('paybill'); ?>">
-                    <label for="paybill" data-error="wrong" data-success="right" class="center-align">Paybill Number *</label>
+                    <label for="paybill" data-error="wrong" data-success="right" class="center-align">Paybill Number <span style="color:red;">*</span></label>
                 </div>
 
                 <div class="input-field">
+                        <i class="material-icons prefix">query_builder</i>
                     <input id="timestamp" type="text" name="timestamp" value="<?php getOption('timestamp'); ?>">
-                    <label for="timestamp" data-error="wrong" data-success="right" class="center-align">Timestamp *</label>
+                    <label for="timestamp" data-error="wrong" data-success="right" class="center-align">Timestamp <span style="color:red;">*</span></label>
                 </div>
 
                 <div class="input-field">
-                    <input id="sag" type="text" name="sag" value="<?php getOption('sag'); ?>">
-                    <label for="sag" data-error="wrong" data-success="right" class="center-align">SAG Password *</label>
+                        <i class="material-icons prefix">lock</i>
+                    <textarea id="sag" name="sag" class="materialize-textarea col s12" ><?php getOption('sag'); ?></textarea>
+                    <label for="sag" data-error="wrong" data-success="right" class="center-align">SAG Password <span style="color:red;">*</span></label>
                 </div>
-
-                <input type="hidden" name="endpoint" value="https://safaricom.co.ke/mpesa_online/lnmo_checkout_server.php?wsdl">
-                <input type="hidden" name="method" value="POST">
 
                 <br>
                 <button class="mdl-button mdl-button--fab" type="submit" name="mpesa"><i class="material-icons">save</i></button>
@@ -153,6 +181,7 @@ if (isset($_GET['page'])) {
         <div class="mdl-card__supporting-text mdl-card--expand">
 
                 <div class="input-field inline">
+                        <i class="material-icons prefix">mail</i>
                     <input id="name" type="email" name="name" value="<?php getOption('email'); ?>">
                     <label for="name" data-error="wrong" data-success="right" class="center-align">Paypal Email </label>
                 </div>
@@ -174,6 +203,7 @@ if (isset($_GET['page'])) {
         <div class="mdl-card__supporting-text mdl-card--expand">
 
                 <div class="input-field inline">
+                        <i class="material-icons prefix">mail</i>
                     <input id="name" type="email" name="name" value="<?php getOption('email'); ?>">
                     <label for="name" data-error="wrong" data-success="right" class="center-align">Stripe Email </label>
                 </div>
@@ -194,6 +224,7 @@ if (isset($_GET['page'])) {
         <div class="mdl-card__supporting-text mdl-card--expand">
 
                 <div class="input-field inline">
+                        <i class="material-icons prefix">mail</i>
                     <input id="name" type="email" name="name" value="<?php getOption('email'); ?>">
                     <label for="name" data-error="wrong" data-success="right" class="center-align">Stripe Email </label>
                 </div>
@@ -260,8 +291,8 @@ if (isset($_GET['page'])) {
 ?>
     <title>Theme Color Options [ <?php getOption('name'); ?> ]</title>
     <div class="mdl-grid mdl-cell mdl-cell--12-col" >
-        <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
-        	<div class=" mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+        <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-grid">
+        	<div class=" mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
         		<style type="text/css">
                 .cholder {
                     display: inline-flex;
@@ -279,9 +310,17 @@ if (isset($_GET['page'])) {
                 }
 
                 </style>
-
-                <h4>Select Theme</h4>
-                <form name="themeForm" method="POST" action="">
+                <div class="mdl-card__title">
+                    <div class="mdl-card__title-text">
+                        Select Theme
+                    </div>
+                    <div class="mdl-layout-spacer"></div>
+                    <div class="mdl-card__subtitle-text mdl-button">
+                        <i class="material-icons">color_lens</i>
+                    </div>
+                </div>
+                <div class="mdl-card_supporting-text">
+                <form name="themeForm" method="POST" action="" class="mdl-cell mdl-cell--12-col">
 
                     <div class="input-field inline">
                         <input type="radio" id="zahra" name="theme" value="zahra" <?php isTheme ('zahra'); ?>>
@@ -337,7 +376,7 @@ if (isset($_GET['page'])) {
                         <label for="hot"><p class="cholder" for="hot">
                             <span class="ccolor mdl-color--red"></span><span class="ccolor csec mdl-color--blue"></span>
                         </p></label>
-                    </div><div class="mdl-tooltip" for="hot">Red Host</div>
+                    </div><div class="mdl-tooltip" for="hot">Red Hot</div>
 
                     <div class="input-field inline">
                         <input type="radio" id="princess" name="theme" value="princess" <?php isTheme ('princess'); ?>>
@@ -382,7 +421,7 @@ if (isset($_GET['page'])) {
                     </div><div class="mdl-tooltip" for="wait">Wait A Minute</div>
 
                     <div class="input-field inline">
-                        <input type="radio" id="orange" name="theme" value="orange" <?php isTheme ('wait'); ?>>
+                        <input type="radio" id="orange" name="theme" value="orange" <?php isTheme ('orange'); ?>>
                         <label for="orange"><p class="cholder" for="orange">
                             <span class="ccolor mdl-color--orange"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
@@ -414,7 +453,7 @@ if (isset($_GET['page'])) {
                     <div class="input-field inline">
                         <input type="radio" id="zebra" name="theme" value="zebra" <?php isTheme ('zebra'); ?>>
                         <label for="zebra"><p class="cholder" for="zebra">
-                            <span class="ccolor mdl-color--white"></span><span class="ccolor csec mdl-color--black"></span>
+                            <span class="ccolor mdl-color--black"></span><span class="ccolor csec mdl-color--yellow"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="zebra">Zebra's Cross</div>
                     
@@ -431,34 +470,50 @@ if (isset($_GET['page'])) {
                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" type="submit" name="mystyle" style="float:right;"><i class="material-icons">save</i></button>
                     </div>
                 </form>
+                </div>
         	</div>
-            <div class=" mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
-                <h4>Custom Styling</h4>
+            <div class=" mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
+                <div class="mdl-card__title">
+                    <div class="mdl-card__title-text">
+                        Custom Styling
+                    </div>
 
-                <form name="themeForm" method="POST" action="" class="">
+                    <div class="mdl-layout-spacer"></div>
+                    <div class="mdl-card__subtitle-text mdl-button">
+                        <i class="material-icons">brush</i>
+                    </div>
+                </div>
+
+                <form name="themeForm" method="POST" action="" class="mdl-cell mdl-cell--12-col">
+                <div class="mdl-card_supporting-text">
 
                     <div class="input-field">
+                        <i class="mdi mdi-format-color-text prefix"></i>
                         <input id="secondary" type="text" name="secondary">
                         <label for="secondary" data-error="wrong" data-success="right" class="center-align">Accent Color </label>
                     </div>
 
                     <div class="input-field">
+                        <i class="mdi mdi-format-paragraph prefix"></i>
                         <input id="textp" type="text" name="textp">
                         <label for="textp" data-error="wrong" data-success="right" class="center-align">Text Primary Color </label>
                     </div>
 
                     <div class="input-field">
+                        <i class="mdi mdi-code-string prefix"></i>
                         <input id="texts" type="text" name="texts">
                         <label for="texts" data-error="wrong" data-success="right" class="center-align">Text Secondary Color </label>
                     </div>
 
                     <div class="input-field">
-                        <textarea id="customs" name="customs" cols="3" ></textarea>
+                        <i class="mdi mdi-language-css3 prefix"></i>
+                        <textarea id="customs" name="customs" cols="3" class="materialize-textarea col s12"></textarea>
                         <label for="customs" data-error="wrong" data-success="right" class="center-align">Custom CSS </label>
                     </div>
 
                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" type="submit" name="custom" style="float:right;"><i class="material-icons">save</i></button>
                 </form>
+                </div>
             </div>
         </div>
 
@@ -467,6 +522,11 @@ if (isset($_GET['page'])) {
                 <div class="mdl-card__title">
                     <div class="mdl-card__title-text">
                         Color Palette
+                    </div>
+
+                    <div class="mdl-layout-spacer"></div>
+                    <div class="mdl-card__subtitle-text mdl-button">
+                        <i class="material-icons">palette</i>
                     </div>
                 </div>
                 <div class="mdl-card_supporting-text"><br>

@@ -1,10 +1,16 @@
 <?php
-//Main Functions file
+/**
+* @package Jabali Framework
+* @subpackage Database
+* @link https://docs.mauko.co.ke/jabali/classes/hdb
+* @author Mauko Maunde
+* @version 0.17.06
+**/
 
 //Date
 date_default_timezone_set("Africa/Nairobi");
 
-include 'db.php';
+include 'config.php';
 function connectDb() {
 	$GLOBALS['conn'] = mysqli_connect( hDBHOST, hDBUSER, hDBPASS, hDBNAME );
 
@@ -177,7 +183,7 @@ function primaryColor($code) {
 			} elseif ($themes['h_style'] == "ghost") {
 				echo "blue-grey";
 			} elseif ($themes['h_style'] == "zebra") {
-				echo "white";
+				echo "black";
 			}
 		}
 	}
@@ -238,8 +244,5 @@ function getOption($code) {
  include 'notifications.php';
  include 'articles.php';
  include 'social.php';
-
-
- include 'payments/MPESA.php'; 
 
 ?>

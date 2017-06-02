@@ -1,7 +1,9 @@
 <?php
 include './functions/jabali.php';
+connectDb();
 
 if (isset($_GET['module'])) {
+
 	if ($_GET['module'] == "app") {
 		$husers = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS husers(
 		h_alias VARCHAR(100),
@@ -14,6 +16,7 @@ if (isset($_GET['module'])) {
 		h_description TEXT,
 		h_email VARCHAR(50),
 		h_fav INT(5),
+		h_gender VARCHAR(10),
 		h_key VARCHAR(100),
 		h_level VARCHAR(12),
 		h_link VARCHAR(100),
@@ -32,7 +35,6 @@ if (isset($_GET['module'])) {
 		)");
 
 		$resources = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hresources (
-		id INT(10) NOT NULL AUTO_INCREMENT,
 		h_alias VARCHAR(100),
 		h_author VARCHAR(12),
 		h_avatar VARCHAR(20),
@@ -43,7 +45,6 @@ if (isset($_GET['module'])) {
 		h_custom VARCHAR(12),
 		h_description TEXT,
 		h_email VARCHAR(50),
-		h_fav INT(5),
 		h_key VARCHAR(100),
 		h_level VARCHAR(12),
 		h_link VARCHAR(100),
@@ -53,7 +54,7 @@ if (isset($_GET['module'])) {
 		h_status VARCHAR(20),
 		h_type VARCHAR(50),
 		h_updated DATE,
-		PRIMARY KEY(id)
+		PRIMARY KEY(h_code)
 		)");
 
 		$hmessages = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hmessages(
@@ -93,7 +94,7 @@ if (isset($_GET['module'])) {
 		PRIMARY KEY(id)
 		)");
 
-		$uploads = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS huploads(
+		$huploads = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS huploads(
 		id INT(10) NOT NULL AUTO_INCREMENT,
 		h_alias VARCHAR(100),
 		h_author VARCHAR(12),
@@ -251,14 +252,16 @@ if (isset($_GET['module'])) {
 		<p>Questions about the Terms of Service should be sent to us at portal@maukoese.co.ke</p>
 		";
 
-		if ($husers && $hresources) {
-
+		if ($husers && $hresources && $hmessages && $hnotifications && $huploads && $harticles && $hnotes && $hratings && $hfaqs && $hoptions) {
 			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Site Name', 'name', 'Jabali', '".$created."')");
 			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Description', 'description', 'A Jabali System', '".$created."')");
 			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Admin Email', 'email', 'jabali@mauko.co.ke', '".$created."')");
-			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Copyright', 'copyright', '© Mauko by Design 2017', '".$created."')");
+			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Copyright', 'copyright', '© JABALI 2017', '".$created."')");
+			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Attribution', 'attribution', 'Mauko by Design', '".$created."')");
+			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Attribution Link', 'attribution_link', 'http://mauko.co.ke', '".$created."')");
 			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Header Logo', 'header_logo', '".hIMAGES."logo.png', '".$created."')");
 			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Home Logo', 'home_logo', '".hIMAGES."logo2.png', '".$created."')");
+			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Favicon', 'favicon', '".hIMAGES."marker.png', '".$created."')");
 			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions (h_alias, h_code, h_description, h_updated) VALUES('Terms Of Service', 'tos', '".$tos."', '".$date."')");
 		}
 
@@ -305,7 +308,13 @@ if (isset($_GET['module'])) {
 		h_updated DATE,
 		PRIMARY KEY(h_code)
 		)");
+
+		mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Merchant Name', 'merchant', 'Jabali', '".$created."')");
+		mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Callback URL', 'callback', '".hROOT."callback', '".$created."')");
+		mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Paybill Number', 'paybill', '898998', '".$created."')");
+		mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Timestamp', 'timestamp', '20160510161908', '".$created."')");
+		mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('SAG Password', 'sag', 'ZmRmZDYwYzIzZDQxZDc5ODYwMTIzYjUxNzNkZDMwMDRjNGRkZTY2ZDQ3ZTI0YjVjODc4ZTExNTNjMDA1YTcwNw==', '".$created."')");
 	}
 }
 ?>
-<title>Setup [ <?php getOption('name'); ?> ]</title>
+<title>Install [ JABALI ]</title>

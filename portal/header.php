@@ -22,12 +22,12 @@ $hSocial = new _hSocial();
 ?>
 <!doctype html>
 <!--
-  Integrated Health Access Portal
+  Jabali Framework
   © 2017 Mauko Maunde. All rights reserved.
 
   Licensed under the MIT license (the "License");
   you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at 
+  You may obtain a copy of the License at https://opensource.org/licenses/MIT
 -->
 <html lang="en">
   <head>
@@ -50,18 +50,14 @@ $hSocial = new _hSocial();
     <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
     <meta name="msapplication-TileColor" content="#3372DF">
 
-    <link rel="shortcut icon" href="images/favicon.png">
+    <link rel="shortcut icon" href="<?php echo hIMAGES; ?>marker.png">
 
-    <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
-    <!--
-    <link rel="canonical" href="http://www.example.com/"> -->
-
-    <link rel="stylesheet" href='<?php echo hASSETS; ?>css/lib/getmdl-select.min.css'>
-    <link rel="stylesheet" href="<?php echo hASSETS; ?>css/lib/nv.d3.css">
-    <link rel="stylesheet" href="<?php echo hASSETS; ?>css/materialize.css">
-    <link rel="stylesheet" href="<?php echo hASSETS; ?>css/material-icons.css">
-    <link rel="stylesheet" href="<?php echo hASSETS; ?>css/materialdesignicons.css">
-    <link rel="stylesheet" href="<?php echo hASSETS; ?>css/font-awesome.css">
+    <link rel="stylesheet" href='<?php echo hSTYLES; ?>lib/getmdl-select.min.css'>
+    <link rel="stylesheet" href="<?php echo hSTYLES; ?>lib/nv.d3.css">
+    <link rel="stylesheet" href="<?php echo hSTYLES; ?>materialize.css">
+    <link rel="stylesheet" href="<?php echo hSTYLES; ?>material-icons.css">
+    <link rel="stylesheet" href="<?php echo hSTYLES; ?>materialdesignicons.css">
+    <link rel="stylesheet" href="<?php echo hSTYLES; ?>font-awesome.css">
     <link rel="stylesheet" href="<?php echo hSTYLES; ?>jabali.css">
     <style type="text/css">
     .mdl-menu__outline {
@@ -190,8 +186,8 @@ $hSocial = new _hSocial();
           <div class="mdl-layout-spacer"></div>
 
           <span class="material-icons mdl-badge mdl-badge--overlap notification" id="shopbtn">
-            <i class="material-icons mdi mdi-shopping"></i>
-          </span>
+            <i class="material-icons">local_mall</i>
+          </span><div class="mdl-tooltip" for="shopbtn">Shop</div>
           <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" for="shopbtn">
             <a class="mdl-menu__item mdl-list__item" href="<?php show( hPORTAL . 'shop?view=list&key=products' ); ?>"><i class="material-icons mdl-list__item-icon">store</i><span style="padding-left: 20px">View Shop</span></a>
 
@@ -204,13 +200,13 @@ $hSocial = new _hSocial();
 
           <span class="material-icons mdl-badge mdl-badge--overlap notification" id="addbtn">
             <i class="material-icons">create</i>
-          </span>
+          </span><div class="mdl-tooltip" for="addbtn">New</div>
           <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" for="addbtn">
             <a class="mdl-menu__item mdl-list__item" href="<?php show( hPORTAL . 'user?create' ); ?>"><i class="material-icons mdl-list__item-icon">account_circle</i><span style="padding-left: 20px">User</span></a>
 
             <a class="mdl-menu__item mdl-list__item"href="<?php show( hPORTAL . 'resource?create'); ?>"><i class="material-icons mdl-list__item-icon">local_hospital</i><span style="padding-left: 20px">Resource</span></a>
             <a class="mdl-menu__item mdl-list__item"href="<?php show( hPORTAL . 'article?create=article'); ?>"><i class="material-icons mdl-list__item-icon">note_add</i><span style="padding-left: 20px">Article</span></a>
-            <a class="mdl-menu__item mdl-list__item"href="<?php show( hPORTAL . 'notification?create'); ?>"><i class="material-icons mdl-list__item-icon">notifications</i><span style="padding-left: 20px">Notification</span></a>
+            <a class="mdl-menu__item mdl-list__item"href="<?php show( hPORTAL . 'notification?create'); ?>"><i class="material-icons mdl-list__item-icon">add_alert</i><span style="padding-left: 20px">Notification</span></a>
           </ul>
 
           <a href="<?php echo hPORTAL.'article?view=list'; ?>" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_service">description</a>
@@ -280,11 +276,17 @@ $hSocial = new _hSocial();
             </ul>
           <a id="hresources" class="mdl-navigation__link" href="#"><i class="mdl-color-text--white material-icons" role="presentation">local_hospital</i>Resources</a>
             <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" for="hresources">
-                <a class="mdl-navigation__link mdl-navigation__link--current" href="./resource?center=list">
+                <a class="mdl-navigation__link mdl-navigation__link--current" href="./resource?view=list&key=resources">
+                    <i class="material-icons" role="presentation">local_hospital</i>
+                    All Resources
+                </a>
+
+                <a class="mdl-navigation__link mdl-navigation__link--current" href="./resource?view=list&type=center">
                     <i class="material-icons" role="presentation">business</i>
                     All Centers
                 </a>
-                <a class="mdl-navigation__link" id="husers" href="./resource?location=<?php echo strtolower($_SESSION['myLocation']); ?>">
+
+                <a class="mdl-navigation__link" id="husers" href="./resource?view=list&location=<?php show( strtolower($_SESSION['myLocation']) ); ?>">
                     <i class="mdl-color-text--white material-icons" role="presentation">room</i>
                     Centers In My Area
                 </a>
@@ -295,37 +297,29 @@ $hSocial = new _hSocial();
                     <i class="material-icons" role="presentation">link</i>
                     My Services
                 </a>
-                <a class="mdl-navigation__link" id="husers" href="./service?view=pending">
+                <a class="mdl-navigation__link" id="husers" href="./service?view=list&status=pending">
                     <i class="mdl-color-text--white material-icons" role="presentation">schedule</i>
                     Pending Requests
                 </a>
                 <a class="mdl-navigation__link" href="./service?create=request">
                     <i class="mdl-color-text--white material-icons" role="presentation">note_add</i>
-                    Request For A Service
+                    Request Service
                 </a>
             </ul>
-          <a id="hmessages"class="mdl-navigation__link" href="#"><i class="mdl-color-text--white material-icons" role="presentation">mail_outline</i>My Messages</a>
+          <a id="hmessages"class="mdl-navigation__link" href="#"><i class="mdl-color-text--white material-icons" role="presentation">mail</i>My Messages</a>
             <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" for="hmessages">
-                <a class="mdl-navigation__link mdl-navigation__link--current" href="./message?view=list">
+                <a class="mdl-navigation__link mdl-navigation__link--current" href="./message?view=list&type=message">
                     <i class="material-icons" role="presentation">message</i>
                     Messages
-                </a>
-                <a class="mdl-navigation__link" id="husers" href="./message?chat=list">
-                    <i class="mdl-color-text--white material-icons" role="presentation">chat</i>
+                </a><!-- 
+                <a class="mdl-navigation__link" id="husers" href="./message?view=list&type=chat">
+                    <i class="mdl-color-text--white material-icons" role="presentation">question_answer</i>
                     Chats
-                </a>
-                <a class="mdl-navigation__link" href="./message?create=message">
-                    <i class="mdl-color-text--white material-icons" role="presentation">comment</i>
-                    New Message
-                </a>
-                <a class="mdl-navigation__link" id="husers" href="./message?create=chat">
-                    <i class="mdl-color-text--white material-icons" role="presentation">chat_bubble</i>
-                    New Chat
-                </a>
+                </a> -->
             </ul>
           <a class="mdl-navigation__link" href="./notification?view=list"><i class="mdl-color-text--white material-icons" role="presentation">notifications</i>Notifications</a>
           <div class="mdl-layout-spacer"></div>
-          <a class="mdl-navigation__link" href="./options?page=color"><i class="mdl-color-text--white material-icons" role="presentation">color_lens</i><span>Change Theme</span></a>
+          <a class="mdl-navigation__link" href="./options?page=color"><i class="mdl-color-text--white material-icons" role="presentation">color_lens</i><span>Theme Options</span></a>
           <a class="mdl-navigation__link" href="./options?page=general"><i class="mdl-color-text--white material-icons" role="presentation">settings</i><span>Site Options</span></a>
         </nav>
       </div>

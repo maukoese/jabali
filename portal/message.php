@@ -3,12 +3,12 @@
 include './header.php';
 
 if (isset($_GET['create'])) {
-	$hForm -> messageForm();
+	$hForm -> messageForm($_GET['create'], $_GET['code']);
 }
 
 if (isset($_GET['chat'])) {
 	if ($_GET['chat'] == "list") {
-		$hMessage -> getChats();
+		$hMessage -> getMessagesType('chat');
 	} else {
 		$hMessage -> getChatCode($_GET['chat']);
 
@@ -41,30 +41,8 @@ if (isset($_POST['create'])) {
 	$hMessage -> createMessage();
 }
 
-if (isset($_POST['update'])) {
-	$hMessage -> loginMessage();
-}
-
-if (isset($_POST['register'])) {
-	$hMessage -> createMessage();
-}
-
-if (isset($_POST['confirm'])) {
-	$hMessage -> confirmMessage();
-} 
-if (isset($_POST['logout'])) {
-	$hMessage -> logoutMessage();
-}
-
-if (isset($_POST['forgot'])) {
-	$hMessage -> forgotPass();
-} 
-
-if (isset($_POST['reset'])) {
-	$hMessage -> resetPass();
-}
 ?>
-<a href="./register" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-  <i class="material-icons">add</i></a>
+<a href="./message?create" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+  <i class="material-icons">message</i></a>
 <?php
 include './footer.php';

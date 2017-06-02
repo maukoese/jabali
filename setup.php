@@ -1,6 +1,14 @@
 <?php
-if (file_exists('./functions/db.php')) {
-	//header("Location: ./login");
+/**
+* @package Jabali Framework
+* @subpackage Setup
+* @link https://docs.mauko.co.ke/jabali/classes/setup
+* @author Mauko Maunde
+* @version 0.17.06
+**/
+
+if (file_exists('./functions/config.php')) {
+	header("Location: ./login");
 }
 
 if (isset($_POST['setup']) && $_POST['host'] != "" && $_POST['user'] != "" && $_POST['password'] != "" && $_POST['name'] != "") {
@@ -13,8 +21,8 @@ if (isset($_POST['setup']) && $_POST['host'] != "" && $_POST['user'] != "" && $_
 	$dbpass = $_POST["password"];
 	$home = $_POST["home"];
 
-	function createDb($dbhost, $dbname, $dbuser, $dbpass, $home) {
-		$dbfile = fopen("./functions/db.php", "w") or die("Unable to open file!");
+	function conFigure($dbhost, $dbname, $dbuser, $dbpass, $home) {
+		$dbfile = fopen("./functions/config.php", "w") or die("Unable to open file!");
 		$txt = "<?php";
 		fwrite($dbfile, $txt);
 		$txt = "\n";
@@ -23,12 +31,30 @@ if (isset($_POST['setup']) && $_POST['host'] != "" && $_POST['user'] != "" && $_
 		fwrite($dbfile, $text);
 		$txt = "\n";
 		fwrite($dbfile, $txt);
-		$text = '* Database Constants';
-		fwrite($dbfile, $text);
+		$txt = '* @package Jabali Framework';
+		fwrite($dbfile, $txt);
 		$txt = "\n";
 		fwrite($dbfile, $txt);
-		$text = '**/';
-		fwrite($dbfile, $text);
+		$txt = '* @subpackage Configuration';
+		fwrite($dbfile, $txt);
+		$txt = "\n";
+		fwrite($dbfile, $txt);
+		$txt = '* @link https://docs.mauko.co.ke/jabali/classes/config';
+		fwrite($dbfile, $txt);
+		$txt = "\n";
+		fwrite($dbfile, $txt);
+		$txt = '* @author Mauko Maunde';
+		fwrite($dbfile, $txt);
+		$txt = "\n";
+		fwrite($dbfile, $txt);
+		$txt = '* @version 0.17.06';
+		fwrite($dbfile, $txt);
+		$txt = "\n";
+		fwrite($dbfile, $txt);
+		$txt = '**/';
+		fwrite($dbfile, $txt);
+		$txt = "\n";
+		fwrite($dbfile, $txt);
 		$txt = "\n";
 		fwrite($dbfile, $txt);
 		$text = 'define("hDBNAME","'.$dbname.'");';
@@ -58,20 +84,21 @@ if (isset($_POST['setup']) && $_POST['host'] != "" && $_POST['user'] != "" && $_
 		return true;
 	}
 
-	if (createDb($dbhost, $dbname, $dbuser, $dbpass, $home)) {
-		header("Location: ./install?module=app");
+	if (conFigure($dbhost, $dbname, $dbuser, $dbpass, $home)) {
+		header("Location: install?module=app");
 	}
-} else {
-
-	include './header.php';?>	
+} else { ?>	
 
     <link rel="stylesheet" href="./assets/css/materialize.css">
     <link rel="stylesheet" href="./assets/css/material-icons.css">
     <link rel="stylesheet" href="./assets/css/jabali.css">
+    <script src="./assets/js/jquery-3.1.1.min.js"></script>
     <script src="./assets/js/materialize.min.js"></script>
     <script src="./assets/js/material.js"></script>
-	<title>Setup [ <?php getOption('name'); ?> ]</title>
-	<div style="padding-top:40px;" >
+	<title>Setup [ JABALI ]</title>
+	<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+	<main class="mdl-layout__content mdl-color--blue mdl-grid">
+	<div style="padding-top:40px;" class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
     <div id="login_div">
         <center><img src="./assets/images/logo.png"></center>
         <form method="POST" action="">
@@ -121,6 +148,8 @@ if (isset($_POST['setup']) && $_POST['host'] != "" && $_POST['user'] != "" && $_
         <button class="mdl-button mdl-button--fab mdl-js-button mdl-button--raised mdl-button--colored" type="submit" name="setup"><i class="material-icons">forward</i></button>
         </form>
     </div>
+	</div>
+	</main>
 	</div>
 <?php
 }

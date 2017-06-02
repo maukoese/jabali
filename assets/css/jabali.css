@@ -883,7 +883,10 @@ main {
 /* Animations */
 /* Dialog */
 html, body {
-  font-family: "Helvetica", "Arial", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 
+    "Segoe UI", "Roboto", "Oxygen", 
+    "Ubuntu", "Cantarell", "Fira Sans", 
+    "Droid Sans", "Helvetica Neue", sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 20px; }
@@ -9923,7 +9926,10 @@ _:-ms-input-placeholder, :root .mdl-slider.mdl-slider.is-upgraded {
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   display: block;
   font-size: 16px;
-  font-family: "Helvetica", "Arial", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 
+    "Segoe UI", "Roboto", "Oxygen", 
+    "Ubuntu", "Cantarell", "Fira Sans", 
+    "Droid Sans", "Helvetica Neue", sans-serif;
   margin: 0;
   padding: 4px 0;
   width: 100%;
@@ -12460,6 +12466,16 @@ a {
   z-index: 900;
 }
 
+.cartfab {
+  position: fixed;
+  display: block;
+  right: 0;
+  bottom: 0;
+  margin-right: 5%;
+  margin-bottom: 5%;
+  z-index: 900;
+}
+
 .newfab {
     position: fixed;
     display: block;
@@ -12875,7 +12891,6 @@ a {
     }
 /* The Modal (background) */
 .modal {
-    display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     padding-top: 100px; /* Location of the box */
@@ -12974,4 +12989,24 @@ a {
 
 footer {
   background-color:transparent;
+}
+
+.mdl-card__media {
+    margin: 0;
+}
+.mdl-card__media > img {
+    max-width: 100%;
+}
+.mdl-card__actions {
+    display: flex;
+    box-sizing:border-box;
+    align-items: center;
+}
+.mdl-card__actions > .mdl-button--icon {
+    margin-right: 3px;
+    margin-left: 3px;
+}
+
+.mdl-card {
+      overflow: visible !important;
 }

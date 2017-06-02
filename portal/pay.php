@@ -1,10 +1,21 @@
 <?php 
 include './header.php';
+include '../functions/payments/MPESA.php';
+if (isset($_POST['pay']) && $_POST['amount'] !== "" && $_POST['h_phone'] !== "") {
+    $AMOUNT = $_POST['amount'];
+    $NUMBER = $_POST['h_phone']; //format 254700000000
+    $PRODUCT_ID = $_GET['order'];
+    //init MPESA class
+  	$mpesa = new MPESA(ENDPOINT, CALLBACK_URL, CALL_BACK_METHOD, PAYBILL_NO, TIMESTAMP, PASSWORD,$GLOBALS['conn']);
+    $mpesa->setProductID($PRODUCT_ID);
+    $mpesa->setAmount($AMOUNT);
+    $mpesa->setNumber($NUMBER); // replaces 0 with 254
+    $mpesa->init();
+}
 ?>
 <title>Shop [ <?php getOption('name'); ?> ]</title>
   <div class="mdl-grid mdl-card">
   	<?php
-  	$mpesa = new MPESA(ENDPOINT, CALLBACK_URL, CALL_BACK_METHOD, PAYBILL_NO, TIMESTAMP, PASSWORD,$GLOBALS['conn']);
   	if ($_GET["order"]) {
 		if(isset($_SESSION["cart_item"])){
 		    $item_total = 0;
@@ -15,7 +26,7 @@ include './header.php';
       <span class="mdl-button">Order <?php show( $_GET['order'] ); ?></span>
         <div class="mdl-layout-spacer"></div>
         <div class="mdl-card__subtitle-text mdl-button">
-        <a id="btnEmpty" href="./shop?buy=empty">
+        <a id="btnEmpty" href="./shop?view=list&buy=empty">
             <i class="material-icons">remove_shopping_cart</i>
             Cancel Order
         </a>
@@ -36,7 +47,7 @@ include './header.php';
 						<td style="text-align:left;" ><strong><?php echo $item["name"]; ?></strong></td>
 						<td style="text-align:left;" ><?php echo $item["quantity"]; ?></td>
 						<td style="text-align:left;" ><?php echo "KSh ".$item["price"]; ?></td>
-						<td style="text-align:left;" ><a href="./shop?buy=remove&code=<?php echo $item["code"]; ?>" class="material-icons">clear</a></td>
+						<td style="text-align:left;" ><a href="./shop?order=<?php show( $_GET['order'] ); ?>&method=<?php show( $_GET['method'] ); ?>&pay=now&buy=remove&code=<?php echo $item["code"]; ?>" class="material-icons">clear</a></td>
 						</tr>
 
 						<?php
@@ -68,13 +79,13 @@ include './header.php';
 
 			    <form class="" name="payForm" method="POST" action=""><br>
 			    	<div class="input-field inline">
-			    		<i class="material-icons prefix">face</i>
+			    		<i class="material-icons prefix">label</i>
 			    		<input type="text" name="h_by" value="<?php show( $_SESSION['myAlias'] ); ?>">
 			    		<label>Full Names</label>
 			    	</div>
 
 			    	<div class="input-field inline">
-			    		<i class="material-icons prefix">mail_outline</i>
+			    		<i class="material-icons prefix">mail</i>
 			    		<input type="text" name="h_email" value="<?php show( $_SESSION['myEmail'] ); ?>">
 			    		<label>Email</label>
 			    	</div>
@@ -96,6 +107,7 @@ include './header.php';
 			    		<input type="text" name="h_location" value="<?php show( strtoupper($_GET['method']) ); ?>">
 			    		<label>Pay Via</label>
 			    	</div>
+			    	<input type="hidden" name="amount" value="<?php echo $item_total; ?>">
 
 			    	<div class="input-field inline">
 					<button class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect" type="submit" name="pay">pay now <i class="material-icons">send</i></button>

@@ -64,7 +64,31 @@ class _hUsers {
  }
   
  function emailUser($email, $subject, $key) {
-   if($subject == "create") {
+   if($subject == "create") { 
+      error_reporting(-1);
+
+      $name = $_POST['name']; 
+      $submit_links = $_POST['submit_links']; 
+
+      if(isset($_POST['submit']))
+      {
+      $from_add = hEMAIL; 
+      $to_add = "ben@webdesignrepo.com"; 
+      $subject = "Your Subject Name";
+      $message = "Name:$name \n Sites: $submit_links";
+
+      $headers = 'From: submit@webdesignrepo.com' . "\r\n" .
+      'Reply-To: ben@webdesignrepo.com' . "\r\n" .
+      'X-Mailer: PHP/' . phpversion();
+
+      if(mail($to_add,$subject,$message,$headers)) 
+      {
+          $msg = "Mail sent";
+
+      echo $msg;
+
+      } 
+      }
    } elseif($subject == "confirm") {
    } elseif($subject == "forgot") {
    } elseif($subject == "reset") {
@@ -74,88 +98,81 @@ class _hUsers {
   function createUser() {
 
     $date = date("YmdHms");
-    if (isset($_SESSION['myEmail'])) {
-      $email = $_SESSION['myEmail'];
+    $email = $_SESSION['myEmail'];
+
+    $hash = str_shuffle(md5($email.$date));
+    $abbr = substr($_POST['lname'], 0,2);
+
+    $h_alias = $_POST['fname'].' '.$_POST['lname'];
+    $h_author = substr($hash, 20);
+    $h_avatar = $_POST['h_avatar'];
+    $h_center = $_POST['h_center'];
+    $h_code = substr($hash, 20);
+    $h_created = date('Ymd');
+    $h_email = $_POST['h_email'];
+    $h_gender = $_POST['h_gender'];
+    $h_key = $hash;
+    $h_level = $_POST['h_level'];
+    $h_link = hPORTAL."user?view=$h_code";
+    $h_location = strtolower( $_POST['h_location'] );
+    $h_notes = "Account created on ".$date;
+    $h_password = md5($_POST['h_password']);
+    $h_phone = $_POST['h_phone'];
+    $h_status = "active"; //Sort emailuser();, Change to "pending"
+    $h_style = "zahra";
+    $h_type = strtolower( $_POST['h_type'] );
+    $h_username = strtolower($_POST['fname'].$abbr);
+
+    if (mysqli_query($GLOBALS['conn'], "INSERT INTO husers (h_alias, h_author, h_avatar, h_center, h_code, h_created, h_email, h_gender, h_key, h_level, h_link, h_location, h_notes, h_password, h_phone, h_status, h_style, h_type, h_username) 
+    VALUES ('".$h_alias."', '".$h_author."', '".$h_avatar."', '".$h_center."', '".$h_code."', '".$h_created."', '".$h_email."', '".$h_gender."', '".$h_key."', '".$h_level."', '".$h_link."', '".$h_location."', '".$h_notes."', '".$h_password."', '".$h_phone."', '".$h_status."', '".$h_style."', '".$h_type."', '".$h_username."')")) {
+      echo "<script type = \"text/javascript\">
+                      alert(\"User Created Successfully!\");
+                  </script>";
     } else {
-      $email = hEMAIL;
-    }
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    } 
 
-    $h_alias = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_alias']); 
-    $h_author = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_author']); 
-    $h_avatar = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_avatar']); 
-    $h_category = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_category']); 
-    $h_center = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_center']);
-    $h_key = str_shuffle(md5($email.$date));
-    $h_code = substr($h_key, rand(0, 15), 16); 
-    $h_created = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_created']); 
-    $h_custom = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_custom']); 
-    $h_desc = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_desc']); 
-    $h_email = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_email']); 
-    $h_fav = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_fav']); 
-    $h_level = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_level']); 
-    $h_link = hPORTAL."user?view=$h_key&action=view"; 
-    $h_location = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_location']); 
-    $h_notes = substr($h_desc, 250); 
-    $h_phone = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_phone']); 
-    $h_reading = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_reading']); 
-    $h_status = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_status']); 
-    $h_style = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_style']); 
-    $h_subtitle = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_subtitle']); 
-    $h_tags = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_tags']); 
-    $h_text = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_text']); 
-    $h_type = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_type']); 
-    $h_updated = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_updated']);
-
-    $createUser = mysqli_query($GLOBALS['conn'], "INSERT INTO husers (h_alias, h_author, h_avatar, h_category, h_center, h_code, h_created, h_custom, h_desc, h_email, h_fav, h_key, h_level, h_link, h_location, h_notes, h_phone, h_reading, h_status, h_style, h_subtitle, h_tags, h_text, h_type, h_updated) 
-      VALUES ('".$h_alias."', '".$h_author."', '".$h_avatar."', '".$h_category."', '".$h_center."', '".$h_code."', '".$h_created."', '".$h_custom."', '".$h_desc."', '".$h_email."', '".$h_fav."', '".$h_key."', '".$h_level."', '".$h_link."', '".$h_location."', '".$h_notes."', '".$h_phone."', '".$h_reading."', '".$h_status."', '".$h_style."', '".$h_subtitle."', '".$h_tags."', '".$h_text."', '".$h_type."', '".$h_updated."'");
-    // if (!$createUser ->conn_error) {
-    //   echo '<div><p>User Created Successfuly!</p></div>';
-    // } else {
-    //   echo '<div><p>Error!</p>'.$createUser ->conn_error.'</div>';
-    // }
   }
 
   function updateUser($h_code) {
     
     $date = date("YmdHms");
-    if (isset($_SESSION['myEmail'])) {
-      $email = $_SESSION['myEmail'];
+    $email = $_SESSION['myEmail'];
+
+    $hash = str_shuffle(md5($email.$date));
+    $abbr = substr($_POST['lname'], 0,2);
+
+    $h_alias = $_POST['fname'].' '.$_POST['lname'];
+    $h_author = substr($hash, 20);
+    $h_avatar = $_POST['h_avatar'];
+    $h_center = $_POST['h_center'];
+    $h_code = substr($hash, 20);
+    $h_created = date('Ymd');
+    $h_description = $_POST['h_description'];
+    $h_email = $_POST['h_email'];
+    $h_gender = strtolower($_POST['h_gender']);
+    $h_key = $hash;
+    $h_level = $_POST['h_level'];
+    $h_link = hPORTAL."user?view=$h_code";
+    $h_location = strtolower( $_POST['h_location'] );
+    $h_notes = "Account updated on ".$date;
+    $h_password = md5($_POST['h_password']);
+    $h_phone = $_POST['h_phone'];
+    $h_status = "active"; //Sort emailuser();, Change to "pending"
+    $h_style = "zahra";
+    $h_type = strtolower( $_POST['h_type'] );
+    $h_username = strtolower($_POST['fname'].$abbr);
+
+    if (mysqli_query($GLOBALS['conn'], "UPDATE husers SET h_alias = '".$h_alias."', h_author = '".$h_author."', h_avatar = '".$h_avatar."', h_center = '".$h_center."', h_code = '".$h_code."', h_created = '".$h_created."', h_description = '".$h_description."', h_email = '".$h_email."', h_gender = '".$h_gender."', h_key = '".$h_key."', h_level = '".$h_level."', h_link = '".$h_link."', h_location = '".$h_location."', h_notes = '".$h_notes."', h_password = '".$h_password."', h_phone = '".$h_phone."', h_type = '".$h_type."' WHERE h_code = '".$h_code."'")) {
+      echo "<script type = \"text/javascript\">
+                      alert(\"User Updated Successfully!\");
+                  </script>";
     } else {
-      $email = hEMAIL;
-    }
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }   
 
-    $h_alias = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_alias']); 
-    $h_author = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_author']); 
-    $h_avatar = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_avatar']); 
-    $h_category = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_category']); 
-    $h_center = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_center']);
-    $h_key = strshuffle(md5($email.$date)); 
-    $h_code = substr($h_key, rand(0, 15), 16); 
-    $h_created = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_created']); 
-    $h_custom = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_custom']); 
-    $h_desc = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_desc']); 
-    $h_email = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_email']); 
-    $h_fav = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_fav']); 
-    $h_level = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_level']); 
-    $h_link = hPORTAL."user?view=$h_key&action=view"; 
-    $h_location = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_location']); 
-    $h_notes = subst($h_desc, 250); 
-    $h_phone = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_phone']); 
-    $h_reading = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_reading']); 
-    $h_status = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_status']); 
-    $h_style = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_style']); 
-    $h_subtitle = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_subtitle']); 
-    $h_tags = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_tags']); 
-    $h_text = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_text']); 
-    $h_type = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_type']); 
-    $h_updated = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_updated']);    
+    $updateUser = mysqli_query($GLOBALS['conn'], " h_var='".$h_var."', h_var='".$h_var."' WHERE h_code='".$h_code."'");
 
-    $updateUser = mysqli_query($GLOBALS['conn'], "UPDATE husers SET h_var='".$h_var."', h_var='".$h_var."' WHERE h_code='".$h_code."'");
-    // if (!$updateUser ->conn_error) {
-    //   echo '<div><p>User Created Successfuly!</p></div>';
-    // } else {
-    //   echo '<div><p>Error!</p>'.$updateUser ->conn_error.'</div>';
-    // }
   }
 
   
@@ -169,57 +186,13 @@ class _hUsers {
     }
   }
 
-  function getUsersBySort($by, $sort) {
-    $getUsersBySort = mysqli_query($GLOBALS['conn'], "SELECT * FROM husers WHERE h_status = 'active' AND h_".$by." = '".$sort."' ORDER BY h_created DESC");
-    if($getUsersBySort -> num_rows > 0) {
-      echo '<div class="mdl-cell--12-col" >
-      <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp"><thead>
-        <tr>
-        <th class="mdl-data-table__cell--non-numeric">CODE</th>
-        <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
-        <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
-        <th class="mdl-data-table__cell--non-numeric">CENTER</th>
-        <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
-        <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
-        </tr>
-        </thead>';
-      while ($usersDetails = mysqli_fetch_assoc($getUsersBySort)){
-        echo '
-        <tbody>
-        <tr>
-        <td class="mdl-data-table__cell--non-numeric">'
-        .$usersDetails['h_code']. '
-        </td>
-        <td class="mdl-data-table__cell--non-numeric">'
-        .$usersDetails['h_username']. '
-        </td>
-        <td class="mdl-data-table__cell--non-numeric">'
-        .$usersDetails['h_email']. '
-        </td>
-        <td class="mdl-data-table__cell--non-numeric">'
-        .$usersDetails['h_center']. '
-        </td>
-        <td class="mdl-data-table__cell--non-numeric">'
-        .$usersDetails['h_location']. '
-        </td>
-        <td class="mdl-data-table__cell--non-numeric"><a href="" ><i class="material-icons">phone</i></a> <a href="" ><i class="material-icons">message</i></a>  <a href="" ><i class="material-icons">edit</i></a> <a href="" ><i class="material-icons">delete</i></a>
-        </td>
-        </tr>
-        </tbody>';
-      } echo '
-        </table></div>';
-    } else {
-      echo 'No Users Found';
-    }
-  }
-
-  function getUsersType($type) {
-      echo "<title>".ucfirst($type)."s List [ <?php getOption('name'); ?> ]</title>";
+  function getUsersType($type) { ?>
+  <title><?php show( ucfirst($type) ); ?>s List [ <?php getOption('name'); ?> ]</title><?php
     $getUsersBy = mysqli_query($GLOBALS['conn'], "SELECT * FROM husers WHERE h_status = 'active' AND h_type='".$type."'");
     if($getUsersBy -> num_rows > 0) {
       ?>
       <a href="./user?create=<?php show( $type ); ?>" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-  <i class="material-icons">edit</i></a>
+  <i class="material-icons">create</i></a>
       <div class="mdl-grid">
         <div class="mdl-cell--12-col" >
             <center>
@@ -263,7 +236,7 @@ class _hUsers {
         <td class="mdl-data-table__cell--non-numeric">
         <a href="./user?view=<?php show( $usersDetails['h_code'] ); ?>&key=<?php show( $usersDetails['h_alias'] ); ?>" ><i class="material-icons">account_circle</i></a> 
         <a href="tel:<?php show( $usersDetails['h_phone'] ); ?>" ><i class="material-icons">phone</i></a> 
-        <a href="?user?message?create=message&code=<?php show( $_SESSION['myCode'] ); ?>" ><i class="material-icons">message</i></a>  
+        <a href="./message?create=message&code=<?php show( $_SESSION['myCode'] ); ?>" ><i class="material-icons">message</i></a>  
         <a href="./user?edit=<?php show( $usersDetails['h_code'] ); ?>&key=<?php show( $usersDetails['h_alias'] ); ?>" ><i class="material-icons">edit</i></a> 
         <a href="./user?delete=<?php show( $usersDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a>
         </td>
@@ -305,20 +278,12 @@ class _hUsers {
       <a href="./user?create=patient" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
   <i class="material-icons">create</i></a>
       <div class="mdl-grid">
-        <div class="mdl-cell--11-col" >
+        <div class="mdl-cell--12-col" >
           <form>
             <center>
             <div class="input-field">
             <i class="material-icons prefix">search</i>
             <input type="text" placeholder="Search <?php show( "User" ); ?>">
-            </div></center>
-            </form>
-        </div>
-        <div class="mdl-cell--1-col" >
-          <form>
-            <center>
-            <div class="input-field">
-            <button type="submit" class="mdl-button mdl-button--fab"><i class="material-icons">send</i></button>
             </div></center>
             </form>
         </div>
@@ -356,7 +321,7 @@ class _hUsers {
         <td class="mdl-data-table__cell--non-numeric">
         <a href="./user?view=<?php show( $usersDetails['h_code'] ); ?>&key=<?php show( $usersDetails['h_alias'] ); ?>" ><i class="material-icons">account_circle</i></a> 
         <a href="tel:<?php show( $usersDetails['h_phone'] ); ?>" ><i class="material-icons">phone</i></a> 
-        <a href="?user?message?create=message&code=<?php show( $_SESSION['myCode'] ); ?>" ><i class="material-icons">message</i></a>  
+        <a href="./message?create=message&code=<?php show( $_SESSION['myCode'] ); ?>" ><i class="material-icons">message</i></a>  
         <a href="./user?edit=<?php show( $usersDetails['h_code'] ); ?>&key=<?php show( $usersDetails['h_alias'] ); ?>" ><i class="material-icons">edit</i></a> 
         <a href="./user?delete=<?php show( $usersDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a>
         </td>
@@ -393,9 +358,10 @@ class _hUsers {
     if($getUserCode -> num_rows > 0) {
       while ($userDetails = mysqli_fetch_assoc($getUserCode)){
         if ($_SESSION['myCode'] !== $userDetails['h_code']) {
+          $name = explode(" ", $userDetails['h_alias']);
           $greettype = 'Contact Details';
         } else {
-          $name = explode(" ", $_SESSION['myAlias']);
+          $name = explode(" ", $userDetails['h_alias']);
           $greettype = '<b>Hello,</b> '.ucfirst($name[0]);
         }
         ?><title><?php show( $userDetails['h_alias'] ); ?> [ <?php getOption('name'); ?> ]</title>
@@ -403,7 +369,7 @@ class _hUsers {
               <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
                     <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
                         <div class="mdl-card__title">
-                            <h2 class="mdl-card__title-text"><?php show( ucfirst($userDetails['h_type']).' '.$userDetails['h_alias'] ); ?></h2>
+                            <h2 class="mdl-card__title-text"><?php show( ucfirst($userDetails['h_alias']) ); ?></h2>
 
                             <div class="mdl-layout-spacer"></div>
                             <div class="mdl-card__subtitle-text">
@@ -413,7 +379,17 @@ class _hUsers {
                         </div>
                         <div class="mdl-card__supporting-text mdl-card--expand mdl-grid">
                           <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
-                            <h5> <?php show ( $greettype ); ?><h5>
+                            <h5><?php show ( $greettype ); ?>
+                              <i class="mdi mdi-gender-<?php 
+                                if ($userDetails['h_gender'] == "male") {
+                                  echo "male";
+                                } elseif ($userDetails['h_gender'] == "female") {
+                                  echo "female";
+                                } else {
+                                  echo "transgender";
+                                } ?> mdl-button-icon mdl-badge mdl-badge--overlap alignright">
+                              </i>
+                            <h5>
                             <h6><b>Email:</b> <a href="mailto:<?php show( $userDetails['h_email'] ); ?>"><?php show( $userDetails['h_email'] ); ?></a><br>
                             <b>Center:</b> <a href="./resource?center=<?php show( $userDetails['h_center'] ); ?>"><?php show( $userDetails['h_center'] ); ?></a><br>
                             <b>Location:</b> <a href="./resource?location=<?php show( $userDetails['h_location'] ); ?>"><?php show( ucwords($userDetails['h_location']) ); ?></a><br>
@@ -450,19 +426,19 @@ class _hUsers {
                         <div class="mdl-card__supporting-text mdl-card--expand">
                         <ul class="collapsible popout" data-collapsible="accordion">
                         <li>
-                          <div class="collapsible-header active"><i class="material-icons">message</i>Messages from <?php show( $userDetails['h_alias'] ); ?></div>
+                          <div class="collapsible-header active"><i class="material-icons">message</i>Messages from <?php show( $name[0] ); ?></div>
                           <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
                         </li>
                         <li>
-                          <div class="collapsible-header"><i class="material-icons">comment</i>Messages to <?php show( $userDetails['h_alias'] ); ?></div>
+                          <div class="collapsible-header"><i class="material-icons">comment</i>Messages to <?php show( ucfirst($name[0]) ); ?></div>
                           <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
                         </li>
                         <li>
-                          <div class="collapsible-header"><i class="material-icons">chat_bubble</i>Chat with <?php show( $userDetails['h_alias'] ); ?></div>
+                          <div class="collapsible-header"><i class="material-icons">chat_bubble</i>Chat with <?php show( ucfirst($name[0]) ); ?></div>
                           <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
                         </li>
                         <li>
-                          <div class="collapsible-header"><i class="material-icons">description</i>Articles by <?php show( $userDetails['h_alias'] ); ?></div>
+                          <div class="collapsible-header"><i class="material-icons">description</i>Articles by <?php show( ucfirst($name[0]) ); ?></div>
                           <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
                         </li>
                       </ul>

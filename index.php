@@ -1,8 +1,17 @@
 <?php
-$dbfile = 'functions/db.php';
+/**
+* @package Jabali Framework
+* @subpackage Home
+* @link https://docs.mauko.co.ke/jabali/classes/home
+* @author Mauko Maunde
+* @version 0.17.06
+**/
+
+$dbfile = 'functions/config.php';
 if (!file_exists($dbfile)) {
-	header("Location: setup?module=app");
+	header("Location: setup");
 }
+
 include 'header.php';
 $year = date("Y");
 $month = date("m");

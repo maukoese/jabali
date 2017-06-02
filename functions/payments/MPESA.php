@@ -32,10 +32,10 @@ class MPESA {
 //put your code here
 
     public function __construct($ENDPOINT, $CALLBACK_URL, $CALL_BACK_METHOD, $PAYBILL_NO, $TIMESTAMP, $PASSWORD,$MySQLiconn) {
-        $this->ENDPOINT = $ENDPOINT;
+        $this->ENDPOINT = "https://safaricom.co.ke/mpesa_online/lnmo_checkout_server.php?wsdl";
 
         $this->CALLBACK_URL = getOption( 'callback' );
-        $this->CALL_BACK_METHOD = getOption( 'method' );
+        $this->CALL_BACK_METHOD = "POST";
 
         $this->PAYBILL_NO = getOption( 'paybill' );
 
