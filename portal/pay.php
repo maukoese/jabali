@@ -145,7 +145,7 @@ if (isset($_POST['pay']) && $_POST['amount'] !== "" && $_POST['h_phone'] !== "")
 				?>
 						<tr>
 						<td style="text-align:left;" ><strong><?php echo $item["name"]; ?></strong></td>
-						<td style="text-align:left;" ><?php echo date('Ymd'); ?></td>
+						<td style="text-align:left;" ><?php show( date(Ymd) ); ?></td>
 
 						<?php
 				        $item_total += ($item["price"]*$item["quantity"]);
@@ -169,7 +169,7 @@ if (isset($_POST['pay']) && $_POST['amount'] !== "" && $_POST['h_phone'] !== "")
 	switch($_GET["buy"]) {
 		case "add":
 			if(!empty($_POST["quantity"])) {
-				$product = mysqli_query($GLOBALS['conn'], "SELECT * FROM harticles LEFT JOIN hproducts ON hproducts.h_code = harticles.h_code WHERE harticles.h_code='" . $_GET["code"] . "'");
+				$product = mysqli_query($GLOBALS['conn'], "SELECT * FROM hposts LEFT JOIN hproducts ON hproducts.h_code = hposts.h_code WHERE hposts.h_code='" . $_GET["code"] . "'");
 				if ($product -> num_rows > 0) {
 					while($row = mysqli_fetch_assoc($product)) {
 						$product_array[] = $row;

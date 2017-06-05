@@ -4,7 +4,7 @@ if(!empty($_GET["buy"])) {
 	switch($_GET["buy"]) {
 		case "add":
 			if(!empty($_POST["quantity"])) {
-				$product = mysqli_query($GLOBALS['conn'], "SELECT * FROM harticles LEFT JOIN hproducts ON hproducts.h_code = harticles.h_code WHERE harticles.h_code='" . $_GET["code"] . "'");
+				$product = mysqli_query($GLOBALS['conn'], "SELECT * FROM hposts LEFT JOIN hproducts ON hproducts.h_code = hposts.h_code WHERE hposts.h_code='" . $_GET["code"] . "'");
 				if ($product -> num_rows > 0) {
 					while($row = mysqli_fetch_assoc($product)) {
 						$product_array[] = $row;
@@ -154,7 +154,7 @@ if(!empty($_GET["buy"])) {
 
 		if (isset($_GET['view'])) { 
 			if ($_GET['view'] == "list") {
-				$products = mysqli_query($GLOBALS['conn'], "SELECT * FROM harticles LEFT JOIN hproducts ON hproducts.h_code = harticles.h_code WHERE h_type = 'product'");
+				$products = mysqli_query($GLOBALS['conn'], "SELECT * FROM hposts LEFT JOIN hproducts ON hproducts.h_code = hposts.h_code WHERE h_type = 'product'");
 				if ($products -> num_rows > 0) {
 					while($row = mysqli_fetch_assoc($products)) {
 						$products_array[] = $row;
@@ -213,7 +213,7 @@ if(!empty($_GET["buy"])) {
 				}
 
 			} else {
-			 	$product = mysqli_query($GLOBALS['conn'], "SELECT * FROM harticles LEFT JOIN hproducts ON hproducts.h_code = harticles.h_code WHERE harticles.h_code='". $_GET["view"] ."'");
+			 	$product = mysqli_query($GLOBALS['conn'], "SELECT * FROM hposts LEFT JOIN hproducts ON hproducts.h_code = hposts.h_code WHERE hposts.h_code='". $_GET["view"] ."'");
 				if ($product -> num_rows > 0) { 
 					while($product_array = mysqli_fetch_assoc($product)) {
 					}

@@ -24,7 +24,7 @@ if(isset($_GET['view'])){
 		if(isset($_GET['type'])) {
 			$hService -> getServicesType($_GET['type']);
 		} elseif (isset($_GET['status'])) {
-			$hService -> getPendingService();
+			$hService -> getPendingService($_SESSION['myCode']);
 		} else {
 			$hService -> getServices();
 		}

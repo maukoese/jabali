@@ -34,57 +34,57 @@ if (isset($_GET['page'])) {
         <div class="mdl-grid" >
 
         <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
-        <div class=" mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
-        <form name="optionForm" method="POST" action="">
+            <div class=" mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <form name="optionForm" method="POST" action="">
 
-                <div class="input-field">
-                        <i class="material-icons prefix">label</i>
-                    <input id="name" type="text" name="name" value="<?php getOption('name'); ?>">
-                    <label for="name" data-error="wrong" data-success="right" class="center-align">Site Name </label>
-                </div>
+                    <div class="input-field">
+                            <i class="material-icons prefix">label</i>
+                        <input id="name" type="text" name="name" value="<?php getOption('name'); ?>">
+                        <label for="name" data-error="wrong" data-success="right" class="center-align">Site Name </label>
+                    </div>
 
-                <div class="input-field">
-                        <i class="material-icons prefix">details</i>
-                    <textarea id="description" name="description" class="materialize-textarea col s12" ><?php getOption("description"); ?></textarea>
-                    <label for="description" data-error="wrong" data-success="right" class="center-align">Site Description </label>
-                </div>
+                    <div class="input-field">
+                            <i class="material-icons prefix">details</i>
+                        <textarea id="description" name="description" class="materialize-textarea col s12" ><?php getOption("description"); ?></textarea>
+                        <label for="description" data-error="wrong" data-success="right" class="center-align">Site Description </label>
+                    </div>
 
-                <div class="input-field">
-                        <i class="material-icons prefix">mail</i>
-                    <input id="email" type="text" name="email" value="<?php getOption('email'); ?>">
-                    <label for="email" class="center-align">Admin Email </label>
-                </div>
+                    <div class="input-field">
+                            <i class="material-icons prefix">mail</i>
+                        <input id="email" type="text" name="email" value="<?php getOption('email'); ?>">
+                        <label for="email" class="center-align">Admin Email </label>
+                    </div>
 
-                <div class="input-field">
-                        <i class="material-icons prefix">copyright</i>
-                    <input id="copyright" type="text" name="copyright" value="<?php getOption('copyright'); ?>">
-                    <label for="copyright"class="center-align">Footer Copyright </label>
-                </div>
+                    <div class="input-field">
+                            <i class="material-icons prefix">copyright</i>
+                        <input id="copyright" type="text" name="copyright" value="<?php getOption('copyright'); ?>">
+                        <label for="copyright"class="center-align">Footer Copyright </label>
+                    </div>
 
-                <div class="input-field">
-                        <i class="mdi mdi-format-color-text prefix"></i>
-                    <input id="attribution" type="text" name="attribution" value="<?php getOption('attribution'); ?>">
-                    <label for="attribution"class="center-align">Footer Attribution </label>
-                </div>
+                    <div class="input-field">
+                            <i class="mdi mdi-format-color-text prefix"></i>
+                        <input id="attribution" type="text" name="attribution" value="<?php getOption('attribution'); ?>">
+                        <label for="attribution"class="center-align">Footer Attribution </label>
+                    </div>
 
-        </div>
+            </div>
 
-        <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-grid">
-        <script>
-           function chooseHeader() {
-              $("#header_logo").click();
-           }
+            <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-grid">
+                <script>
+                   function chooseHeader() {
+                      $("#header_logo").click();
+                   }
 
-           function chooseHome() {
-              $("#home_logo").click();
-           }
-        </script>
+                   function chooseHome() {
+                      $("#home_logo").click();
+                   }
+                </script>
 
-                <div class="input-field inline mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp">
+                <div class="input-field inline mdl-cell mdl-cell--2-col-desktop mdl-cell--2-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp">
                     <div style="height:0px;overflow:hidden">
                         <input id="header_logo" type="file" name="header_logo" value="<?php getOption('header_logo'); ?>">
                     </div>
-                    <img src="<?php show( hIMAGES."marker.png" ); ?>" width="50%" onclick="chooseHeader();">
+                    <img src="<?php getOption('favicon'); ?>" width="100%" onclick="chooseHeader();">
                     <label for="header_logo" data-error="wrong" data-success="right" class="center-align">Favicon <span><i class="material-icons">edit</i></span></label>
                 </div>
 
@@ -92,7 +92,7 @@ if (isset($_GET['page'])) {
                     <div style="height:0px;overflow:hidden">
                         <input id="header_logo" type="file" name="header_logo" value="<?php getOption('header_logo'); ?>">
                     </div>
-                    <img src="<?php show( hIMAGES."logo.png" ); ?>" width="75%" onclick="chooseHeader();">
+                    <img src="<?php getOption('header_logo'); ?>" width="75%" onclick="chooseHeader();">
                     <label for="header_logo" data-error="wrong" data-success="right" class="center-align">Header Logo (100x80px) <span><i class="material-icons">edit</i></span></label>
                 </div>
 
@@ -100,11 +100,10 @@ if (isset($_GET['page'])) {
                     <div style="height:0px;overflow:hidden">
                     <input id="home_logo" type="file" name="home_logo" value="<?php getOption("home_logo"); ?>">
                     </div>
-                    <img src="<?php show( hIMAGES."logo.png" ); ?>" width="100%" onclick="chooseHome();">
+                    <img src="<?php getOption('home_logo'); ?>" width="100%" onclick="chooseHome();">
                     <label for="home_logo" data-error="wrong" data-success="right">Home Logo (250x80px) <span><i class="material-icons">edit</i></span></label>
                 </div>
-
-        </div>
+            </div>
         </div>
 
         <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
@@ -139,31 +138,31 @@ if (isset($_GET['page'])) {
                 <div class="input-field">
                         <i class="material-icons prefix">label</i>
                     <input id="merchant" type="text" name="merchant" value="<?php getOption('merchant'); ?>">
-                    <label for="merchant" data-error="wrong" data-success="right" class="center-align">Merchant Name <span style="color:red;">*</span></label>
+                    <label for="merchant" data-error="wrong" data-success="right" class="center-align">Merchant Name <b style="color:red;">*</b></label>
                 </div>
 
                 <div class="input-field">
                         <i class="material-icons prefix">public</i>
                     <input id="callback" type="text" name="callback" value="<?php getOption('callback'); ?>">
-                    <label for="callback" data-error="wrong" data-success="right" class="center-align">Callback URL <span style="color:red;">*</span></label>
+                    <label for="callback" data-error="wrong" data-success="right" class="center-align">Callback URL <b style="color:red;">*</b></label>
                 </div>
 
                 <div class="input-field">
                         <i class="material-icons prefix">payment</i>
                     <input id="paybill" type="text" name="paybill" value="<?php getOption('paybill'); ?>">
-                    <label for="paybill" data-error="wrong" data-success="right" class="center-align">Paybill Number <span style="color:red;">*</span></label>
+                    <label for="paybill" data-error="wrong" data-success="right" class="center-align">Paybill Number <b style="color:red;">*</b></label>
                 </div>
 
                 <div class="input-field">
                         <i class="material-icons prefix">query_builder</i>
                     <input id="timestamp" type="text" name="timestamp" value="<?php getOption('timestamp'); ?>">
-                    <label for="timestamp" data-error="wrong" data-success="right" class="center-align">Timestamp <span style="color:red;">*</span></label>
+                    <label for="timestamp" data-error="wrong" data-success="right" class="center-align">Timestamp <b style="color:red;">*</b></label>
                 </div>
 
                 <div class="input-field">
                         <i class="material-icons prefix">lock</i>
                     <textarea id="sag" name="sag" class="materialize-textarea col s12" ><?php getOption('sag'); ?></textarea>
-                    <label for="sag" data-error="wrong" data-success="right" class="center-align">SAG Password <span style="color:red;">*</span></label>
+                    <label for="sag" data-error="wrong" data-success="right" class="center-align">SAG Password <b style="color:red;">*</b></label>
                 </div>
 
                 <br>
@@ -183,7 +182,7 @@ if (isset($_GET['page'])) {
                 <div class="input-field inline">
                         <i class="material-icons prefix">mail</i>
                     <input id="name" type="email" name="name" value="<?php getOption('email'); ?>">
-                    <label for="name" data-error="wrong" data-success="right" class="center-align">Paypal Email </label>
+                    <label for="name" data-error="wrong" data-success="right" class="center-align">Paypal Email <b style="color:red;">*</b></label>
                 </div>
 
                 <div class="input-field inline">
@@ -205,7 +204,7 @@ if (isset($_GET['page'])) {
                 <div class="input-field inline">
                         <i class="material-icons prefix">mail</i>
                     <input id="name" type="email" name="name" value="<?php getOption('email'); ?>">
-                    <label for="name" data-error="wrong" data-success="right" class="center-align">Stripe Email </label>
+                    <label for="name" data-error="wrong" data-success="right" class="center-align">Stripe Email <b style="color:red;">*</b></label>
                 </div>
                 
                 <div class="input-field inline">
@@ -219,14 +218,26 @@ if (isset($_GET['page'])) {
         <form name="optionForm" method="POST" action="" class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
         <div class="mdl-card__title">
         <i class="fa fa-cc-stripe"></i>
-          <span class="mdl-button">Stripe Settings</span>
+          <span class="mdl-button">Bank Settings</span>
         </div>
         <div class="mdl-card__supporting-text mdl-card--expand">
 
+                <div class="input-field">
+                        <i class="material-icons prefix">business</i>
+                    <input id="name" type="text" name="baccount" value="<?php getOption('name'); ?>">
+                    <label for="name" data-error="wrong" data-success="right" class="center-align">Bank Name<b style="color:red;">*</b></label>
+                </div>
+
+                <div class="input-field">
+                        <i class="material-icons prefix">business</i>
+                    <input id="name" type="text" name="bname" value="<?php getOption('timestamp'); ?>">
+                    <label for="name" data-error="wrong" data-success="right" class="center-align">Account Number<b style="color:red;">*</b></label>
+                </div>
+
                 <div class="input-field inline">
-                        <i class="material-icons prefix">mail</i>
-                    <input id="name" type="email" name="name" value="<?php getOption('email'); ?>">
-                    <label for="name" data-error="wrong" data-success="right" class="center-align">Stripe Email </label>
+                        <i class="material-icons prefix">business</i>
+                    <input id="name" type="text" name="bname" value="<?php getOption('paybill'); ?>">
+                    <label for="name" data-error="wrong" data-success="right" class="center-align">Branch Code<b style="color:red;">*</b></label>
                 </div>
                 
                 <div class="input-field inline">
@@ -437,7 +448,7 @@ if (isset($_GET['page'])) {
                     <div class="input-field inline">
                         <input type="radio" id="earth" name="theme" value="earth" <?php isTheme ('earth'); ?>>
                         <label for="earth"><p class="cholder" for="earth">
-                            <span class="ccolor mdl-color--brown"></span><span class="ccolor csec mdl-color--white"></span>
+                            <span class="ccolor mdl-color--brown"></span><span class="ccolor csec mdl-color--orange"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="earth">Down To Earth</div>
                     
@@ -445,7 +456,7 @@ if (isset($_GET['page'])) {
                     <div class="input-field inline">
                         <input type="radio" id="ghost" name="theme" value="ghost" <?php isTheme ('ghost'); ?>>
                         <label for="ghost"><p class="cholder" for="ghost">
-                            <span class="ccolor mdl-color--blue-grey"></span><span class="ccolor csec mdl-color--white"></span>
+                            <span class="ccolor mdl-color--blue-grey"></span><span class="ccolor csec mdl-color--red"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="ghost">Ghosting Blues</div>
                     

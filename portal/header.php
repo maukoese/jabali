@@ -15,9 +15,8 @@ $hResource = new _hResources();
 $hService = new _hServices();
 $hMessage = new _hMessages();
 $hNotification = new _hNotifications();
-$hArticle = new _hArticles();
+$hPost = new _hPosts();
 $hSocial = new _hSocial();
-
 
 ?>
 <!doctype html>
@@ -29,6 +28,7 @@ $hSocial = new _hSocial();
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at https://opensource.org/licenses/MIT
 -->
+
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -50,7 +50,7 @@ $hSocial = new _hSocial();
     <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
     <meta name="msapplication-TileColor" content="#3372DF">
 
-    <link rel="shortcut icon" href="<?php echo hIMAGES; ?>marker.png">
+    <link rel="shortcut icon" href="<?php getOption('favicon'); ?>">
 
     <link rel="stylesheet" href='<?php echo hSTYLES; ?>lib/getmdl-select.min.css'>
     <link rel="stylesheet" href="<?php echo hSTYLES; ?>lib/nv.d3.css">
@@ -60,6 +60,9 @@ $hSocial = new _hSocial();
     <link rel="stylesheet" href="<?php echo hSTYLES; ?>font-awesome.css">
     <link rel="stylesheet" href="<?php echo hSTYLES; ?>jabali.css">
     <style type="text/css">
+    main {
+    background: url(<?php echo hIMAGES.'bgs/'.rand(0, 45).'-min.jpg'; ?>) no-repeat;
+    }
     .mdl-menu__outline {
         background-color: <?php primaryColor($_SESSION['myCode']); ?>;
         overflow-y: auto;
@@ -110,7 +113,7 @@ $hSocial = new _hSocial();
   </head>
   <body>
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-      <header class="demo-header mdl-layout__header mdl-color--<?php primaryColor($_SESSION['myCode']); ?> mdl-color-text--grey-600">
+      <header class="demo-header mdl-layout__header mdl-color-text--grey-600" style="background: url(<?php echo hIMAGES.'bgs/'; ?><?php primaryColor($_SESSION['myCode']); ?>.jpg) no-repeat;">
         <div class="mdl-layout__header-row">
           <span class="mdl-layout-title"><?php 
           if (isset($_GET['type'])) {
@@ -149,34 +152,39 @@ $hSocial = new _hSocial();
             echo "Pay Via ".strtoupper($_GET['method']);
           }
           ?></span>
-          <div class="mdl-layout-spacer"></div>
-
-          <span class="material-icons mdl-badge mdl-badge--overlap notification" id="shopbtn">
-            <i class="material-icons">local_mall</i>
-          </span><div class="mdl-tooltip" for="shopbtn">Shop</div>
-          <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" for="shopbtn">
-            <a class="mdl-menu__item mdl-list__item" href="<?php show( hPORTAL . 'shop?view=list&key=products' ); ?>"><i class="material-icons mdl-list__item-icon">store</i><span style="padding-left: 20px">View Shop</span></a>
-
-            <a class="mdl-menu__item mdl-list__item"href="<?php show( hPORTAL . 'shop?orders='.$_SESSION['myCode']); ?>"><i class="material-icons mdl-list__item-icon">shopping_basket</i><span style="padding-left: 20px">My Orders</span></a>
-            <a class="mdl-menu__item mdl-list__item"href="<?php show( hPORTAL . 'shop?payments='.$_SESSION['myCode']); ?>"><i class="material-icons mdl-list__item-icon">monetization_on</i><span style="padding-left: 20px">My Payments</span></a>
-            <a class="mdl-menu__item mdl-list__item"href="<?php show( hPORTAL . 'shop?author='.$_SESSION['myCode']); ?>"><i class="material-icons mdl-list__item-icon">shopping_cart</i><span style="padding-left: 20px">My Products</span></a>
-            <div class="mdl-layout-spacer"></div>
-            <a class="mdl-menu__item mdl-list__item"href="./options?page=shop"><i class="material-icons mdl-list__item-icon">settings_applications</i><span style="padding-left: 20px">Shop Options</span></a>
+          <div class="mdl-layout-spacer"></div><?php 
+          if( !isCap('admin') ) { ?>
+          <span class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification" id="happs">apps</span>
+            <div class="mdl-tooltip" for="happs">Options</div><?php } ?>
+            <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-card mdl-grid mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" for="happs">
+            <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+              <a class="" href="<?php show( hPORTAL . 'options?page=general'); ?>"><i class="material-icons mdl-list__item-icon">settings</i></a>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+              <a class="" href="<?php show( hPORTAL . 'options?page=color'); ?>"><i class="material-icons mdl-list__item-icon">palette</i></a>
+            </div>
+            <div class="mdl-cell">
+            <a class="" href="<?php show( hPORTAL . 'shop?view=list&key=products' ); ?>"><i class="material-icons mdl-list__item-icon">store</i></a>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+            <a class="" href="<?php show( hPORTAL . 'shop?orders='.$_SESSION['myCode']); ?>"><i class="material-icons mdl-list__item-icon">shopping_basket</i></a>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+            <a class="" href="<?php show( hPORTAL . 'shop?payments='.$_SESSION['myCode']); ?>"><i class="material-icons mdl-list__item-icon">monetization_on</i></a>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+            <a class="" href="<?php show( hPORTAL . 'shop?author='.$_SESSION['myCode']); ?>"><i class="fa fa-cart-arrow-down mdl-list__item-icon" aria-hidden="true"></i></a>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+            <a class="" href="<?php show( hPORTAL . 'options?page=shop' ); ?>"><i class="material-icons mdl-list__item-icon">shopping_cart</i></a>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+              <a class="" href="<?php show( hPORTAL . 'post?view=list' ); ?>"><i class="material-icons mdl-list__item-icon">description</i></a>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+            <a class="" href="<?php show( hPORTAL . 'wapi?events=list' ); ?>"><i class="material-icons mdl-list__item-icon">date_range</i></a>
+            </div>
           </ul>
-
-          <span class="material-icons mdl-badge mdl-badge--overlap notification" id="addbtn">
-            <i class="material-icons">create</i>
-          </span><div class="mdl-tooltip" for="addbtn">New</div>
-          <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" for="addbtn">
-            <a class="mdl-menu__item mdl-list__item" href="<?php show( hPORTAL . 'user?create' ); ?>"><i class="material-icons mdl-list__item-icon">account_circle</i><span style="padding-left: 20px">User</span></a>
-
-            <a class="mdl-menu__item mdl-list__item"href="<?php show( hPORTAL . 'resource?create'); ?>"><i class="material-icons mdl-list__item-icon">local_hospital</i><span style="padding-left: 20px">Resource</span></a>
-            <a class="mdl-menu__item mdl-list__item"href="<?php show( hPORTAL . 'article?create=article'); ?>"><i class="material-icons mdl-list__item-icon">note_add</i><span style="padding-left: 20px">Article</span></a>
-            <a class="mdl-menu__item mdl-list__item"href="<?php show( hPORTAL . 'notification?create'); ?>"><i class="material-icons mdl-list__item-icon">add_alert</i><span style="padding-left: 20px">Notification</span></a>
-          </ul>
-
-          <a href="<?php echo hPORTAL.'article?view=list'; ?>" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_service">description</a>
-            <div class="mdl-tooltip" for="h_service">Articles</div>
 
           <a href="./notification?view=list" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_notifications"
                >
@@ -193,7 +201,7 @@ $hSocial = new _hSocial();
           </button>
           <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" for="hdrbtn">
             <a class="mdl-menu__item mdl-list__item" href="<?php show( hROOT . 'about' ); ?>"><i class="material-icons mdl-list__item-icon">account_circle</i><span style="padding-left: 20px">About JABALI</span></a>
-            <a class="mdl-menu__item mdl-list__item"href="<?php show( hROOT . 'contact');?>"><i class="material-icons mdl-list__item-icon">link</i><span style="padding-left: 20px">Request Service</span></a>
+            <a class="mdl-menu__item mdl-list__item"href="<?php show( hPORTAL . 'service?create=request');?>"><i class="material-icons mdl-list__item-icon">link</i><span style="padding-left: 20px">Request Service</span></a>
             <a class="mdl-menu__item mdl-list__item"href="<?php show( hROOT . 'logout?action=true' );?>"><i class="material-icons mdl-list__item-icon text-color--secondary">exit_to_app</i><span style="padding-left: 20px">Logout</span></a>
           </ul>
         </div>
@@ -222,17 +230,9 @@ $hSocial = new _hSocial();
                     <i class="mdl-color-text--white material-icons" role="presentation">group</i>
                     Doctors
                 </a>
-                <a class="mdl-navigation__link" href="./user?view=list&type=nurse">
-                    <i class="mdl-color-text--white material-icons" role="presentation">supervisor_account</i>
-                    Nurses
-                </a>
                 <a class="mdl-navigation__link" id="husers" href="./user?view=list&type=manager">
-                    <i class="mdl-color-text--white material-icons" role="presentation">people</i>
+                    <i class="mdl-color-text--white material-icons" role="presentation">supervisor_account</i>
                     Managers
-                </a>
-                <a class="mdl-navigation__link" href="./user?view=list&action=view&type=patient">
-                    <i class="mdl-color-text--white material-icons" role="presentation">people</i>
-                    Patients
                 </a>
                 <div class="mdl-layout-spacer"></div>
                 <a class="mdl-navigation__link" href="./user?view=<?php echo $_SESSION['myCode']; ?>">
@@ -277,16 +277,14 @@ $hSocial = new _hSocial();
                 <a class="mdl-navigation__link mdl-navigation__link--current" href="./message?view=list&type=message">
                     <i class="material-icons" role="presentation">message</i>
                     Messages
-                </a><!-- 
-                <a class="mdl-navigation__link" id="husers" href="./message?view=list&type=chat">
-                    <i class="mdl-color-text--white material-icons" role="presentation">question_answer</i>
-                    Chats
-                </a> -->
+                </a>
             </ul>
           <a class="mdl-navigation__link" href="./notification?view=list"><i class="mdl-color-text--white material-icons" role="presentation">notifications</i>Notifications</a>
           <div class="mdl-layout-spacer"></div>
-          <a class="mdl-navigation__link" href="./options?page=color"><i class="mdl-color-text--white material-icons" role="presentation">color_lens</i><span>Theme Options</span></a>
+          <a class="mdl-navigation__link" href="./options?page=color"><i class="mdl-color-text--white material-icons" role="presentation">color_lens</i><span>Theme Options</span></a><?php 
+          if( isCap('admin') ) { ?>
           <a class="mdl-navigation__link" href="./options?page=general"><i class="mdl-color-text--white material-icons" role="presentation">settings</i><span>Site Options</span></a>
+          <?php } ?>
         </nav>
       </div>
-      <main class="mdl-layout__content mdl-color--<?php primaryColor($_SESSION['myCode']); ?>-100">
+      <main class="mdl-layout__content" style="background: url(<?php echo hIMAGES.'bgs/'; ?><?php primaryColor($_SESSION['myCode']); ?>.jpg) no-repeat;">

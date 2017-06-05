@@ -2,7 +2,7 @@
 session_start();
 ?>
 </main>
-<footer class="mdl-footer mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
+<footer class="mdl-footer" style="background: url(<?php echo hIMAGES.'bgs/'; ?><?php primaryColor($_SESSION['myCode']); ?>.jpg) no-repeat;">
 	<div style="float:left;padding-left:20px;"><?php getOption( 'copyright' ); ?></div>
 	<span style="float:right;padding-right:20px;"><?php getOption( 'attribution' ); ?></span>
 </footer>

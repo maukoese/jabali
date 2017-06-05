@@ -7,22 +7,15 @@
       
         <div class="demo-container mdl-grid">
           <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--12-col">
-            <span class="alignright"><?php $hSocial -> socShare("article"); ?></span>
-            <b><h3>About JABALI</h3></b>
-            <div>
-              <div class="alignleft"><b>Posted In:</b> <?php echo $_SESSION['myAlias']; ?></div>
-              <div class="alignright"><b>Tagged:</b> <?php echo $_SESSION['myAlias']; ?></div>
-            </div><br><br>
+            <b><h3><?php getOption('name'); ?></h3></b><br><br>
             <div>
               <?php getOption('description'); ?>
             </div>
             <div ><br><br>
-            <div >
-              <h5>Add Comment</h5>
+              <h5>Get In Touch</h5>
               <?php $hForm -> contactForm(); ?>
-            </div>
           </div>
         </div>
       </div>
     </div>
-<?php include 'footer.php';
+<?php include './footer.php';

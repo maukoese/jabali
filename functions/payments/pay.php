@@ -1,22 +1,5 @@
 <?php
 
-/*
- * This script returns REST resonses in form of JSON, HTML or XML formats.
- * To get the desired format specify by extension. The format control is defined in the .htacess file
- * For example, hello.json; hello.xml; hello.html. See step 3 below
- */
-// Remove notices
-//error_reporting(E_ALL ^ E_NOTICE);
-// Remove warnings
-error_reporting(E_ERROR | E_PARSE);
-
-require_once './config.php';
-
-date_default_timezone_set('Africa/Nairobi');
-$date = date("j  F Y  g.i a", time());
-$month = date("F");
-
-
 function deliver_response($format, $api_response) {
 
     // Define HTTP responses
@@ -175,7 +158,7 @@ if (strcasecmp($_GET['method'], 'checkout') == 0) {
 
     if (isset($_POST['amount'], $_POST['number'])) {
         $AMOUNT = $_POST['amount'];
-        $NUMBER = $_POST['number']; //format 254700000000
+        $NUMBER = $_POST['number'];
         $PRODUCT_ID = $_POST['item'];
         //init MPESA class
         $mpesa->setProductID($PRODUCT_ID);

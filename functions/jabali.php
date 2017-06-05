@@ -101,17 +101,15 @@ function isCap($cap) {
 	}
 }
 
-//Show/hide edit/delete buttons
-// if (isCap( 'admin' ) && isCap( 'doctor' ) && $_SESSION['myCode'] == $_GET['view']) {
-// 	# show
-// } else {
-// 	# hide
-// }
+//Check if user has appropriate permisions
+function isProfile($cap) {
+	if ($_SESSION['myCode'] == $_GET['view']) {
+		return true;
+	} else {
+		return false;
+	}
+}
 
-//fav button
-// if ($_SESSION['myCode'] !== $_GET['view']) {
-// 	# show
-//}
 
 function uploadFile() {
 	$uploaddir = "uploads/$year/$month/$day";
@@ -236,13 +234,26 @@ function getOption($code) {
     }
 }
 
- include 'forms.php';
- include 'users.php';
- include 'resources.php';
- include 'services.php';
- include 'messages.php';
- include 'notifications.php';
- include 'articles.php';
- include 'social.php';
+function isEmail($data) {
+  if (filter_var($data, FILTER_VALIDATE_EMAIL)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function newButton($hclass, $htype, $hicon) {
+	echo '<a href="./'.$hclass.'?create='.$htype.'" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+  <i class="material-icons">'.$hicon.'</i></a>';
+}
+
+ include 'class.forms.php';
+ include 'class.users.php';
+ include 'class.resources.php';
+ include 'class.services.php';
+ include 'class.messages.php';
+ include 'class.notifications.php';
+ include 'class.posts.php';
+ include 'class.social.php';
 
 ?>

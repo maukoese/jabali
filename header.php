@@ -1,7 +1,7 @@
 <?php
 session_start();
 include './functions/jabali.php';
-if (file_exists('./functions/db.php')) {
+if (file_exists('./functions/config.php')) {
     connectDb();
 }
 
@@ -11,7 +11,7 @@ $hResource = new _hResources();
 $hService = new _hServices();
 $hMessage = new _hMessages();
 $hNotification = new _hNotifications();
-$hArticle = new _hArticles();
+$hPost = new _hPosts();
 $hSocial = new _hSocial();
 ?>
 <!doctype html>
@@ -25,7 +25,12 @@ $hSocial = new _hSocial();
 -->
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
-    <link rel="shortcut icon" href="<?php echo hIMAGES; ?>marker.png">
+    <link rel="shortcut icon" href="<?php 
+    if (file_exists('./functions/config.php')) {
+        getOption('favicon');
+    } else {
+        echo hIMAGES."marker.png"; 
+    } ?>">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
@@ -53,6 +58,9 @@ $hSocial = new _hSocial();
     <link rel="stylesheet" href="<?php echo hSTYLES; ?>font-awesome.css">
     <link rel="stylesheet" href="<?php echo hSTYLES; ?>jabali.css">
     <style type="text/css">
+    main, demo-header {
+    background: url(<?php echo hIMAGES.'bgs/'.rand(0, 45).'-min.jpg'; ?>) no-repeat;
+    }
     .mdl-menu__outline {
         background-color: <?php primaryColor($_SESSION['myCode']); ?>;
         overflow-y: auto;
@@ -77,6 +85,7 @@ $hSocial = new _hSocial();
 
     <script src="<?php echo hSCRIPTS; ?>jquery-3.1.1.min.js"></script>
     <script src="<?php echo hASSETS; ?>js/ckeditor/ckeditor.js"></script>
+    <script src="<?php echo hASSETS; ?>js/list.js"></script>
     <script>
     $(document).ready(function($) {
 
@@ -112,9 +121,8 @@ $hSocial = new _hSocial();
     </script>
 </head>
 <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-        <header class="demo-header mdl-layout__header mdl-color--<?php if (isset($_SESSION['myCode'])) {
-            primaryColor($_SESSION['myCode']);
-        } else { echo "blue";}  ?> mdl-color-text--grey-600">
+<body>
+        <header class="demo-header mdl-layout__header mdl-color-text--grey-600" style="background: url(<?php echo hIMAGES.'bgs/'; ?><?php if (isset($_SESSION['myCode'])) { primaryColor($_SESSION['myCode']); } else { echo "blue"; } ?>.jpg) no-repeat;">
         <div class="mdl-layout__header-row">
           <a href="<?php if (file_exists('./functions/db.php')) {
               echo hROOT;
@@ -122,10 +130,10 @@ $hSocial = new _hSocial();
               echo hIMAGES.'logo-w.png';
           } else { echo './assets/images/logo-w.png'; } ?>" width="100px;"></span></a>
           <div class="mdl-layout-spacer"></div>
-          <a href="<?php echo hROOT.'contact'; ?>" class="mdi mdi-email mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_contact"></a>
+          <a href="<?php echo hROOT.'about'; ?>" class="mdi mdi-email mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_contact"></a>
             <div class="mdl-tooltip" for="h_contact">Contact</div>
-          <a href="<?php echo hROOT.'submit'; ?>" class="mdi mdi-link mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_submit"></a>
-            <div class="mdl-tooltip" for="h_submit">Submit</div>
+          <a href="<?php echo hROOT.'register'; ?>" class="mdi mdi-account-plus mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_submit"></a>
+            <div class="mdl-tooltip" for="h_submit">Register</div>
 
           <a href="<?php if (isset($_SESSION['myCode'])) {
               echo hPORTAL.'user?view='.$_SESSION['myCode'].'&key='.$_SESSION['myAlias'];
@@ -165,6 +173,4 @@ $hSocial = new _hSocial();
           </ul>
         </div>
       </header>
-    <main class="mdl-layout__content mdl-color--<?php if (isset($_SESSION['myCode'])) {
-            primaryColor($_SESSION['myCode']);
-        } else { echo "blue";}  ?>">
+    <main class="mdl-layout__content" style="background: url(<?php echo hIMAGES.'bgs/'; ?><?php if (isset($_SESSION['myCode'])) { primaryColor($_SESSION['myCode']); } else { echo "blue"; } ?>.jpg) no-repeat;">

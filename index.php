@@ -2,7 +2,7 @@
 /**
 * @package Jabali Framework
 * @subpackage Home
-* @link https://docs.mauko.co.ke/jabali/classes/home
+* @link https://docs.mauko.co.ke/jabali/home
 * @author Mauko Maunde
 * @version 0.17.06
 **/
@@ -22,23 +22,23 @@ if (!is_dir($directory)) {
 	mkdir($directory, 755, true);
 }
 
-if (isset($_GET['article'])) {
-	if ($_GET['article'] == "articles") {
-		$hArticle -> getArticles();
+if (isset($_GET['post'])) {
+	if ($_GET['post'] == "posts") {
+		$hPost -> getPosts();
 	} else {
-		$hArticle -> getArticleCode($_GET['article']);
+		$hPost -> getPostCode($_GET['post']);
 	}
 } else { ?>
 	<title>Access Your Health [ <?php getOption('name'); ?> ]</title>
 	<div style="padding-top:40px; class="mdl-color--<?php if (isset($_SESSION['myCode'])) {
             primaryColor($_SESSION['myCode']);
-        } else { echo "teal";}  ?>">
+        } else { echo "blue";}  ?>">
 	    <div id="login_div">
-		<center><a href="<?php echo hROOT; ?>"><img src="<?php echo hIMAGES; ?>logo.png" width="300px;"></a><br>
+		<center><a href="<?php echo hROOT; ?>"><img src="<?php echo hIMAGES; ?>logo-w.png" width="300px;"></a><br>
 	    <a href="./register" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">
 	  <i class="material-icons">edit</i> REGISTER</a> <a href="./login" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">
 	  <i class="material-icons">exit_to_app</i> LOGIN</a>
-	  <p>© JABALI 2017 - All Rights Reserved</p>
+	  <p>© <?php getOption('name'); ?> 2017 - All Rights Reserved</p>
 	  <a href="./about">About</a> - <a href="./tos">TOS</a> - <a href="./faq">FAQs</a>
 		</center><br>
 	    </div>

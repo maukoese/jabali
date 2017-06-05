@@ -9,37 +9,7 @@
             <li>
               <div class="collapsible-header"><i class="material-icons">help</i>Ask for Help</div>
               <div class="collapsible-body">
-              <form>
-              <div class="input-field inline">
-                <i class="material-icons prefix">account_circle</i>
-              <input id="h_by" name="h_by" type="text">
-              <label for="h_by">Your Name</label>
-              </div>
-
-              <div class="input-field inline">
-                <i class="material-icons prefix">mail_outline</i>
-              <input id="h_email" name="h_email" type="text">
-              <label for="h_email">Your Email</label>
-              </div>
-
-              <div class="input-field inline">
-                <i class="material-icons prefix">phone</i>
-              <input id="h_phone" name="h_phone" type="text">
-              <label for="h_phone">Phone (Optional)</label>
-              </div>
-
-              <div class="input-field inline">
-                <i class="material-icons prefix">person_pin_circle</i>
-              <input id="h_location" name="h_phone" type="text">
-              <label for="h_location">Location (Optional)</label>
-              </div>
-
-              <div class="input-field">
-              <textarea rows="5" id="h_description" name="h_description" ></textarea><script>CKEDITOR.replace( "h_description" );</script>
-              <label for="h_description">Your Question</label>
-              </div>
-              <button type="submit" name="" class="mdl-button mdl-button--fab"><i  class="material-icons">send</i></button>
-              </form>
+              <?php $hForm -> faqForm(); ?>
               </div>
             </li><?php
       while ($faq = mysqli_fetch_assoc($getfaqs)) {

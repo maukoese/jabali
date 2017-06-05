@@ -1,10 +1,14 @@
 <?php
+
+if (file_exists('./functions/.zahra')) {
+	header("Location: ./login");
+}
+
 include './functions/jabali.php';
 connectDb();
 
-if (isset($_GET['module'])) {
-
-	if ($_GET['module'] == "app") {
+function installJabali($module) {
+	if ($module == "app") {
 		$husers = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS husers(
 		h_alias VARCHAR(100),
 		h_author VARCHAR(12),
@@ -95,7 +99,6 @@ if (isset($_GET['module'])) {
 		)");
 
 		$hnotifications = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hnotifications(
-		id INT(10) NOT NULL AUTO_INCREMENT,
 		h_alias VARCHAR(100),
 		h_author VARCHAR(20),
 		h_by VARCHAR(20),
@@ -110,11 +113,10 @@ if (isset($_GET['module'])) {
 		h_status VARCHAR(20),
 		h_type VARCHAR(50),
 		h_updated DATE,
-		PRIMARY KEY(id)
+		PRIMARY KEY(h_code)
 		)");
 
 		$huploads = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS huploads(
-		id INT(10) NOT NULL AUTO_INCREMENT,
 		h_alias VARCHAR(100),
 		h_author VARCHAR(12),
 		h_avatar VARCHAR(20),
@@ -135,11 +137,10 @@ if (isset($_GET['module'])) {
 		h_status VARCHAR(20),
 		h_type VARCHAR(50),
 		h_updated DATE,
-		PRIMARY KEY(id)
+		PRIMARY KEY(h_code)
 		)");
 
-		$harticles = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS harticles(
-		id INT(10) NOT NULL AUTO_INCREMENT,
+		$hposts = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hposts(
 		h_alias VARCHAR(300),
 		h_author VARCHAR(20),
 		h_by VARCHAR(100),
@@ -151,6 +152,7 @@ if (isset($_GET['module'])) {
 		h_description TEXT,
 		h_email VARCHAR(50),
 		h_fav INT(5),
+		h_gallert VARCHAR(500),
 		h_key VARCHAR(100),
 		h_level VARCHAR(12),
 		h_link VARCHAR(100),
@@ -163,7 +165,7 @@ if (isset($_GET['module'])) {
 		h_tags VARCHAR(50),
 		h_type VARCHAR(50),
 		h_updated DATE,
-		PRIMARY KEY(id)
+		PRIMARY KEY(h_code)
 		)");
 
 		$hnotes = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hnotes (
@@ -271,7 +273,7 @@ if (isset($_GET['module'])) {
 		<p>Questions about the Terms of Service should be sent to us at portal@maukoese.co.ke</p>
 		";
 
-		if ($husers && $hresources && $hmessages && $hnotifications && $huploads && $harticles && $hnotes && $hratings && $hfaqs && $hoptions) {
+		if ($husers && $hresources && $hmessages && $hnotifications && $huploads && $hposts && $hnotes && $hratings && $hfaqs && $hoptions) {
 			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Site Name', 'name', 'Jabali', '".$created."')");
 			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Description', 'description', 'A Jabali System', '".$created."')");
 			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Admin Email', 'email', 'jabali@mauko.co.ke', '".$created."')");
@@ -284,14 +286,14 @@ if (isset($_GET['module'])) {
 			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions (h_alias, h_code, h_description, h_updated) VALUES('Terms Of Service', 'tos', '".$tos."', '".$date."')");
 		}
 
-	} elseif ($_GET['module'] == "shop") {
-		mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hproducts (
+	} elseif ($module == "shop") {
+		$hproducts = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hproducts (
 		h_code VARCHAR(16), 
 		h_price VARCHAR(50),
 		PRIMARY KEY(h_code)
 		)");
 
-		mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS horders(
+		$horders = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS horders(
 		h_alias VARCHAR(300),
 		h_amount VARCHAR(20),
 		h_author VARCHAR(20),
@@ -309,7 +311,7 @@ if (isset($_GET['module'])) {
 		PRIMARY KEY(h_code)
 		)");
 
-		mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hpayments(
+		$hpayments = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hpayments(
 		h_alias VARCHAR(300),
 		h_amount VARCHAR(20),
 		h_author VARCHAR(20),
@@ -328,12 +330,42 @@ if (isset($_GET['module'])) {
 		PRIMARY KEY(h_code)
 		)");
 
-		mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Merchant Name', 'merchant', 'Jabali', '".$created."')");
-		mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Callback URL', 'callback', '".hROOT."callback', '".$created."')");
-		mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Paybill Number', 'paybill', '898998', '".$created."')");
-		mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Timestamp', 'timestamp', '20160510161908', '".$created."')");
-		mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('SAG Password', 'sag', 'ZmRmZDYwYzIzZDQxZDc5ODYwMTIzYjUxNzNkZDMwMDRjNGRkZTY2ZDQ3ZTI0YjVjODc4ZTExNTNjMDA1YTcwNw==', '".$created."')");
+		if ($hproducts && $horders && $hpayments) {
+
+			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Merchant Name', 'merchant', 'Jabali', '".$created."')");
+			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Callback URL', 'callback', '".hROOT."callback', '".$created."')");
+			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Paybill Number', 'paybill', '898998', '".$created."')");
+			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Timestamp', 'timestamp', '20160510161908', '".$created."')");
+			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('SAG Password', 'sag', 'ZmRmZDYwYzIzZDQxZDc5ODYwMTIzYjUxNzNkZDMwMDRjNGRkZTY2ZDQ3ZTI0YjVjODc4ZTExNTNjMDA1YTcwNw==', '".$created."')");
+		}
+
+	}
+
+	return true;
+} ?>
+<title>Install <?php show ( ucwords($_GET['module']) ); ?> [ JABALI ]</title><?php 
+
+if (isset($_GET['module'])) {
+	if (installJabali($_GET['module'])) {
+		$zahra = fopen("./functions/.zahra", "w") or die("Unable to open file!");
+		$salts = md5(date('YmdHms'));
+		fwrite($zahra, $salts); ?>
+		<link rel="stylesheet" href="./assets/css/materialize.css">
+	    <link rel="stylesheet" href="./assets/css/material-icons.css">
+	    <link rel="stylesheet" href="./assets/css/jabali.css">
+	    <script src="./assets/js/jquery-3.1.1.min.js"></script>
+	    <script src="./assets/js/materialize.min.js"></script>
+	    <script src="./assets/js/material.js"></script>
+		<title>Success! [ JABALI ]</title>
+		<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+			<main class="mdl-layout__content mdl-color--blue mdl-grid">
+				<div style="padding-top:40px;" class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+				    <div id="login_div">
+				    	<p>Success!</p>
+				    	<a href="./register">Create Account</a>
+				    </div>
+			    </div>
+		    </main>
+	    </div><?php
 	}
 }
-?>
-<title>Install [ JABALI ]</title>

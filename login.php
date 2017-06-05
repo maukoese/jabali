@@ -19,19 +19,12 @@ if (isset($_POST['login']) && $_POST['user'] != "" && $_POST['password'] != "") 
     include 'functions/jabali.php';
     connectDb();
 
-    function isEmail($data) {
-      if (filter_var($data, FILTER_VALIDATE_EMAIL)) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-
     $user = $_POST['user'];
     $password = md5($_POST['password']);
 
-    $checkMail = isEmail($user);
-    if ($checkMail) {
+  //$hUser -> loginUser($user);
+
+    if (isEmail($user)) {
       $result = mysqli_query($GLOBALS['conn'], "SELECT * FROM husers WHERE h_email = '".$user."'");
     } else {
       $result = mysqli_query($GLOBALS['conn'], "SELECT * FROM husers WHERE h_username = '".$user."'");
@@ -94,7 +87,7 @@ if (isset($_POST['login']) && $_POST['user'] != "" && $_POST['password'] != "") 
           <input type="checkbox" id="remember-me"/>
           <label for="remember-me">Remember me</label>
           </div>
-          <button class="mdl mdl-button mdl-button--fab mdl-js-button mdl-button--raised mdl-button--colored" type="submit" name="login"><i class="material-icons">send</i></button>
+          <button class="mdl mdl-button mdl-button--fab mdl-js-button mdl-button--raised mdl-button--colored alignright" type="submit" name="login"><i class="material-icons">send</i></button>
     
 
           <p>

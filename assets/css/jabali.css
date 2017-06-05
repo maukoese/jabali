@@ -11933,7 +11933,7 @@ a {
     color: white; }
     .employer-form .mdl-radio span:first-of-type {
       margin-left: 10px; }
-  .employer-form .form__article > span {
+  .employer-form .form__post > span {
     float: left;
     width: 100%;
     color: rgba(255, 255, 255, 0.6);
@@ -12067,7 +12067,7 @@ a {
 .form .mdl-cell--12-col {
   width: 100%; }
 
-.form__article h3 {
+.form__post h3 {
   font-family: -apple-system, BlinkMacSystemFont, 
     "Segoe UI", "Roboto", "Oxygen", 
     "Ubuntu", "Cantarell", "Fira Sans", 
@@ -12268,7 +12268,6 @@ a {
     "Segoe UI", "Roboto", "Oxygen", 
     "Ubuntu", "Cantarell", "Fira Sans", 
     "Droid Sans", "Helvetica Neue", sans-serif;
-  color: black;
   font-size: 16px;
   font-weight: 300; }
 
@@ -12525,8 +12524,9 @@ a {
  background-color:transparent;
  padding-left:20px;
  padding-right:20px;
- width:50%;
+ width:70%;
  margin: auto;
+ margin-bottom: 30px;
  border-radius: 10px;
 }
 
@@ -12536,13 +12536,6 @@ a {
   } 
 }
 
-
-#login_div button
-{
- margin-bottom:20px;
- height:40px;
- float:right;
-}
 #login_div #register
 {
  margin-top:20px;
@@ -12618,14 +12611,14 @@ a {
  /*margin-left: 0.8rem;*/
 }
 
-/* card article */
-.card__article a {
+/* card post */
+.card__post a {
   text-decoration: none;
   color: #444;
   text-overflow: ellipsis;
   transition: all 0.5s ease;
 }
-  .card__article a:hover {
+  .card__post a:hover {
     color: #2980b9;
   }
 

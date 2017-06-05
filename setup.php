@@ -39,7 +39,7 @@ if (isset($_POST['setup']) && $_POST['host'] != "" && $_POST['user'] != "" && $_
 		fwrite($dbfile, $txt);
 		$txt = "\n";
 		fwrite($dbfile, $txt);
-		$txt = '* @link https://docs.mauko.co.ke/jabali/classes/config';
+		$txt = '* @link https://docs.mauko.co.ke/jabali/config';
 		fwrite($dbfile, $txt);
 		$txt = "\n";
 		fwrite($dbfile, $txt);
@@ -57,23 +57,23 @@ if (isset($_POST['setup']) && $_POST['host'] != "" && $_POST['user'] != "" && $_
 		fwrite($dbfile, $txt);
 		$txt = "\n";
 		fwrite($dbfile, $txt);
-		$text = 'define("hDBNAME","'.$dbname.'");';
+		$text = 'define("hDBNAME", "'.$dbname.'");';
 		fwrite($dbfile, $text);
 		$txt = "\n";
 		fwrite($dbfile, $txt);
-		$text = 'define("hDBUSER","'.$dbuser.'");';
+		$text = 'define("hDBUSER", "'.$dbuser.'");';
 		fwrite($dbfile, $text);
 		$txt = "\n";
 		fwrite($dbfile, $txt);
-		$text = 'define("hDBPASS","'.$dbpass.'");';
+		$text = 'define("hDBPASS", "'.$dbpass.'");';
 		fwrite($dbfile, $text);
 		$txt = "\n";
 		fwrite($dbfile, $txt);
-		$text = 'define("hDBHOST","'.$dbhost.'");';
+		$text = 'define("hDBHOST", "'.$dbhost.'");';
 		fwrite($dbfile, $text);
 		$txt = "\n";
 		fwrite($dbfile, $txt);
-		$text = 'define("hROOT","'.$home.'");';
+		$text = 'define("hROOT", "'.$home.'");';
 		fwrite($dbfile, $text);
 		$txt = "\n";
 		fwrite($dbfile, $txt);
@@ -145,7 +145,7 @@ if (isset($_POST['setup']) && $_POST['host'] != "" && $_POST['user'] != "" && $_
         <label for="home" class="center-align">Home Url</label>
         </div>
 
-        <button class="mdl-button mdl-button--fab mdl-js-button mdl-button--raised mdl-button--colored" type="submit" name="setup"><i class="material-icons">forward</i></button>
+        <button class="mdl-button mdl-button--fab mdl-js-button mdl-button--raised mdl-button--colored alignright" type="submit" name="setup"><i class="material-icons">forward</i></button>
         </form>
     </div>
 	</div>

@@ -45,7 +45,7 @@ class MPESA {
         $this->MERCHANT_TRANSACTION_ID = $this->generateRandomString();
         $this->INFO = getOption( 'paybill' );
         $this->TIMESTAMP = getOption( 'timestamp' );
-        $this->PASSWORD = getOption( 'mpassword' );
+        $this->PASSWORD = getOption( 'sag' );
         
     }
     
