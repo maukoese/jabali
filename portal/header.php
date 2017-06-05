@@ -153,7 +153,7 @@ $hSocial = new _hSocial();
           }
           ?></span>
           <div class="mdl-layout-spacer"></div><?php 
-          if( !isCap('admin') ) { ?>
+          if( isCap('admin') ) { ?>
           <span class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification" id="happs">apps</span>
             <div class="mdl-tooltip" for="happs">Options</div><?php } ?>
             <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-card mdl-grid mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" for="happs">

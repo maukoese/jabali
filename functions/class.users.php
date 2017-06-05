@@ -243,9 +243,10 @@ class _hUsers {
         <td class="mdl-data-table__cell--non-numeric">
         <a href="./user?view=<?php show( $usersDetails['h_code'] ); ?>&key=<?php show( $usersDetails['h_alias'] ); ?>" ><i class="material-icons">account_circle</i></a> 
         <a href="tel:<?php show( $usersDetails['h_phone'] ); ?>" ><i class="material-icons">phone</i></a> 
-        <a href="./message?create=message&code=<?php show( $_SESSION['myCode'] ); ?>" ><i class="material-icons">message</i></a>  
+        <a href="./message?create=message&code=<?php show( $_SESSION['myCode'] ); ?>" ><i class="material-icons">message</i></a><?php 
+        if( isCap('admin') ) { ?>  
         <a href="./user?edit=<?php show( $usersDetails['h_code'] ); ?>&key=<?php show( $usersDetails['h_alias'] ); ?>" ><i class="material-icons">edit</i></a> 
-        <a href="./user?delete=<?php show( $usersDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a>
+        <a href="./user?delete=<?php show( $usersDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
         </td>
         </tr>
         </tbody><?php
@@ -326,9 +327,10 @@ class _hUsers {
         <td class="mdl-data-table__cell--non-numeric">
         <a href="./user?view=<?php show( $usersDetails['h_code'] ); ?>&key=<?php show( $usersDetails['h_alias'] ); ?>" ><i class="material-icons">account_circle</i></a> 
         <a href="tel:<?php show( $usersDetails['h_phone'] ); ?>" ><i class="material-icons">phone</i></a> 
-        <a href="./message?create=message&code=<?php show( $_SESSION['myCode'] ); ?>" ><i class="material-icons">message</i></a>  
+        <a href="./message?create=message&code=<?php show( $_SESSION['myCode'] ); ?>" ><i class="material-icons">message</i></a><?php 
+        if( isCap('admin') ) { ?>  
         <a href="./user?edit=<?php show( $usersDetails['h_code'] ); ?>&key=<?php show( $usersDetails['h_alias'] ); ?>" ><i class="material-icons">edit</i></a> 
-        <a href="./user?delete=<?php show( $usersDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a>
+        <a href="./user?delete=<?php show( $usersDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
         </td>
         </tr>
         </tbody><?php
@@ -409,9 +411,10 @@ class _hUsers {
         <td class="mdl-data-table__cell--non-numeric">
         <a href="./user?view=<?php show( $usersDetails['h_code'] ); ?>&key=<?php show( $usersDetails['h_alias'] ); ?>" ><i class="material-icons">account_circle</i></a> 
         <a href="tel:<?php show( $usersDetails['h_phone'] ); ?>" ><i class="material-icons">phone</i></a> 
-        <a href="./message?create=message&code=<?php show( $_SESSION['myCode'] ); ?>" ><i class="material-icons">message</i></a>  
+        <a href="./message?create=message&code=<?php show( $_SESSION['myCode'] ); ?>" ><i class="material-icons">message</i></a><?php 
+        if( isCap('admin') ) { ?>  
         <a href="./user?edit=<?php show( $usersDetails['h_code'] ); ?>&key=<?php show( $usersDetails['h_alias'] ); ?>" ><i class="material-icons">edit</i></a> 
-        <a href="./user?delete=<?php show( $usersDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a>
+        <a href="./user?delete=<?php show( $usersDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
         </td>
         </tr>
         </tbody><?php
@@ -491,9 +494,10 @@ class _hUsers {
         <td class="mdl-data-table__cell--non-numeric">
         <a href="./user?view=<?php show( $usersDetails['h_code'] ); ?>&key=<?php show( $usersDetails['h_alias'] ); ?>" ><i class="material-icons">account_circle</i></a> 
         <a href="tel:<?php show( $usersDetails['h_phone'] ); ?>" ><i class="material-icons">phone</i></a> 
-        <a href="./message?create=message&code=<?php show( $_SESSION['myCode'] ); ?>" ><i class="material-icons">message</i></a>  
+        <a href="./message?create=message&code=<?php show( $_SESSION['myCode'] ); ?>" ><i class="material-icons">message</i></a><?php 
+        if( isCap('admin') ) { ?>  
         <a href="./user?edit=<?php show( $usersDetails['h_code'] ); ?>&key=<?php show( $usersDetails['h_alias'] ); ?>" ><i class="material-icons">edit</i></a> 
-        <a href="./user?delete=<?php show( $usersDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a>
+        <a href="./user?delete=<?php show( $usersDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
         </td>
         </tr>
         </tbody><?php
@@ -530,7 +534,7 @@ class _hUsers {
       while ($userDetails = mysqli_fetch_assoc($getUserCode)){
         if ($_SESSION['myCode'] !== $userDetails['h_code']) {
           $name = explode(" ", $userDetails['h_alias']);
-          $greettype = 'Contact Details';
+          $greettype = 'About '.ucfirst($name[0]);
         } else {
           $name = explode(" ", $userDetails['h_alias']);
           $greettype = '<b>Hello,</b> '.ucfirst($name[0]);
@@ -540,19 +544,18 @@ class _hUsers {
               <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
                     <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
                         <div class="mdl-card__title">
-                            <h2 class="mdl-card__title-text"><?php show( ucfirst($userDetails['h_alias']) ); ?></h2>
+                            <h2 class="mdl-card__title-text"><?php show ( $greettype ); ?></h2>
 
                             <div class="mdl-layout-spacer"></div>
                             <div class="mdl-card__subtitle-text">
                                 <a href="./user?view=<?php show( $userDetails['h_code'] ); ?>&fav=<?php show( $userDetails['h_code'] ); ?>" class="material-icons mdl-badge mdl-badge--overlap">favorite</a><?php 
-                                if( !isCap('admin') || isProfile($_SESSION['myCode']) ) { ?>
+                                if( isCap('admin') || isProfile($_SESSION['myCode']) ) { ?>
                                 <a href="./user?edit=<?php show( $userDetails['h_code'] ); ?>&key=<?php show( $userDetails['h_alias'] ); ?>" ><i class="material-icons">edit</i></a><?php } ?>
                             </div>
                         </div>
                         <div class="mdl-card__supporting-text mdl-card--expand mdl-grid">
                           <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
-                            <h5><?php show ( $greettype ); ?>
-                              <i class="mdi mdi-gender-<?php 
+                            <h5><i class="mdi mdi-gender-<?php 
                                 if (strtolower($userDetails['h_gender']) == "male") {
                                   echo "male";
                                 } elseif (strtolower($userDetails['h_gender']) == "female") {
