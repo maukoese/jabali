@@ -75,7 +75,7 @@ if (isset($_POST['create'])) {
         </center>
 
         <div id="test-swipe-1" class="col s12">
-            <form name="registerUser" method="POST" action="">
+            <form enctype="multipart/form-data" name="registerUser" method="POST" action="">
 
             <div class="input-field">
             <i class="material-icons prefix">label</i>
@@ -125,7 +125,9 @@ if (isset($_POST['create'])) {
             <input class="mdl-textfield__input" type="text" id="counties" name="h_location" readonly tabIndex="-1" placeholder="Location">
             <ul for="counties" class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--<?php if (isset($_SESSION['myCode'])) { primaryColor($_SESSION['myCode']); } else { echo "blue"; } ?>" style="max-height: 250px !important; overflow-y: auto;">
                 <?php 
-                $county_list = "baringo, bomet, bungoma, busia, elgeyo-marakwet, embu, garissa, homa bay, isiolo, kakamega, kajiado, kapenguria, kericho, kiambu, kilifi, kirinyanga, kisii, kisumu, kitui, kwale, laikipia, lamu, machakos, makueni, mandera, marsabit, meru, migori, mombasa, muranga, nairobi, nakuru, nandi, narok, nyamira, nyandarua, nyeri, ol kalou, samburu, siaya, taita-taveta, tana river, tharaka-nithi, trans-nzoia, turkana, uasin-gishu, vihiga, wajir, west pokot";
+                $county_list = "baringo, bomet, bungoma, busia, elgeyo-marakwet, embu, garissa, homa bay, isiolo, kajiado, kakamega, kericho, kiambu, kilifi, kirinyanga, kisii, kisumu, kitui, kwale, laikipia, lamu, machakos, makueni, mandera, marsabit, meru, migori, mombasa, muranga, nairobi, nakuru, nandi, narok, nyamira, nyandarua, nyeri, samburu, siaya, taita-taveta, tana river, tharaka-nithi, trans-nzoia, turkana, uasin-gishu, vihiga, wajir, west pokot";
+
+                $cities = "baringo, bomet, Bungoma, Busia, Elgeyo/Marakwet, Embu, Garissa, Homa Bay, Isiolo, Kajiado, Kakamega, Kericho, Kiambu, Kilifi, Kirinyaga, Kisii, Kisumu, Kitui, Kwale, Laikipia, Lamu, Machakos, Makueni, Mandera, Marsabit, Meru, Migori, Mombasa, Murang'a, nairobi city, Nakuru, Nandi, Narok, Nyamira, Nyandarua, Nyeri, Samburu, Siaya, Taita/Taveta, Tana River, Tharaka-Nithi, Trans Nzoia, Turkana, Uasin Gishu, Vihiga, Wajir, West Pokot";
                 $counties = explode(", ", $county_list);
                 for ($c=0; $c < count($counties); $c++) {
                     $label = ucwords($counties[$c]);
@@ -158,7 +160,7 @@ if (isset($_POST['create'])) {
         </div>
 
         <div id="test-swipe-2" class="col s12">
-            <form name="registerResource" method="POST" action="" ">
+            <form enctype="multipart/form-data" name="registerResource" method="POST" action="" ">
               <div class="input-field">
                 <i class="material-icons prefix">label</i>
               <input id="rh_alias" name="h_alias" type="text" >
@@ -217,7 +219,7 @@ if (isset($_POST['create'])) {
 
 
         <div id="test-swipe-3" class="col s12">
-        <form name="registerService" method="POST" action="">
+        <form enctype="multipart/form-data" name="registerService" method="POST" action="">
               <div class="input-field">
                 <i class="material-icons prefix">label</i>
                 <input id="sh_alias" name="h_alias" type="text" >

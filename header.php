@@ -69,7 +69,7 @@ $hSocial = new _hSocial();
     .primary {
         color: <?php primaryColor($_SESSION['myCode']); ?>;
     }
-    .secondary {
+    .accent, a {
         color: <?php secondaryColor($_SESSION['myCode']); ?>;
     }
     .mdl-data-table {

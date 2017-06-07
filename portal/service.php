@@ -23,10 +23,19 @@ if(isset($_GET['view'])){
 	if ($_GET['view'] == "list") {
 		if(isset($_GET['type'])) {
 			$hService -> getServicesType($_GET['type']);
+			if ( isCap( 'admin' ) ) {
+				newButton('service', $_GET['type'], 'create');
+			}
 		} elseif (isset($_GET['status'])) {
 			$hService -> getPendingService($_SESSION['myCode']);
+			if ( isCap( 'admin' ) ) {
+				newButton('service', 'request', 'create');
+			}
 		} else {
 			$hService -> getServices();
+			if ( isCap( 'admin' ) ) {
+				newButton('service', 'request', 'create');
+			}
 		}
 	} else {
 		$hService -> getServiceCode($_GET['view']);

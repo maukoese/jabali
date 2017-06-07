@@ -18,14 +18,34 @@ if (isset($_POST['mpesa'])) {
 }
 
 if (isset($_POST['preferences'])) {
-    $date = date(Ymd);
+    $date = date('Ymd');
+    $uploads = "../uploads/".date('Y').'/'.date('m').'/'.date('d')."/";
+    $headerlogo = $uploads . basename( $_FILES['header_logo']['name'] );
+    $homelogo = $uploads . basename( $_FILES['home_logo']['name'] );
+    $favicon = $uploads . basename( $_FILES['my_favicon']['name'] );
+
+    if (move_uploaded_file($_FILES['header_logo']["tmp_name"], $headerlogo ) || move_uploaded_file($_FILES['home_logo']["tmp_name"], $homelogo ) || move_uploaded_file($_FILES['my_favicon']["tmp_name"], $favicon ) ) {
+        //Do nothing
+    } else {
+        echo "Sorry, there was an error uploading your file.";
+    }
+    $header_logo = hUPLOADS.date('Y').'/'.date('m').'/'.date('d').'/'.$_FILES['header_logo']['name'];
+    $home_logo = hUPLOADS.date('Y').'/'.date('m').'/'.date('d').'/'.$_FILES['home_logo']['name'];
+    $favicon = hUPLOADS.date('Y').'/'.date('m').'/'.date('d').'/'.$_FILES['my_favicon']['name'];
+
     mysqli_query($GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['name']."', h_updated = '".$date."' WHERE h_code='name'");
     mysqli_query($GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['description']."', h_updated = '".$date."'  WHERE h_code='description'");
     mysqli_query($GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['email']."', h_updated = '".$date."'  WHERE h_code='email'");
     mysqli_query($GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['copyright']."', h_updated = '".$date."'  WHERE h_code='copyright'");
-    mysqli_query($GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['header_logo']."', h_updated = '".$date."'  WHERE h_code='header_logo'");
-    mysqli_query($GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['home_logo']."', h_updated = '".$date."'  WHERE h_code='home_logo'");
+    mysqli_query($GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['attribution']."', h_updated = '".$date."'  WHERE h_code='attribution'");
+    mysqli_query($GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$header_logo."', h_updated = '".$date."'  WHERE h_code='header_logo'");
+    mysqli_query($GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$home_logo."', h_updated = '".$date."'  WHERE h_code='home_logo'");
+    mysqli_query($GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$favicon."', h_updated = '".$date."'  WHERE h_code='favicon'");
     mysqli_query($GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['tos']."', h_updated = '".$date."'  WHERE h_code='tos'");
+
+    echo "<script type = \"text/javascript\">
+              alert(\"Preferences Updated Successfully!\");
+          </script>";
 }
 
 if (isset($_GET['page'])) {
@@ -35,7 +55,7 @@ if (isset($_GET['page'])) {
 
         <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
             <div class=" mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
-            <form name="optionForm" method="POST" action="">
+            <form enctype="multipart/form-data" name="optionForm" method="POST" action="">
 
                     <div class="input-field">
                             <i class="material-icons prefix">label</i>
@@ -78,14 +98,18 @@ if (isset($_GET['page'])) {
                    function chooseHome() {
                       $("#home_logo").click();
                    }
+
+                   function chooseFavicon() {
+                      $("#my_favicon").click();
+                   }
                 </script>
 
                 <div class="input-field inline mdl-cell mdl-cell--2-col-desktop mdl-cell--2-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp">
                     <div style="height:0px;overflow:hidden">
-                        <input id="header_logo" type="file" name="header_logo" value="<?php getOption('header_logo'); ?>">
+                        <input id="my_favicon" type="file" name="my_favicon" value="<?php getOption('favicon'); ?>">
                     </div>
-                    <img src="<?php getOption('favicon'); ?>" width="100%" onclick="chooseHeader();">
-                    <label for="header_logo" data-error="wrong" data-success="right" class="center-align">Favicon <span><i class="material-icons">edit</i></span></label>
+                    <img src="<?php getOption('favicon'); ?>" width="100%" onclick="chooseFavicon();">
+                    <label for="my_favicon" data-error="wrong" data-success="right" class="center-align">Favicon <span><i class="material-icons">edit</i></span></label>
                 </div>
 
                 <div class="input-field inline mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp">
@@ -127,7 +151,7 @@ if (isset($_GET['page'])) {
 
         <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card">
         <div class=" mdl-cell mdl-cell--6-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone">
-        <form name="optionForm" method="POST" action="" class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
+        <form enctype="multipart/form-data" name="optionForm" method="POST" action="" class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
         <div class="mdl-card__title">
         <i class="mdi mdi-cellphone"></i>
           <span class="mdl-button">M-PESA Settings</span>
@@ -172,7 +196,7 @@ if (isset($_GET['page'])) {
         </div>
         <br>
         <div class=" mdl-cell mdl-cell--6-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone">
-        <form name="optionForm" method="POST" action="" class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
+        <form enctype="multipart/form-data" name="optionForm" method="POST" action="" class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
         <div class="mdl-card__title">
         <i class="fa fa-paypal"></i>
           <span class="mdl-button">Paypal Settings</span>
@@ -194,7 +218,7 @@ if (isset($_GET['page'])) {
 
         <br>
 
-        <form name="optionForm" method="POST" action="" class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
+        <form enctype="multipart/form-data" name="optionForm" method="POST" action="" class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
         <div class="mdl-card__title">
         <i class="fa fa-cc-stripe"></i>
           <span class="mdl-button">Stripe Settings</span>
@@ -215,7 +239,7 @@ if (isset($_GET['page'])) {
 
         <br>
 
-        <form name="optionForm" method="POST" action="" class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
+        <form enctype="multipart/form-data" name="optionForm" method="POST" action="" class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
         <div class="mdl-card__title">
         <i class="fa fa-cc-stripe"></i>
           <span class="mdl-button">Bank Settings</span>
@@ -223,7 +247,7 @@ if (isset($_GET['page'])) {
         <div class="mdl-card__supporting-text mdl-card--expand">
 
                 <div class="input-field">
-                        <i class="material-icons prefix">business</i>
+                        <i class="material-icons prefix">account_balance</i>
                     <input id="name" type="text" name="baccount" value="<?php getOption('name'); ?>">
                     <label for="name" data-error="wrong" data-success="right" class="center-align">Bank Name<b style="color:red;">*</b></label>
                 </div>
@@ -331,7 +355,7 @@ if (isset($_GET['page'])) {
                     </div>
                 </div>
                 <div class="mdl-card_supporting-text">
-                <form name="themeForm" method="POST" action="" class="mdl-cell mdl-cell--12-col">
+                <form enctype="multipart/form-data" name="themeForm" method="POST" action="" class="mdl-cell mdl-cell--12-col">
 
                     <div class="input-field inline">
                         <input type="radio" id="zahra" name="theme" value="zahra" <?php isTheme ('zahra'); ?>>
@@ -462,11 +486,11 @@ if (isset($_GET['page'])) {
                     
 
                     <div class="input-field inline">
-                        <input type="radio" id="zebra" name="theme" value="zebra" <?php isTheme ('zebra'); ?>>
-                        <label for="zebra"><p class="cholder" for="zebra">
-                            <span class="ccolor mdl-color--black"></span><span class="ccolor csec mdl-color--yellow"></span>
+                        <input type="radio" id="bred" name="theme" value="bred" <?php isTheme ('bred'); ?>>
+                        <label for="bred"><p class="cholder" for="bred">
+                            <span class="ccolor mdl-color--black"></span><span class="ccolor csec mdl-color--red"></span>
                         </p></label>
-                    </div><div class="mdl-tooltip" for="zebra">Zebra's Cross</div>
+                    </div><div class="mdl-tooltip" for="bred">Born & Bred</div>
                     
 
                     <div class="input-field inline">
@@ -495,7 +519,7 @@ if (isset($_GET['page'])) {
                     </div>
                 </div>
 
-                <form name="themeForm" method="POST" action="" class="mdl-cell mdl-cell--12-col">
+                <form enctype="multipart/form-data" name="themeForm" method="POST" action="" class="mdl-cell mdl-cell--12-col">
                 <div class="mdl-card_supporting-text">
 
                     <div class="input-field">

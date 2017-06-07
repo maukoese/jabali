@@ -37,8 +37,27 @@ class _hPosts {
     }
 
     $h_alias = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_alias']); 
-    $h_author = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_author']); 
-    $h_avatar = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_avatar']); 
+    $h_author = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_author']);
+
+    if ($_FILES['h_avatar'] == "") {
+      $h_avatar = hIMAGES.'placeholder.svg';
+    } else {
+      $uploads = "../uploads/".date('Y').'/'.date('m').'/'.date('d').'/';
+      $upload = $uploads . basename( $_FILES['h_avatar']['name'] );
+
+      if (file_exists($upload)) {
+        echo "Sorry, file already exists.";
+        $uploadOk = 0;
+      }
+
+      if (move_uploaded_file($_FILES['h_avatar']["tmp_name"], $upload)) {
+          //Do nothing
+      } else {
+          echo "Sorry, there was an error uploading your file.";
+      }
+      $h_avatar = $uploads.$_FILES['h_avatar']['name'];
+    }
+
     $h_by = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_by']);
     $h_category = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_category']); 
     $h_center = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_center']);
@@ -87,8 +106,23 @@ class _hPosts {
     }
 
     $h_alias = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_alias']); 
-    $h_author = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_author']); 
-    $h_avatar = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_avatar']); 
+    $h_author = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_author']);
+
+    $uploads = "../uploads/".date('Y').'/'.date('m').'/'.date('d').'/';
+    $upload = $uploads . basename( $_FILES['h_avatar']['name'] );
+
+    if (file_exists($upload)) {
+      echo "Sorry, file already exists.";
+      $uploadOk = 0;
+    }
+
+    if (move_uploaded_file($_FILES['h_avatar']["tmp_name"], $upload)) {
+        //Do nothing
+    } else {
+        echo "Sorry, there was an error uploading your file.";
+    }
+    $h_avatar = $uploads.$_FILES['h_avatar']['name'];
+
     $h_by = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_by']);
     $h_category = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_category']); 
     $h_center = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_center']);
@@ -111,19 +145,12 @@ class _hPosts {
     $h_type = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_type']); 
     $h_updated = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_updated']);
 
-    $createPost = "INSERT INTO hposts (h_alias, h_author, h_avatar, h_category, h_center, h_code, h_created, h_description, h_email, h_fav, h_key, h_level, h_link, h_location, h_notes, h_phone, h_reading, h_status, h_subtitle, h_tags, h_type, h_updated) 
-      VALUES ('".$h_alias."', '".$h_author."', '".$h_avatar."', '".$h_category."', '".$h_center."', '".$h_code."', '".$h_created."', '".$h_desc."', '".$h_email."', '".$h_fav."', '".$h_key."', '".$h_level."', '".$h_link."', '".$h_location."', '".$h_notes."', '".$h_phone."', '".$h_reading."', '".$h_status."', '".$h_subtitle."', '".$h_tags."', '".$h_type."', '".$h_updated."')";
-    
-    if ($_POST['h_price'] !== "") {
-      mysqli_query( $GLOBALS['conn'], "INSERT INTO hproducts (h_code, h_price) VALUES ('".$h_code."', '".$h_price."')" );
-    }
-
-    if ( mysqli_query( $GLOBALS['conn'], $createPost ) ) {
+    if ( mysqli_query( $GLOBALS['conn'], "UPDATE hposts SET h_alias ='".$h_alias."', h_author = '".$h_author."', h_avatar = '".$h_avatar."', h_category = '".$h_category."', h_center = '".$h_center."', h_code = '".$h_code."', h_created = '".$h_created."', h_description = '".$h_desc."', h_email = '".$h_email."', h_fav = '".$h_fav."', h_key = '".$h_key."', h_level = '".$h_level."', h_link = '".$h_link."', h_location = '".$h_location."', h_notes = '".$h_notes."', h_phone = '".$h_phone."', h_reading = '".$h_reading."', h_status = '".$h_status."', h_subtitle = '".$h_subtitle."', h_tags = '".$h_tags."', h_type = '".$h_type."', h_updated = '".$h_updated."'" ) ) {
       echo "<script type = \"text/javascript\">
                       alert(\"Post Updated Successfully!\");
                   </script>";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Error: " . $GLOBALS['conn']->error;
     }
   }
 
@@ -305,7 +332,7 @@ class _hPosts {
     $getPostCode = mysqli_query($GLOBALS['conn'], "SELECT * FROM hposts WHERE h_code = '".$code."'");
     if($getPostCode -> num_rows > 0) {
       while ($postDetails = mysqli_fetch_assoc($getPostCode)){ ?>
-      <title><?php show( $postDetails['h_alias'] ); ?> [ JABALI Posts ]</title>
+      <title><?php show( $postDetails['h_alias'] ); ?> [ <?php getOption( 'name' );?> ]</title>
         <div class="mdl-grid" >
               <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
                     <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
@@ -320,7 +347,7 @@ class _hPosts {
                             </div>
                         </div>
                         <div class="mdl-card__supporting-text mdl-card--expand mdl-grid">
-                          <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
+                          <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone">
                             <h4><?php show( $postDetails['h_subtitle'] ); ?></h4>
                             <h6>Published: <?php show( $postDetails['h_created'] ); ?><br>
                             Authored by: <?php show( $postDetails['h_by'] ); ?><br>
@@ -332,12 +359,14 @@ class _hPosts {
                             <a href="sms://<?php show( $_SESSION['myPhone'] ); ?>?body=<?php show( $postDetails['h_alias'].' '.hPORTAL ); ?>post?view=<?php show( $postDetails['h_code'] ); ?>"><i class="mdi mdi-message"></i></a>
                             <a href="whatsapp://send?text=<?php show( $postDetails['h_alias'].' '.hPORTAL ); ?>post=view=<?php show( $postDetails['h_code'] ); ?>" data-action="share/whatsapp/share"><i class="mdi mdi-whatsapp"></i></a>
                           </div>
-                          <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
+                          <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone">
                             <img src="<?php show( $postDetails['h_avatar'] ); ?>" width="100%">
                           </div>
                         </div>
                         <div class="mdl-card__supporting-text mdl-card--expand">
-                        <?php show( $postDetails['h_description'] ); ?>
+                        <span>
+                          <?php show( $postDetails['h_description'] ); ?>
+                        </span>
                         </div>
                     </div>
                 </div>

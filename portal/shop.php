@@ -106,7 +106,7 @@ if(!empty($_GET["buy"])) {
 		        </div>
 		    </div>
 
-		    <form class="" name="payForm" method="GET" action="./pay"><br>
+		    <form enctype="multipart/form-data" class="" name="payForm" method="GET" action="./pay"><br>
 
 		    	<input type="hidden" name="order" value="<?php show( $_GET['order'] ); ?>">
 
@@ -167,7 +167,7 @@ if(!empty($_GET["buy"])) {
 						<div class="mdl-card-media">
 							<img src="<?php echo $products_array[$key]["h_avatar"]; ?>" width="100%" style="overflow: hidden;" >
 						</div>
-						<form method="post" action="./shop?view=list&buy=add&code=<?php echo $products_array[$key]["h_code"]; ?>">
+						<form enctype="multipart/form-data" method="post" action="./shop?view=list&buy=add&code=<?php echo $products_array[$key]["h_code"]; ?>">
 							<div class="mdl-card__title mdl-card--expand">
 							    <div class="mdl-card__title-text">
 							    	<?php echo $products_array[$key]["h_alias"]; ?>

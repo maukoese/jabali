@@ -40,7 +40,7 @@ if (isset($_POST['reset'])) {
 <div style="padding-top:40px;" >
     <div id="login_div">
 <center><?php frontlogo(); ?></center>
-        <form method="POST" action="">
+        <form enctype="multipart/form-data" method="POST" action="">
 
         <div class="input-field">
         <i class="mdi-social-person-outline prefix"></i>

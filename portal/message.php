@@ -31,6 +31,8 @@ if(isset($_GET['view'])){
 		} else {
 			$hMessage -> getMessages();
 		}
+	} elseif ($_GET['view'] == "unread") {
+		$hMessage -> getUnreadMessages();
 	} else {
 		$hMessage -> getMessageCode($_GET['view']);
 	}

@@ -71,9 +71,15 @@ $hSocial = new _hSocial();
     .primary {
         color: <?php primaryColor($_SESSION['myCode']); ?>;
     }
-    .secondary {
+    .accent, a, .mdl-data-table.a, .mdl-badge.mdl-badge--no-background[data-badge]:after, .mdl-layout__drawer.mdl-navigation.mdl-navigation__link--current.material-icons, .mdl-layout__drawer.mdl-navigation.mdl-navigation__link:hover, .mdl-layout__drawer.mdl-navigation.mdl-navigation__link:hover.material-icons {
         color: <?php secondaryColor($_SESSION['myCode']); ?>;
     }
+
+
+    .accent, .mdl-button--fab.mdl-button--colored, .mdl-badge[data-badge]:after {
+        background-color: <?php secondaryColor($_SESSION['myCode']); ?>;
+    }
+
     .mdl-data-table {
     color: white;
     white-space: nowrap;
@@ -191,7 +197,7 @@ $hSocial = new _hSocial();
               notifications_none
           </a><div class="mdl-tooltip" for="h_notifications">Notifications</div>
 
-          <a href="./message?view=list" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_messages"
+          <a href="./message?view=unread&key=messages" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_messages"
                  data-badge="<?php getMsgCount() ?>">
                 mail_outline
             </a><div class="mdl-tooltip" for="h_messages"><?php getMsgCount(); ?> Messages</div>
@@ -281,9 +287,9 @@ $hSocial = new _hSocial();
             </ul>
           <a class="mdl-navigation__link" href="./notification?view=list"><i class="mdl-color-text--white material-icons" role="presentation">notifications</i>Notifications</a>
           <div class="mdl-layout-spacer"></div>
-          <a class="mdl-navigation__link" href="./options?page=color"><i class="mdl-color-text--white material-icons" role="presentation">color_lens</i><span>Theme Options</span></a><?php 
+          <a class="mdl-navigation__link" href="./options?page=color"><i class="mdl-color-text--white material-icons" role="presentation">color_lens</i><span>Theme</span></a><?php 
           if( isCap('admin') ) { ?>
-          <a class="mdl-navigation__link" href="./options?page=general"><i class="mdl-color-text--white material-icons" role="presentation">settings</i><span>Site Options</span></a>
+          <a class="mdl-navigation__link" href="./options?page=general"><i class="mdl-color-text--white material-icons" role="presentation">settings</i><span>Settings</span></a>
           <?php } ?>
         </nav>
       </div>

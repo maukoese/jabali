@@ -77,7 +77,7 @@ if (isset($_POST['pay']) && $_POST['amount'] !== "" && $_POST['h_phone'] !== "")
 		        </div>
 		    </div>
 
-			    <form class="" name="payForm" method="POST" action=""><br>
+			    <form enctype="multipart/form-data" class="" name="payForm" method="POST" action=""><br>
 			    	<div class="input-field inline">
 			    		<i class="material-icons prefix">label</i>
 			    		<input type="text" name="h_by" value="<?php show( $_SESSION['myAlias'] ); ?>">

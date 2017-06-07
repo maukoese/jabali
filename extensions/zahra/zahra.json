@@ -1,0 +1,16 @@
+{
+	"name": "Zahra",
+	"slug": "zahra",
+	"author": "Mauko Maunde",
+	"category": "Education",
+	"screenshot": "http://localhost/jabali/assets/images/avatar.svg",
+	"description": "An extension to create an online book portal with jabali",
+	"social": {
+		"facebook": "http://facebook.com/maukoese",
+		"twitter": "http://twitter.com/maukoese",
+		"github": "http://github.com/maukoese",
+		"email": "maukoese@gmail.com"
+	},
+	"website": "http://jabali.mauko.co.ke/extensions/zahra",
+	"support": "http://jabali.mauko.co.ke/support"
+}

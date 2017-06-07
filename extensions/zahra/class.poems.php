@@ -1,60 +1,36 @@
 <?php
 
 class _hPoems extends _hPosts {
-  var $h_alias; 
-  var $h_author; 
-  var $h_avatar; 
-  var $h_by; 
-  var $h_category; 
-  var $h_code; 
-  var $h_created; 
-  var $h_custom; 
-  var $h_description; 
-  var $h_email; 
-  var $h_fav; 
-  var $h_key; 
-  var $h_level; 
-  var $h_link; 
-  var $h_location; 
-  var $h_notes; 
-  var $h_phone; 
-  var $h_reading; 
-  var $h_status; 
-  var $h_style; 
-  var $h_subtitle; 
-  var $h_tags; 
-  var $h_type; 
-  var $h_updated;
+
+  function menu() { ?>
+    <a id="hresources" class="mdl-navigation__link" href="#"><i class="mdl-color-text--white material-icons" role="presentation">local_hospital</i>Resources</a>
+      <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" for="hresources">
+          <a class="mdl-navigation__link mdl-navigation__link--current" href="./resource?view=list&key=resources">
+              <i class="material-icons" role="presentation">local_hospital</i>
+              All Poems
+          </a>
+      </ul><?php
+  }
 
   function getPoems() { ?>
   <title>All Poems [ <?php getOption('name'); ?> ]</title>
-    <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
-      <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor($_SESSION['myCode']); ?>"><?php
-            $getPoems = mysqli_query($GLOBALS['conn'], "SELECT * FROM hmessages WHERE h_author = '".$_SESSION['myCode']."'");
+    <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone "><?php
+            $getPoems = mysqli_query($GLOBALS['conn'], "SELECT * FROM hposts WHERE h_author = '".$_SESSION['myCode']."'");
             if ($getPoems -> num_rows >= 0) { ?>
-              <div class="mdl-card__title">
-              <i class="material-icons">list</i>
-                <span class="mdl-button">List of Poems</span>
-              <div class="mdl-layout-spacer"></div>
-              </div>
-              <div class="mdl-card__supporting-text">
-                <ul class="collapsible popout" data-collapsible="accordion"><?php
+                <ul class="collapsible popout " data-collapsible="accordion"><?php
                     while ($note = mysqli_fetch_assoc($getPoems)) { ?>
                     <li>
-                      <div class="collapsible-header"><i class="material-icons">label_outline</i>
+                      <div class="collapsible-header mdl-shadow--2dp mdl-color--<?php primaryColor($_SESSION['myCode']); ?>"><i class="material-icons">label_outline</i>
                         
-                          <b><?php show( $note['h_alias'] ); ?></b><span class="alignright"><a href="./message?view=<?php show( $note['h_code'] ); ?>" ><i class="material-icons">open_in_new</i></a></span>
+                          <b><?php show( $note['h_alias'] ); ?></b><span class="alignright"><a href="./post?view=<?php show( $note['h_code'] ); ?>" ><i class="material-icons">open_in_new</i></a></span>
                       </div>
-                      <div class="collapsible-body"><span class="alignright">
-                          <a href="./message?view=<?php show( $note['h_code'] ); ?>" ><i class="material-icons">open_in_new</i></a>
-                          </span>
+                      <div class="collapsible-body mdl-shadow--2dp mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
                           <span><?php
                           show( $note['h_description'] ); ?></span>
                       </div>
                     </li><?php
                     } ?>
-              </ul>
-              </div><?
+              </ul><?
             } else {
             echo '<div class="mdl-card__title">
   <i class="material-icons">notifications_none</i>
@@ -62,7 +38,6 @@ class _hPoems extends _hPosts {
       <div class="mdl-layout-spacer">';
           }
         ?>
-      </div>
   </div><?php
   }
 

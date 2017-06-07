@@ -7,9 +7,301 @@
 * @version 0.17.06
 **/
 
-//Date
+/**
+* Default Date/Timezone
+**/
 date_default_timezone_set("Africa/Nairobi");
 
+/**
+* Install main instance of Jabali
+**/
+function installJabali($module) {
+	if ($module == "app") {
+		$husers = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS husers(
+		h_alias VARCHAR(100),
+		h_author VARCHAR(12),
+		h_avatar VARCHAR(100), 
+		h_center VARCHAR(100),
+		h_code VARCHAR(16),
+		h_created DATE,
+		h_custom VARCHAR(12),
+		h_description TEXT,
+		h_email VARCHAR(50),
+		h_fav INT(5),
+		h_gender VARCHAR(10),
+		h_key VARCHAR(100),
+		h_level VARCHAR(12),
+		h_link VARCHAR(100),
+		h_location VARCHAR(50),
+		h_logdate VARCHAR(12),
+		h_logip VARCHAR(20),
+		h_notes TEXT,
+		h_password VARCHAR(50),
+		h_phone VARCHAR(20),
+		h_social VARCHAR(500),
+		h_status VARCHAR(20),
+		h_style VARCHAR(100),
+		h_type VARCHAR(50),
+		h_updated DATE,
+		h_username VARCHAR(20),
+		PRIMARY KEY(h_code)
+		)");
+
+		$resources = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hresources (
+		h_alias VARCHAR(100),
+		h_author VARCHAR(12),
+		h_avatar VARCHAR(20),
+		h_by VARCHAR(20), 
+		h_center VARCHAR(20),
+		h_code VARCHAR(16),
+		h_created DATE,
+		h_custom VARCHAR(12),
+		h_description TEXT,
+		h_email VARCHAR(50),
+		h_key VARCHAR(100),
+		h_level VARCHAR(12),
+		h_link VARCHAR(100),
+		h_location VARCHAR(50),
+		h_notes TEXT,
+		h_phone VARCHAR(20),
+		h_social VARCHAR(500),
+		h_status VARCHAR(20),
+		h_type VARCHAR(50),
+		h_updated DATE,
+		PRIMARY KEY(h_code)
+		)");
+
+		$services = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hservices (
+		h_alias VARCHAR(100),
+		h_author VARCHAR(12),
+		h_by VARCHAR(20), 
+		h_center VARCHAR(20),
+		h_code VARCHAR(16),
+		h_created DATE,
+		h_email VARCHAR(50),
+		h_key VARCHAR(100),
+		h_level VARCHAR(12),
+		h_link VARCHAR(100),
+		h_location VARCHAR(50),
+		h_notes TEXT,
+		h_status VARCHAR(20),
+		h_type VARCHAR(50),
+		h_updated DATE,
+		PRIMARY KEY(h_code)
+		)");
+
+		$hmessages = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hmessages(
+		h_alias VARCHAR(100),
+		h_author VARCHAR(20),
+		h_by VARCHAR(20),
+		h_code VARCHAR(16),
+		h_created DATE,
+		h_description TEXT,
+		h_email VARCHAR(50),
+		h_for VARCHAR(20),
+		h_key VARCHAR(100),
+		h_level VARCHAR(12),
+		h_link VARCHAR(100),
+		h_phone VARCHAR(20),
+		h_status VARCHAR(20),
+		h_type VARCHAR(50),
+		PRIMARY KEY(h_code)
+		)");
+
+		$hnotifications = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hnotifications(
+		h_alias VARCHAR(100),
+		h_author VARCHAR(20),
+		h_by VARCHAR(20),
+		h_code VARCHAR(16),
+		h_created DATE,
+		h_description TEXT,
+		h_email VARCHAR(50),
+		h_for VARCHAR(20),
+		h_key VARCHAR(100),
+		h_level VARCHAR(12),
+		h_link VARCHAR(100),
+		h_status VARCHAR(20),
+		h_type VARCHAR(50),
+		h_updated DATE,
+		PRIMARY KEY(h_code)
+		)");
+
+		$huploads = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS huploads(
+		h_alias VARCHAR(100),
+		h_author VARCHAR(12),
+		h_avatar VARCHAR(20),
+		h_by VARCHAR(20), 
+		h_center VARCHAR(20),
+		h_code VARCHAR(16),
+		h_created DATE,
+		h_custom VARCHAR(12),
+		h_description TEXT,
+		h_email VARCHAR(50),
+		h_for VARCHAR(20),
+		h_key VARCHAR(100),
+		h_level VARCHAR(12),
+		h_link VARCHAR(100),
+		h_location VARCHAR(50),
+		h_notes TEXT,
+		h_phone VARCHAR(20),
+		h_status VARCHAR(20),
+		h_type VARCHAR(50),
+		h_updated DATE,
+		PRIMARY KEY(h_code)
+		)");
+
+		$hposts = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hposts(
+		h_alias VARCHAR(300),
+		h_author VARCHAR(20),
+		h_by VARCHAR(100),
+		h_avatar VARCHAR(100),
+		h_category VARCHAR(20), 
+		h_center VARCHAR(20),
+		h_code VARCHAR(16),
+		h_created DATE,
+		h_description TEXT,
+		h_email VARCHAR(50),
+		h_fav INT(5),
+		h_gallery VARCHAR(500),
+		h_key VARCHAR(100),
+		h_level VARCHAR(12),
+		h_link VARCHAR(100),
+		h_location VARCHAR(100),
+		h_notes TEXT,
+		h_phone VARCHAR(100),
+		h_reading VARCHAR(500),
+		h_status VARCHAR(20),
+		h_subtitle VARCHAR(100),
+		h_tags VARCHAR(50),
+		h_type VARCHAR(50),
+		h_updated DATE,
+		PRIMARY KEY(h_code)
+		)");
+
+		$hnotes = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hnotes (
+		id INT(10) NOT NULL AUTO_INCREMENT,
+		h_author VARCHAR(20),
+		h_by VARCHAR(100),
+		h_created DATE,
+		h_description TEXT,
+		h_for VARCHAR(20),
+		h_link VARCHAR(100),
+		h_type VARCHAR(50),
+		PRIMARY KEY(id)
+		)");
+
+		$hratings = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hratings (
+		id INT(10) NOT NULL AUTO_INCREMENT,
+		h_author VARCHAR(20),
+		h_code VARCHAR(16),
+		h_for VARCHAR(20),
+		h_type VARCHAR(50),
+		PRIMARY KEY(id)
+		)");
+
+		$faqs = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hfaqs (
+		h_alias VARCHAR(100),
+		h_code VARCHAR(16),
+		h_description TEXT,
+		h_type VARCHAR(50),
+		PRIMARY KEY(h_code)
+		)");
+
+		$hoptions = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hoptions (
+		id INT(10) NOT NULL AUTO_INCREMENT,
+		h_alias VARCHAR(200),
+		h_code VARCHAR(100) UNIQUE,
+		h_description TEXT,
+		h_updated DATE,
+		PRIMARY KEY(id)
+		)");
+
+
+
+		$hextensions = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hextensions(
+		h_alias VARCHAR(300),
+		h_author VARCHAR(20),
+		h_avatar VARCHAR(100),
+		h_category VARCHAR(20), 
+		h_code VARCHAR(16),
+		h_created DATE,
+		h_description TEXT,
+		h_email VARCHAR(50),
+		h_social VARCHAR(500),
+		h_status VARCHAR(20),
+		h_support VARCHAR(500),
+		h_updated DATE,
+		h_website VARCHAR(500),
+		PRIMARY KEY(h_code)
+		)");
+
+		if ($husers && $hresources && $hmessages && $hnotifications && $huploads && $hposts && $hnotes && $hratings && $hfaqs && $hoptions && $hextensions) {
+			return true; 
+		} else {
+			return false;
+		}
+
+	} elseif ($module == "shop") {
+		$hproducts = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hproducts (
+		h_code VARCHAR(16), 
+		h_price VARCHAR(50),
+		PRIMARY KEY(h_code)
+		)");
+
+		$horders = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS horders(
+		h_alias VARCHAR(300),
+		h_amount VARCHAR(20),
+		h_author VARCHAR(20),
+		h_by VARCHAR(100),
+		h_code VARCHAR(16),
+		h_created DATE,
+		h_description TEXT,
+		h_email VARCHAR(50),
+		h_key VARCHAR(100),
+		h_location VARCHAR(100),
+		h_notes TEXT,
+		h_phone VARCHAR(100),
+		h_status VARCHAR(20),
+		h_updated DATE,
+		PRIMARY KEY(h_code)
+		)");
+
+		$hpayments = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hpayments(
+		h_alias VARCHAR(300),
+		h_amount VARCHAR(20),
+		h_author VARCHAR(20),
+		h_by VARCHAR(100),
+		h_code VARCHAR(16),
+		h_created DATE,
+		h_description TEXT,
+		h_email VARCHAR(50),
+		h_for VARCHAR(20),
+		h_key VARCHAR(100),
+		h_notes TEXT,
+		h_phone VARCHAR(100),
+		h_status VARCHAR(20),
+		h_trx_code VARCHAR(50),
+		h_updated DATE,
+		PRIMARY KEY(h_code)
+		)");
+
+		if ($hproducts && $horders && $hpayments) {
+
+			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Merchant Name', 'merchant', 'Jabali', '".$created."')");
+			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Callback URL', 'callback', '".hROOT."callback', '".$created."')");
+			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Paybill Number', 'paybill', '898998', '".$created."')");
+			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Timestamp', 'timestamp', '20160510161908', '".$created."')");
+			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('SAG Password', 'sag', 'ZmRmZDYwYzIzZDQxZDc5ODYwMTIzYjUxNzNkZDMwMDRjNGRkZTY2ZDQ3ZTI0YjVjODc4ZTExNTNjMDA1YTcwNw==', '".$created."')");
+		}
+
+	}
+
+	return true;
+} 
+
+/**
+* Include the main configuration file
+**/
 include 'config.php';
 function connectDb() {
 	$GLOBALS['conn'] = mysqli_connect( hDBHOST, hDBUSER, hDBPASS, hDBNAME );
@@ -22,50 +314,76 @@ function connectDb() {
 	
 }
 
-//Directories
+/**
+* Script Directories
+**/
 define('hPORTAL', hROOT.'portal/');
 define('hFUNCTIONS', hROOT.'functions/');
 define('hUPLOADS', hROOT.'uploads/');
+define('hEXTENSIONS', hROOT.'extensions/');
 
-
-//Assets
+/**
+* Assets Directories
+**/
 define('hASSETS', hROOT.'assets/');
 define('hSTYLES', hASSETS.'css/');
 define('hSCRIPTS', hASSETS.'js/');
 define('hIMAGES', hASSETS.'images/');
 define('hFONTS', hASSETS.'fonts/');
 
-//Actions
+/**
+* 
+**/
 define('hLOGIN', hROOT.'login/');
 define('hREGISTER', hROOT.'register/');
+define('hAPI', hROOT.'api/');
 
+/**
+* 
+**/
 define('hEMAIL', 'portal@mtaandao.co.ke');
 define('hPHONE', '254702630550');
 
-define('hAPI', hROOT.'api/');
-
+/**
+* Include Function
+**/
 function getFile($path, $file) {
 
 	include $path.$file.'.php';
 }
 
+/**
+* Load stylesheets
+**/
 function getStyle($link) {
 	?><link rel="stylesheet" type="text/css" href="<?php echo $link; ?>"><?php
 }
 
+/**
+* Load Javascript
+**/
 function getScript($link) {
 	?><script src="<?php echo $link; ?>"></script><?php
 }
 
+/**
+* Display logo
+**/
 function frontlogo() {
 
         echo '<a href="'.hROOT.'"><img src="'.hIMAGES.'logo.png" width="250px;"></a>';
 }
 
+/**
+* Print out something
+**/
 function show($what) {
 	echo $what;
 }
 
+/**
+* Window Alert
+**/
 function showAlert($alert) {
 	?><script>
 	function showText() {
@@ -76,6 +394,9 @@ function showAlert($alert) {
 	</script><?php
 }
 
+/**
+* Window Confirm
+**/
 function showConf($message, $yes, $no, $where) {
 	?><script>
 	function confirmAcion() {
@@ -92,7 +413,10 @@ function showConf($message, $yes, $no, $where) {
 	</script><?php
 }
 
-//Check if user has appropriate permisions
+
+/**
+* Check if user has appropriate permisions
+**/
 function isCap($cap) {
 	if ($_SESSION['myCap'] == $cap) {
 		return true;
@@ -101,7 +425,10 @@ function isCap($cap) {
 	}
 }
 
-//Check if user has appropriate permisions
+
+/**
+* Check if user is viewing own profile
+**/
 function isProfile($cap) {
 	if ($_SESSION['myCode'] == $_GET['view']) {
 		return true;
@@ -111,13 +438,38 @@ function isProfile($cap) {
 }
 
 
+/**
+* 
+**/
 function uploadFile() {
-	$uploaddir = "uploads/$year/$month/$day";
-	$uploadfile = $uploaddir. basename($_FILES['file']['name']);
-	move_uploaded_file(filename, destination);
+	$year = date('Y');
+	$month = date('m');
+	$day = date('d');
+	$uploads = hUPLOADS . "$year/$month/$day/";
+	$upload = $uploads . basename( $_FILES['h_avatar']['name'] );
+	$uploadOk = 1;
+
+	if (file_exists($upload)) {
+    echo "Sorry, file already exists.";
+    $uploadOk = 0;
+	}
+
+	if ($uploadOk == 0) {
+    echo "Sorry, your file was not uploaded.";
+	// if everything is ok, try to upload file
+	} else {
+	    if (move_uploaded_file($_FILES['h_avatar']["tmp_name"], $upload)) {
+	        echo "The file ". basename( $_FILES["h_avatar"]["name"]). " has been uploaded.";
+	    } else {
+	        echo "Sorry, there was an error uploading your file.";
+	    }
+	}
 
 }
 
+/**
+* 
+**/
 function getMsgCount() {
     $getMessages = mysqli_query($GLOBALS['conn'], "SELECT * FROM hmessages WHERE h_status='unread'");
     if ($getMessages -> num_rows >= 0) {
@@ -128,6 +480,9 @@ function getMsgCount() {
     }
 }
 
+/**
+* 
+**/
 function getNoteCount() {
 	$getMessages = mysqli_query($GLOBALS['conn'], "SELECT * FROM hnotifications");
 	if ($getMessages -> num_rows >= 0) {
@@ -138,6 +493,9 @@ function getNoteCount() {
 	}
 }
 
+/**
+* 
+**/
 function primaryColor($code) {
 	$getColor = mysqli_query($GLOBALS['conn'], "SELECT h_style FROM husers  WHERE h_code='".$code."'");
 	if ($getColor) {
@@ -180,32 +538,68 @@ function primaryColor($code) {
 				echo "brown";
 			} elseif ($themes['h_style'] == "ghost") {
 				echo "blue-grey";
-			} elseif ($themes['h_style'] == "zebra") {
+			} elseif ($themes['h_style'] == "bred") {
 				echo "black";
 			}
 		}
 	}
 }
 
+/**
+* 
+**/
 function secondaryColor($code) {
 	$getColor = mysqli_query($GLOBALS['conn'], "SELECT h_style FROM husers  WHERE h_code='".$code."'");
 	if ($getColor) {
 		while ($themes = mysqli_fetch_assoc($getColor)) {
 			if ($themes['h_style'] == "love") {
-				echo "cyan";
+				echo "magenta";
 			} elseif ($themes['h_style'] == "zahra") {
-				echo "teal";
+				echo "red";
 			} elseif ($themes['h_style'] == "wizz") {
-				echo "brown";
-			} elseif ($themes['h_style'] == "bluepint") {
-				echo "blue";
+				echo "black";
+			} elseif ($themes['h_style'] == "pint") {
+				echo "magenta";
 			} elseif ($themes['h_style'] == "stack") {
-				echo "grey";
+				echo "brown";
+			} elseif ($themes['h_style'] == "hot") {
+				echo "red";
+			} elseif ($themes['h_style'] == "princess") {
+				echo "pink";
+			} elseif ($themes['h_style'] == "haze") {
+				echo "green";
+			} elseif ($themes['h_style'] == "prince") {
+				echo "green";
+			} elseif ($themes['h_style'] == "indie") {
+				echo "indigo";
+			} elseif ($themes['h_style'] == "sky") {
+				echo "blue";
+			} elseif ($themes['h_style'] == "greene") {
+				echo "green";
+			} elseif ($themes['h_style'] == "vegan") {
+				echo "green";
+			} elseif ($themes['h_style'] == "lemon") {
+				echo "lime";
+			} elseif ($themes['h_style'] == "wait") {
+				echo "orange";
+			} elseif ($themes['h_style'] == "orange") {
+				echo "orange";
+			} elseif ($themes['h_style'] == "sun") {
+				echo "deep-orange";
+			} elseif ($themes['h_style'] == "earth") {
+				echo "orange";
+			} elseif ($themes['h_style'] == "ghost") {
+				echo "red";
+			} elseif ($themes['h_style'] == "bred") {
+				echo "red";
 			}
 		}
 	}
 }
 
+/**
+* 
+**/
 function textColor($code) {
 	$getColor = mysqli_query($GLOBALS['conn'], "SELECT h_style FROM husers  WHERE h_code='".$code."'");
 	if ($getColor) {
@@ -225,15 +619,21 @@ function textColor($code) {
 	}
 }
 
+/**
+* 
+**/
 function getOption($code) {
     $getOptions = mysqli_query($GLOBALS['conn'], "SELECT * FROM hoptions WHERE h_code='".$code."'");
     if ($getOptions -> num_rows > 0) {
         while ($siteOption = mysqli_fetch_assoc($getOptions)) { 
-            show( $siteOption['h_description']);
+            show( $siteOption['h_description'] );
         }
     }
 }
 
+/**
+* 
+**/
 function isEmail($data) {
   if (filter_var($data, FILTER_VALIDATE_EMAIL)) {
     return true;
@@ -242,11 +642,18 @@ function isEmail($data) {
   }
 }
 
+/**
+* 
+**/
 function newButton($hclass, $htype, $hicon) {
 	echo '<a href="./'.$hclass.'?create='.$htype.'" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
   <i class="material-icons">'.$hicon.'</i></a>';
 }
 
+
+/**
+* Autoload Classes
+**/
  include 'class.forms.php';
  include 'class.users.php';
  include 'class.resources.php';
@@ -255,5 +662,6 @@ function newButton($hclass, $htype, $hicon) {
  include 'class.notifications.php';
  include 'class.posts.php';
  include 'class.social.php';
+
 
 ?>

@@ -69,7 +69,7 @@ if (isset($_POST['login']) && $_POST['user'] != "" && $_POST['password'] != "") 
   <div style="padding-top:40px;" >
       <div id="login_div">
           <center><?php frontlogo(); ?></center>
-          <form method="POST" action="">
+          <form enctype="multipart/form-data" method="POST" action="">
           <div class="input-field">
           <i class="material-icons prefix">account_circle</i>
           <input name="user" id="email" type="text">

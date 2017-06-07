@@ -34,7 +34,14 @@ if (isset($_GET['post'])) {
             primaryColor($_SESSION['myCode']);
         } else { echo "blue";}  ?>">
 	    <div id="login_div">
-		<center><a href="<?php echo hROOT; ?>"><img src="<?php echo hIMAGES; ?>logo-w.png" width="300px;"></a><br>
+		<center><a href="<?php echo hROOT; ?>"><img src="<?php echo hIMAGES; ?>logo-w.png" width="300px;"></a><br><?php
+		if (isset($_GET['logout'])) {
+			session_destroy();
+
+			echo '<div id="success" class="alert mdl-color--red">
+                    <span>You are now logged out!</span>
+                </div>';
+		} ?>
 	    <a href="./register" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">
 	  <i class="material-icons">edit</i> REGISTER</a> <a href="./login" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">
 	  <i class="material-icons">exit_to_app</i> LOGIN</a>

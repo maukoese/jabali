@@ -10,132 +10,131 @@
 class _hForms {
 
   function messageForm($type, $for) {
-    
     $getUser = mysqli_query($GLOBALS['conn'], "SELECT * FROM husers WHERE h_code = '".$for."'");
     if($getUser -> num_rows > 0) {
       while ($userDeets = mysqli_fetch_assoc($getUser)){
         $userDeet[] = $userDeets;
       }
-    }
-      
-            ?><div class="mdl-grid">
-              <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-card--expand mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
-              <div class="mdl-card__title">
-              <i class="material-icons">mail</i>
-                <span class="mdl-button"><?php if (!empty($userDeet)) { show( 'Message To '.$userDeet[0]["h_alias"] ); } ?></span>
-              <div class="mdl-layout-spacer"></div>
-              </div>
-                  <div class="mdl-card__supporting-text mdl-card--expand">
-                      <form name="messageForm" method="POST" action="./message?create">
-                        <title>Compose <?php echo ucfirst($_GET['create']); ?> [ <?php getOption('name'); ?> ]</title>
-                          <div class="input-field">
-                          <input id="subject" type="text" name="h_alias" >
-                          <label for="email" data-error="wrong" data-success="right" class="center-align">Subject</label>
-                          </div>
-
-                          <input type="hidden" name="h_author" value="<?php echo $_SESSION['myCode']; ?>">
-                          <input type="hidden" name="h_by" value="<?php echo $_SESSION['myAlias']; ?>">
-                          <input type="hidden" name="h_email" value="<?php echo $_SESSION['myEmail']; ?>">
-                          <input type="hidden" name="h_for" value="<?php echo $for; ?>">
-                          <input type="hidden" name="h_level" value="private">
-                          <input type="hidden" name="h_phone" value="<?php echo $_SESSION['myPhone']; ?>">
-                          <input type="hidden" name="h_type" value="<?php echo $_GET['create']; ?>">
-
-                          <div class="input-field">
-                          <p>Your Message</p>
-                          <textarea class="materialize-textarea col s12" type="text" id="h_description" rows="5" name="h_description"></textarea><script>CKEDITOR.replace( 'h_description' );</script>
-                          </div>
-
-                          <div class="input-field">
-                          <button class="mdl-button mdl-button--fab alignright" type="submit" name="create"><i class="material-icons">send</i></button>
-                          </div>
-                      </form>
-                  </div>
-              </div>
-              <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-color--<?php primaryColor( $_SESSION['myCode']); ?> mdl-card"><?php
-                  $getNotes = mysqli_query($GLOBALS['conn'], "SELECT * FROM hmessages LIMIT 5");
-                  if ($getNotes -> num_rows >= 0) { ?>
-                    <div class="mdl-card__title">
-                    <i class="material-icons">query_builder</i>
-                      <span class="mdl-button">Recent Messages</span>
-                    <div class="mdl-layout-spacer"></div>
-                    </div>
-                    <div class="mdl-card__supporting-text">
-                      <ul class="collapsible popout" data-collapsible="accordion"><?php
-                          while ($note = mysqli_fetch_assoc($getNotes)) { ?>
-                          <li>
-                            <div class="collapsible-header"><i class="material-icons">label_outline</i>
-                              
-                                <b><?php show( $note['h_alias'] ); ?></b><span class="alignright"><?php
-                                show( $note['h_created'] ); ?></span>
-                            </div>
-                            <div class="collapsible-body"><span class="alignright">
-                                <a href="./notification?create=note&code=<?php show( $note['h_author'] ); ?>" ><i class="material-icons">reply</i></a> 
-                                <a href="./notification?view=<?php show( $note['h_code'] ); ?>" ><i class="material-icons">open_in_new</i></a> 
-                                <a href="./notification?delete=<?php show( $note['h_code'] ); ?>" ><i class="material-icons">delete</i></a>
-                                </span>
-                                <span><?php
-                                show( $note['h_description'] ); ?></span>
-                            </div>
-                          </li><?php
-                          } ?>
-                    </ul>
-                    </div><?
-                  } else {
-                    echo "No Messages";
-                  } ?>
-              </div>
-          </div><?php
-  }
-
-  function contactForm() {
-    
-          ?><div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-card--expand mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
-                <div class="mdl-card__supporting-text mdl-card--expand">
-                  <form>
-                  <div class="input-field inline">
-                    <i class="material-icons prefix">account_circle</i>
-                  <input id="h_by" name="h_by" type="text">
-                  <label for="h_by">Your Name</label>
+    } ?>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-card--expand mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
+        <div class="mdl-card__title">
+        <i class="material-icons">mail</i>
+          <span class="mdl-button"><?php if (!empty($userDeet)) { show( 'Message To '.$userDeet[0]["h_alias"] ); } ?></span>
+        <div class="mdl-layout-spacer"></div>
+        </div>
+          <div class="mdl-card__supporting-text mdl-card--expand">
+              <form enctype="multipart/form-data" name="messageForm" method="POST" action="./message?create">
+                <title>Compose <?php echo ucfirst($_GET['create']); ?> [ <?php getOption('name'); ?> ]</title>
+                  <div class="input-field">
+                  <input id="subject" type="text" name="h_alias" >
+                  <label for="email" data-error="wrong" data-success="right" class="center-align">Subject</label>
                   </div>
 
-                  <div class="input-field inline">
-                    <i class="material-icons prefix">mail_outline</i>
-                  <input id="h_email" name="h_email" type="text">
-                  <label for="h_email">Your Email</label>
-                  </div>
-
-                  <div class="input-field inline">
-                    <i class="material-icons prefix">phone</i>
-                  <input id="h_phone" name="h_phone" type="text">
-                  <label for="h_phone">Phone (Optional)</label>
-                  </div>
-
-                  <div class="input-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
-                    <i class="material-icons prefix">room</i>
-                  <input class="mdl-textfield__input" type="text" id="counties" name="h_location" readonly tabIndex="-1" placeholder="Location (Optional)">
-                  <ul for="counties" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" style="max-height: 300px !important; overflow-y: auto;">
-                      <?php 
-                      $county_list = "baringo, bomet, bungoma, busia, elgeyo-marakwet, embu, garissa, homa bay, isiolo, kakamega, kajiado, kapenguria, kericho, kiambu, kilifi, kirinyanga, kisii, kisumu, kitui, kwale, laikipia, lamu, machakos, makueni, mandera, marsabit, meru, migori, mombasa, muranga, nairobi, nakuru, nandi, narok, nyamira, nyandarua, nyeri, ol kalou, samburu, siaya, taita-taveta, tana river, tharaka-nithi, trans-nzoia, turkana, uasin-gishu, vihiga, wajir, west pokot";
-                      $counties = explode(", ", $county_list);
-                      for ($c=0; $c < count($counties); $c++) {
-                          $label = ucwords($counties[$c]);
-                          echo '<li class="mdl-menu__item" data-val="'.$counties[$c].'">'.$label.'</li>';
-                      }
-                       ?>
-                  </ul>
-                  </div>
+                  <input type="hidden" name="h_author" value="<?php echo $_SESSION['myCode']; ?>">
+                  <input type="hidden" name="h_by" value="<?php echo $_SESSION['myAlias']; ?>">
+                  <input type="hidden" name="h_email" value="<?php echo $_SESSION['myEmail']; ?>">
+                  <input type="hidden" name="h_for" value="<?php echo $for; ?>">
+                  <input type="hidden" name="h_level" value="private">
+                  <input type="hidden" name="h_phone" value="<?php echo $_SESSION['myPhone']; ?>">
+                  <input type="hidden" name="h_type" value="<?php echo $_GET['create']; ?>">
 
                   <div class="input-field">
                   <p>Your Message</p>
                   <textarea class="materialize-textarea col s12" type="text" id="h_description" rows="5" name="h_description"></textarea><script>CKEDITOR.replace( 'h_description' );</script>
-                  </div><br>
-                  <button type="submit" name="" class="mdl-button mdl-button--fab alignright"><i  class="material-icons">send</i></button>
-                  </form>
-                </div>
+                  </div>
+
+                  <div class="input-field">
+                  <button class="mdl-button alignleft" type="file" name="attachment"><i class="material-icons">attach_file</i> Attach File</button>
+                  <button class="mdl-button mdl-button--fab alignright" type="submit" name="create"><i class="material-icons">send</i></button>
+                  </div>
+              </form>
+          </div>
+      </div>
+
+      <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-color--<?php primaryColor( $_SESSION['myCode']); ?> mdl-card"><?php
+          $getNotes = mysqli_query($GLOBALS['conn'], "SELECT * FROM hmessages LIMIT 5");
+          if ($getNotes -> num_rows >= 0) { ?>
+            <div class="mdl-card__title">
+            <i class="material-icons">query_builder</i>
+              <span class="mdl-button">Recent Messages</span>
+            <div class="mdl-layout-spacer"></div>
             </div>
-        </div><?php
+            <div class="mdl-card__supporting-text">
+              <ul class="collapsible popout" data-collapsible="accordion"><?php
+                  while ($note = mysqli_fetch_assoc($getNotes)) { ?>
+                  <li>
+                    <div class="collapsible-header"><i class="material-icons">label_outline</i>
+                      
+                        <b><?php show( $note['h_alias'] ); ?></b><span class="alignright"><?php
+                        show( $note['h_created'] ); ?></span>
+                    </div>
+                    <div class="collapsible-body"><span class="alignright">
+                        <a href="./notification?create=note&code=<?php show( $note['h_author'] ); ?>" ><i class="material-icons">reply</i></a> 
+                        <a href="./notification?view=<?php show( $note['h_code'] ); ?>" ><i class="material-icons">open_in_new</i></a> 
+                        <a href="./notification?delete=<?php show( $note['h_code'] ); ?>" ><i class="material-icons">delete</i></a>
+                        </span>
+                        <span><?php
+                        show( $note['h_description'] ); ?></span>
+                    </div>
+                  </li><?php
+                  } ?>
+            </ul>
+            </div><?
+          } else {
+            echo "No Messages";
+          } ?>
+      </div>
+    </div><?php
+  }
+
+  function contactForm() { ?>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-card--expand mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
+          <div class="mdl-card__supporting-text mdl-card--expand">
+            <form>
+              <div class="input-field inline">
+                <i class="material-icons prefix">account_circle</i>
+              <input id="h_by" name="h_by" type="text">
+              <label for="h_by">Your Name</label>
+              </div>
+
+              <div class="input-field inline">
+                <i class="material-icons prefix">mail_outline</i>
+              <input id="h_email" name="h_email" type="text">
+              <label for="h_email">Your Email</label>
+              </div>
+
+              <div class="input-field inline">
+                <i class="material-icons prefix">phone</i>
+              <input id="h_phone" name="h_phone" type="text">
+              <label for="h_phone">Phone (Optional)</label>
+              </div>
+
+              <div class="input-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
+                <i class="material-icons prefix">room</i>
+              <input class="mdl-textfield__input" type="text" id="counties" name="h_location" readonly tabIndex="-1" placeholder="Location (Optional)">
+              <ul for="counties" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" style="max-height: 300px !important; overflow-y: auto;">
+                  <?php 
+                  $county_list = "baringo, bomet, bungoma, busia, elgeyo-marakwet, embu, garissa, homa bay, isiolo, kakamega, kajiado, kapenguria, kericho, kiambu, kilifi, kirinyanga, kisii, kisumu, kitui, kwale, laikipia, lamu, machakos, makueni, mandera, marsabit, meru, migori, mombasa, muranga, nairobi, nakuru, nandi, narok, nyamira, nyandarua, nyeri, ol kalou, samburu, siaya, taita-taveta, tana river, tharaka-nithi, trans-nzoia, turkana, uasin-gishu, vihiga, wajir, west pokot";
+                  $counties = explode(", ", $county_list);
+                  for ($c=0; $c < count($counties); $c++) {
+                      $label = ucwords($counties[$c]);
+                      echo '<li class="mdl-menu__item" data-val="'.$counties[$c].'">'.$label.'</li>';
+                  }
+                   ?>
+              </ul>
+              </div>
+
+              <div class="input-field">
+              <p>Your Message</p>
+              <textarea class="materialize-textarea col s12" type="text" id="h_description" rows="5" name="h_description"></textarea><script>CKEDITOR.replace( 'h_description' );</script>
+              </div><br>
+              <button type="submit" name="" class="mdl-button mdl-button--fab alignright"><i  class="material-icons">send</i></button>
+            </form>
+          </div>
+      </div>
+    </div><?php
   }
 
   function faqForm() { ?>
@@ -191,168 +190,165 @@ class _hForms {
     </div><?php
   }
 
-  function postForm() {  
-    ?><div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-card--expand mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
-                    <form name="postForm" method="POST" action="./post?create=page" class="mdl-grid mdl-card__supporting-text mdl-card--expand">
-                      <title>New <?php echo ucfirst($_GET['create']); ?> [ <?php getOption('name'); ?> ]</title>
-                      <div class="mdl-cell mdl-cell--7-col-desktop mdl-cell--7-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-card--expand ">
-                        <div class="mdl-cell mdl-cell--12-col">
-                        <div class="input-field">
-                        <input id="h_alias" type="text" name="h_alias" >
-                        <label for="h_alias" data-error="wrong" data-success="right" class="center-align">Title</label>
-                        </div>
+  function postForm() { ?>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-card--expand mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
+              <form enctype="multipart/form-data" name="postForm" method="POST" action="./post?create=page" class="mdl-grid mdl-card__supporting-text mdl-card--expand">
+                <title>New <?php echo ucfirst($_GET['create']); ?> [ <?php getOption('name'); ?> ]</title>
+                <div class="mdl-cell mdl-cell--7-col-desktop mdl-cell--7-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-card--expand ">
+                  <div class="mdl-cell mdl-cell--12-col">
+                  <div class="input-field">
+                  <input id="h_alias" type="text" name="h_alias" >
+                  <label for="h_alias" data-error="wrong" data-success="right" class="center-align">Title</label>
+                  </div>
 
-                        <div class="input-field">
-                        <input id="h_subtitle" type="text" name="h_subtitle" >
-                        <label for="h_subtitle" data-error="wrong" data-success="right" class="center-align">Subtitle(Optional)</label>
-                        </div>
+                  <div class="input-field">
+                  <input id="h_subtitle" type="text" name="h_subtitle" >
+                  <label for="h_subtitle" data-error="wrong" data-success="right" class="center-align">Subtitle(Optional)</label>
+                  </div>
 
-                        <?php
-                        if ($_GET['create'] == "article" || $_GET['create'] == "product") { ?>
+                  <?php
+                  if ($_GET['create'] == "article" || $_GET['create'] == "product") { ?>
 
-                        <div class="input-field inline">
-                        <i class="material-icons prefix">label</i>
-                        <textarea id="h_tags" name="h_tags" class="materialize-textarea col s12"></textarea>
-                        <label for="h_tags" class="center-align">Tags</label>
-                        </div>
+                  <div class="input-field inline">
+                  <i class="material-icons prefix">label</i>
+                  <textarea id="h_tags" name="h_tags" class="materialize-textarea col s12"></textarea>
+                  <label for="h_tags" class="center-align">Tags</label>
+                  </div>
 
-                        <div class="input-field inline">
-                        <i class="material-icons prefix">label_outline</i>
-                        <textarea id="h_category" name="h_category" class="materialize-textarea col s12"></textarea>
-                        <label for="h_category" class="center-align">Categories</label>
-                        </div><?php
-                        } 
+                  <div class="input-field inline">
+                  <i class="material-icons prefix">label_outline</i>
+                  <textarea id="h_category" name="h_category" class="materialize-textarea col s12"></textarea>
+                  <label for="h_category" class="center-align">Categories</label>
+                  </div><?php
+                  } 
 
-                        if ($_GET['create'] == "product") { ?>
+                  if ($_GET['create'] == "product") { ?>
 
-                        <div class="input-field">
-                        <i class="material-icons prefix">monetization_on</i>
-                        <input id="h_price" type="text" name="h_price" >
-                        <label for="h_price" class="center-align">Price (KSh)</label>
-                        </div>
+                  <div class="input-field">
+                  <i class="material-icons prefix">monetization_on</i>
+                  <input id="h_price" type="text" name="h_price" >
+                  <label for="h_price" class="center-align">Price (KSh)</label>
+                  </div>
 
-                        <?php } ?>
-                      </div>
-                      </div>
-                      <div class="mdl-cell mdl-cell--5-col-desktop mdl-cell--5-col-tablet mdl-cell--12-col-phone mdl-card mdl-card--expand ">
+                  <?php } ?>
+                </div>
+                </div>
+                <div class="mdl-cell mdl-cell--5-col-desktop mdl-cell--5-col-tablet mdl-cell--12-col-phone mdl-card mdl-card--expand ">
 
-                        <div class="input-field inline mdl-card mdl-shadow--2dp">
-                          <div style="height:0px;overflow:hidden">
-                             <input type="file" id="h_avatar" name="h_avatar" />
-                          </div>
-                          <img id="havatar" src="<?php show( hIMAGES.'placeholder.svg' ); ?>" width="100%">
-                          </div>
-                           <script>
-                              $(function () {
-                                $(":file").change(function () {
-                                    if (this.files && this.files[0]) {
-                                        var reader = new FileReader();
-                                        reader.onload = imageIsLoaded;
-                                        reader.readAsDataURL(this.files[0]);
-                                    }
-                                });
-                            });
-
-                            function imageIsLoaded(e) {
-                                $('#havatar').attr('src', e.target.result);
-                            };
-                            </script>
-                              <span class="mdl-button mdl-button--fab" style="position: relative; left: 30%" onclick="chooseFile();"><i class="material-icons">edit</i></span>
-                              <script>
-                             function chooseFile() {
-                                $("#h_avatar").click();
-                             }
-                           </script><?php
-                          if ($_GET['create'] == "product") { ?>
-
-                          <div class="mdl-layout-spacer"></div>
-
-                        <div class="mdl-card mdl-shadow--2dp">
-                          <div class="file-field input-field">
-                          <div class="btn mdl-button">
-                            <i class="material-icons">photo_library</i>
-                            <input type="file" multiple>
-                          </div>
-                          <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text" placeholder="Product Gallery Images">
-                          </div>
-                          </div>
-                        </div>
-                        <?php } ?>
-                      </div>
-                        <input type="hidden" name="h_author" value="<?php echo $_SESSION['myCode']; ?>">
-                        <input type="hidden" name="h_by" value="<?php echo $_SESSION['myAlias']; ?>">
-                        <input type="hidden" name="h_center" value="<?php echo $_SESSION['myCenter']; ?>">
-                        <input type="hidden" name="h_level" value="public">
-                        <input type="hidden" name="h_location" value="<?php echo $_SESSION['myLocation']; ?>">
-                        <input type="hidden" name="h_phone" value="<?php echo $_SESSION['myPhone']; ?>">
-                        <input type="hidden" name="h_status" value="published">
-                        <input type="hidden" name="h_type" value="<?php echo $_GET['create']; ?>">
-
-                        <div class="mdl-cell mdl-cell--12-col ">
-                        <div class="input-field">
-                        <p><?php echo ucfirst($_GET['create']); ?> Content</p>
-                        <textarea class="materialize-textarea col s12" type="text" id="message" rows="5" name="h_desc"></textarea><script>CKEDITOR.replace( 'message' );</script>
-                        <br>
-                        <button class="mdl-button mdl-button--fab alignright" type="submit" name="create"><i class="material-icons">save</i></button>
-                        </div>
-                      </div>
-                    </form>
-            </div>
-            <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-card--expand mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
-            <?php
-                $getNotes = mysqli_query($GLOBALS['conn'], "SELECT * FROM hposts WHERE h_status='published' AND h_type = '".$_GET['create']."'");
-                if ($getNotes -> num_rows > 0) { ?>
-                    <div class="mdl-card__title">
-                    <i class="material-icons">query_builder</i>
-                      <span class="mdl-button">Recent Notifications</span>
-                    <div class="mdl-layout-spacer"></div>
-                      <div class="mdl-card__subtitle-text">
-                        <i class="material-icons">description</i>
-                      </div>
+                  <div class="input-field inline mdl-card mdl-shadow--2dp">
+                    <div style="height:0px;overflow:hidden">
+                       <input type="file" id="h_avatar" name="h_avatar" />
                     </div>
-                    <div class="mdl-card__supporting-text">
-                      <ul class="collapsible popout" data-collapsible="accordion"><?php
-                          while ($note = mysqli_fetch_assoc($getNotes)) { ?>
-                          <li>
-                            <div class="collapsible-header"><i class="material-icons">label_outline</i>
-                              
-                                <b><?php show( $note['h_alias'] ); ?></b><span class="alignright"><?php
-                                show( $note['h_created'] ); ?></span>
-                            </div>
-                            <div class="collapsible-body"><span class="alignright">
-                                <a href="./notification?create=note&code=<?php show( $note['h_author'] ); ?>" ><i class="material-icons">reply</i></a> 
-                                <a href="./notification?view=<?php show( $note['h_code'] ); ?>" ><i class="material-icons">open_in_new</i></a> 
-                                <a href="./notification?delete=<?php show( $note['h_code'] ); ?>" ><i class="material-icons">delete</i></a>
-                                </span>
-                                <span><?php
-                                show( $note['h_description'] ); ?></span>
-                            </div>
-                          </li><?php
-                          } ?>
-                    </ul>
-                    </div><?
-                  } else {
-                  echo '<div class="mdl-card__title">
-                  <i class="material-icons">donut_large</i>
-                    <span class="mdl-button">No '.ucfirst($_GET['create']).'s Found</span>
-                      <div class="mdl-layout-spacer">';
-                }
-              ?>
-        </div><?php
+                    <img id="havatar" src="<?php show( hIMAGES.'placeholder.svg' ); ?>" width="100%">
+                    </div>
+                     <script>
+                        $(function () {
+                          $(":file").change(function () {
+                              if (this.files && this.files[0]) {
+                                  var reader = new FileReader();
+                                  reader.onload = imageIsLoaded;
+                                  reader.readAsDataURL(this.files[0]);
+                              }
+                          });
+                      });
+
+                      function imageIsLoaded(e) {
+                          $('#havatar').attr('src', e.target.result);
+                      };
+                      </script>
+                        <span class="mdl-button mdl-button--fab" style="position: relative; left: 30%" onclick="chooseFile();"><i class="material-icons">edit</i></span>
+                        <script>
+                       function chooseFile() {
+                          $("#h_avatar").click();
+                       }
+                     </script><?php
+                    if ($_GET['create'] == "product") { ?>
+
+                    <div class="mdl-layout-spacer"></div>
+
+                  <div class="mdl-card mdl-shadow--2dp">
+                    <div class="file-field input-field">
+                    <div class="btn mdl-button">
+                      <i class="material-icons">photo_library</i>
+                      <input type="file" multiple>
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text" placeholder="Product Gallery Images">
+                    </div>
+                    </div>
+                  </div>
+                  <?php } ?>
+                </div>
+                  <input type="hidden" name="h_author" value="<?php echo $_SESSION['myCode']; ?>">
+                  <input type="hidden" name="h_by" value="<?php echo $_SESSION['myAlias']; ?>">
+                  <input type="hidden" name="h_center" value="<?php echo $_SESSION['myCenter']; ?>">
+                  <input type="hidden" name="h_level" value="public">
+                  <input type="hidden" name="h_location" value="<?php echo $_SESSION['myLocation']; ?>">
+                  <input type="hidden" name="h_phone" value="<?php echo $_SESSION['myPhone']; ?>">
+                  <input type="hidden" name="h_status" value="published">
+                  <input type="hidden" name="h_type" value="<?php echo $_GET['create']; ?>">
+
+                  <div class="mdl-cell mdl-cell--12-col ">
+                  <div class="input-field">
+                  <p><?php echo ucfirst($_GET['create']); ?> Content</p>
+                  <textarea class="materialize-textarea col s12" type="text" id="message" rows="5" name="h_desc"></textarea><script>CKEDITOR.replace( 'message' );</script>
+                  <br>
+                  <button class="mdl-button mdl-button--fab alignright" type="submit" name="create"><i class="material-icons">save</i></button>
+                  </div>
+                </div>
+              </form>
+      </div>
+      <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-card--expand mdl-color--<?php primaryColor($_SESSION['myCode']); ?>"><?php
+          $getNotes = mysqli_query($GLOBALS['conn'], "SELECT * FROM hposts WHERE h_status='published' AND h_type = '".$_GET['create']."'");
+          if ($getNotes -> num_rows > 0) { ?>
+              <div class="mdl-card__title">
+              <i class="material-icons">query_builder</i>
+                <span class="mdl-button">Recent Notifications</span>
+              <div class="mdl-layout-spacer"></div>
+                <div class="mdl-card__subtitle-text">
+                  <i class="material-icons">description</i>
+                </div>
+              </div>
+              <div class="mdl-card__supporting-text">
+                <ul class="collapsible popout" data-collapsible="accordion"><?php
+                    while ($note = mysqli_fetch_assoc($getNotes)) { ?>
+                    <li>
+                      <div class="collapsible-header"><i class="material-icons">label_outline</i>
+                        
+                          <b><?php show( $note['h_alias'] ); ?></b><span class="alignright"><?php
+                          show( $note['h_created'] ); ?></span>
+                      </div>
+                      <div class="collapsible-body"><span class="alignright">
+                          <a href="./notification?create=note&code=<?php show( $note['h_author'] ); ?>" ><i class="material-icons">reply</i></a> 
+                          <a href="./notification?view=<?php show( $note['h_code'] ); ?>" ><i class="material-icons">open_in_new</i></a> 
+                          <a href="./notification?delete=<?php show( $note['h_code'] ); ?>" ><i class="material-icons">delete</i></a>
+                          </span>
+                          <span><?php
+                          show( $note['h_description'] ); ?></span>
+                      </div>
+                    </li><?php
+                    } ?>
+              </ul>
+              </div><?
+            } else {
+            echo '<div class="mdl-card__title">
+            <i class="material-icons">donut_large</i>
+              <span class="mdl-button">No '.ucfirst($_GET['create']).'s Found</span>
+                <div class="mdl-layout-spacer">';
+            } ?>
+      </div><?php
   }
 
   function editPostForm($code) {
     $getPostCode = mysqli_query($GLOBALS['conn'], "SELECT * FROM hposts WHERE h_code = '".$code."'");
     if($getPostCode -> num_rows > 0) {
       while ($postDetails = mysqli_fetch_assoc($getPostCode)){
-        $names = explode(" ", $postDetails['h_alias']);
-
-        ?><title>Edit <?php show( $postDetails['h_alias'] ); ?> [ <?php getOption('name'); ?> ]</title>
+        $names = explode(" ", $postDetails['h_alias']); ?>
+        <title>Edit <?php show( $postDetails['h_alias'] ); ?> [ <?php getOption('name'); ?> ]</title>
         <div class="mdl-grid">
             <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-card--expand mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
-                <form name="postForm" method="POST" action="./post?edit=<?php show( $postDetails['h_code'] ); ?>" class="mdl-grid mdl-card__supporting-text mdl-card--expand">
+                <form enctype="multipart/form-data" name="postForm" method="POST" action="./post?edit=<?php show( $postDetails['h_code'] ); ?>" class="mdl-grid mdl-card__supporting-text mdl-card--expand">
                   <div class="mdl-cell mdl-cell--7-col-desktop mdl-cell--7-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-card--expand ">
                     <div class="mdl-cell mdl-cell--12-col">
                     <div class="input-field">
@@ -366,7 +362,7 @@ class _hForms {
                     </div>
 
                     <?php
-                    if ($_GET['create'] == "post" || $_GET['create'] == "product") { ?>
+                    if ($postDetails['h_type'] == "article" || $postDetails['h_type'] == "product") { ?>
 
                     <div class="input-field inline">
                     <i class="material-icons prefix">label</i>
@@ -396,7 +392,7 @@ class _hForms {
 
                     <div class="input-field inline mdl-card mdl-shadow--2dp">
                       <div style="height:0px;overflow:hidden">
-                         <input type="file" id="h_avatar" name="h_avatar" />
+                         <input type="file" id="h_avatar" name="h_avatar" value="<?php show( $postDetails['h_avatar'] ); ?>"/>
                       </div>
                       <img id="havatar" src="<?php show( $postDetails['h_avatar'] ); ?>" width="100%">
                       </div>
@@ -478,7 +474,7 @@ class _hForms {
     ?><div class="mdl-grid">
             <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-card--expand mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
                 <div class="mdl-card__supporting-text mdl-card--expand">
-                    <form name="messageForm" method="POST" action="">
+                    <form enctype="multipart/form-data" name="messageForm" method="POST" action="">
                       <title>New Notification</title>
                         <div class="input-field">
                         <input id="subject" type="text" name="h_alias" >
@@ -550,11 +546,10 @@ class _hForms {
         </div><?php
   }
 
-  function userForm() {
-
-        ?><title>Create <?php show( ucfirst($_GET['create']) ); ?> [ <?php getOption('name'); ?> ]</title>
+  function userForm() { ?>
+        <title>Create <?php show( ucfirst($_GET['create']) ); ?> [ <?php getOption('name'); ?> ]</title>
         <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
-        <form name="registerUser" method="POST" action="<?php show ( hPORTAL.'user?create' ); ?>" class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-grid">
+        <form enctype="multipart/form-data" name="registerUser" method="POST" action="<?php show ( hPORTAL.'user?create' ); ?>" class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-grid">
             <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
 
               <div class="input-field inline">
@@ -684,7 +679,7 @@ class _hForms {
         $names = explode(" ", $userDetails['h_alias']);
 
         ?><title>Editing <? show( $userDetails['h_alias']." [ ".getOption('name')." ]</title>" ); ?>
-        <form name="registerUser" method="POST" action="<?php show ( hPORTAL.'user?view='.$code ); ?>" class="mdl-grid" >
+        <form enctype="multipart/form-data" name="registerUser" method="POST" action="<?php show ( hPORTAL.'user?view='.$code.'&key='.$userDetails['h_alias'] ); ?>" class="mdl-grid" >
           <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
               <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
 
@@ -767,7 +762,7 @@ class _hForms {
                       <div class="input-field">
                       <i class="mdi mdi-bio prefix"></i>
                       <textarea class="materialize-textarea col s12" rows="5" id="h_description" name="h_description" >
-                      <?php show( $userDetails['h_description'] ); ?>
+                        <?php show( $userDetails['h_description'] ); ?>
                       </textarea>
                       <script>CKEDITOR.replace( 'h_description' );</script>
                       </div>
@@ -778,7 +773,7 @@ class _hForms {
                     <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
                     
                       <div style="height:0px;overflow:hidden">
-                         <input type="file" id="h_avatar" name="h_avatar" />
+                         <input type="file" id="h_avatar" name="h_avatar" value="<?php show( $userDetails['h_avatar'] ); ?>" />
                       </div>
                       <img id="havatar" src="<?php show( $userDetails['h_avatar'] ); ?>" width="100%">
 
@@ -826,11 +821,10 @@ class _hForms {
     }
   }
 
-  function serviceForm() {
-
-        ?><title>Create <?php show( ucfirst($_GET['create']) ); ?> [ <?php getOption('name'); ?> ]</title>
+  function serviceForm() { ?>
+        <title>Create <?php show( ucfirst($_GET['create']) ); ?> [ <?php getOption('name'); ?> ]</title>
         <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
-        <form name="registerService" method="POST" action="<?php show ( hPORTAL.'service?create' ); ?>" class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-grid">
+        <form enctype="multipart/form-data" name="registerService" method="POST" action="<?php show ( hPORTAL.'service?create' ); ?>" class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-grid">
             <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone">
 
               <div class="input-field">
@@ -921,7 +915,7 @@ class _hForms {
         $names = explode(" ", $userDetails['h_alias']);
 
         ?><title>Editing <? show( $userDetails['h_alias']." [ ".getOption('name')." ]</title>" ); ?>
-        <form name="registerUser" method="POST" action="<?php show ( hPORTAL.'user?create' ); ?>" class="mdl-grid" >
+        <form enctype="multipart/form-data" name="registerUser" method="POST" action="<?php show ( hPORTAL.'user?create' ); ?>" class="mdl-grid" >
           <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
               <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
 
@@ -1056,11 +1050,10 @@ class _hForms {
     }
   }
 
-  function resourceForm() {
-
-        ?><title><?php show( $resourceDetails['h_alias'] ); ?> Create <?php show( ucfirst($_GET['create']) ); ?> [ <?php getOption('name'); ?> ]</title>
+  function resourceForm() { ?>
+        <title><?php show( $resourceDetails['h_alias'] ); ?> Create <?php show( ucfirst($_GET['create']) ); ?> [ <?php getOption('name'); ?> ]</title>
         <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
-        <form name="registerResource" method="POST" action="<?php show ( hPORTAL."resource?create=center" ); ?>" class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-grid">
+        <form enctype="multipart/form-data" name="registerResource" method="POST" action="<?php show ( hPORTAL."resource?create=center" ); ?>" class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-grid">
             <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
 
               <div class="input-field">
@@ -1171,7 +1164,7 @@ class _hForms {
         $names = explode(" ", $resourceDetails['h_alias']);
 
         ?><title>Editing <? show( $resourceDetails['h_alias']." [ ".getOption('name')." ]</title>" ); ?>
-        <form name="registerResource" method="POST" action="<?php show ( hPORTAL.'resource?create' ); ?>" class="mdl-grid" >
+        <form enctype="multipart/form-data" name="registerResource" method="POST" action="<?php show ( hPORTAL.'resource?create' ); ?>" class="mdl-grid" >
           <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
               <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
 
@@ -1286,4 +1279,4 @@ class _hForms {
     }
   }
 
-} 
+} ?>

@@ -108,8 +108,23 @@ class _hUsers {
     $h_alias = $_POST['fname'].' '.$_POST['lname'];
     $h_author = substr($hash, 20);
     
-    if ($_POST['h_avatar'] == "") {
+    if ($_FILES['h_avatar'] == "") {
       $h_avatar = hIMAGES.'avatar.svg';
+    } else {
+      $uploads = "../uploads/".date('Y').'/'.date('m').'/'.date('d').'/';
+      $upload = $uploads . basename( $_FILES['h_avatar']['name'] );
+
+      if (file_exists($upload)) {
+        echo "Sorry, file already exists.";
+        $uploadOk = 0;
+      }
+
+      if (move_uploaded_file($_FILES['h_avatar']["tmp_name"], $upload)) {
+          //Do nothing
+      } else {
+          echo "Sorry, there was an error uploading your file.";
+      }
+      $h_avatar = $uploads.$_FILES['h_avatar']['name'];
     }
 
     $h_center = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_center']);
@@ -150,21 +165,36 @@ class _hUsers {
     $abbr = substr($_POST['lname'], 0,2);
 
     $h_alias = $_POST['fname'].' '.$_POST['lname'];
-    $h_avatar = $_POST['h_avatar'];
-    $h_center = $_POST['h_center'];
+
+    $uploads = "../uploads/".date('Y').'/'.date('m').'/'.date('d').'/';
+    $upload = $uploads . basename( $_FILES['h_avatar']['name'] );
+
+    if (file_exists($upload)) {
+      echo "Sorry, file already exists.";
+      $uploadOk = 0;
+    }
+
+    if (move_uploaded_file($_FILES['h_avatar']["tmp_name"], $upload)) {
+        //Do nothing
+    } else {
+        echo "Sorry, there was an error uploading your file.";
+    }
+    $h_avatar = $uploads.$_FILES['h_avatar']['name'];
+
+    $h_center = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_center'] );
     $h_created = date('Ymd');
-    $h_description = $_POST['h_description'];
+    $h_description = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_description'] );
     $h_email = $_POST['h_email'];
 
-    $h_gender = $_POST['h_gender'];
+    $h_gender = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_gender'] );
     $h_gender = strtolower( $h_gender );
 
     $h_key = $hash;
-    $h_level = $_POST['h_level'];
-    $h_link = hPORTAL."user?view=$h_code";
+    $h_level = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_level'] );
+    $h_link = hPORTAL."user?view=$h_code&key=$h_alias";
 
-    $h_location = strtolower( $_POST['h_location'] );
-    $h_location = $h_location;
+    $h_location = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_location'] );
+    $h_location = strtolower( $h_location );
 
     $h_notes = "Account updated on ".$date;
     
@@ -179,7 +209,7 @@ class _hUsers {
 
     if (mysqli_query($GLOBALS['conn'], "UPDATE husers SET h_alias = '".$h_alias."', h_avatar = '".$h_avatar."', h_center = '".$h_center."', h_created = '".$h_created."', h_description = '".$h_description."', h_email = '".$h_email."', h_gender = '".$h_gender."', h_key = '".$h_key."', h_level = '".$h_level."', h_link = '".$h_link."', h_location = '".$h_location."', h_notes = '".$h_notes."', h_password = '".$h_password."', h_phone = '".$h_phone."', h_type = '".$h_type."' WHERE h_code = '".$code."'")) {
       echo "<script type = \"text/javascript\">
-              alert(\"User Updated Successfully!\");
+              alert(\" $h_alias Updated Successfully!\");
           </script>";
     } else {
       echo '<script type = \"text/javascript\">
@@ -537,14 +567,16 @@ class _hUsers {
           $greettype = 'About '.ucfirst($name[0]);
         } else {
           $name = explode(" ", $userDetails['h_alias']);
-          $greettype = '<b>Hello,</b> '.ucfirst($name[0]);
+          $greettype = '<b>Hello </b> '.ucfirst($name[0])."!";
         }
         ?><title><?php show( $userDetails['h_alias'] ); ?> [ <?php getOption('name'); ?> ]</title>
         <div class="mdl-grid" >
               <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
                     <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
                         <div class="mdl-card__title">
-                            <h2 class="mdl-card__title-text"><?php show ( $greettype ); ?></h2>
+                            <div class="mdl-card__title-text">
+                            <span><?php show ( $greettype ); ?></span>
+                            </div>
 
                             <div class="mdl-layout-spacer"></div>
                             <div class="mdl-card__subtitle-text">
@@ -554,7 +586,7 @@ class _hUsers {
                             </div>
                         </div>
                         <div class="mdl-card__supporting-text mdl-card--expand mdl-grid">
-                          <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
+                          <div class="mdl-cell mdl-cell--7-col-desktop mdl-cell--7-col-tablet mdl-cell--12-col-phone">
                             <h5><i class="mdi mdi-gender-<?php 
                                 if (strtolower($userDetails['h_gender']) == "male") {
                                   echo "male";
@@ -577,7 +609,7 @@ class _hUsers {
                             <a href="./notification?create=note"><i class="material-icons">notifications</i></a>
                             
                           </div>
-                          <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
+                          <div class="mdl-cell mdl-cell--5-col-desktop mdl-cell--5-col-tablet mdl-cell--12-col-phone">
                             <img src="<?php show( $userDetails['h_avatar'] ); ?>" width="100%">
                           </div>
                           <div class="mdl-cell mdl-cell--12-col">

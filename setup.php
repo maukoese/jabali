@@ -11,9 +11,9 @@ if (file_exists('./functions/config.php')) {
 	header("Location: ./login");
 }
 
-if (isset($_POST['setup']) && $_POST['host'] != "" && $_POST['user'] != "" && $_POST['password'] != "" && $_POST['name'] != "") {
+include './functions/jabali.php';
 
-	include './functions/jabali.php';
+if (isset($_POST['setup']) && $_POST['host'] != "" && $_POST['user'] != "" && $_POST['password'] != "" && $_POST['name'] != "") {
 	
 	$dbhost = $_POST["host"];
 	$dbname = $_POST["name"];
@@ -35,7 +35,7 @@ if (isset($_POST['setup']) && $_POST['host'] != "" && $_POST['user'] != "" && $_
 		fwrite($dbfile, $txt);
 		$txt = "\n";
 		fwrite($dbfile, $txt);
-		$txt = '* @subpackage Configuration';
+		$txt = '* @subpackage Configuration File';
 		fwrite($dbfile, $txt);
 		$txt = "\n";
 		fwrite($dbfile, $txt);
@@ -101,7 +101,7 @@ if (isset($_POST['setup']) && $_POST['host'] != "" && $_POST['user'] != "" && $_
 	<div style="padding-top:40px;" class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
     <div id="login_div">
         <center><img src="./assets/images/logo.png"></center>
-        <form method="POST" action="">
+        <form enctype="multipart/form-data" method="POST" action="">
         <div class="input-field">
         <i class="material-icons prefix">account_circle</i>
         <input name="host" id="host" type="text" value="localhost">

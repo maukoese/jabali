@@ -289,7 +289,7 @@ class _hNotifications {
                         </div>';
       }
             ?><div class="mdl-card__supporting-text mdl-card--expand">
-                    <form name="notificationForm" method="POST" action="">
+                    <form enctype="multipart/form-data" name="notificationForm" method="POST" action="">
                       <title>Create Notification</title>
                         <input type="hidden" name="h_alias" value="Reply">
                         <input type="hidden" name="h_email" value="'.$_SESSION['myEmail'].'">

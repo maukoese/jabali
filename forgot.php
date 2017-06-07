@@ -42,7 +42,7 @@ if (isset($_POST['login'])) {
 <div style="padding-top:40px;" >
     <div id="login_div">
 <center><?php frontlogo(); ?>
-        <form method="POST" action="">
+        <form enctype="multipart/form-data" method="POST" action="">
         
         <div class="input-field">
         <i class="mdi-social-person-outline prefix"></i>
