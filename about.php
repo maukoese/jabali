@@ -1,8 +1,8 @@
 <?php include './header.php'; ?>
-<title>What is JABALI? [ <?php getOption('name'); ?> ]</title>
+<title>About [ <?php getOption('name'); ?> ]</title>
     <div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
       <div class="demo-main mdl-layout__content">
-      <div class="demo-ribbon mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" style="background: url(<?php echo hIMAGES.'logo.png' ?>);">
+      <div class="demo-ribbon mdl-color--<?php if( isset( $_SESSION['myCode'] ) ){ primaryColor($_SESSION['myCode']); } else { echo "blue"; }?>" style="background: url(<?php echo hIMAGES.'logo.png' ?>);">
       <center><img src="<?php echo hIMAGES.'logo-w.png' ?>" width="250px;"></center></div>
       
         <div class="demo-container mdl-grid">

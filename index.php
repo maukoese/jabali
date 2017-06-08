@@ -7,6 +7,8 @@
 * @version 0.17.06
 **/
 
+session_start();
+
 $dbfile = 'functions/config.php';
 if (!file_exists($dbfile)) {
 	header("Location: setup");
@@ -38,7 +40,7 @@ if (isset($_GET['post'])) {
 		if (isset($_GET['logout'])) {
 			session_destroy();
 
-			echo '<div id="success" class="alert mdl-color--red">
+			echo '<div id="success" class="alert mdl-color--orange">
                     <span>You are now logged out!</span>
                 </div>';
 		} ?>

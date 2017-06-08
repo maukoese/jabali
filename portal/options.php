@@ -41,6 +41,7 @@ if (isset($_POST['preferences'])) {
     mysqli_query($GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$header_logo."', h_updated = '".$date."'  WHERE h_code='header_logo'");
     mysqli_query($GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$home_logo."', h_updated = '".$date."'  WHERE h_code='home_logo'");
     mysqli_query($GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$favicon."', h_updated = '".$date."'  WHERE h_code='favicon'");
+    mysqli_query($GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['registration']."', h_updated = '".$date."'  WHERE h_code='registration'");
     mysqli_query($GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['tos']."', h_updated = '".$date."'  WHERE h_code='tos'");
 
     echo "<script type = \"text/javascript\">
@@ -139,7 +140,11 @@ if (isset($_GET['page'])) {
                     <label for="h_tos" data-error="wrong" data-success="right" class="center-align">Terms of Service </label>
                 </div>
                 <br>
-                <button class="mdl-button mdl-button--fab" type="submit" name="preferences"><i class="material-icons">save</i></button>
+                <p>
+                  <input type="checkbox" id="registration" name="registration" <?php getOption('registration'); ?> value="checked" />
+                  <label for="registration">Allow User Registrations?</label>
+                </p>
+                <button class="mdl-button mdl-button--fab alignright" type="submit" name="preferences"><i class="material-icons">save</i></button>
             </div>
         </form>
         </div>

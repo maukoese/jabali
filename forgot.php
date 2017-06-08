@@ -42,18 +42,15 @@ if (isset($_POST['login'])) {
 <div style="padding-top:40px;" >
     <div id="login_div">
 <center><?php frontlogo(); ?>
-        <form enctype="multipart/form-data" method="POST" action="">
+        <form enctype="multipart/form-data" method="POST" action="" class="">
         
         <div class="input-field">
-        <i class="mdi-social-person-outline prefix"></i>
+        <i class="material-icons prefix">mail</i>
         <input class="validate" name="email" id="email" type="email">
         <label for="email" data-error="wrong" data-success="right" class="center-align">Enter Your Email</label>
         </div>
 
-        <div class="input-field">
-        <button class="btn waves-effect waves-light" type="submit" name="forgot">SUBMIT</button>
-        </div>
-
+        <button class="mdl-button mdl-button--fab mdl-button--colored alignright" type="submit" name="forgot"><i class="material-icons">send</i></button>
         <p>
         <a href="./register" id="register">Register</a>
         <a href="./login" id="forgot">Already Registered? Login</a>

@@ -122,7 +122,7 @@ $hSocial = new _hSocial();
 </head>
 <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
 <body>
-        <header class="demo-header mdl-layout__header mdl-color-text--grey-600" style="background: url(<?php echo hIMAGES.'bgs/'; ?><?php if (isset($_SESSION['myCode'])) { primaryColor($_SESSION['myCode']); } else { echo "blue"; } ?>.jpg) no-repeat;">
+        <header class="demo-header mdl-layout__header mdl-color-text--grey-600 mdl-color--<?php if (isset($_SESSION['myCode'])) { primaryColor($_SESSION['myCode']); } else { echo "grey"; } ?>">
         <div class="mdl-layout__header-row">
           <a href="<?php if (file_exists('./functions/db.php')) {
               echo hROOT;
@@ -173,4 +173,4 @@ $hSocial = new _hSocial();
           </ul>
         </div>
       </header>
-    <main class="mdl-layout__content" style="background: url(<?php echo hIMAGES.'bgs/'; ?><?php if (isset($_SESSION['myCode'])) { primaryColor($_SESSION['myCode']); } else { echo "blue"; } ?>.jpg) no-repeat;">
+    <main class="mdl-layout__content mdl-color--<?php if (isset($_SESSION['myCode'])) { primaryColor($_SESSION['myCode']); } else { echo "grey"; } ?>">

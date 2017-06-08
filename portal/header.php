@@ -119,7 +119,7 @@ $hSocial = new _hSocial();
   </head>
   <body>
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-      <header class="demo-header mdl-layout__header mdl-color-text--grey-600" style="background: url(<?php echo hIMAGES.'bgs/'; ?><?php primaryColor($_SESSION['myCode']); ?>.jpg) no-repeat;">
+      <header class="demo-header mdl-layout__header mdl-color-text--grey-600 mdl-color--<?php primaryColor($_SESSION['myCode']); ?>">
         <div class="mdl-layout__header-row">
           <span class="mdl-layout-title"><?php 
           if (isset($_GET['type'])) {
@@ -208,7 +208,7 @@ $hSocial = new _hSocial();
           <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" for="hdrbtn">
             <a class="mdl-menu__item mdl-list__item" href="<?php show( hROOT . 'about' ); ?>"><i class="material-icons mdl-list__item-icon">account_circle</i><span style="padding-left: 20px">About JABALI</span></a>
             <a class="mdl-menu__item mdl-list__item"href="<?php show( hPORTAL . 'service?create=request');?>"><i class="material-icons mdl-list__item-icon">link</i><span style="padding-left: 20px">Request Service</span></a>
-            <a class="mdl-menu__item mdl-list__item"href="<?php show( hROOT . 'logout?action=true' );?>"><i class="material-icons mdl-list__item-icon text-color--secondary">exit_to_app</i><span style="padding-left: 20px">Logout</span></a>
+            <a class="mdl-menu__item mdl-list__item"href="<?php show( hROOT . '?logout=true' );?>"><i class="material-icons mdl-list__item-icon text-color--secondary">exit_to_app</i><span style="padding-left: 20px">Logout</span></a>
           </ul>
         </div>
       </header>
@@ -236,31 +236,38 @@ $hSocial = new _hSocial();
                     <i class="mdl-color-text--white material-icons" role="presentation">group</i>
                     Doctors
                 </a>
-                <a class="mdl-navigation__link" id="husers" href="./user?view=list&type=manager">
+                <a class="mdl-navigation__link" id="husers" href="./user?view=list&type=center">
                     <i class="mdl-color-text--white material-icons" role="presentation">supervisor_account</i>
-                    Managers
-                </a>
+                    Centers
+                </a><?php if ( isCap( 'admin' ) ) { ?>
                 <div class="mdl-layout-spacer"></div>
-                <a class="mdl-navigation__link" href="./user?view=<?php echo $_SESSION['myCode']; ?>">
-                    <i class="mdl-color-text--white material-icons" role="presentation">account_circle</i>
-                    My Profile
-                </a>
+                <a class="mdl-navigation__link" href="./user?view=pending">
+                    <i class="mdl-color-text--white material-icons" role="presentation">done</i>
+                    Pending Users
+                </a><?php } ?>
             </ul>
           <a id="hresources" class="mdl-navigation__link" href="#"><i class="mdl-color-text--white material-icons" role="presentation">local_hospital</i>Resources</a>
             <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" for="hresources">
-                <a class="mdl-navigation__link mdl-navigation__link--current" href="./resource?view=list&key=resources">
-                    <i class="material-icons" role="presentation">local_hospital</i>
-                    All Resources
+
+                <a class="mdl-navigation__link mdl-navigation__link--current" href="./resource?view=list&location=<?php show( strtolower($_SESSION['myLocation']) ); ?>&type=ambulance">
+                    <i class="material-icons" role="presentation">directions_car</i>
+                    Nearby Ambulances
                 </a>
 
-                <a class="mdl-navigation__link mdl-navigation__link--current" href="./resource?view=list&type=center">
-                    <i class="material-icons" role="presentation">business</i>
-                    All Centers
+                <a class="mdl-navigation__link" id="husers" href="./resource?view=list&location=<?php show( strtolower($_SESSION['myLocation']) ); ?>&type=lab">
+                    <i class="mdl-color-text--white material-icons" role="presentation">business</i>
+                    Nearby Labs
                 </a>
 
-                <a class="mdl-navigation__link" id="husers" href="./resource?view=list&location=<?php show( strtolower($_SESSION['myLocation']) ); ?>">
-                    <i class="mdl-color-text--white material-icons" role="presentation">room</i>
-                    Centers In My Area
+                <a class="mdl-navigation__link" id="husers" href="./resource?view=list&location=<?php show( strtolower($_SESSION['myLocation']) ); ?>&type=morgue">
+                    <i class="mdl-color-text--white material-icons" role="presentation">business</i>
+                    Nearby Morgues
+                </a>
+                <div class="mdl-layout-spacer"></div>
+
+                <a class="mdl-navigation__link mdl-navigation__link--current" href="./user?view=list&location=<?php show( strtolower($_SESSION['myLocation']) ); ?>&type=center">
+                    <i class="material-icons" role="presentation">room</i>
+                    Nearby Centers
                 </a>
             </ul>
           <a id="hservices" class="mdl-navigation__link" href="#"><i class="mdl-color-text--white material-icons" role="presentation">link</i>My Services</a>
@@ -293,4 +300,4 @@ $hSocial = new _hSocial();
           <?php } ?>
         </nav>
       </div>
-      <main class="mdl-layout__content" style="background: url(<?php echo hIMAGES.'bgs/'; ?><?php primaryColor($_SESSION['myCode']); ?>.jpg) no-repeat;">
+      <main class="mdl-layout__content mdl-color--">

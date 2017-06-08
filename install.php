@@ -104,6 +104,7 @@ if (isset($_POST['register'])) {
 	mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Home Logo', 'home_logo', '".hIMAGES."logo2.png', '".$h_created."')");
 	mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Favicon', 'favicon', '".hIMAGES."marker.png', '".$h_created."')");
 	mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions (h_alias, h_code, h_description, h_updated) VALUES('Terms Of Service', 'tos', '".$tos."', '".$h_created."')");
+	mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions (h_alias, h_code, h_updated) VALUES('Allow Registration', 'registration', '".$h_created."')");
 
     if (mysqli_query($GLOBALS['conn'], "INSERT INTO husers (h_author, h_avatar, h_center, h_code, h_created, h_email, h_key, h_level, h_notes, h_password, h_phone, h_status, h_style, h_type, h_username) 
     VALUES ('".$h_author."', '".$h_avatar."', '".$h_center."', '".$h_code."', '".$h_created."', '".$h_email."', '".$h_key."', '".$h_level."', '".$h_notes."', '".$h_password."', '".$h_phone."', '".$h_status."', '".$h_style."', '".$h_type."', '".$h_username."')")) {

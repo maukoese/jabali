@@ -1,5 +1,7 @@
-<?php include './header.php';
-include '../extensions/zahra/class.poems.php';
+<?php 
+//to-do move to zahra
+include './header.php';
+include '../extensions/zahra/zahra.php';
 $hPoem = new _hPoems();
 
 if(isset($_GET['view'])){

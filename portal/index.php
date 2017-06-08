@@ -16,7 +16,7 @@ function getCount($utype) {
 	}
 }
 
-$types = "admin, doctor, nurse, manager, patient";
+$types = "admin, doctor, nurse, center, patient";
 $type = explode(", ", $types);
 
 ?>

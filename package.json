@@ -1,9 +1,8 @@
 {
-	"name": "Banda",
-	"slug": "banda",
+	"name": "Jabali Framework",
+	"slug": "jabali",
 	"version": "0.17.06",
 	"author": "Mauko Maunde",
-	"category": "e-commerce",
 	"screenshot": "http://localhost/jabali/assets/images/avatar.svg",
 	"description": "An extension to create an online ecommerce store with jabali",
 	"social": {
@@ -12,9 +11,10 @@
 		"github": "http://github.com/maukoese",
 		"email": "maukoese@gmail.com"
 	},
-	"website": "http://jabali.mauko.co.ke/extensions/banda",
+	"website": "http://jabali.mauko.co.ke/",
 	"support": "http://jabali.mauko.co.ke/support",
-	"download": "http://code.mauko.co.ke/dl/extensions/banda.zip",
+	"documentation": "http://jabali.mauko.co.ke/documentation",
+	"download": "http://code.mauko.co.ke/dl/jabali.zip",
 	"licences": {
 		"MIT": "https://opensource.org/licenses/MIT",
 		"GNU": "https://opensource.org/licenses/gpl-license",

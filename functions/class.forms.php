@@ -90,7 +90,7 @@ class _hForms {
 
   function contactForm() { ?>
     <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-card--expand mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
+      <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-card--expand mdl-color--<?php if( isset( $_SESSION['myCode'] ) ){ primaryColor($_SESSION['myCode']); } else { echo "blue"; }?>">
           <div class="mdl-card__supporting-text mdl-card--expand">
             <form>
               <div class="input-field inline">
@@ -577,10 +577,11 @@ class _hForms {
                       show( '<li class="mdl-menu__item" data-val="admin">Admin</li>' );
                      } ?>
                      <li class="mdl-menu__item" data-val="doctor">Doctor</li>
-                     <li class="mdl-menu__item" data-val="manager">Manager</li>
+                     <li class="mdl-menu__item" data-val="center">Center</li>
                    </ul>
                 </div>
 
+                <?php if ($_GET['create'] !== "center") { ?>
                 <div class="input-field inline mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
                   <i class="mdi mdi-gender-transgender prefix"></i>
                  <input class="mdl-textfield__input" id="h_gender" name="h_gender" type="text" readonly tabIndex="-1" placeholder="Gender" >
@@ -589,7 +590,7 @@ class _hForms {
                      <li class="mdl-menu__item" data-val="female">Female</li>
                      <li class="mdl-menu__item" data-val="other">Other</li>
                    </ul>
-                </div>
+                </div><? } ?>
 
               <div class="input-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
                 <i class="material-icons prefix">room</i>
@@ -612,12 +613,12 @@ class _hForms {
               <label for="h_phone" class="center-align">Phone Number</label>
               </div>
 
-
+              <?php if ($_GET['create'] !== "center") { ?>
               <div class="input-field">
                 <i class="material-icons prefix">local_hospital</i>
               <input id="h_center" name="h_center" type="text" >
               <label for="h_center">Center</label>
-              </div>
+              </div><?php } ?>
 
               <div class="input-field">
                 <i class="material-icons prefix">mail</i>
@@ -629,6 +630,11 @@ class _hForms {
                 <i class="material-icons prefix">lock</i>
               <input id="password" name=="h_password" type="text" >
               <label for="password">Password</label>
+              </div>
+
+              <div class="input-field center-align">
+                <input type="checkbox" id="remember-me" name="h_status" value="active"/>
+                <label for="remember-me">Activate Account</label>
               </div>
 
               <br>
@@ -660,11 +666,6 @@ class _hForms {
                     $("#h_avatar").click();
                  }
                </script>
-
-              <div class="input-field center-align">
-                <input type="checkbox" id="remember-me" name="h_status" name="active"/>
-                <label for="remember-me">Activate Account</label>
-              </div>
 
               <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" type="submit" style="margin-left: 150px;margin-top: 100px;" name="register"><i class="material-icons">save</i></button>  
           </div>
@@ -706,7 +707,7 @@ class _hForms {
                             show( '<li class="mdl-menu__item" data-val="admin">Admin</li>' );
                            } ?>
                            <li class="mdl-menu__item" data-val="doctor">Doctor</li>
-                           <li class="mdl-menu__item" data-val="manager">Manager</li>
+                           <li class="mdl-menu__item" data-val="center">Center</li>
                          </ul>
                       </div>
                              
@@ -802,12 +803,9 @@ class _hForms {
                       <div class="input-field">
                       <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-2">
                         <input type="checkbox" id="switch-2" class="mdl-switch__input"> <span style="padding-left: 20px;">Online/Offline</span>         
-                      </label> 
-                      </div><br>
+                      </label>
                       <input type="hidden" name="code" value="<?php show( $code ); ?>" >
-
-                      <div class="input-field">
-                          <button type="submit" name="update" class="mdl-button mdl-button--fab"><i class="material-icons">save</i></button>
+                          <button type="submit" name="update" class="mdl-button mdl-button--fab alignright"><i class="material-icons">save</i></button>
                       </div>
                       </center>
                     </div>
@@ -841,7 +839,7 @@ class _hForms {
                  <input class="mdl-textfield__input" id="h_type" name="h_type" type="text" readonly tabIndex="-1" placeholder="<?php show( ucwords($_SESSION['myCap']) ); ?>" data-val="<?php show( $_SESSION['myCap'] ); ?>">
                    <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" for="h_type">
                      <li class="mdl-menu__item" data-val="doctor">Doctor</li>
-                     <li class="mdl-menu__item" data-val="manager">Manager</li>
+                     <li class="mdl-menu__item" data-val="center">Center</li>
                      <li class="mdl-menu__item" data-val="nurse">Nurse</li>
                      <li class="mdl-menu__item" data-val="patient">Patient</li>
                    </ul>
@@ -939,7 +937,7 @@ class _hForms {
                        <input class="mdl-textfield__input" id="h_type" name="h_type" type="text" readonly tabIndex="-1" placeholder="<?php show( ucfirst($userDetails['h_type']) ); ?>" value="<?php show( ucwords($userDetails['h_type']) ); ?>">
                          <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" for="h_type">
                            <li class="mdl-menu__item" data-val="doctor">Doctor</li>
-                           <li class="mdl-menu__item" data-val="manager">Manager</li>
+                           <li class="mdl-menu__item" data-val="center">Center</li>
                            <li class="mdl-menu__item" data-val="nurse">Nurse</li>
                            <li class="mdl-menu__item" data-val="patient">Patient</li>
                          </ul>
@@ -1070,16 +1068,16 @@ class _hForms {
                     echo 'Type';
                   } ?>" >
                    <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" for="h_type">
-                     <li class="mdl-menu__item" data-val="center">Center</li>
-                     <li class="mdl-menu__item" data-val="equipment">Equipment</li>
+                     <li class="mdl-menu__item" data-val="ambulance">Ambulance</li>
                      <li class="mdl-menu__item" data-val="lab">Lab</li>
                      <li class="mdl-menu__item" data-val="ward">Ward</li>
+                     <li class="mdl-menu__item" data-val="morgue">Morgue</li>
                    </ul>
                 </div>
 
               <div class="input-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
                 <i class="material-icons prefix">room</i>
-              <input class="mdl-textfield__input" type="text" id="counties" name="h_location" readonly tabIndex="-1" placeholder="Location">
+              <input class="mdl-textfield__input" type="text" id="counties" name="h_location" readonly tabIndex="-1" value="<?php show( $_SESSION['myLocation']); ?>">
               <ul for="counties" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" style="max-height: 300px !important; overflow-y: auto;">
                   <?php 
                   $county_list = "baringo, bomet, bungoma, busia, elgeyo-marakwet, embu, garissa, homa bay, isiolo, kakamega, kajiado, kapenguria, kericho, kiambu, kilifi, kirinyanga, kisii, kisumu, kitui, kwale, laikipia, lamu, machakos, makueni, mandera, marsabit, meru, migori, mombasa, muranga, nairobi, nakuru, nandi, narok, nyamira, nyandarua, nyeri, ol kalou, samburu, siaya, taita-taveta, tana river, tharaka-nithi, trans-nzoia, turkana, uasin-gishu, vihiga, wajir, west pokot";
@@ -1101,7 +1099,7 @@ class _hForms {
 
               <div class="input-field">
                 <i class="material-icons prefix">local_hospital</i>
-              <input id="h_center" name="h_center" type="text" >
+              <input id="h_center" name="h_center" type="text" value="<?php show( $_SESSION['myCenter']); ?>">
               <label for="h_center">Center</label>
               </div>
 

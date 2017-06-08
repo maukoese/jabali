@@ -1,17 +1,7 @@
 <?php 
 include './header.php';
 include '../functions/payments/MPESA.php';
-if (isset($_POST['pay']) && $_POST['amount'] !== "" && $_POST['h_phone'] !== "") {
-    $AMOUNT = $_POST['amount'];
-    $NUMBER = $_POST['h_phone']; //format 254700000000
-    $PRODUCT_ID = $_GET['order'];
-    //init MPESA class
-  	$mpesa = new MPESA(ENDPOINT, CALLBACK_URL, CALL_BACK_METHOD, PAYBILL_NO, TIMESTAMP, PASSWORD,$GLOBALS['conn']);
-    $mpesa->setProductID($PRODUCT_ID);
-    $mpesa->setAmount($AMOUNT);
-    $mpesa->setNumber($NUMBER); // replaces 0 with 254
-    $mpesa->init();
-}
+
 ?>
 <title>Shop [ <?php getOption('name'); ?> ]</title>
   <div class="mdl-grid mdl-card">

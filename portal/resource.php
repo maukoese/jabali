@@ -23,10 +23,19 @@ if(isset($_GET['view'])){
 	if ($_GET['view'] == "list") {
 		if(isset($_GET['type'])) {
 			$hResource -> getResourcesType($_GET['type']);
+			if ( isCap( 'admin' ) || isCap( 'center' ) ) {
+				newButton('resource', $_GET['type'], 'create');
+			}
 		} elseif(isset($_GET['location'])) {
 			$hResource -> getResourcesLoc($_GET['location']);
+			if ( isCap( 'admin' ) || isCap( 'center' ) ) {
+				newButton('resource', $_GET['location'], 'create');
+			}
 		} else {
 			$hResource -> getResources();
+			if ( isCap( 'admin' ) || isCap( 'center' ) ) {
+				newButton('resource', 'center', 'create');
+			}
 		}
 	} else {
 		$hResource -> getResourceCode($_GET['view']);

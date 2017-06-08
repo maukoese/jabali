@@ -185,7 +185,7 @@ class _hMessages {
 
   function getUnreadMessages() { ?>
     <title>Unread Messages - <? getMsgCount(); ?> [ <?php getOption('name'); ?> ]</title><?php
-    $getMessages = mysqli_query($GLOBALS['conn'], "SELECT * FROM hmessages WHERE h_status = 'unread' ORDER BY h_created DESC");
+    $getMessages = mysqli_query($GLOBALS['conn'], "SELECT * FROM hmessages WHERE (h_status = 'unread' AND h_for = '".$_SESSION['myCode']."') ORDER BY h_created DESC");
     if($getMessages -> num_rows > 0) {?>
       <div style="margin:1%;" >
       <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>"><thead>
@@ -237,7 +237,9 @@ class _hMessages {
         </thead>
         <tbody>
         <tr>
-        <td><p>Oops! You have read all your messages.</p></td>
+        <td>
+        <center><i class="material-icons">done_all</i><p>Oops! You have read all your messages.</p></center>
+        </td>
         </tr>
         </tbody>
         </table>

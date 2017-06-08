@@ -43,20 +43,18 @@ if (isset($_POST['reset'])) {
         <form enctype="multipart/form-data" method="POST" action="">
 
         <div class="input-field">
-        <i class="mdi-social-person-outline prefix"></i>
+        <i class="material-icons prefix">lock</i>
         <input class="validate" name="pass1" id="email" type="password">
         <label for="email" data-error="wrong" data-success="right" class="center-align">New Password</label>
         </div>
 
         <div class="input-field">
-        <i class="mdi-action-lock-outline prefix"></i>
+        <i class="material-icons prefix">lock</i>
         <input name="password" id="password" type="password">
         <label for="password">Repeat Password</label>
         </div>
 
-        <div class="input-field">
-        <button class="btn waves-effect waves-light" type="submit" name="action">RESET PASSWORD</button>
-        </div>
+        <button class="mdl-button mdl-button--fab mdl-button--colored alignright" type="submit" name="reset"><i class="material-icons">send</i></button>
 
         <p>
         <a href="./register" id="register">Register</a>

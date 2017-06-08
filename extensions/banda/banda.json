@@ -1,7 +1,6 @@
 {
 	"name": "Banda",
 	"slug": "banda",
-	"version": "0.17.06",
 	"author": "Mauko Maunde",
 	"category": "e-commerce",
 	"screenshot": "http://localhost/jabali/assets/images/avatar.svg",
@@ -13,11 +12,5 @@
 		"email": "maukoese@gmail.com"
 	},
 	"website": "http://jabali.mauko.co.ke/extensions/banda",
-	"support": "http://jabali.mauko.co.ke/support",
-	"download": "http://code.mauko.co.ke/dl/extensions/banda.zip",
-	"licences": {
-		"MIT": "https://opensource.org/licenses/MIT",
-		"GNU": "https://opensource.org/licenses/gpl-license",
-		"Apache": "https://opensource.org/licenses/Apache-2.0"
-	}
+	"support": "http://jabali.mauko.co.ke/support"
 }

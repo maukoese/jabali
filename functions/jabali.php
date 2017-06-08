@@ -241,59 +241,6 @@ function installJabali($module) {
 			return false;
 		}
 
-	} elseif ($module == "shop") {
-		$hproducts = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hproducts (
-		h_code VARCHAR(16), 
-		h_price VARCHAR(50),
-		PRIMARY KEY(h_code)
-		)");
-
-		$horders = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS horders(
-		h_alias VARCHAR(300),
-		h_amount VARCHAR(20),
-		h_author VARCHAR(20),
-		h_by VARCHAR(100),
-		h_code VARCHAR(16),
-		h_created DATE,
-		h_description TEXT,
-		h_email VARCHAR(50),
-		h_key VARCHAR(100),
-		h_location VARCHAR(100),
-		h_notes TEXT,
-		h_phone VARCHAR(100),
-		h_status VARCHAR(20),
-		h_updated DATE,
-		PRIMARY KEY(h_code)
-		)");
-
-		$hpayments = mysqli_query($GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hpayments(
-		h_alias VARCHAR(300),
-		h_amount VARCHAR(20),
-		h_author VARCHAR(20),
-		h_by VARCHAR(100),
-		h_code VARCHAR(16),
-		h_created DATE,
-		h_description TEXT,
-		h_email VARCHAR(50),
-		h_for VARCHAR(20),
-		h_key VARCHAR(100),
-		h_notes TEXT,
-		h_phone VARCHAR(100),
-		h_status VARCHAR(20),
-		h_trx_code VARCHAR(50),
-		h_updated DATE,
-		PRIMARY KEY(h_code)
-		)");
-
-		if ($hproducts && $horders && $hpayments) {
-
-			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Merchant Name', 'merchant', 'Jabali', '".$created."')");
-			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Callback URL', 'callback', '".hROOT."callback', '".$created."')");
-			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Paybill Number', 'paybill', '898998', '".$created."')");
-			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Timestamp', 'timestamp', '20160510161908', '".$created."')");
-			mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('SAG Password', 'sag', 'ZmRmZDYwYzIzZDQxZDc5ODYwMTIzYjUxNzNkZDMwMDRjNGRkZTY2ZDQ3ZTI0YjVjODc4ZTExNTNjMDA1YTcwNw==', '".$created."')");
-		}
-
 	}
 
 	return true;

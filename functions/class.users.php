@@ -140,7 +140,13 @@ class _hUsers {
     $h_notes = "Account created on ".$date;
     $h_password = md5($_POST['h_password']);
     $h_phone = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_phone']);
-    $h_status = "active"; //Sort emailuser();, Change to "pending"
+
+    if (!$_POST['h_status']) {
+      $h_status = "pending";
+    } else {
+      $h_status = $_POST['h_status'];
+    }
+    
     $h_style = "zahra";
     $h_type = strtolower( $_POST['h_type'] );
     $h_username = strtolower($_POST['fname'].$abbr);
@@ -219,7 +225,6 @@ class _hUsers {
 
   }
 
-  
   function deleteUser($h_code) {
     
     $deleteUser = mysqli_query($GLOBALS['conn'], "DELETE FROM husers WHERE h_code='".$h_code."'");
@@ -245,8 +250,8 @@ class _hUsers {
         <tr>
         <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
         <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
-        <th class="mdl-data-table__cell--non-numeric">PHONE</th>
-        <th class="mdl-data-table__cell--non-numeric">CENTER</th>
+        <th class="mdl-data-table__cell--non-numeric">PHONE</th><?php if ($type !== "center") { ?>
+        <th class="mdl-data-table__cell--non-numeric">CENTER</th><? } ?>
         <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
@@ -263,10 +268,10 @@ class _hUsers {
         </td>
         <td class="mdl-data-table__cell--non-numeric">
           <?php show( $usersDetails['h_phone'] ); ?>
-        </td>
+        </td><?php if ($type !== "center") { ?>
         <td class="mdl-data-table__cell--non-numeric">
           <?php show( $usersDetails['h_center'] ); ?>
-        </td>
+        </td><? } ?>
         <td class="mdl-data-table__cell--non-numeric">
           <?php show( ucwords($usersDetails['h_location']) ); ?>
         </td>
@@ -290,8 +295,8 @@ class _hUsers {
         <tr>
         <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
         <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
-        <th class="mdl-data-table__cell--non-numeric">PHONE</th>
-        <th class="mdl-data-table__cell--non-numeric">CENTER</th>
+        <th class="mdl-data-table__cell--non-numeric">PHONE</th><?php if ($type !== "center") { ?>
+        <th class="mdl-data-table__cell--non-numeric">CENTER</th><? } ?>
         <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
@@ -475,6 +480,90 @@ class _hUsers {
     }
   }
 
+  function getPendingUsers() { ?>
+    <title>All Users [ <?php getOption('name'); ?> ]</title><?php
+    $getUsers = mysqli_query($GLOBALS['conn'], "SELECT * FROM husers WHERE h_status = 'pending' ORDER BY h_created DESC");
+
+    if($getUsers -> num_rows > 0) { ?>
+      <div class="mdl-grid">
+        <div class="mdl-cell--12-col" >
+          <form>
+            <center>
+            <div class="input-field">
+            <i class="material-icons prefix">search</i>
+            <input type="text" placeholder="Search <?php show( "User" ); ?>">
+            </div></center>
+            </form>
+        </div>
+      <div class="mdl-cell--12-col mdl-grid">
+      <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
+        <thead>
+        <tr>
+        <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
+        <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
+        <th class="mdl-data-table__cell--non-numeric">PHONE</th>
+        <th class="mdl-data-table__cell--non-numeric">CENTER</th>
+        <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
+        <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
+        </tr>
+        </thead><?php
+      while ($usersDetails = mysqli_fetch_assoc($getUsers)){
+        ?>
+        <tbody>
+        <tr>
+        <td class="mdl-data-table__cell--non-numeric">
+          <?php show( $usersDetails['h_username'] ); ?>
+        </td>
+        <td class="mdl-data-table__cell--non-numeric">
+          <?php show( $usersDetails['h_email'] ); ?>
+        </td>
+        <td class="mdl-data-table__cell--non-numeric">
+          <?php show( $usersDetails['h_phone'] ); ?>
+        </td>
+        <td class="mdl-data-table__cell--non-numeric">
+          <?php show( $usersDetails['h_center'] ); ?>
+        </td>
+        <td class="mdl-data-table__cell--non-numeric">
+          <?php show( ucwords($usersDetails['h_location']) ); ?>
+        </td>
+        <td class="mdl-data-table__cell--non-numeric">
+        <a href="./user?view=<?php show( $usersDetails['h_code'] ); ?>&key=<?php show( $usersDetails['h_alias'] ); ?>" ><i class="material-icons">account_circle</i></a> 
+        <a href="tel:<?php show( $usersDetails['h_phone'] ); ?>" ><i class="material-icons">phone</i></a> 
+        <a href="./message?create=message&code=<?php show( $_SESSION['myCode'] ); ?>" ><i class="material-icons">message</i></a><?php 
+        if( isCap('admin') ) { ?>  
+        <a href="./user?edit=<?php show( $usersDetails['h_code'] ); ?>&key=<?php show( $usersDetails['h_alias'] ); ?>" ><i class="material-icons">edit</i></a> 
+        <a href="./user?delete=<?php show( $usersDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a>
+        <a href="./user?activate=<?php show( $usersDetails['h_code'] ); ?>" ><i class="material-icons">done</i></a><?php } ?>
+        </td>
+        </tr>
+        </tbody><?php
+      } ?>
+      </table>
+      </div>
+      </div>
+      <?php    } else { ?>
+
+        <div style="margin:1%;" ><table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>"><thead>
+        <tr>
+        <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
+        <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
+        <th class="mdl-data-table__cell--non-numeric">PHONE</th>
+        <th class="mdl-data-table__cell--non-numeric">CENTER</th>
+        <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
+        <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>
+            <center><i class="material-icons">done_all</i> <p>No Pending Users Found</p></center>
+          </td>
+        </tr>
+        </tbody>
+        </table></div></div><?php
+    }
+  }
+
   function getUsers() { ?>
     <title>All Users [ <?php getOption('name'); ?> ]</title><?php
     $getUsers = mysqli_query($GLOBALS['conn'], "SELECT * FROM husers WHERE h_status = 'active' ORDER BY h_created DESC");
@@ -597,11 +686,11 @@ class _hUsers {
                                 } ?> mdl-button-icon mdl-badge mdl-badge--overlap alignright">
                               </i>
                             <h5>
-                            <h6><b>Email:</b> <a href="mailto:<?php show( $userDetails['h_email'] ); ?>"><?php show( $userDetails['h_email'] ); ?></a><br>
-                            <b>Center:</b> <a href="./resource?center=<?php show( $userDetails['h_center'] ); ?>"><?php show( $userDetails['h_center'] ); ?></a><br>
+                            <h6><b>Email:</b> <a href="mailto:<?php show( $userDetails['h_email'] ); ?>"><?php show( $userDetails['h_email'] ); ?></a><br><?php if( $userDetails['h_type'] !== "center") { ?>
+                            <b>Center:</b> <a href="./resource?center=<?php show( $userDetails['h_center'] ); ?>"><?php show( $userDetails['h_center'] ); ?></a><br><? } ?>
                             <b>Location:</b> <a href="./resource?location=<?php show( $userDetails['h_location'] ); ?>"><?php show( ucwords($userDetails['h_location']) ); ?></a><br>
-                            <b>Phone:</b> <a href="tel:<?php show( $userDetails['h_phone'] ); ?>"><?php show( $userDetails['h_phone'] ); ?></a><br>
-                            <b>Expertise: </b><?php show( $userDetails['h_type'] ); ?></h6>
+                            <b>Phone:</b> <a href="tel:<?php show( $userDetails['h_phone'] ); ?>"><?php show( $userDetails['h_phone'] ); ?></a><br><?php if( $userDetails['h_type'] !== "center") { ?>
+                            <b>Expertise: </b><?php show( $userDetails['h_type'] ); } ?></h6>
                             <a href="tel:<?php show( $userDetails['h_phone'] ); ?>"><i class="material-icons">phone</i></a>
                             <a href="mailto:<?php show( $userDetails['h_email'] ); ?>"><i class="material-icons">mail_outline</i></a>
                             <a href="./message?create=message"><i class="material-icons">message</i></a>
@@ -621,8 +710,8 @@ class _hUsers {
 
                 <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
                     <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor($_SESSION['myCode']); ?>"><?php
-                          $getNotes = mysqli_query($GLOBALS['conn'], "SELECT * FROM hmessages WHERE h_author = '".$userDetails['h_code']."'");
-                          if ($getNotes -> num_rows >= 0) { ?>
+                          $getNotes = mysqli_query($GLOBALS['conn'], "SELECT * FROM hnotifications WHERE h_author = '".$userDetails['h_code']."'");
+                          if ($getNotes -> num_rows > 0) { ?>
                             <div class="mdl-card__title">
                             <i class="material-icons">query_builder</i>
                               <span class="mdl-button">Recently From <?php show( ucfirst($name[0]) ); ?></span>
@@ -655,7 +744,7 @@ class _hUsers {
                           } else {
                           echo '<div class="mdl-card__title">
                 <i class="material-icons">notifications_none</i>
-                  <span class="mdl-button">No Recent Messages</span>
+                  <span class="mdl-button">No Recent Notifications</span>
                     <div class="mdl-layout-spacer">';
                         }
                       ?>
