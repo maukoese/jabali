@@ -43,10 +43,11 @@ if (isset($_GET['post'])) {
 			echo '<div id="success" class="alert mdl-color--orange">
                     <span>You are now logged out!</span>
                 </div>';
-		} ?>
-	    <a href="./register" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">
-	  <i class="material-icons">edit</i> REGISTER</a> <a href="./login" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">
-	  <i class="material-icons">exit_to_app</i> LOGIN</a>
+		} ?><a href="./login" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">
+	  <i class="material-icons">exit_to_app</i> LOGIN</a><br><br>
+	    <a href="./register?type=user" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">
+	  <i class="material-icons">create</i> NEW USER</a> <a href="./register?type=center" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">
+	  <i class="material-icons">edit</i> NEW CENTER</a><br>
 	  <p>© <?php getOption('name'); ?> 2017 - All Rights Reserved</p>
 	  <a href="./about">About</a> - <a href="./tos">TOS</a> - <a href="./faq">FAQs</a>
 		</center><br>

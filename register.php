@@ -6,6 +6,11 @@ if (isset($_POST['create'])) {
     include 'functions/jabali.php';
     connectDb();
 
+  if (emailExists($_POST['h_email'])) {
+
+    header("Location: ./register?create=exists");
+  } else {
+
     $date = date('YmdHms');
     if (isset($_SESSION['myEmail'])) {
       $email = $_SESSION['myEmail'];
@@ -14,7 +19,7 @@ if (isset($_POST['create'])) {
     }
 
     $hash = str_shuffle(md5($email.$date));
-    $abbr = substr($_POST['lname'], 0,2);
+    $abbr = substr($_POST['lname'], 0,3);
 
     $h_alias = $_POST['fname'].' '.$_POST['lname'];
     $h_author = substr($hash, 20);
@@ -42,6 +47,7 @@ if (isset($_POST['create'])) {
       } else {
         header("Location: ./register?create=fail");
       }
+  }
 
 } elseif (isset($_POST['resource'])) {
     # code...
@@ -61,7 +67,12 @@ if (isset($_POST['create'])) {
           } elseif ($_GET['create'] == "fail") { ?>
           <div id="fail" class="alert mdl-color--red">
               <span>Oops!<br>We Ran Into A Problem. Please Try Again</span>
-          </div><?php }
+          </div><?php 
+          } elseif ($_GET['create'] == "exists") { ?>
+          <div id="exists" class="alert mdl-color--red">
+              <span>Oops!<br>A User Already Exists With That Email. Please Try Again With A Different Email.</span>
+          </div><?php 
+          }
       } 
       frontlogo(); ?>
       </center>
@@ -98,14 +109,7 @@ if (isset($_POST['create'])) {
           <label for="password">Password</label>
           </div>
 
-          <div class="input-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
-            <i class="material-icons prefix">perm_identity</i>
-             <input class="mdl-textfield__input" id="h_type" name="h_type" type="text" readonly tabIndex="-1" placeholder="Type" />
-               <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--<?php if (isset($_SESSION['myCode'])) { primaryColor($_SESSION['myCode']); } else { show( 'blue' ); }?>" for="h_type">
-                 <li class="mdl-menu__item" data-val="doctor">Doctor</li>
-                 <li class="mdl-menu__item" data-val="center">Center</li>
-               </ul>
-            </div>
+          <input type="hidden" name="h_type" value="<? show( $_GET['type'] ); ?>">
 
           <div class="input-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
             <i class="material-icons prefix">room</i>
@@ -124,6 +128,7 @@ if (isset($_POST['create'])) {
           </ul>
           </div>
 
+          <?php if ($_GET['type'] !== "center") { ?>
           <div class="input-field inline mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
             <i class="mdi mdi-gender-transgender prefix"></i>
            <input class="mdl-textfield__input" id="h_gender" name="h_gender" type="text" readonly tabIndex="-1" placeholder="Gender" >
@@ -133,12 +138,14 @@ if (isset($_POST['create'])) {
                <li class="mdl-menu__item" data-val="other">Other</li>
              </ul>
           </div>
-
-          <div class="input-field inline">
-          <i class="material-icons prefix">local_hospital</i>
-          <input id="h_center" name="h_center" type="text">
-          <label for="h_center">Center</label>
-          </div>
+          
+          <div class="input-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
+            <i class="material-icons prefix">local_hospital</i>
+            <input class="mdl-textfield__input" type="text" id="centers" name="h_center" readonly tabIndex="-1" placeholder="Center">
+            <ul for="centers" class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" style="max-height: 300px !important; overflow-y: auto;">
+                <?php $hUser -> getCenters(); ?>
+            </ul>
+          </div><? } ?>
 
           <button class="mdl-button mdl-button--fab mdl-button--colored alignright" type="submit" name="create"><i class="material-icons">send</i></button>
 

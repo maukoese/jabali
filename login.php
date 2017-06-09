@@ -91,8 +91,10 @@ if (isset($_POST['login']) && $_POST['user'] != "" && $_POST['password'] != "") 
     
 
           <p>
-          <a href="./register" id="register">Register Now!</a>
-          <a href="./forgot" id="forgot">Forgot password?</a>
+          <span id="register"><a href="./register?type=user" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">
+    <i class="material-icons">create</i> NEW USER</a> <a href="./register?type=center" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">
+    <i class="material-icons">edit</i> NEW CENTER</a></span>
+          <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" href="./forgot" id="forgot">Forgot password?</a>
           </p>
 
           <br>

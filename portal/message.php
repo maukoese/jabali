@@ -3,7 +3,7 @@
 include './header.php';
 
 if (isset($_GET['create'])) {
-	$hForm -> messageForm($_GET['create'], $_GET['code']);
+	$hForm -> messageForm($_GET['create']);
 }
 
 if (isset($_GET['chat'])) {
@@ -31,6 +31,8 @@ if(isset($_GET['view'])){
 		} else {
 			$hMessage -> getMessages();
 		}
+	} elseif ($_GET['view'] == "sent") {
+		$hMessage -> getSentMessages();
 	} elseif ($_GET['view'] == "unread") {
 		$hMessage -> getUnreadMessages();
 	} else {

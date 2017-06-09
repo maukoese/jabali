@@ -19,6 +19,13 @@ if (isset($_GET['fav'])) {
 		VALUES ('".$_SESSION['myCode']."', '".$_GET['fav']."', 'resource')");
 }
 
+if(isset($_GET['author'])) {
+	$hResource-> getResourcesAuthor($_GET['author']);
+	if ( isCap( 'admin' ) ) {
+		newButton('resource', 'resource', 'create');
+	}
+}
+
 if(isset($_GET['view'])){
 	if ($_GET['view'] == "list") {
 		if(isset($_GET['type'])) {

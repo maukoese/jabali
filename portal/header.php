@@ -60,9 +60,6 @@ $hSocial = new _hSocial();
     <link rel="stylesheet" href="<?php echo hSTYLES; ?>font-awesome.css">
     <link rel="stylesheet" href="<?php echo hSTYLES; ?>jabali.css">
     <style type="text/css">
-    main {
-    background: url(<?php echo hIMAGES.'bgs/'.rand(0, 45).'-min.jpg'; ?>) no-repeat;
-    }
     .mdl-menu__outline {
         background-color: <?php primaryColor($_SESSION['myCode']); ?>;
         overflow-y: auto;
@@ -260,7 +257,7 @@ $hSocial = new _hSocial();
                 </a>
 
                 <a class="mdl-navigation__link" id="husers" href="./resource?view=list&location=<?php show( strtolower($_SESSION['myLocation']) ); ?>&type=morgue">
-                    <i class="mdl-color-text--white material-icons" role="presentation">business</i>
+                    <i class="mdl-color-text--white material-icons" role="presentation">location_city</i>
                     Nearby Morgues
                 </a>
                 <div class="mdl-layout-spacer"></div>
@@ -289,7 +286,17 @@ $hSocial = new _hSocial();
             <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor($_SESSION['myCode']); ?>" for="hmessages">
                 <a class="mdl-navigation__link mdl-navigation__link--current" href="./message?view=list&type=message">
                     <i class="material-icons" role="presentation">message</i>
-                    Messages
+                    My Messages
+                </a>
+
+                <a class="mdl-navigation__link mdl-navigation__link--current" href="./message?view=sent&key=messages">
+                    <i class="material-icons" role="presentation">message</i>
+                    Sent Messages
+                </a>
+
+                <a class="mdl-navigation__link mdl-navigation__link--current" href="./message?view=unread&key=messages">
+                    <i class="material-icons" role="presentation">message</i>
+                    Unread Messages
                 </a>
             </ul>
           <a class="mdl-navigation__link" href="./notification?view=list"><i class="mdl-color-text--white material-icons" role="presentation">notifications</i>Notifications</a>

@@ -58,9 +58,6 @@ $hSocial = new _hSocial();
     <link rel="stylesheet" href="<?php echo hSTYLES; ?>font-awesome.css">
     <link rel="stylesheet" href="<?php echo hSTYLES; ?>jabali.css">
     <style type="text/css">
-    main, demo-header {
-    background: url(<?php echo hIMAGES.'bgs/'.rand(0, 45).'-min.jpg'; ?>) no-repeat;
-    }
     .mdl-menu__outline {
         background-color: <?php primaryColor($_SESSION['myCode']); ?>;
         overflow-y: auto;

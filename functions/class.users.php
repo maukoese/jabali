@@ -103,7 +103,7 @@ class _hUsers {
     $email = $_SESSION['myEmail'];
 
     $hash = str_shuffle(md5($email.$date));
-    $abbr = substr($_POST['lname'], 0,2);
+    $abbr = substr($_POST['lname'], 0,3);
 
     $h_alias = $_POST['fname'].' '.$_POST['lname'];
     $h_author = substr($hash, 20);
@@ -243,6 +243,96 @@ class _hUsers {
             <input type="text" placeholder="Search <?php show( ucfirst($type) ); ?>">
             </div></center>
             <div class="result"></div>
+        </div>
+      <div class="mdl-cell--12-col mdl-grid">
+      <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
+        <thead>
+        <tr>
+        <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
+        <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
+        <th class="mdl-data-table__cell--non-numeric">PHONE</th><?php if ($type !== "center") { ?>
+        <th class="mdl-data-table__cell--non-numeric">CENTER</th><? } ?>
+        <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
+        <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
+        </tr>
+        </thead><?php
+      while ($usersDetails = mysqli_fetch_assoc($getUsersBy)){
+        ?>
+        <tbody>
+        <tr>
+        <td class="mdl-data-table__cell--non-numeric">
+          <?php show( $usersDetails['h_username'] ); ?>
+        </td>
+        <td class="mdl-data-table__cell--non-numeric">
+          <?php show( $usersDetails['h_email'] ); ?>
+        </td>
+        <td class="mdl-data-table__cell--non-numeric">
+          <?php show( $usersDetails['h_phone'] ); ?>
+        </td><?php if ($type !== "center") { ?>
+        <td class="mdl-data-table__cell--non-numeric">
+          <?php show( $usersDetails['h_center'] ); ?>
+        </td><? } ?>
+        <td class="mdl-data-table__cell--non-numeric">
+          <?php show( ucwords($usersDetails['h_location']) ); ?>
+        </td>
+        <td class="mdl-data-table__cell--non-numeric">
+        <a href="./user?view=<?php show( $usersDetails['h_code'] ); ?>&key=<?php show( $usersDetails['h_alias'] ); ?>" ><i class="material-icons">account_circle</i></a> 
+        <a href="tel:<?php show( $usersDetails['h_phone'] ); ?>" ><i class="material-icons">phone</i></a> 
+        <a href="./message?create=message&code=<?php show( $_SESSION['myCode'] ); ?>" ><i class="material-icons">message</i></a><?php 
+        if( isCap('admin') ) { ?>  
+        <a href="./user?edit=<?php show( $usersDetails['h_code'] ); ?>&key=<?php show( $usersDetails['h_alias'] ); ?>" ><i class="material-icons">edit</i></a> 
+        <a href="./user?delete=<?php show( $usersDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
+        </td>
+        </tr>
+        </tbody><?php
+      } ?>
+      </table>
+      </div>
+      </div>
+      <?php    } else { ?>
+
+        <div style="margin:1%;" ><table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>"><thead>
+        <tr>
+        <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
+        <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
+        <th class="mdl-data-table__cell--non-numeric">PHONE</th><?php if ($type !== "center") { ?>
+        <th class="mdl-data-table__cell--non-numeric">CENTER</th><? } ?>
+        <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
+        <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>
+            <p>No <?php show( ucfirst($type) ); ?>s Found</p>
+          </td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+        </div><?php
+    }
+  }
+
+  function getUsersAuthor($author) { ?>
+    <title>Users List [ <?php getOption('name'); ?> ]</title><?php
+    $getUsersBy = mysqli_query($GLOBALS['conn'], "SELECT * FROM husers WHERE h_status = 'active' AND h_author='".$author."'");
+    if($getUsersBy -> num_rows > 0) {
+      ?>
+      <div class="mdl-grid">
+        <div class="mdl-cell--11-col" >
+            <center>
+            <div class="input-field search-box">
+            <i class="material-icons prefix">search</i>
+            <input type="text" placeholder="Search <?php show( ucfirst($type) ); ?>">
+            </div></center>
+            <div class="result"></div>
+        </div>
+
+        <div class="mdl-cell--1-col mdl-card" ><br>
+              <a href="user?view=<?php show( $author ); ?>" class="alignright">
+              <i class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification">account_circle</i></a>
+            
         </div>
       <div class="mdl-cell--12-col mdl-grid">
       <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
@@ -613,7 +703,7 @@ class _hUsers {
         <td class="mdl-data-table__cell--non-numeric">
         <a href="./user?view=<?php show( $usersDetails['h_code'] ); ?>&key=<?php show( $usersDetails['h_alias'] ); ?>" ><i class="material-icons">account_circle</i></a> 
         <a href="tel:<?php show( $usersDetails['h_phone'] ); ?>" ><i class="material-icons">phone</i></a> 
-        <a href="./message?create=message&code=<?php show( $_SESSION['myCode'] ); ?>" ><i class="material-icons">message</i></a><?php 
+        <a href="./message?create=message&code=<?php show( $usersDetails['h_code'] ); ?>" ><i class="material-icons">message</i></a><?php 
         if( isCap('admin') ) { ?>  
         <a href="./user?edit=<?php show( $usersDetails['h_code'] ); ?>&key=<?php show( $usersDetails['h_alias'] ); ?>" ><i class="material-icons">edit</i></a> 
         <a href="./user?delete=<?php show( $usersDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
@@ -647,6 +737,16 @@ class _hUsers {
     }
   }
 
+  function getCenters() {
+    $centers = mysqli_query($GLOBALS['conn'], "SELECT h_alias, h_code FROM husers WHERe h_type = 'center' ORDER BY h_alias");
+    if($centers -> num_rows > 0) {;
+      while ($center = mysqli_fetch_assoc($centers)) {
+          echo '<li class="mdl-menu__item" data-val="'.$center['h_code'].'">'.$center['h_alias'].'</li>';
+      } 
+      echo '<center>Your Center Not Listed? <br><a href="./register?type=center">Register it Now</a></center>';
+    }
+  }
+
   function getUserCode($code) {
     $getUserCode = mysqli_query($GLOBALS['conn'], "SELECT * FROM husers WHERE h_code = '".$code."'");
     if($getUserCode -> num_rows > 0) {
@@ -668,7 +768,8 @@ class _hUsers {
                             </div>
 
                             <div class="mdl-layout-spacer"></div>
-                            <div class="mdl-card__subtitle-text">
+                            <div class="mdl-card__subtitle-text"><?php if (strtolower($userDetails['h_type']) == "center") { ?>
+                                <a href="./resource?author=<?php show( $userDetails['h_code'] ); ?>" class="material-icons mdl-badge mdl-badge--overlap">business</a><?php } ?>
                                 <a href="./user?view=<?php show( $userDetails['h_code'] ); ?>&fav=<?php show( $userDetails['h_code'] ); ?>" class="material-icons mdl-badge mdl-badge--overlap">favorite</a><?php 
                                 if( isCap('admin') || isProfile($_SESSION['myCode']) ) { ?>
                                 <a href="./user?edit=<?php show( $userDetails['h_code'] ); ?>&key=<?php show( $userDetails['h_alias'] ); ?>" ><i class="material-icons">edit</i></a><?php } ?>
@@ -676,14 +777,18 @@ class _hUsers {
                         </div>
                         <div class="mdl-card__supporting-text mdl-card--expand mdl-grid">
                           <div class="mdl-cell mdl-cell--7-col-desktop mdl-cell--7-col-tablet mdl-cell--12-col-phone">
-                            <h5><i class="mdi mdi-gender-<?php 
+                            <h5><i class="mdi mdi-<?php 
+                            if (strtolower($userDetails['h_type']) == "center") { 
+                                echo "city";
+                            } else {
                                 if (strtolower($userDetails['h_gender']) == "male") {
-                                  echo "male";
+                                  echo "gender-male";
                                 } elseif (strtolower($userDetails['h_gender']) == "female") {
-                                  echo "female";
+                                  echo "gender-female";
                                 } else {
                                   echo "transgender";
-                                } ?> mdl-button-icon mdl-badge mdl-badge--overlap alignright">
+                                }
+                            } ?> mdl-button-icon mdl-badge mdl-badge--overlap alignright">
                               </i>
                             <h5>
                             <h6><b>Email:</b> <a href="mailto:<?php show( $userDetails['h_email'] ); ?>"><?php show( $userDetails['h_email'] ); ?></a><br><?php if( $userDetails['h_type'] !== "center") { ?>
@@ -693,9 +798,9 @@ class _hUsers {
                             <b>Expertise: </b><?php show( $userDetails['h_type'] ); } ?></h6>
                             <a href="tel:<?php show( $userDetails['h_phone'] ); ?>"><i class="material-icons">phone</i></a>
                             <a href="mailto:<?php show( $userDetails['h_email'] ); ?>"><i class="material-icons">mail_outline</i></a>
-                            <a href="./message?create=message"><i class="material-icons">message</i></a>
-                            <a href="./message?create=chat"><i class="material-icons">forum</i></a>
-                            <a href="./notification?create=note"><i class="material-icons">notifications</i></a>
+                            <a href="./message?create=message&code=<?php show( $userDetails['h_code'] ); ?>"><i class="material-icons">message</i></a>
+                            <a href="./message?chat=<?php show( $userDetails['h_code'] ); ?>"><i class="material-icons">forum</i></a>
+                            <a href="./notification?create=note&code=<?php show( $userDetails['h_code'] ); ?>"><i class="material-icons">notifications</i></a>
                             
                           </div>
                           <div class="mdl-cell mdl-cell--5-col-desktop mdl-cell--5-col-tablet mdl-cell--12-col-phone">

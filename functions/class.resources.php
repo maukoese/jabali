@@ -36,7 +36,7 @@ class _hResources {
     $abbr = substr($_POST['lname'], 0,2);
 
     $h_alias = $_POST['h_alias'];
-    $h_author = substr($hash, 20);
+    $h_author = $_POST['h_author'];
     $h_avatar = $_POST['h_avatar'];
     $h_center = $_POST['h_center'];
     $h_code = substr($hash, 20);
@@ -265,6 +265,96 @@ class _hResources {
         </tbody>
       </table>
       </div></div><?php
+    }
+  }
+
+  function getResourcesAuthor($author) { ?>
+    <title>Users List [ <?php getOption('name'); ?> ]</title><?php
+    $getResourcesBy = mysqli_query($GLOBALS['conn'], "SELECT * FROM hresources WHERE h_author='".$author."'");
+    if($getResourcesBy -> num_rows > 0) {
+      ?>
+      <div class="mdl-grid">
+        <div class="mdl-cell--11-col" >
+            <center>
+            <div class="input-field search-box">
+            <i class="material-icons prefix">search</i>
+            <input type="text" placeholder="Search <?php show( "Resource" ); ?>">
+            </div></center>
+            <div class="result"></div>
+        </div>
+
+        <div class="mdl-cell--1-col mdl-card" ><br>
+              <a href="user?view=<?php show( $author ); ?>" class="alignright">
+              <i class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification">account_circle</i></a>
+            
+        </div>
+      <div class="mdl-cell--12-col mdl-grid">
+      <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
+        <thead>
+        <tr>
+        <th class="mdl-data-table__cell--non-numeric">NAME</th>
+        <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
+        <th class="mdl-data-table__cell--non-numeric">PHONE</th>
+        <th class="mdl-data-table__cell--non-numeric">CENTER</th>
+        <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
+        <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
+        </tr>
+        </thead><?php
+      while ($usersDetails = mysqli_fetch_assoc($getUsersBy)){
+        ?>
+        <tbody>
+        <tr>
+        <td class="mdl-data-table__cell--non-numeric">
+          <?php show( $usersDetails['h_username'] ); ?>
+        </td>
+        <td class="mdl-data-table__cell--non-numeric">
+          <?php show( $usersDetails['h_email'] ); ?>
+        </td>
+        <td class="mdl-data-table__cell--non-numeric">
+          <?php show( $usersDetails['h_phone'] ); ?>
+        </td><?php if ($type !== "center") { ?>
+        <td class="mdl-data-table__cell--non-numeric">
+          <?php show( $usersDetails['h_center'] ); ?>
+        </td><? } ?>
+        <td class="mdl-data-table__cell--non-numeric">
+          <?php show( ucwords($usersDetails['h_location']) ); ?>
+        </td>
+        <td class="mdl-data-table__cell--non-numeric">
+        <a href="./user?view=<?php show( $usersDetails['h_code'] ); ?>&key=<?php show( $usersDetails['h_alias'] ); ?>" ><i class="material-icons">account_circle</i></a> 
+        <a href="tel:<?php show( $usersDetails['h_phone'] ); ?>" ><i class="material-icons">phone</i></a> 
+        <a href="./message?create=message&code=<?php show( $_SESSION['myCode'] ); ?>" ><i class="material-icons">message</i></a><?php 
+        if( isCap('admin') ) { ?>  
+        <a href="./user?edit=<?php show( $usersDetails['h_code'] ); ?>&key=<?php show( $usersDetails['h_alias'] ); ?>" ><i class="material-icons">edit</i></a> 
+        <a href="./user?delete=<?php show( $usersDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
+        </td>
+        </tr>
+        </tbody><?php
+      } ?>
+      </table>
+      </div>
+      </div>
+      <?php    } else { ?>
+
+        <div style="margin:1%;" ><table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>"><thead>
+        <tr>
+        <th class="mdl-data-table__cell--non-numeric">NAME</th>
+        <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
+        <th class="mdl-data-table__cell--non-numeric">PHONE</th>
+        <th class="mdl-data-table__cell--non-numeric">CENTER</th>
+        <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
+        <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>
+            <p>This user has not created any resources yet!</p>
+          </td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+        </div><?php
     }
   }
 

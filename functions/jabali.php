@@ -302,29 +302,30 @@ function getFile($path, $file) {
 /**
 * Load stylesheets
 **/
-function getStyle($link) {
-	?><link rel="stylesheet" type="text/css" href="<?php echo $link; ?>"><?php
+function getStyle($link) {?>
+	<link rel="stylesheet" type="text/css" href="<?php echo $link; ?>"><?php
 }
 
 /**
 * Load Javascript
 **/
-function getScript($link) {
-	?><script src="<?php echo $link; ?>"></script><?php
+function getScript($link) {?>
+	<script src="<?php echo $link; ?>"></script><?php
 }
 
 /**
 * Display logo
 **/
 function frontlogo() {
-
-        echo '<a href="'.hROOT.'"><img src="'.hIMAGES.'logo.png" width="250px;"></a>';
+	
+	echo '<a href="'.hROOT.'"><img src="'.hIMAGES.'logo.png" width="250px;"></a>';
 }
 
 /**
 * Print out something
 **/
 function show($what) {
+
 	echo $what;
 }
 
@@ -372,6 +373,14 @@ function isCap($cap) {
 	}
 }
 
+function emailExists($email) {
+	$theEmail = mysqli_query( $GLOBALS['conn'], "SELECT h_email FROM husers WHERE h_email ='".$email."'" );
+	if ($theEmail -> num_rows > 0) {
+		return true;
+	} else {
+		return false;
+	}
+}
 
 /**
 * Check if user is viewing own profile
@@ -418,7 +427,7 @@ function uploadFile() {
 * 
 **/
 function getMsgCount() {
-    $getMessages = mysqli_query($GLOBALS['conn'], "SELECT * FROM hmessages WHERE h_status='unread'");
+    $getMessages = mysqli_query($GLOBALS['conn'], "SELECT * FROM hmessages WHERE (h_status = 'unread' AND h_for = '".$_SESSION['myCode']."')");
     if ($getMessages -> num_rows >= 0) {
       $messagecount = $getMessages -> num_rows;
       echo $messagecount;

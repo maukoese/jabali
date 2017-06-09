@@ -27,6 +27,13 @@ if (isset($_GET['fav'])) {
 		VALUES ('".$_SESSION['myCode']."', '".$_GET['fav']."', 'user')");
 }
 
+if(isset($_GET['author'])) {
+	$hUser -> getUsersAuthor($_GET['author']);
+	if ( isCap( 'admin' ) ) {
+		newButton('user', 'doctor', 'create');
+	}
+}
+
 if(isset($_GET['view'])){
 	if ($_GET['view'] == "list") {
 		if(isset($_GET['type'])) {
