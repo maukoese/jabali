@@ -2,48 +2,48 @@
 include './header.php';
 include '../extensions/banda/banda.php';
 
-if (isset($_GET['install'])) {
+if ( isset( $_GET['install'] ) ) {
 	setupShop();
 }
 
-if (isset($_POST['pay']) && $_POST['amount'] !== "" && $_POST['h_phone'] !== "") {
+if ( isset( $_POST['pay'] ) && $_POST['amount'] !== "" && $_POST['h_phone'] !== "" ) {
     $AMOUNT = $_POST['amount'];
     $NUMBER = $_POST['h_phone']; //format 254700000000
     $PRODUCT_ID = $_GET['order'];
     //init MPESA class
-  	$mpesa = new MPESA(ENDPOINT, CALLBACK_URL, CALL_BACK_METHOD, PAYBILL_NO, TIMESTAMP, PASSWORD,$GLOBALS['conn']);
-    $mpesa->setProductID($PRODUCT_ID);
-    $mpesa->setAmount($AMOUNT);
-    $mpesa->setNumber($NUMBER); // replaces 0 with 254
+  	$mpesa = new MPESA(ENDPOINT, CALLBACK_URL, CALL_BACK_METHOD, PAYBILL_NO, TIMESTAMP, PASSWORD,$GLOBALS['conn'] );
+    $mpesa->setProductID( $PRODUCT_ID );
+    $mpesa->setAmount( $AMOUNT );
+    $mpesa->setNumber( $NUMBER ); // replaces 0 with 254
     $mpesa->init();
 }
 
 $hProduct = new _hProducts();
 
-if(!empty($_GET["buy"])) {
-	switch($_GET["buy"]) {
+if ( !empty( $_GET["buy"] ) ) {
+	switch( $_GET["buy"] ) {
 		case "add":
-			if(!empty($_POST["quantity"])) {
-				$product = mysqli_query($GLOBALS['conn'], "SELECT * FROM hposts LEFT JOIN hproducts ON hproducts.h_code = hposts.h_code WHERE hposts.h_code='" . $_GET["code"] . "'");
-				if ($product -> num_rows > 0) {
-					while($row = mysqli_fetch_assoc($product)) {
+			if ( !empty( $_POST["quantity"] ) ) {
+				$product = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts LEFT JOIN hproducts ON hproducts.h_code = hposts.h_code WHERE hposts.h_code='" . $_GET["code"] . "'" );
+				if ( $product -> num_rows > 0) {
+					while( $row = mysqli_fetch_assoc( $product) ) {
 						$product_array[] = $row;
 					}
 				}
-				$itemArray = array($product_array[0]["h_code"]=>array('name'=>$product_array[0]["h_alias"], 'code'=>$product_array[0]["h_code"], 'quantity'=>$_POST["quantity"], 'price'=>$product_array[0]["h_price"]));
+				$itemArray = array( $product_array[0]["h_code"]=>array('name'=>$product_array[0]["h_alias"], 'code'=>$product_array[0]["h_code"], 'quantity'=>$_POST["quantity"], 'price'=>$product_array[0]["h_price"] ) );
 				
-				if(!empty($_SESSION["cart_item"])) {
-					if(in_array($product_array[0]["h_code"],array_keys($_SESSION["cart_item"]))) {
-						foreach($_SESSION["cart_item"] as $k => $v) {
-								if($product_array[0]["h_code"] == $k) {
-									if(empty($_SESSION["cart_item"][$k]["quantity"])) {
+				if ( !empty( $_SESSION["cart_item"] ) ) {
+					if ( in_array( $product_array[0]["h_code"],array_keys( $_SESSION["cart_item"] )) ) {
+						foreach( $_SESSION["cart_item"] as $k => $v) {
+								if ( $product_array[0]["h_code"] == $k) {
+									if ( empty( $_SESSION["cart_item"][$k]["quantity"] ) ) {
 										$_SESSION["cart_item"][$k]["quantity"] = 0;
 									}
 									$_SESSION["cart_item"][$k]["quantity"] += $_POST["quantity"];
 								}
 						}
 					} else {
-						$_SESSION["cart_item"] = array_merge($_SESSION["cart_item"],$itemArray);
+						$_SESSION["cart_item"] = array_merge( $_SESSION["cart_item"],$itemArray );
 					}
 				} else {
 					$_SESSION["cart_item"] = $itemArray;
@@ -51,26 +51,26 @@ if(!empty($_GET["buy"])) {
 			}
 		break;
 		case "remove":
-			if(!empty($_SESSION["cart_item"])) {
-				foreach($_SESSION["cart_item"] as $k => $v) {
-						if($_GET["code"] == $k)
-							unset($_SESSION["cart_item"][$k]);				
-						if(empty($_SESSION["cart_item"]))
-							unset($_SESSION["cart_item"]);
+			if ( !empty( $_SESSION["cart_item"] ) ) {
+				foreach( $_SESSION["cart_item"] as $k => $v) {
+						if ( $_GET["code"] == $k)
+							unset( $_SESSION["cart_item"][$k] );				
+						if ( empty( $_SESSION["cart_item"] ))
+							unset( $_SESSION["cart_item"] );
 				}
 			}
 		break;
 		case "empty":
-			unset($_SESSION["cart_item"]);
+			unset( $_SESSION["cart_item"] );
 		break;	
 	}
 } ?>
   	<div class="mdl-grid">
-  	<?php
-  	if ($_GET["order"]) {
-		if(isset($_SESSION["cart_item"])){
+  	<?php 
+  	if ( $_GET["order"] ) {
+		if ( isset( $_SESSION["cart_item"] )){
 		    $item_total = 0; ?>
-		<div class="mdl-layout__content mdl-cell mdl-cell--8-col mdl-card mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
+		<div class="mdl-layout__content mdl-cell mdl-cell--8-col mdl-card mdl-color--<?php primaryColor( $_SESSION['myCode'] ); ?>">
 			<div class="mdl-card__title">
 		    <i class="material-icons">shopping_cart</i>
 		      <span class="mdl-button">Order Details</span>
@@ -82,7 +82,7 @@ if(!empty($_GET["buy"])) {
 		        </a>
 		        </div>
 		    </div>
-			<table class="mdl-data-table mdl-js-data-table mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
+			<table class="mdl-data-table mdl-js-data-table mdl-color--<?php primaryColor( $_SESSION['myCode'] ); ?>">
 			<tbody>
 			<tr>
 			<th class="mdl-data-table__cell--non-numeric">ITEM</th>
@@ -90,8 +90,8 @@ if(!empty($_GET["buy"])) {
 			<th class="mdl-data-table__cell--non-numeric">PRICE</th>
 			<th class="mdl-data-table__cell--non-numeric">ACTION</th>
 			</tr>	
-			<?php		
-			    foreach ($_SESSION["cart_item"] as $item){
+			<?php 		
+			    foreach ( $_SESSION["cart_item"] as $item){
 					?>
 							<tr>
 							<td style="text-align:left;" ><strong><?php echo $item["name"]; ?></strong></td>
@@ -100,8 +100,8 @@ if(!empty($_GET["buy"])) {
 							<td style="text-align:left;" ><a href="./shop?order=<?php echo $_GET["order"]; ?>&buy=remove&code=<?php echo $item["code"]; ?>" class="material-icons">clear</a></td>
 							</tr>
 
-							<?php
-					        $item_total += ($item["price"]*$item["quantity"]);
+							<?php 
+					        $item_total += ( $item["price"]*$item["quantity"] );
 							}
 							?>
 			<tr>
@@ -112,7 +112,7 @@ if(!empty($_GET["buy"])) {
 
 			</table>
 		</div>
-		<div class="mdl-layout__content mdl-cell mdl-cell--4-col mdl-card mdl-color--<?php primaryColor( $_SESSION['myCode']); ?>">
+		<div class="mdl-layout__content mdl-cell mdl-cell--4-col mdl-card mdl-color--<?php primaryColor( $_SESSION['myCode'] ); ?>">
 
 			<div class="mdl-card__title">
 		    <i class="material-icons">monetization_on</i>
@@ -120,15 +120,15 @@ if(!empty($_GET["buy"])) {
 		        <div class="mdl-layout-spacer"></div>
 		        <div class="mdl-card__subtitle-text mdl-button">
 		            <i class="material-icons">person_pin_circle</i>
-		            <?php show( $_SESSION['myLocation'] ); ?>
+		            <?php _show_( $_SESSION['myLocation'] ); ?>
 		        </div>
 		    </div>
 
 		    <form enctype="multipart/form-data" class="" name="payForm" method="GET" action="./pay"><br>
 
-		    	<input type="hidden" name="order" value="<?php show( $_GET['order'] ); ?>">
+		    	<input type="hidden" name="order" value="<?php _show_( $_GET['order'] ); ?>">
 
-				<?php if(!empty($_SESSION["cart_item"])) { ?>
+				<?php if ( !empty( $_SESSION["cart_item"] ) ) { ?>
 
 		    	<div class="input-field inline">
 		    		<i class="mdi mdi-cellphone prefix"></i>
@@ -170,8 +170,8 @@ if(!empty($_GET["buy"])) {
 		}
   	} else {
 
-		if (isset($_GET['view'])) { 
-			if ($_GET['view'] == "list") {
+		if ( isset( $_GET['view'] ) ) { 
+			if ( $_GET['view'] == "list" ) {
 				$hProduct -> getProducts();
 			} else {
 				$hProduct -> getProduct( $_GET['view'] );

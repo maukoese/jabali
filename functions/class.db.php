@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
 * @package Jabali Framework
 * @subpackage Jabali Database Access Abstraction Object
@@ -107,7 +107,7 @@ class _hDb {
 			'col_meta',
 			'table_charset',
 			'check_current_query',
-		);
+		 );
 		if (  in_array( $name, $protected_members, true ) ) {
 			return;
 		}
@@ -207,7 +207,7 @@ class _hDb {
 		$this->flush();
 
 		// Log how the function was called
-		$this->func_call = "\$db->query(\"$query\")";
+		$this->func_call = "\$db->query(\"$query\" )";
 
 		// If we're writing to the database, make sure the query will write safely.
 		if ( $this->check_current_query && ! $this->check_ascii( $query ) ) {
@@ -373,7 +373,7 @@ class _hDb {
 		$fields  = '`' . implode( '`, `', array_keys( $data ) ) . '`';
 		$formats = implode( ', ', $formats );
 
-		$sql = "$type INTO `$table` ($fields) VALUES ($formats)";
+		$sql = "$type INTO `$table` ( $fields) VALUES ( $formats)";
 
 		$this->check_current_query = false;
 		return $this->query( $this->prepare( $sql, $values ) );
@@ -483,7 +483,7 @@ class _hDb {
 			$value = array(
 				'value'  => $value,
 				'format' => '%s',
-			);
+			 );
 
 			if ( ! empty( $format ) ) {
 				$value['format'] = array_shift( $formats );
@@ -662,7 +662,7 @@ class _hDb {
 		$query = rtrim( $query, ';/-#' );
 
 		// Allow (select...) union [...] style queries. Use the first query's table name.
-		$query = ltrim( $query, "\r\n\t (" );
+		$query = ltrim( $query, "\r\n\t ( " );
 
 		// Strip everything between parentheses except nested selects.
 		$query = preg_replace( '/\((?!\s*select)[^(]*?\)/is', '()', $query );
@@ -674,12 +674,12 @@ class _hDb {
 				. '|REPLACE(?:\s+LOW_PRIORITY|\s+DELAYED)?(?:\s+INTO)?'
 				. '|UPDATE(?:\s+LOW_PRIORITY)?(?:\s+IGNORE)?'
 				. '|DELETE(?:\s+LOW_PRIORITY|\s+QUICK|\s+IGNORE)*(?:.+?FROM)?'
-				. ')\s+((?:[0-9a-zA-Z$_.`-]|[\xC2-\xDF][\x80-\xBF])+)/is', $query, $maybe ) ) {
+				. ' )\s+((?:[0-9a-zA-Z$_.`-]|[\xC2-\xDF][\x80-\xBF] )+)/is', $query, $maybe ) ) {
 			return str_replace( '`', '', $maybe[1] );
 		}
 
 		// SHOW TABLE STATUS and SHOW TABLES WHERE Name = 'wp_posts'
-		if ( preg_match( '/^\s*SHOW\s+(?:TABLE\s+STATUS|(?:FULL\s+)?TABLES).+WHERE\s+Name\s*=\s*("|\')((?:[0-9a-zA-Z$_.-]|[\xC2-\xDF][\x80-\xBF])+)\\1/is', $query, $maybe ) ) {
+		if ( preg_match( '/^\s*SHOW\s+(?:TABLE\s+STATUS|(?:FULL\s+)?TABLES).+WHERE\s+Name\s*=\s*( "|\' )((?:[0-9a-zA-Z$_.-]|[\xC2-\xDF][\x80-\xBF] )+)\\1/is', $query, $maybe ) ) {
 			return $maybe[2];
 		}
 
@@ -688,7 +688,7 @@ class _hDb {
 		// It is usually a pattern for matching a prefix so we just
 		// strip the trailing % and unescape the _ to get 'wp_123_'
 		// which drop-ins can use for routing these SQL statements.
-		if ( preg_match( '/^\s*SHOW\s+(?:TABLE\s+STATUS|(?:FULL\s+)?TABLES)\s+(?:WHERE\s+Name\s+)?LIKE\s*("|\')((?:[\\\\0-9a-zA-Z$_.-]|[\xC2-\xDF][\x80-\xBF])+)%?\\1/is', $query, $maybe ) ) {
+		if ( preg_match( '/^\s*SHOW\s+(?:TABLE\s+STATUS|(?:FULL\s+)?TABLES)\s+(?:WHERE\s+Name\s+)?LIKE\s*( "|\' )((?:[\\\\0-9a-zA-Z$_.-]|[\xC2-\xDF][\x80-\xBF] )+)%?\\1/is', $query, $maybe ) ) {
 			return str_replace( '\\_', '_', $maybe[2] );
 		}
 
@@ -707,7 +707,7 @@ class _hDb {
 				. '|LOAD\s+DATA.*INFILE.*INTO\s+TABLE'
 				. '|(?:GRANT|REVOKE).*ON\s+TABLE'
 				. '|SHOW\s+(?:.*FROM|.*TABLE)'
-				. ')\s+\(*\s*((?:[0-9a-zA-Z$_.`-]|[\xC2-\xDF][\x80-\xBF])+)\s*\)*/is', $query, $maybe ) ) {
+				. ' )\s+\(*\s*((?:[0-9a-zA-Z$_.`-]|[\xC2-\xDF][\x80-\xBF] )+)\s*\)*/is', $query, $maybe ) ) {
 			return str_replace( '`', '', $maybe[1] );
 		}
 

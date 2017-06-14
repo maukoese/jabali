@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
 * @package Jabali Framework
 * @subpackage Configuration File
@@ -7,9 +7,9 @@
 * @version 0.17.06
 **/
 
-define("hDBNAME", "jabali");
-define("hDBUSER", "root");
-define("hDBPASS", "");
-define("hDBHOST", "localhost");
-define("hROOT", "http://localhost/jabali/");
+define( "hDBNAME", "jabali" );
+define( "hDBUSER", "root" );
+define( "hDBPASS", "" );
+define( "hDBHOST", "localhost" );
+define( "hROOT", "http://localhost/jabali/" );
 ?>

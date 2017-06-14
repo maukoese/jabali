@@ -9899,8 +9899,7 @@ _:-ms-input-placeholder, :root .mdl-slider.mdl-slider.is-upgraded {
   width: 300px;
   max-width: 100%;
   margin: 0;
-  padding: 20px 0;
-  padding-left: 40px; }
+  padding: 20px 0; }
   .mdl-textfield .mdl-button {
     position: absolute;
     bottom: 20px; }
@@ -12858,7 +12857,6 @@ a {
   display: none; } 
 }
 
-
 .loader {
   position: fixed;
   left: 0px;
@@ -12880,7 +12878,6 @@ a {
     left: 0;
     top: 0;
     width: 100%; /* Full width */
-    height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
@@ -12893,12 +12890,13 @@ a {
     margin: auto;
     padding: 0;
     border: 1px solid #888;
-    width: 50%;
+    width: 70%;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
     animation-name: animatetop;
-    animation-duration: 0.4s
+    animation-duration: 0.4s;
+    overflow-y: auto;
 }
 
 /* Add Animation */
@@ -12910,14 +12908,6 @@ a {
 @keyframes animatetop {
     from {top:-300px; opacity:0}
     to {top:0; opacity:1}
-}
-
-/* The Close Button */
-.close {
-    color: #ffffff;
-    float: right;
-    font-size: 32px;
-    font-weight: bold;
 }
 
 .close:hover,
@@ -12968,10 +12958,6 @@ a {
 
 .option-drop {
   width: 200px;
-}
-
-footer {
-  background-color:transparent;
 }
 
 .mdl-card__media {
@@ -13110,11 +13096,6 @@ th.sort {
 .scale-anm {
   transform: scale(1);
 }
-
-p:hover { 
-  cursor:pointer; 
-  background: #333; 
-  color:#eee; }
 
 .tile img {
     max-width: 100%;

@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
 * @package Jabali Framework
 * @subpackage Home
@@ -8,7 +8,7 @@
 **/
 
 include 'header.php'; ?>
-<title>My Portfolio [ <?php getOption('name'); ?> ]</title>
+<title>My Portfolio [ <?php getOption( 'name' ); ?> ]</title>
 <script>
 var options = {
         valueNames: ['material', 'quantity', 'price']
@@ -17,19 +17,19 @@ var options = {
   ;
 
 
-$($('th.sort')[0]).trigger('click', function () {
-  console.log('clicked');
-});
+$( $('th.sort' )[0] ).trigger('click', function () {
+  console.log('clicked' );
+} );
 
-$('input.search').on('keyup', function (e) {
-  if (e.keyCode === 27) {
-    $(e.currentTarget).val('');
-    documentTable.search('');
+$('input.search' ).on('keyup', function (e) {
+  if ( e.keyCode === 27) {
+    $(e.currentTarget).val('' );
+    documentTable.search('' );
   }
-});
+} );
 </script>
 <div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--8-col mdl-card mdl-shadow--2dp mdl-color--blue">
+  <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--2dp mdl-color">
 
   <ul id="tabs-swipe-demo" style="border-radius: 5px;" class="tabs mdl-card__title">
       <li class="tab col s3"><a class="mdl-color--teal active" href="#test-swipe-1">All</a></li>
@@ -40,22 +40,13 @@ $('input.search').on('keyup', function (e) {
       <li class="tab col s3"><a href="#test-swipe-6">Web/Email Hosting</a></li>
       <li class="tab col s3"><a href="#test-swipe-7">Graphic Design</a></li>
   </ul>
-  <div id="test-swipe-1" class="col s12">1</div>
+  <div id="test-swipe-1" class="col s12"><?php $hPost -> getArticles(); ?></div>
   <div id="test-swipe-2" class="col s12">2</div>
   <div id="test-swipe-3" class="col s12">3</div>
   <div id="test-swipe-4" class="col s12">1</div>
   <div id="test-swipe-5" class="col s12">2</div>
   <div id="test-swipe-6" class="col s12">3</div>
   </div>
-  <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--2dp ">
-    <div class="mdl-card__title">
-    <i class="material-icons">work</i>
-      <span class="mdl-button">My Portfolio</span>
-    </div>
-    <div class="mdl-card__supporting-text mdl-card--expand">
-      Random details here.
-    </div>
-  </div> 
 </div>
 <?php 
 include 'footer.php';

@@ -1,7 +1,7 @@
 {
 	"name": "Jabali Framework",
 	"slug": "jabali",
-	"version": "0.17.06",
+	"version": "0.17.05",
 	"author": "Mauko Maunde",
 	"screenshot": "http://localhost/jabali/assets/images/avatar.svg",
 	"description": "An extension to create an online ecommerce store with jabali",

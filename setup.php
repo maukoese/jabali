@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
 * @package Jabali Framework
 * @subpackage Setup
@@ -7,85 +7,83 @@
 * @version 0.17.06
 **/
 
-if (file_exists('./functions/config.php')) {
-	header("Location: ./login");
+if ( file_exists('./functions/config.php' ) ) {
+	header( "Location: ./install?module=app" );
 }
 
-include './functions/jabali.php';
+if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" && $_POST['password'] != "" && $_POST['name'] != "" ) {
 
-if (isset($_POST['setup']) && $_POST['host'] != "" && $_POST['user'] != "" && $_POST['password'] != "" && $_POST['name'] != "") {
-	
 	$dbhost = $_POST["host"];
 	$dbname = $_POST["name"];
 	$dbuser = $_POST["user"];
 	$dbpass = $_POST["password"];
 	$home = $_POST["home"];
 
-	function conFigure($dbhost, $dbname, $dbuser, $dbpass, $home) {
-		$dbfile = fopen("./functions/config.php", "w") or die("Unable to open file!");
-		$txt = "<?php";
-		fwrite($dbfile, $txt);
+	function conFigure( $dbhost, $dbname, $dbuser, $dbpass, $home) {
+		$dbfile = fopen( "./functions/config.php", "w" ) or die( "Unable to open file!" );
+		$txt = "<?php ";
+		fwrite( $dbfile, $txt );
 		$txt = "\n";
-		fwrite($dbfile, $txt);
+		fwrite( $dbfile, $txt );
 		$text = '/**';
-		fwrite($dbfile, $text);
+		fwrite( $dbfile, $text );
 		$txt = "\n";
-		fwrite($dbfile, $txt);
+		fwrite( $dbfile, $txt );
 		$txt = '* @package Jabali Framework';
-		fwrite($dbfile, $txt);
+		fwrite( $dbfile, $txt );
 		$txt = "\n";
-		fwrite($dbfile, $txt);
+		fwrite( $dbfile, $txt );
 		$txt = '* @subpackage Configuration File';
-		fwrite($dbfile, $txt);
+		fwrite( $dbfile, $txt );
 		$txt = "\n";
-		fwrite($dbfile, $txt);
+		fwrite( $dbfile, $txt );
 		$txt = '* @link https://docs.mauko.co.ke/jabali/config';
-		fwrite($dbfile, $txt);
+		fwrite( $dbfile, $txt );
 		$txt = "\n";
-		fwrite($dbfile, $txt);
+		fwrite( $dbfile, $txt );
 		$txt = '* @author Mauko Maunde';
-		fwrite($dbfile, $txt);
+		fwrite( $dbfile, $txt );
 		$txt = "\n";
-		fwrite($dbfile, $txt);
+		fwrite( $dbfile, $txt );
 		$txt = '* @version 0.17.06';
-		fwrite($dbfile, $txt);
+		fwrite( $dbfile, $txt );
 		$txt = "\n";
-		fwrite($dbfile, $txt);
+		fwrite( $dbfile, $txt );
 		$txt = '**/';
-		fwrite($dbfile, $txt);
+		fwrite( $dbfile, $txt );
 		$txt = "\n";
-		fwrite($dbfile, $txt);
+		fwrite( $dbfile, $txt );
 		$txt = "\n";
-		fwrite($dbfile, $txt);
-		$text = 'define("hDBNAME", "'.$dbname.'");';
-		fwrite($dbfile, $text);
+		fwrite( $dbfile, $txt );
+		$text = 'define( "hDBNAME", "'.$dbname.'" );';
+		fwrite( $dbfile, $text );
 		$txt = "\n";
-		fwrite($dbfile, $txt);
-		$text = 'define("hDBUSER", "'.$dbuser.'");';
-		fwrite($dbfile, $text);
+		fwrite( $dbfile, $txt );
+		$text = 'define( "hDBUSER", "'.$dbuser.'" );';
+		fwrite( $dbfile, $text );
 		$txt = "\n";
-		fwrite($dbfile, $txt);
-		$text = 'define("hDBPASS", "'.$dbpass.'");';
-		fwrite($dbfile, $text);
+		fwrite( $dbfile, $txt );
+		$text = 'define( "hDBPASS", "'.$dbpass.'" );';
+		fwrite( $dbfile, $text );
 		$txt = "\n";
-		fwrite($dbfile, $txt);
-		$text = 'define("hDBHOST", "'.$dbhost.'");';
-		fwrite($dbfile, $text);
+		fwrite( $dbfile, $txt );
+		$text = 'define( "hDBHOST", "'.$dbhost.'" );';
+		fwrite( $dbfile, $text );
 		$txt = "\n";
-		fwrite($dbfile, $txt);
-		$text = 'define("hROOT", "'.$home.'");';
-		fwrite($dbfile, $text);
+		fwrite( $dbfile, $txt );
+		$text = 'define( "hROOT", "'.$home.'" );';
+		fwrite( $dbfile, $text );
 		$txt = "\n";
-		fwrite($dbfile, $txt);
+		fwrite( $dbfile, $txt );
 		$txt = "?>";
-		fwrite($dbfile, $txt);
-		fclose($dbfile);
+		fwrite( $dbfile, $txt );
+		fclose( $dbfile );
 
 		return true;
 	}
 
-	if (conFigure($dbhost, $dbname, $dbuser, $dbpass, $home)) {
-		header("Location: install?module=app");
+	if ( conFigure( $dbhost, $dbname, $dbuser, $dbpass, $home) ) {
+		header( "Location: ./install?module=app" );
 	}
 } else { ?>	
 
@@ -101,7 +99,7 @@ if (isset($_POST['setup']) && $_POST['host'] != "" && $_POST['user'] != "" && $_
 	<div style="padding-top:40px;" class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
     <div id="login_div">
         <center><img src="./assets/images/logo.png"></center>
-        <form enctype="multipart/form-data" method="POST" action="">
+        <form enctype="multipart/form-data" method="POST" action="./setup">
         <div class="input-field">
         <i class="material-icons prefix">account_circle</i>
         <input name="host" id="host" type="text" value="localhost">
@@ -132,16 +130,16 @@ if (isset($_POST['setup']) && $_POST['host'] != "" && $_POST['user'] != "" && $_
         <input name="home" id="home" type="text" value="<?php 
         function is_localhost() {
 	    $whitelist = array( '127.0.0.1', '::1' );
-	    if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) )
+	    if ( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) )
 	        return true;
 		}
 
-		if (is_localhost()) {
-			$base = basename(__DIR__);
+		if ( is_localhost() ) {
+			$base = basename(__DIR__ );
 		} else {
 			$base = "";
 		}
-        $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://"; echo $protocol . $_SERVER['HTTP_HOST'].'/'.$base; ?>/">
+        $protocol = ((!empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] != 'off' ) || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://"; echo $protocol . $_SERVER['HTTP_HOST'].'/'.$base; ?>/">
         <label for="home" class="center-align">Home Url</label>
         </div>
 
@@ -151,6 +149,6 @@ if (isset($_POST['setup']) && $_POST['host'] != "" && $_POST['user'] != "" && $_
 	</div>
 	</main>
 	</div>
-<?php
+<?php 
 }
-?>
+include 'footer.php'; ?>

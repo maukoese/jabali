@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
 * @package Jabali Framework
 * @subpackage Home
@@ -8,7 +8,7 @@
 **/
 
 include 'header.php'; ?>
-<title>Tables [ <?php getOption('name'); ?> ]</title>
+<title>Tables [ <?php getOption( 'name' ); ?> ]</title>
 <style>
 div.mdl-card {
   margin: 0 auto;
@@ -86,16 +86,16 @@ var options = {
   ;
 
 
-$($('th.sort')[0]).trigger('click', function () {
-  console.log('clicked');
-});
+$( $('th.sort' )[0] ).trigger('click', function () {
+  console.log('clicked' );
+} );
 
-$('input.search').on('keyup', function (e) {
-  if (e.keyCode === 27) {
-    $(e.currentTarget).val('');
-    documentTable.search('');
+$('input.search' ).on('keyup', function (e) {
+  if ( e.keyCode === 27) {
+    $(e.currentTarget).val('' );
+    documentTable.search('' );
   }
-});
+} );
 </script>
 <div class="mdl-grid">
 <div class="mdl-cell mdl-cell--12-col">

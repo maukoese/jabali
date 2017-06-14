@@ -1,33 +1,33 @@
-<?php
+<?php 
 
-if (file_exists('./functions/.zahra')) {
-	header("Location: ./login");
+if (file_exists('./functions/.zahra') ) {
+	header("Location: ./login" );
 }
 
 include './functions/jabali.php';
 connectDb();
 
-if (isset($_POST['register'])) {
-	$date = date("YmdHms");
-    $h_email = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_email']);
+if (isset($_POST['register']) ) {
+	$date = date("YmdHms" );
+    $h_email = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_email'] );
 
-    $hash = str_shuffle(md5($h_email.$date));
+    $hash = str_shuffle(md5($h_email.$date ) );
 
-    $h_author = substr($hash, 20);
+    $h_author = substr($hash, 20 );
     
     $h_avatar = hIMAGES.'avatar.svg';
 
     $h_center = "hq";
-    $h_code = substr($hash, 20);
-    $h_created = date('Ymd');
+    $h_code = substr($hash, 20 );
+    $h_created = date('Ymd' );
     $h_key = $hash;
     $h_level = "admin";
     $h_notes = "Account created on ".$date;
-    $h_password = md5($_POST['h_password']);
+    $h_password = md5($_POST['h_password'] );
     $h_status = "active"; //Sort emailuser();, Change to "pending"
     $h_style = "zahra";
     $h_type = "admin";
-    $h_username = strtolower($_POST['h_username']);
+    $h_username = strtolower($_POST['h_username'] );
 
 	$tos = "<p>TERMS OF SERVICE</p>
 
@@ -94,35 +94,35 @@ if (isset($_POST['register'])) {
 	<p>Questions about the Terms of Service should be sent to us at portal@maukoese.co.ke</p>
 	";
 
-	mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Site Name', 'name', 'Jabali', '".$h_created."')");
-	mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Description', 'description', 'A Jabali System', '".$h_created."')");
-	mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Admin Email', 'email', '".$h_email."', '".$h_created."')");
-	mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Copyright', 'copyright', '© JABALI 2017', '".$h_created."')");
-	mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Attribution', 'attribution', 'Mauko by Design', '".$h_created."')");
-	mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Attribution Link', 'attribution_link', 'http://mauko.co.ke', '".$h_created."')");
-	mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Header Logo', 'header_logo', '".hIMAGES."logo.png', '".$h_created."')");
-	mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Home Logo', 'home_logo', '".hIMAGES."logo2.png', '".$h_created."')");
-	mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Favicon', 'favicon', '".hIMAGES."marker.png', '".$h_created."')");
-	mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions (h_alias, h_code, h_description, h_updated) VALUES('Terms Of Service', 'tos', '".$tos."', '".$h_created."')");
-	mysqli_query($GLOBALS['conn'], "INSERT INTO hoptions (h_alias, h_code, h_updated) VALUES('Allow Registration', 'registration', '".$h_created."')");
+	mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Site Name', 'name', 'Jabali', '".$h_created."')" );
+	mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Description', 'description', 'A Jabali System', '".$h_created."')" );
+	mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Admin Email', 'email', '".$h_email."', '".$h_created."')" );
+	mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Copyright', 'copyright', '© JABALI 2017', '".$h_created."')" );
+	mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Attribution', 'attribution', 'Mauko by Design', '".$h_created."')" );
+	mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Attribution Link', 'attribution_link', 'http://mauko.co.ke', '".$h_created."')" );
+	mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Header Logo', 'header_logo', '".hIMAGES."logo.png', '".$h_created."')" );
+	mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Home Logo', 'home_logo', '".hIMAGES."logo2.png', '".$h_created."')" );
+	mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Favicon', 'favicon', '".hIMAGES."marker.png', '".$h_created."')" );
+	mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions (h_alias, h_code, h_description, h_updated) VALUES('Terms Of Service', 'tos', '".$tos."', '".$h_created."')" );
+	mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions (h_alias, h_code, h_updated) VALUES('Allow Registration', 'registration', '".$h_created."')" );
 
-    if (mysqli_query($GLOBALS['conn'], "INSERT INTO husers (h_author, h_avatar, h_center, h_code, h_created, h_email, h_key, h_level, h_notes, h_password, h_phone, h_status, h_style, h_type, h_username) 
-    VALUES ('".$h_author."', '".$h_avatar."', '".$h_center."', '".$h_code."', '".$h_created."', '".$h_email."', '".$h_key."', '".$h_level."', '".$h_notes."', '".$h_password."', '".$h_phone."', '".$h_status."', '".$h_style."', '".$h_type."', '".$h_username."')")) {
+    if (mysqli_query( $GLOBALS['conn'], "INSERT INTO husers (h_author, h_alias, h_avatar, h_center, h_code, h_created, h_email, h_key, h_level, h_notes, h_password, h_phone, h_status, h_style, h_type, h_username) 
+    VALUES ('".$h_author."', 'Admin', ".$h_avatar."', '".$h_center."', '".$h_code."', '".$h_created."', '".$h_email."', '".$h_key."', '".$h_level."', '".$h_notes."', '".$h_password."', '".$h_phone."', '".$h_status."', '".$h_style."', '".$h_type."', '".$h_username."')") ) {
 
-		$zahra = fopen("./functions/.zahra", "w") or die("Unable to open file!");
-		$salts = sha1(date('YmdHms')).sha1(date('YmdHms'));
-		fwrite($zahra, $salts);
+		$zahra = fopen("./functions/.zahra", "w") or die("Unable to open file!" );
+		$salts = sha1(date('YmdHms')).sha1(date('YmdHms' ) );
+		fwrite($zahra, $salts );
 
-		header("Location: ./login");
+		header("Location: ./login" );
 
     } else {
         echo "Error: <br>" . $GLOBALS['conn']->error;
     }
 }
 
-if (isset($_GET['module'])) { ?>
-	<title>Install <?php show ( ucwords($_GET['module']) ); ?> [ JABALI ]</title><?php 
-	installJabali( $_GET['module'] );
+if (isset($_GET['module']) ) { ?>
+	<title>Install <?php _show_( ucwords($_GET['module']) ); ?> [ JABALI ]</title><?php 
+	installJabali();
 	if ( !file_exists("./functions/.zahra") ) { ?>
 		<link rel="stylesheet" href="./assets/css/materialize.css">
 		<link rel="stylesheet" href="./assets/css/material-icons.css">
@@ -167,6 +167,6 @@ if (isset($_GET['module'])) { ?>
 				    </div>
 			    </div>
 		    </main>
-		</div><?php
+		</div><?php 
 	}
 }

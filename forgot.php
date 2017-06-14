@@ -1,20 +1,20 @@
-<?php
-if ( isset($_POST['forgot']) && $_POST['h_email'] !== "") {
+<?php 
+if ( isset( $_POST['forgot'] ) && $_POST['h_email'] !== "" ) {
   include 'functions/jabali.php';
 
-  if (emailExists($_POST['h_email'])) {
-    $theUser = mysqli_query($GLOBALS['conn'], "SELECT h_email, h_key FROM husers WHERE h_email = '".$_POST['h_email']."'");
-    if ($theUser -> num_rows >0 ) {
-      while ($thisuser = mysqli_fetch_assoc($theUser)) {
+  if ( emailExists( $_POST['h_email'] ) ) {
+    $theUser = mysqli_query( $GLOBALS['conn'], "SELECT h_email, h_key FROM husers WHERE h_email = '".$_POST['h_email']."'" );
+    if ( $theUser -> num_rows >0 ) {
+      while ( $thisuser = mysqli_fetch_assoc( $theUser) ) {
         $user[] = $thisuser;
       }
     }
     
-    if (!empty($user)) {
-      if( $hUser -> emailUser( $user[0]['h_email'], "forgot", $user[0]['h_key'] ) ) {
-        header("Location: ./forgot?error=null");
+    if ( !empty( $user) ) {
+      if ( $hUser -> emailUser( $user[0]['h_email'], "forgot", $user[0]['h_key'] ) ) {
+        header( "Location: ./forgot?error=null" );
       } else {
-        header("Location: ./forgot?error=email");
+        header( "Location: ./forgot?error=email" );
       }
     }
   }
@@ -22,7 +22,7 @@ if ( isset($_POST['forgot']) && $_POST['h_email'] !== "") {
 } else {
   include 'header.php';
   ?>
-  <title>Forgot Password [ <?php getOption('name'); ?> ]</title>
+  <title>Forgot Password [ <?php getOption( 'name' ); ?> ]</title>
   <div style="padding-top:40px;" >
       <div id="login_div">
   <center><?php frontlogo(); ?>
@@ -47,7 +47,7 @@ if ( isset($_POST['forgot']) && $_POST['h_email'] !== "") {
           </form>
       </div>
   </div>
-  <?php
+  <?php 
   include 'footer.php';
 }
 ?>
