@@ -1,19 +1,15 @@
 <?php 
 session_start();
-include './functions/jabali.php';
-if ( file_exists('./functions/config.php' ) ) {
-    connectDb();
+
+if ( isset( $_GET['logout'] ) ) {
+  session_unset();
+  session_destroy();
 }
 
-$hUser = new _hUsers();
-$hForm = new _hForms();
-$hResource = new _hResources();
-$hService = new _hServices();
-$hMessage = new _hMessages();
-$hNotification = new _hNotifications();
-$hPost = new _hPosts();
-$hSocial = new _hSocial();
-?>
+include './inc/jabali.php';
+if ( file_exists('./inc/config.php' ) ) {
+    connectDb();
+} ?>
 <!doctype html>
 <!--
   Jabali Framework
@@ -26,8 +22,8 @@ $hSocial = new _hSocial();
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <link rel="shortcut icon" href="<?php 
-    if ( file_exists('./functions/config.php' ) ) {
-        getOption( 'favicon' );
+    if ( file_exists('./inc/config.php' ) ) {
+        showOption( 'favicon' );
     } else {
         echo hIMAGES."marker.png"; 
     } ?>">
@@ -60,18 +56,18 @@ $hSocial = new _hSocial();
     <link rel="stylesheet" href="<?php echo hSTYLES; ?>jabali.css">
     <style type="text/css">
     .mdl-menu__outline {
-        background-color: <?php primaryColor( $_SESSION['myCode'] ); ?>;
+        background-color: <?php primaryColor(); ?>;
         overflow-y: auto;
     }
 
     .primary {
-        color: <?php primaryColor( $_SESSION['myCode'] ); ?>;
+        color: <?php primaryColor(); ?>;
     }
     .accent, a {
-        color: <?php if ( isset( $_SESSION['myCode'] ) ) { secondaryColor( $_SESSION['myCode'] ); } else { echo "red"; } ?>;
+        color: <?php if ( isset( $_SESSION['myCode'] ) ) { secondaryColor(); } else { echo "red"; } ?>;
     }
     .accent, .mdl-button--fab.mdl-button--colored, .mdl-badge[data-badge]:after {
-        background-color: <?php if ( isset( $_SESSION['myCode'] ) ) { secondaryColor( $_SESSION['myCode'] ); } else { echo "red"; } ?>;
+        background-color: <?php if ( isset( $_SESSION['myCode'] ) ) { secondaryColor(); } else { echo "red"; } ?>;
     }
     .mdl-data-table {
     color: white;
@@ -84,62 +80,50 @@ $hSocial = new _hSocial();
     }
     </style>
 
-    <script src="<?php echo hSCRIPTS; ?>jquery-3.1.1.min.js"></script>
+    <script src="<?php echo hSCRIPTS; ?>jquery-3.2.1.min.js"></script>
     <script src="<?php echo hSCRIPTS; ?>jquery-ui.min.js"></script>
     <script src="<?php echo hASSETS; ?>js/ckeditor/ckeditor.js"></script>
     <script src="<?php echo hASSETS; ?>js/list.js"></script>
 </head>
-<div class="demo-layout-transparent mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-<body>
-        <header class="demo-header mdl-layout__header mdl-color-text--grey-600 mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ) { primaryColor( $_SESSION['myCode'] ); } else { echo "grey"; } ?>">
-        <div class="mdl-layout__header-row">
-          <a href="<?php if ( file_exists('./functions/config.php' ) ) {
-              echo hROOT;
-          } else { echo './'; } ?>"><span class="mdl-layout-title"><img src="<?php if ( file_exists('./functions/config.php' ) ) {
-              echo hIMAGES.'logo-w.png';
-          } else { echo './assets/images/logo-w.png'; } ?>" width="100px;"></span></a>
-          <div class="mdl-layout-spacer"></div>
-          <a href="<?php echo hROOT.'about'; ?>" class="mdi mdi-email mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_contact"></a>
-            <div class="mdl-tooltip" for="h_contact">Contact</div>
-          <a href="<?php echo hROOT.'register'; ?>" class="mdi mdi-account-plus mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_submit"></a>
-            <div class="mdl-tooltip" for="h_submit">Register</div>
+<div class="mdl-layout mdl-layout-transparent mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+  <body>
+  <header class="mdl-layout__header  mdl-layout__header--waterfall mdl-color-text--grey-600 mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ) { primaryColor(); } else { echo "madge"; } ?>">
+    <div class="mdl-layout__header-row">
+      <a href="<?php if ( file_exists('./inc/config.php' ) ) {
+      echo hROOT;
+      } else { echo './'; } ?>">
+        <span class="mdl-layout-title"><img src="<?php if ( file_exists('./inc/config.php' ) ) {
+          echo hIMAGES.'head-w.png';
+          } else { echo './assets/images/head-w.png'; } ?>" width="100px;">
+        </span>
+      </a>
+      <div class="mdl-layout-spacer"></div>
+      <a href="http://github.com/maukoese/jabali" class="mdi mdi-github-circle mdl-badge mdl-badge--overlap mdl-button--icon notification" id="github"></a>
+      <div class="mdl-tooltip" for="github">Github</div>
 
-          <a href="<?php if ( isset( $_SESSION['myCode'] ) ) {
-              echo hPORTAL.'user?view='.$_SESSION['myCode'].'&key='.$_SESSION['myAlias'];
-            } else {
-            echo hROOT.'login'; 
-            }
-            ?>" class="mdi <?php if ( isset( $_SESSION['myCode'] ) ) {
-              echo 'mdi-account';
-            } else {
-            echo 'mdi-login-variant'; 
-            }
-            ?> mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_login"></a>
-            <div class="mdl-tooltip" for="h_login">Portal</div>
+      <a href="<?php echo hROOT.'about'; ?>" class="mdi mdi-email mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_contact"></a>
+      <div class="mdl-tooltip" for="h_contact">Contact</div>
 
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
-            <i class="material-icons">more_vert</i>
-          </button>
-          <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ) { primaryColor( $_SESSION['myCode'] ); } else { echo "grey"; } ?>" for="hdrbtn">
-            <a class="mdl-menu__item mdl-list__item" href="<?php echo hROOT."about"; ?>"><i class="material-icons mdl-list__item-icon">mail_outline</i><span style="padding-left: 20px">Contact</span></a>
-            <a class="mdl-menu__item mdl-list__item"href="<?php echo hROOT."register"; ?>"><i class="material-icons mdl-list__item-icon">link</i><span style="padding-left: 20px">Request Service</span></a>
-            <a class="mdl-menu__item mdl-list__item"href="<?php if ( isset( $_SESSION['myCode'] ) ) {
-              echo hPORTAL.'user?view='.$_SESSION['myCode'].'&key='.$_SESSION['myAlias'];
-            } else {
-            echo hROOT.'login'; 
-            }
-            ?>"><i class="material-icons mdl-list__item-icon"><?php if ( isset( $_SESSION['myCode'] ) ) {
-              echo 'account_circle';
-            } else {
-            echo 'exit_to_app'; 
-            }
-            ?></i><span style="padding-left: 20px"><?php if ( isset( $_SESSION['myCode'] ) ) {
-              echo 'Account';
-            } else {
-            echo 'Login'; 
-            }
-            ?></span></a>
-          </ul>
-        </div>
-      </header>
-    <main class="mdl-layout__content mdl-color-text--white">
+      <a href="<?php echo hROOT.'register?type=user'; ?>" class="mdi mdi-account-plus mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_submit"></a>
+      <div class="mdl-tooltip" for="h_submit">Register</div>
+
+      <?php if ( isset( $_SESSION['myCode'] ) ) { ?>
+      <a id="admin" href="#" class="mdi mdi-lock mdl-badge mdl-badge--overlap mdl-button--icon"></a>
+      <div class="mdl-tooltip" for="admin">Admin</div>
+        <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-color--<?php primaryColor(); ?>" for="admin">
+        <a class="mdl-cell" href="<?php _show_(  hADMIN .'index?page=my dashboard' ); ?>"><i class="material-icons mdl-list__item-icon">dashboard</i></a>
+        <a class="mdl-cell" href="<?php _show_(  hADMIN .'user?view='. $_SESSION['myCode'] .'&key='.$_SESSION['myAlias'] ); ?>"><i class="material-icons mdl-list__item-icon">perm_identity</i></a>
+        <a class="mdl-cell" href="<?php _show_(  hADMIN .'options?settings=color' ); ?>"><i class="material-icons mdl-list__item-icon">palette</i></a>
+        </ul><?php
+      } else { ?>
+      <a id="admin" href="<?php _show_(  hROOT.'login' ); ?>" class="mdi mdi-exit-to-app mdl-badge mdl-badge--overlap mdl-button--icon"></a><?php 
+      } ?>
+
+    </div>
+    <!-- Bottom row, not visible on scroll -->
+    <div class="mdl-layout__header-row">
+      <div class="mdl-layout-spacer"></div>
+        <?php _hMenus::header(); ?>
+    </div>
+  </header>
+  <main class="mdl-layout__content mdl-color-text--white">

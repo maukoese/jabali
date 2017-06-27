@@ -1,107 +1,141 @@
 <?php 
-function setupShop() {
-  $hproducts = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hproducts (
-  h_code VARCHAR(16), 
-  h_price VARCHAR(50),
-  PRIMARY KEY(h_code)
-  )" );
+include hABSX.'banda/functions.php';
+if ( !isShop() ) {
+  call_user_func( 'setupShop' );
+}
 
-  $horders = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS horders(
-  h_alias VARCHAR(300),
-  h_amount VARCHAR(20),
-  h_author VARCHAR(20),
-  h_by VARCHAR(100),
-  h_code VARCHAR(16),
-  h_created DATE,
-  h_description TEXT,
-  h_email VARCHAR(50),
-  h_key VARCHAR(100),
-  h_location VARCHAR(100),
-  h_notes TEXT,
-  h_phone VARCHAR(100),
-  h_status VARCHAR(20),
-  h_updated DATE,
-  PRIMARY KEY(h_code)
-  )" );
+include hABSX.'banda/cart.php';
+include hABSX.'banda/options.php';
+if ( isset( $_POST['mpesa'] ) ) {
+    $date = date(Ymd );
+    mysqli_query( $GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['merchant']."', h_updated = '".$date."' WHERE h_code='merchant'" );
+    mysqli_query( $GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['callback']."', h_updated = '".$date."'  WHERE h_code='callback'" );
+    mysqli_query( $GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['paybill']."', h_updated = '".$date."'  WHERE h_code='paybill'" );
+    mysqli_query( $GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['timestamp']."', h_updated = '".$date."'  WHERE h_code='timestamp'" );
+    mysqli_query( $GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['sag']."', h_updated = '".$date."'  WHERE h_code='sag'" );
+}
 
-  $hpayments = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hpayments(
-  h_alias VARCHAR(300),
-  h_amount VARCHAR(20),
-  h_author VARCHAR(20),
-  h_by VARCHAR(100),
-  h_code VARCHAR(16),
-  h_created DATE,
-  h_description TEXT,
-  h_email VARCHAR(50),
-  h_for VARCHAR(20),
-  h_key VARCHAR(100),
-  h_notes TEXT,
-  h_phone VARCHAR(100),
-  h_status VARCHAR(20),
-  h_trx_code VARCHAR(50),
-  h_updated DATE,
-  PRIMARY KEY(h_code)
-  )" );
+include hABSX.'banda/class.products.php';
+$hProduct = new _hProducts();
 
-  if ( $hproducts && $horders && $hpayments) {
+$h_alias = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_alias'] ); 
+$h_author = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_author'] );
 
-    mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Merchant Name', 'merchant', 'Jabali', '".$created."' )" );
-    mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Callback URL', 'callback', '".hROOT."callback', '".$created."' )" );
-    mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Paybill Number', 'paybill', '898998', '".$created."' )" );
-    mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Timestamp', 'timestamp', '20160510161908', '".$created."' )" );
-    mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('SAG Password', 'sag', 'ZmRmZDYwYzIzZDQxZDc5ODYwMTIzYjUxNzNkZDMwMDRjNGRkZTY2ZDQ3ZTI0YjVjODc4ZTExNTNjMDA1YTcwNw==', '".$created."' )" );
+if ( $_FILES['h_avatar'] == "" ) {
+  $h_avatar = hIMAGES.'placeholder.svg';
+} else {
+  $uploads = hABSUP . "uploads/".date('Y' ).'/'.date('m' ).'/'.date('d' ).'/';
+  $upload = $uploads . basename( $_FILES['h_avatar']['name'] );
+
+  if ( file_exists( $upload) ) {
+    echo "Sorry, file already exists.";
+    $uploadOk = 0;
+  }
+
+  if ( move_uploaded_file( $_FILES['h_avatar']["tmp_name"], $upload) ) {
+      //Do nothing
+  } else {
+      echo "Sorry, there was an error uploading your file.";
+  }
+  $h_avatar = $uploads.$_FILES['h_avatar']['name'];
+}
+
+$h_by = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_by'] );
+$h_category = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_category'] ); 
+$h_organization = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_organization'] );
+$h_key = str_shuffle( generateCode() );
+$h_code = substr( $h_key, rand(0, 15), 12 ); 
+$h_created = $_POST['h_created'];
+$h_desc = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_desc'] ); 
+$h_email = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_email'] ); 
+$h_fav = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_fav'] ); 
+$h_level = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_level'] ); 
+$h_link = hADMIN."post?view=".$h_code; 
+$h_location = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_location'] );
+$h_notes = substr( $h_desc, 250 ); 
+$h_phone = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_phone'] ); 
+$h_price = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_price'] );
+$h_reading = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_reading'] ); 
+$h_status = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_status'] );
+$h_subtitle = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_subtitle'] ); 
+$h_tags = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_tags'] ); 
+$h_type = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_type'] ); 
+$h_updated = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_updated'] );
+
+if ( isset( $_POST['product'] ) ) {
+  $hProduct -> createp($h_code, $h_price );
+  $hProduct -> create( $h_alias, $h_author, $h_avatar, $h_by, $h_category, $h_organization, $h_code, $h_created, $h_desc, $h_email, $h_fav, $h_key, $h_level, $h_link, $h_location, $h_notes, $h_phone, $h_reading, $h_status, $h_subtitle, $h_tags, $h_type, $h_updated );
+}
+
+if ( isset( $_POST['productupd'] ) ) {
+  $hProduct -> createp($h_code, $h_price );
+  $hProduct -> update( $h_alias, $h_author, $h_avatar, $h_by, $h_category, $h_organization, $h_code, $h_created, $h_desc, $h_email, $h_fav, $h_key, $h_level, $h_link, $h_location, $h_notes, $h_phone, $h_reading, $h_status, $h_subtitle, $h_tags, $h_type, $h_updated );
+}
+
+if ( isset( $_GET['product'] ) ) { 
+  if ( $_GET['product'] == "all" ) {
+    $hProduct -> getProducts();
+    if ( !isCap( 'admin' ) ) {
+      newButton('do', 'product&x=banda', 'create' );
+    } else {
+      show_cart();
+    }
+  } elseif ( $_GET['product'] == "drafts" ) {
+    $hProduct -> getDrafts();
+  } else {
+    $hProduct -> getProduct( $_GET['product'] );
+    if ( !isCap( 'admin' ) ) {
+      newButton('do', 'product&x=banda', 'create' );
+    } else {
+      show_cart();
+    }
   }
 }
 
-function show_cart() { ?>
-
-  <span class="cartfab mdl-button mdl-button--fab notification mdl-color--<?php primaryColor( $_SESSION['myCode'] ); ?>" id="cartbtn" >
-  <i class="material-icons mdl-badge mdl-badge--overlap" data-badge="<?php echo count( $_SESSION["cart_item"] ); ?>">shopping_cart</i>
-  </span><div class="mdl-tooltip" for="cartbtn">My Cart</div>
-
-  <div class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--top-right option-drop mdl-card mdl-color--<?php primaryColor( $_SESSION['myCode'] ); ?>" for="cartbtn" style="width: 250px">
-    <div class="mdl-card__title"><?php 
-    if ( !empty( $_SESSION["cart_item"] ) ) { ?>
-      <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="./shop?order=<?php echo substr(md5( $_SESSION['myEmail'].date(Ymd)), 0, 12 ); ?>">checkout now<i class="material-icons">forward</i></a>
-          <div class="mdl-layout-spacer"></div>
-          <div class="mdl-card__subtitle-text">
-              
-          <a class="mdl-badge mdl-badge--overlap notification" id="btnEmpty" href="./shop?view=list&buy=empty">
-              <i class="material-icons">remove_shopping_cart</i>
-          </a>
-          </div><?php 
-      } else { echo "MY CART";} ?>
-      </div>
-
-      <div class="mdl-card__supporting-text">
-              <?php 
-    if ( isset( $_SESSION["cart_item"] )){
-        $item_total = 0; ?>
-    <table class="mdl-data-table mdl-js-data-table">
-    <tbody> 
-    <?php  
-        foreach ( $_SESSION["cart_item"] as $item){
-        ?>
-            <tr><td style="text-align:left;" ><a href="./shop?view=list&buy=remove&code=<?php echo $item["code"]; ?>" class="material-icons">clear</a></td>
-            <td style="text-align:left;" ><strong><?php echo $item["name"]; ?></strong></td>
-            </tr>
-
-            <?php 
-            $item_total += ( $item["price"]*$item["quantity"] );
-        }
-        ?>
-    </tbody>
-    </table><?php 
-    } else { echo "<center><br>Your Cart Is Empty</center>";}
-    ?>
-    <?php if ( !empty( $_SESSION["cart_item"] ) ) { ?>
-    <center>
-      <h5><b>TOTAL: </b> <?php echo "KSh ".$item_total; ?></h5>
-    </center>
-    <?php } ?>  
-    </div>
-  </div><?php 
+if ( isset( $_GET['create'] ) ) { 
+  if ( $_GET['create'] == "product" ) {
+    $hForm -> postForm();
+    $hProduct -> productFields ();
+  } elseif ( $_GET['create'] == "drafts" ) {
+    $hProduct -> getDrafts();
+  } else {
+    $hForm -> postForm();
+    $hProduct -> productFields ();
+  }
 }
 
-  include '../extensions/banda/class.products.php';
-?>
+if ( isset( $_GET['edit'] ) ) { 
+  if ( $_GET['edit'] == "product" ) {
+    $hForm -> editPostForm( $_GET['edit'] );
+    $hProduct -> productFields ();
+  } elseif ( $_GET['edit'] == "order" ) {
+    $hProduct -> getDrafts();
+  } else {
+    $hForm -> editPostForm( $_GET['edit'] );
+    $hProduct -> productFields ();
+  }
+}
+
+if ( isset( $_GET['order'] ) ) { 
+  if ( $_GET['order'] == "all" ) {
+    $hProduct -> getProducts();
+  } elseif ( $_GET['order'] == "drafts" ) {
+    $hProduct -> getDrafts();
+  } else {
+    $hProduct -> getProduct( $_GET['order'] );
+  }
+}
+
+if ( isset( $_GET['payment'] ) ) { 
+  if ( $_GET['payment'] == "all" ) {
+    $hProduct -> getProducts();
+  } elseif ( $_GET['payment'] == "drafts" ) {
+    $hProduct -> getDrafts();
+  } else {
+    $hProduct -> getProduct( $_GET['payment'] );
+  }
+}
+
+if ( $_GET["order"] ) {
+   
+} ?>

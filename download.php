@@ -1,7 +1,7 @@
 <?php include 'header.php'; ?>
-<title>Download [ <?php getOption( 'name' ); ?> ]</title>
+<title>Download [ <?php showOption( 'name' ); ?> ]</title>
   <div class="mdl-grid ">
-        <div class="mdl-card mdl-cell mdl-cell--12-col mdl-color--<?php primaryColor( $_SESSION['myCode'] ); ?>">
+        <div class="mdl-card mdl-cell mdl-cell--12-col mdl-color--<?php primaryColor(); ?>">
           <ul class="collapsible popout" data-collapsible="accordion">
             <li>
               <div class="collapsible-header active">

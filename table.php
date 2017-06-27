@@ -8,7 +8,7 @@
 **/
 
 include 'header.php'; ?>
-<title>Tables [ <?php getOption( 'name' ); ?> ]</title>
+<title>Tables [ <?php showOption( 'name' ); ?> ]</title>
 <style>
 div.mdl-card {
   margin: 0 auto;

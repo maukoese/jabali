@@ -4,7 +4,7 @@
 	"version": "0.17.05",
 	"author": "Mauko Maunde",
 	"screenshot": "http://localhost/jabali/assets/images/avatar.svg",
-	"description": "An extension to create an online ecommerce store with jabali",
+	"description": "Opensource web application framework with material design components for quick deployment.",
 	"social": {
 		"facebook": "http://facebook.com/maukoese",
 		"twitter": "http://twitter.com/maukoese",
@@ -19,5 +19,7 @@
 		"MIT": "https://opensource.org/licenses/MIT",
 		"GNU": "https://opensource.org/licenses/gpl-license",
 		"Apache": "https://opensource.org/licenses/Apache-2.0"
-	}
+	},
+	"php": "5.2+",
+	"mysql": "5.0+"
 }

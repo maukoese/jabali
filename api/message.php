@@ -1,5 +1,5 @@
 <?php 
-include '../functions/jabali.php';
+include '../inc/jabali.php';
 connectDb();
 
 if ( isset( $_GET['view'] ) ) {

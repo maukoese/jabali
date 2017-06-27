@@ -1,33 +1,37 @@
 <?php 
 
-if (file_exists('./functions/.zahra') ) {
-	header("Location: ./login" );
+if ( file_exists( './inc/.zahra' ) ) {
+	header( "Location: ./login" );
 }
 
-include './functions/jabali.php';
+include './inc/jabali.php';
 connectDb();
 
 if (isset($_POST['register']) ) {
-	$date = date("YmdHms" );
+	$date = date( "YmdHms" );
     $h_email = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_email'] );
+    $site_name = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_name'] );
+    $social = '{"facebook":"https://www.facebook.com/","twitter":"https://twitter.com/","instagram":"https://instagram.com/","github":"https://github.com/"}';
 
     $hash = str_shuffle(md5($h_email.$date ) );
 
-    $h_author = substr($hash, 20 );
-    
+    $h_alias = "Admin";
+    $h_author = substr( $hash, 20 );
     $h_avatar = hIMAGES.'avatar.svg';
-
-    $h_center = "hq";
-    $h_code = substr($hash, 20 );
-    $h_created = date('Ymd' );
+    $h_organization = "hq";
+    $h_code = $h_author;
+    $h_created = date('Y-md-' );
     $h_key = $hash;
     $h_level = "admin";
-    $h_notes = "Account created on ".$date;
+    $h_location = "nairobi";
+    $h_notes = "Account created on ".$h_created;
     $h_password = md5($_POST['h_password'] );
-    $h_status = "active"; //Sort emailuser();, Change to "pending"
+    $h_status = "active";
     $h_style = "zahra";
     $h_type = "admin";
     $h_username = strtolower($_POST['h_username'] );
+
+    $menu_code = substr( md5(date( 'YmdHms' ).rand(10,1000) ), 0, 12);
 
 	$tos = "<p>TERMS OF SERVICE</p>
 
@@ -94,36 +98,87 @@ if (isset($_POST['register']) ) {
 	<p>Questions about the Terms of Service should be sent to us at portal@maukoese.co.ke</p>
 	";
 
-	mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Site Name', 'name', 'Jabali', '".$h_created."')" );
-	mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Description', 'description', 'A Jabali System', '".$h_created."')" );
-	mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Admin Email', 'email', '".$h_email."', '".$h_created."')" );
-	mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Copyright', 'copyright', '© JABALI 2017', '".$h_created."')" );
-	mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Attribution', 'attribution', 'Mauko by Design', '".$h_created."')" );
-	mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Attribution Link', 'attribution_link', 'http://mauko.co.ke', '".$h_created."')" );
-	mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Header Logo', 'header_logo', '".hIMAGES."logo.png', '".$h_created."')" );
-	mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Home Logo', 'home_logo', '".hIMAGES."logo2.png', '".$h_created."')" );
-	mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Favicon', 'favicon', '".hIMAGES."marker.png', '".$h_created."')" );
-	mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions (h_alias, h_code, h_description, h_updated) VALUES('Terms Of Service', 'tos', '".$tos."', '".$h_created."')" );
-	mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions (h_alias, h_code, h_updated) VALUES('Allow Registration', 'registration', '".$h_created."')" );
+	/*
+	*Set Initial Settings So They Are Editable
+	*/
+	$hOpt -> create ( 'Site Name', 'name', '".$site_name."', $h_created );
+	$hOpt -> create ( 'Description', 'description', 'A Jabali System', $h_created );
+	$hOpt -> create ( 'Admin Email', 'email', '".$h_email."', $h_created );
+	$hOpt -> create ( 'Copyright', 'copyright', '© JABALI 2017', $h_created );
+	$hOpt -> create ( 'Attribution', 'attribution', 'Mauko by Design', $h_created );
+	$hOpt -> create ( 'Attribution Link', 'attribution_link', 'http://mauko.co.ke', $h_created );
+	$hOpt -> create ( 'Header Logo', 'header_logo', hIMAGES."logo.png", $h_created );
+	$hOpt -> create ( 'Home Logo', 'home_logo', hIMAGES."logo2.png", $h_created );
+	$hOpt -> create ( 'Favicon', 'favicon', hIMAGES."marker.png", $h_created );
+	$hOpt -> create ( 'Terms Of Service', 'tos', $tos, $h_created );
+	$hOpt -> create ( 'Site Social', 'social', $social, $h_created );
+	$hOpt -> create ( 'Allow Registration', 'registration', $h_created );
 
-    if (mysqli_query( $GLOBALS['conn'], "INSERT INTO husers (h_author, h_alias, h_avatar, h_center, h_code, h_created, h_email, h_key, h_level, h_notes, h_password, h_phone, h_status, h_style, h_type, h_username) 
-    VALUES ('".$h_author."', 'Admin', ".$h_avatar."', '".$h_center."', '".$h_code."', '".$h_created."', '".$h_email."', '".$h_key."', '".$h_level."', '".$h_notes."', '".$h_password."', '".$h_phone."', '".$h_status."', '".$h_style."', '".$h_type."', '".$h_username."')") ) {
 
-		$zahra = fopen("./functions/.zahra", "w") or die("Unable to open file!" );
+	/*
+	*Set Initial Menus So They Are Editable
+	*/
+	//Dashboard Link
+	$hMenu -> create ( 'Dashboard', 'jabali', 'dashboard', 'dashboard', '', './index?view=summary', 'drawer', 'visible', 'drop' );
+
+	//Posts Menu
+	$hMenu -> create ( 'Articles', 'jabali', 'description', 'articles', '', '#', 'drawer', 'visible', 'drop' );
+		//Posts SubMenus
+		$hMenu -> create ( 'All Articles', 'jabali', 'description', 'allarticles', 'articles', './post?view=list&type=article', 'drawer', 'visible', 'null' );
+		$hMenu -> create ( 'Draft Articles', 'jabali', 'insert_drive_file', 'draftarticles', 'articles', './post?view=list&status=draft', 'drawer', 'visible', 'null' );
+
+	//Pages Menu
+	$hMenu -> create ( 'Pages', 'jabali', 'description', 'pages', '', '#', 'drawer', 'visible', 'drop' );
+		//Pages SubMenus
+		$hMenu -> create ( 'All Pages', 'jabali', 'description', 'allpages', 'pages', './post?view=list&type=page', 'drawer', 'visible', 'null' );
+		$hMenu -> create ( 'Draft Pages', 'jabali', 'insert_drive_file', 'draftpages', 'pages', './post?view=list&status=draft', 'drawer', 'visible', 'null' );
+
+	//Users Menu
+	$hMenu -> create ( 'Users', 'jabali', 'group', 'users', '', '#', 'drawer', 'visible', 'drop' );
+		//Users SubMenus
+		$hMenu -> create ( 'All Users', 'jabali', 'supervisor_account', 'allusers', 'users', './user?view=list', 'drawer', 'visible', 'null' );
+		$hMenu -> create ( 'Pending Users', 'jabali', 'done', 'draftusers', 'users', './user?view=pending', 'drawer', 'visible', 'null' );
+
+	//Extensions
+	$hMenu -> create ( 'Extensions', 'jabali', 'power', 'extensions', '', '#', 'drawer', 'visible', 'drop' );
+		//Extensions SubMenus
+		$hMenu -> create ( 'Installed Extensions', 'jabali', 'link', 'installedx', 'extensions', './extensions?view=installed', 'drawer', 'visible', 'null' );
+		$hMenu -> create ( 'Active Extensions', 'jabali', 'schedule', 'activex', 'extensions', './extensions?view=active', 'drawer', 'visible', 'null' );
+		$hMenu -> create ( 'Add Extensions', 'jabali', 'file_download', 'newx', 'extensions', './extensions?add=new', 'drawer', 'visible', 'null' );
+
+	//Messages Menu
+	$hMenu -> create ( 'Messages', 'jabali', 'mail', 'messages', '', '#', 'drawer', 'visible', 'drop' );
+		//Messages SubMenus
+		$hMenu -> create ( 'My Messages', 'jabali', 'message', 'mymessages', 'messages', './message?view=list&type=message', 'drawer', 'visible', 'null' );
+		$hMenu -> create ( 'Sent Messages', 'jabali', 'message', 'sentmessages', 'messages', './message?view=sent&key=messages', 'drawer', 'visible', 'null' );
+		$hMenu -> create ( 'Unread Messages', 'jabali', 'message', 'unreadmessages', 'messages', './message?view=unread&key=messages', 'drawer', 'visible', 'null' );
+
+
+	/*
+	*Create Admin Account
+	*/
+    if ( mysqli_query( $GLOBALS['conn'], "INSERT INTO husers (h_alias, h_author, h_avatar, h_organization, h_code, h_created, h_email, h_gender, h_key, h_level, h_link, h_location, h_notes, h_password, h_status, h_style, h_type, h_username) 
+    VALUES ('".$h_alias."', '".$h_author."', '".$h_avatar."', '".$h_organization."', '".$h_code."', '".$h_created."', '".$h_email."', '".$h_gender."', '".$h_key."', '".$h_level."', '".$h_link."', '".$h_location."', '".$h_notes."', '".$h_password."', '".$h_status."', '".$h_style."', '".$h_type."', '".$h_username."' )" ) ) {
+
+    	/*
+		* Add Zahra file to prevent hacks
+		* Must be deleted to reinstall
+		*/
+		$zahra = fopen("./inc/.zahra", "w") or die("Unable to open file!" );
 		$salts = sha1(date('YmdHms')).sha1(date('YmdHms' ) );
 		fwrite($zahra, $salts );
 
 		header("Location: ./login" );
 
     } else {
-        echo "Error: <br>" . $GLOBALS['conn']->error;
+        echo '<span class="mdl-color--red">Error: <br>' . $GLOBALS['conn']->error . '<br>'.$_POST[].'</span>';
     }
 }
 
 if (isset($_GET['module']) ) { ?>
 	<title>Install <?php _show_( ucwords($_GET['module']) ); ?> [ JABALI ]</title><?php 
 	installJabali();
-	if ( !file_exists("./functions/.zahra") ) { ?>
+	if ( !file_exists("./inc/.zahra") ) { ?>
 		<link rel="stylesheet" href="./assets/css/materialize.css">
 		<link rel="stylesheet" href="./assets/css/material-icons.css">
 		<link rel="stylesheet" href="./assets/css/jabali.css">
@@ -142,13 +197,19 @@ if (isset($_GET['module']) ) { ?>
 			          <form enctype="multipart/form-data" method="POST" action="">
 
 			          <div class="input-field">
+			          <i class="material-icons prefix">label</i>
+			          <input name="h_name" id="h_name" type="text">
+			          <label for="h_name" class="center-align">Site Name</label>
+			          </div>
+
+			          <div class="input-field">
 			          <i class="material-icons prefix">mail</i>
 			          <input name="h_email" id="h_email" type="text">
 			          <label for="h_email" class="center-align">Email Address</label>
 			          </div>
 
 			          <div class="input-field">
-			          <i class="material-icons prefix">account_circle</i>
+			          <i class="material-icons prefix">perm_identity</i>
 			          <input name="h_username" id="h_username" type="text">
 			          <label for="h_username" class="center-align">Username</label>
 			          </div>

@@ -31,21 +31,21 @@ class MPESA {
 
 //put your code here
 
-    public function __construct( $ENDPOINT, $CALLBACK_URL, $CALL_BACK_METHOD, $PAYBILL_NO, $TIMESTAMP, $PASSWORD,$MySQLiconn) {
+    public function __construct( $ENDPOINT, $CALLBACK_URL, $CALL_BACK_METHOD, $PAYBILL_NO, $TIMESTAMP, $PASSWORD, $MySQLiconn) {
         $this->ENDPOINT = "https://safaricom.co.ke/mpesa_online/lnmo_checkout_server.php?wsdl";
 
-        $this->CALLBACK_URL = getOption( 'callback' );
+        $this->CALLBACK_URL = showOption( 'callback' );
         $this->CALL_BACK_METHOD = "POST";
 
-        $this->PAYBILL_NO = getOption( 'paybill' );
+        $this->PAYBILL_NO = showOption( 'paybill' );
 
-        $this->MERCHANT_ID = getOption( 'paybill' );
+        $this->MERCHANT_ID = showOption( 'paybill' );
         
 
         $this->MERCHANT_TRANSACTION_ID = $this->generateRandomString();
-        $this->INFO = getOption( 'paybill' );
-        $this->TIMESTAMP = getOption( 'timestamp' );
-        $this->PASSWORD = getOption( 'sag' );
+        $this->INFO = showOption( 'paybill' );
+        $this->TIMESTAMP = showOption( 'timestamp' );
+        $this->PASSWORD = showOption( 'sag' );
         
     }
     

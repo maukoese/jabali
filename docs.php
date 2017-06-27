@@ -1,7 +1,7 @@
 <?php include 'header.php'; ?>
-<title>Jabali Docs [ <?php getOption( 'name' ); ?> ]</title>
+<title>Jabali Docs [ <?php showOption( 'name' ); ?> ]</title>
   <div id="drawer" class="mdl-tabs vertical-mdl-tabs mdl-js-tabs mdl-js-ripple-effect mdl-grid">
-            <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-grid--no-spacing mdl-card mdl-color--<?php primaryColor( $_SESSION['myCode'] ); ?>">
+            <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-grid--no-spacing mdl-card mdl-color--<?php primaryColor(); ?>">
             <div class="mdl-cell mdl-cell--2-col">
                 <div class="mdl-tabs__tab-bar ">
 
