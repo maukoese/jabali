@@ -78,7 +78,24 @@ class _hMenus {
 	/**
 	* Header menu
 	**/
-	function header() {}
+	function header() {
+          $getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmenus WHERE h_location = 'header' AND h_status = 'visible' ORDER BY h_code DESC" );
+          if ( $getMenu -> num_rows > 0 ) {
+               while ( $menus = mysqli_fetch_assoc( $getMenu) ) {
+                    echo '<a class="mdl-list__item" id= "'.$menus['h_code'].'" href="'.$menus["h_link"].'">'.$menus["h_alias"].'</a>';
+                    if ( $menus['h_type'] == "drop" ) {
+                         $subMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmenus WHERE h_type != 'drop' AND h_location = 'drawer' AND h_status = 'visible' AND h_for = '".$menus['h_code']."'" );
+                         if ( $subMenu -> num_rows > 0 ) { ?>
+                              <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-left mdl-color--<?php primaryColor(); ?>" for="<?php _show_( $menus['h_code'] ); ?>"><?php
+                              while ( $menusub = mysqli_fetch_assoc( $subMenu) ) {
+                                   echo '<a class="mdl-navigation__link" href="'.$menusub["h_link"].'"><i class="mdl-color-text--white material-icons" role="presentation">'.$menusub["h_avatar"].'</i>'.$menusub["h_alias"].'</a>';
+                              }
+                              echo "</ul>";
+                         }
+                    }
+               }
+          }
+     }
 
 	/**
 	* Main Front menu

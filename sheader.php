@@ -85,45 +85,47 @@ if ( file_exists('./inc/config.php' ) ) {
     <script src="<?php echo hASSETS; ?>js/ckeditor/ckeditor.js"></script>
     <script src="<?php echo hASSETS; ?>js/list.js"></script>
 </head>
-<div class="mdl-layout mdl-layout-transparent mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+<div class="mdl-layout mdl-layout-transparent mdl-layout__header--waterfall mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
   <body>
-  <header class="mdl-layout__header mdl-layout__header--waterfall mdl-color-text--grey-600 mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ) { primaryColor(); } else { echo "madge"; } ?>">
+  <header class="mdl-layout__header mdl-color-text--grey-600 mdl-layout__header mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ) { primaryColor(); } else { echo "madge"; } ?>">
     <div class="mdl-layout__header-row">
       <a href="<?php if ( file_exists('./inc/config.php' ) ) {
       echo hROOT;
       } else { echo './'; } ?>">
         <span class="mdl-layout-title"><img src="<?php if ( file_exists('./inc/config.php' ) ) {
-          echo hIMAGES.'head-w.png';
-          } else { echo './assets/images/head-w.png'; } ?>" width="100px;">
+          echo hIMAGES.'ecom.png';
+          } else { echo './assets/images/ecom.png'; } ?>" width="120px;">
         </span>
       </a>
       <div class="mdl-layout-spacer"></div>
-      <a href="http://github.com/maukoese/jabali" class="mdi mdi-github-circle mdl-badge mdl-badge--overlap mdl-button--icon notification" id="github"></a>
-      <div class="mdl-tooltip" for="github">Github</div>
+      <a href="./login" class="mdl-button mdl-button--colored notification" id="github">HOME | </a><a href="./login" class="mdl-button mdl-button--colored notification" id="github">ABOUT US | </a><a href="./login" class="mdl-button mdl-button--colored notification" id="github">INVITE A FRIEND</a> <a href="#" class="mdl-button mdl-button--colored notification" id="github"></a>
+      <a href="./login" class="mdl-button notification" id="login">LOGIN</a>
+      <div class="mdl-tooltip" for="login">Login</div>
 
-      <a href="<?php echo hROOT.'about'; ?>" class="mdi mdi-email mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_contact"></a>
-      <div class="mdl-tooltip" for="h_contact">Contact</div>
+      <a href="register?type=user" class="mdl-button notification" id="register">Register</a>
+      <div class="mdl-tooltip" for="register">Register</div>
 
-      <a href="<?php echo hROOT.'register?type=user'; ?>" class="mdi mdi-account-plus mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_submit"></a>
-      <div class="mdl-tooltip" for="h_submit">Register</div>
+      <a href="./shop" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon" id="h_messages" data-badge="0" tabindex="0">
+                shopping_cart
+            </a>
+      <div class="mdl-tooltip" for="h_messages">Shop</div>
 
-      <?php if ( isset( $_SESSION['myCode'] ) ) { ?>
-      <a id="admin" href="#" class="mdi mdi-lock mdl-badge mdl-badge--overlap mdl-button--icon"></a>
+      <a href="<?php echo hROOT.'register?type=user'; ?>" class="mdi mdi-facebook mdl-badge mdl-badge--overlap mdl-button--icon notification" id="facebook"></a>
+      <div class="mdl-tooltip" for="facebook">Facebook</div>
+
+      <a href="<?php echo hROOT.'register?type=user'; ?>" class="mdi mdi-twitter mdl-badge mdl-badge--overlap mdl-button--icon notification" id="twitter"></a>
+      <div class="mdl-tooltip" for="twitter">Twitter</div>
+
+      <a id="admin" href="#" class="mdi mdi-menu mdl-badge mdl-badge--overlap mdl-button--icon"></a>
       <div class="mdl-tooltip" for="admin">Admin</div>
-        <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-color--<?php primaryColor(); ?>" for="admin">
-        <a class="mdl-cell" href="<?php _show_(  hADMIN .'index?page=my dashboard' ); ?>"><i class="material-icons mdl-list__item-icon">dashboard</i></a>
-        <a class="mdl-cell" href="<?php _show_(  hADMIN .'user?view='. $_SESSION['myCode'] .'&key='.$_SESSION['myAlias'] ); ?>"><i class="material-icons mdl-list__item-icon">perm_identity</i></a>
-        <a class="mdl-cell" href="<?php _show_(  hADMIN .'options?settings=color' ); ?>"><i class="material-icons mdl-list__item-icon">palette</i></a>
-        </ul><?php
-      } else { ?>
-      <a id="admin" href="<?php _show_(  hROOT.'login' ); ?>" class="mdi mdi-exit-to-app mdl-badge mdl-badge--overlap mdl-button--icon"></a><?php 
-      } ?>
-
-    </div>
-    <!-- Bottom row, not visible on scroll -->
-    <div class="mdl-layout__header-row" style="overflow-x: auto;">
-      <div class="mdl-layout-spacer"></div>
-        <?php _hMenus::header(); ?>
+        <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-color--pink" for="admin">
+        <a href="./login" class="mdl-list__item"><i class="mdi mdi-exit-to-app mdl-list__item-icon"></i><span style="padding-left: 20px">LOGIN</span></a>
+        <a href="./register" class="mdl-list__item"><i class="mdi mdi-account-plus mdl-list__item-icon"></i><span style="padding-left: 20px">REGISTER</span></a>
+        <a href="./login" class="mdl-list__item"><i class="mdi mdi-help mdl-list__item-icon"></i><span style="padding-left: 20px">FAQ</span></a>
+        <a href="./contact" class="mdl-list__item"><i class="mdi mdi-email mdl-list__item-icon"></i><span style="padding-left: 20px">CONTACT</span></a>
+        <div class="mdl-layout-spacer"></div>
+        <a href="./" class="mdl-list__item"><i class="mdi mdi-home mdl-list__item-icon"></i><span style="padding-left: 20px">HOME</span></a>
+        </ul>
     </div>
   </header>
   <main class="mdl-layout__content mdl-color-text--white">

@@ -566,7 +566,7 @@ function secondaryColor() {
 			} elseif ( $themes['h_style'] == "hot" ) {
 				echo "red";
 			} elseif ( $themes['h_style'] == "princess" ) {
-				echo "pink";
+				echo "cyan";
 			} elseif ( $themes['h_style'] == "haze" ) {
 				echo "green";
 			} elseif ( $themes['h_style'] == "prince" ) {

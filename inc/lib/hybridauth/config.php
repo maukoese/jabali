@@ -9,8 +9,8 @@
 //	HybridAuth Config file: http://hybridauth.sourceforge.net/userguide/Configuration.html
 // ----------------------------------------------------------------------------------------
 
-return array(
-    "base_url" => "http://localhost/hybridauth-git/hybridauth/",
+$config = array(
+    "base_url" => "http://localhost/jabali/inc/lib/hybridauth/index",
     "providers" => array(
         // openid providers
         "OpenID" => array(
@@ -29,13 +29,13 @@ return array(
         ),
         "Facebook" => array(
             "enabled" => true,
-            "keys" => array("id" => "", "secret" => ""),
+            "keys" => array("id" => "1084251448343450", "secret" => "8bee7cdf240afde6c3977ad73992a05a"),
             "trustForwarded" => false,
         ),
         "Twitter" => array(
             "enabled" => true,
-            "keys" => array("key" => "", "secret" => ""),
-            "includeEmail" => false,
+            "keys" => array("key" => "WIewzibMOm4cV8ixqPHX084yE", "secret" => "gBf4pN1Ft2OEgR6Qp8l5UIeIo8KY073VHkZXue4SrBrgMCRRfZ"),
+            "includeEmail" => true,
         ),
         // windows live
         "Live" => array(

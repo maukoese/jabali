@@ -259,22 +259,21 @@ class _hForms {
 
             if ( $_GET['create'] !== "page" ) { ?>
               <div class="mdl-cell mdl-cell--12-col mdl-grid">
-              <div class="input-field mdl-cell mdl-cell--6-col">
-              <i class="material-icons prefix">label</i>
-              <textarea id="h_tags" name="h_tags" class="materialize-textarea chips col s12"></textarea>
-              <label for="h_tags" class="center-align">Tags</label>
-              </div>
+                <div class="input-field mdl-cell mdl-cell--6-col">
+                <i class="material-icons prefix">label</i>
+                <textarea id="h_tags" name="h_tags" class="materialize-textarea chips col s12"></textarea>
+                <label for="h_tags" class="center-align">Tags</label>
+                </div>
 
-              <div class="input-field mdl-cell mdl-cell--6-col">
-              <i class="material-icons prefix">label_outline</i>
-              <textarea id="h_category" name="h_category" class="materialize-textarea col s12"></textarea>
-              <label for="h_category" class="center-align">Categories</label>
-              </div>
-              </div><?php 
+                <div class="input-field mdl-cell mdl-cell--6-col">
+                <i class="material-icons prefix">label_outline</i>
+                <textarea id="h_category" name="h_category" class="materialize-textarea col s12"></textarea>
+                <label for="h_category" class="center-align">Categories</label>
+                </div><?php 
             } ?>
 
-              <div class="input-field">
-                <i class="material-icons prefix">schedule</i>
+              <div class="input-field mdl-cell mdl-cell--7-col">
+                <i class="material-icons prefix">today</i>
                 <input  id="h_created" name="h_created" type="text" value="<?php echo date( 'Y-m-d' ); ?>" >
                 <label for="h_created" class="center-align">Publish Date</label>
                 <script>
@@ -282,6 +281,18 @@ class _hForms {
                   $("#h_created").datepicker({ dateFormat: "yy-mm-dd" }).val()
                   });
                 </script>
+              </div>
+
+              <div class="input-field mdl-cell mdl-cell--5-col">
+                <i class="material-icons prefix">schedule</i>
+                <input  id="h_created_t" name="h_created_t" type="text" value="<?php echo date( 'H:i:s' ); ?>" >
+                <label for="h_created_t" class="center-align">Time</label>
+                <script>
+                  $(function() {
+                  $("#h_created").datepicker({ dateFormat: "yy-mm-dd" }).val()
+                  });
+                </script>
+              </div>
               </div>
 
               <div class="input-field inline mdl-card mdl-shadow--2dp">
@@ -405,16 +416,8 @@ class _hForms {
               </div><?php 
               } ?>
 
-              <div class="input-field">
-                <i class="material-icons prefix">date_range</i>
-                <input  id="h_created" name="h_created" type="text" value="<?php _show_( $postDetails['h_created'] ); ?>" >
-                <label for="h_created" class="center-align">Publish Date</label>
-                <script>
-                  $(function() {
-                  $("#h_created").datepicker({ dateFormat: "yy-mm-dd" }).val()
-                  });
-                </script>
-              </div>
+              <p>Published On <?php _show_( $postDetails['h_created'] ); ?></p>
+              <p>Author: <a href="./user?view=<?php _show_( $postDetails['h_author'] ); ?>&key=<?php _show_( $postDetails['h_by'] ); ?>"><?php _show_( $postDetails['h_by'] ); ?></a></p>
 
               <div class="input-field inline mdl-card mdl-shadow--2dp">
               <div style="height:0px;overflow:hidden">
@@ -739,8 +742,10 @@ class _hForms {
                            if ( $_SESSION['myCap'] == "admin"  ) {
                             _show_( '<li class="mdl-menu__item" data-val="admin">Admin</li>' );
                            } ?>
-                           <li class="mdl-menu__item" data-val="doctor">Doctor</li>
-                           <li class="mdl-menu__item" data-val="center">Center</li>
+                     <li class="mdl-menu__item" data-val="organization">Organization<i class="mdl-color-text--white mdi mdi-city alignright" role="presentation"></i></li>
+                     <li class="mdl-menu__item" data-val="editor">Editor<i class="mdl-color-text--white mdi mdi-note alignright" role="presentation"></i></li>
+                     <li class="mdl-menu__item" data-val="author">Author<i class="mdl-color-text--white mdi mdi-note-plus alignright" role="presentation"></i></li>
+                     <li class="mdl-menu__item" data-val="subscriber">Subscriber<i class="mdl-color-text--white mdi mdi-email alignright" role="presentation"></i></li>
                          </ul>
                       </div><br>
 

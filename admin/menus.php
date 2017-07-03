@@ -43,7 +43,7 @@ if ( isset( $_POST['update'] ) ) {
 } ?>
 <div class="mdl-grid">
 
-<div class="mdl-cell mdl-cell--9-col-desktop mdl-cell--9-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><?php
+<div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><?php
 if (isset( $_GET['add'] )) { ?>
           <title>Add New Menu [ <?php showOption( 'name' ); ?> ]</title>
          <div class="mdl-card__title">
@@ -304,7 +304,7 @@ if (isset( $_GET['add'] )) { ?>
     </div><? } ?>
 </div>
 
-<div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--3-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+<div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
     
     <div class="mdl-card__title">
       <span class="mdl-button">Tips</span>

@@ -7,63 +7,132 @@
 * @version 0.17.06
 **/
 
-$dbfile = 'inc/config.php';
-if ( !file_exists( $dbfile) ) {
-	header( "Location: ./setup" );
-}
+include 'sheader.php'; ?>
+<title>Shop [ <?php showOption( 'name' ); ?> ]</title>
+<div class="mdl-grid">
+	<div class="mdl-cell mdl-cell--2-col" style="background: url( <?php _show_( hIMAGES.'tag.png' ); ?> ); background-repeat:repeat; background-size: initial;background-blend-mode: lighten;"></div>
+	<div class="input-field mdl-cell mdl-cell--8-col">
+        <button class="mdl-button mdl-color--grey-400" id="categories">CATEGORIES <i class="material-icons">keyboard_arrow_down</i></button>
+        <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-color--<?php primaryColor(); ?>" for="categories">
+        	<a class="mdl-list__item" href="?product_category=men">Men</a>
+        	<a class="mdl-list__item" href="?product_category=women">Women</a>
+        	<a class="mdl-list__item" href="?product_category=children">Children</a>
+        </ul>
 
-include 'header.php';
-$year = date( "Y" );
-$month = date( "m" );
-$day = date( "d" );
-$directory = "uploads/$year/$month/$day/";
+        <button class="mdl-button mdl-color--grey-400" id="categories">PRODUCTS <i class="material-icons">keyboard_arrow_down</i></button>
+        <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-color--<?php primaryColor(); ?>" for="categories">
+        	<a class="mdl-list__item" href="?product_category=men">Men</a>
+        	<a class="mdl-list__item" href="?product_category=women">Women</a>
+        	<a class="mdl-list__item" href="?product_category=children">Children</a>
+        </ul>
 
-if ( !is_dir( $directory) ) {
-	mkdir( $directory, 755, true );
-}
+        <button class="mdl-button mdl-color--grey-400" id="categories">BRANDS <i class="material-icons">keyboard_arrow_down</i></button>
+        <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-color--<?php primaryColor(); ?>" for="categories">
+        	<a class="mdl-list__item" href="?product_category=men">Men</a>
+        	<a class="mdl-list__item" href="?product_category=women">Women</a>
+        	<a class="mdl-list__item" href="?product_category=children">Children</a>
+        </ul>
 
-if ( isset( $_GET['post'] ) ) {
-	if ( $_GET['post'] == "posts" ) {
-		$hPost -> getArticles();
-	} else {
-		$hPost -> getArticleCode( $_GET['post'] );
-		$hSocial -> bottomshare( $_GET['post'] );
-	}
-} else { ?>
-	<title>Access Your Health [ <?php showOption( 'name' ); ?> ]</title>
-	<div style="padding-top:40px;" >
-	    <div id="login_div" class="">
-		<center><a href="<?php echo hROOT; ?>"><img src="<?php echo hIMAGES; ?>logo-w.png" width="300px;"></a><br><?php 
-		if ( isset( $_GET['logout'] ) ) {
+        <button class="mdl-button mdl-color--grey-400" id="categories">PRICE <i class="material-icons">keyboard_arrow_down</i></button>
+        <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-color--<?php primaryColor(); ?>" for="categories">
+        	<a class="mdl-list__item" href="?product_category=men">Men</a>
+        	<a class="mdl-list__item" href="?product_category=women">Women</a>
+        	<a class="mdl-list__item" href="?product_category=children">Children</a>
+        </ul>
 
-			echo '<div id="success" class="alert mdl-color--orange">
-                    <span>You are now logged out!</span>
-                </div>';
-		} 
-		if ( !isset( $_SESSION['myCode'] ) ) { ?>
-		<a href="./login" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ) { secondaryColor(); } else { echo "red"; } ?>">
-	  		<i class="material-icons">exit_to_app</i> LOGIN
-	  	</a><br><?php 
-	  } ?><br>
-	  <p>© <?php showOption( 'name' ); ?> 2017 - All Rights Reserved</p><b>
-	  <a href="./about">About</a> - <a href="./tos">TOS</a> - <a href="./faq">FAQs</a></b>
-		</center><br>
-	    </div>
-	    
-<div class="fixed-action-btn">
-	<a class="btn-floating btn-large red">
-		<i class="large material-icons">mode_edit</i>
-	</a>
-	<ul>
-		<li class="waves-effect waves-light"><a href="./register?type=user" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">
-  <i class="mdi mdi-account-plus mdi-24px mdl-color-text--red"></i></a></li>
-            <li class="waves-effect waves-light"><a href="./register?type=organization" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">
-  <i class="material-icons mdl-color-text--red">location_city</i></a></li>
-            <li class="waves-effect waves-light"><a href="./contact" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">
-  <i class="material-icons mdl-color-text--red">message</i></a></li>
-	</ul>
-</div>
-</div><?php 
-}
+        <button class="mdl-button mdl-color--grey-400 alignright" id="categories"><i class="material-icons">search</i> Search Item</button>
 
+	</div>
+	<div class="mdl-cell mdl-cell--2-col" style="background: url( <?php _show_( hIMAGES.'tag.png' ); ?> ); background-repeat:repeat; background-size: initial;background-blend-mode: lighten;"></div>
+
+	<div class=" mdl-color--pink" style="background: url( <?php _show_( hIMAGES.'avatar.svg' ); ?> ); background-repeat:no-repeat; background-size: cover;background-blend-mode: lighten;">
+		<style type="text/css">
+		@keyframes slidy {
+			0% { left: 0%; }
+			20% { left: 0%; }
+			25% { left: -100%; }
+			45% { left: -100%; }
+			50% { left: -200%; }
+			70% { left: -200%; }
+			75% { left: -300%; }
+			95% { left: -300%; }
+			100% { left: -400%; }
+			}
+
+			body { margin: 0; } 
+			div#slider { 
+				overflow: hidden;
+				min-height: 250px;
+				max-height: 300px; }
+			div#slider figure img { width: 20%; float: left; }
+			div#slider figure { 
+			  position: relative;
+			  width: 500%;
+			  margin: 0;
+			  left: 0;
+			  text-align: left;
+			  font-size: 0;
+			  animation: 30s slidy infinite; 
+			}
+			table
+    {
+    border-collapse:separate;
+    border-spacing:10px 0px;
+    }
+		</style>
+		<div id="slider">
+		<figure>
+		<img src="http://localhost/jabali/inc/assets/images/logo-w.png" alt>
+		<img src="http://localhost/jabali/inc/assets/images/marker.png" alt>
+		<img src="http://localhost/jabali/inc/assets/images/logo.png" alt>
+		</figure>
+		</div>
+	</div>
+	<div class="mdl-cell mdl-cell--2-col" style="background: url( <?php _show_( hIMAGES.'tag.png' ); ?> ); background-repeat:repeat; background-size: initial;background-blend-mode: lighten;"></div>
+	<div class="mdl-cell mdl-cell--8-col">
+		<table class="mdl-data-table" style="border-collapse:separate;border-spacing:0px 10px;">
+  <thead>
+  </thead>
+  <tbody>
+    <tr class="mdl-shadow--2dp mdl-color--grey-100 mdl-color-text--black">
+      <td class="mdl-data-table__cell--non-numeric"><img src="<?php _show_( hIMAGES.'marker.png' ); ?>" width="150px;" ></td>
+      <td class="mdl-data-table__cell--non-numeric"><h6><b>Product Name</b></h6>Category<br>
+      <div style="display: inline-table;">
+      	<a href=""><img style="border-radius: 100%;" src="<?php _show_( hIMAGES.'marker.png' ); ?>" width="50px;"><span> <b>Author</b> Location</span></a>
+      </div>
+      
+      </td>
+      <td><b>KSh 49021</b><br>
+      <a class="mdl-button mdl-color--pink alignleft" href="#">VIEW <i class="material-icons">visibility</i></a>
+      <a class="mdl-button mdl-color--pink alignright" href="#">ADD <i class="material-icons">add_shopping_cart</i></a></td>
+    </tr>
+    <tr class="mdl-shadow--2dp mdl-color--grey-100 mdl-color-text--black">
+      <td class="mdl-data-table__cell--non-numeric"><img src="<?php _show_( hIMAGES.'marker.png' ); ?>" width="150px;" ></td>
+      <td class="mdl-data-table__cell--non-numeric"><h6><b>Product Name</b></h6>Category<br>
+      <div style="display: inline-table;">
+      	<a href=""><img style="border-radius: 100%;" src="<?php _show_( hIMAGES.'marker.png' ); ?>" width="50px;"><span> <b>Author</b> Location</span></a>
+      </div>
+      
+      </td>
+      <td><b>KSh 49021</b><br>
+      <a class="mdl-button mdl-color--pink alignleft" href="#">VIEW <i class="material-icons">visibility</i></a>
+      <a class="mdl-button mdl-color--pink alignright" href="#">ADD <i class="material-icons">add_shopping_cart</i></a></td>
+    </tr>
+    <tr class="mdl-shadow--2dp mdl-color--grey-100 mdl-color-text--black">
+      <td class="mdl-data-table__cell--non-numeric"><img src="<?php _show_( hIMAGES.'marker.png' ); ?>" width="150px;" ></td>
+      <td class="mdl-data-table__cell--non-numeric"><h6><b>Product Name</b></h6>Category<br>
+      <div style="display: inline-table;">
+      	<a href=""><img style="border-radius: 100%;" src="<?php _show_( hIMAGES.'marker.png' ); ?>" width="50px;"><span> <b>Author</b> Location</span></a>
+      </div>
+      
+      </td>
+      <td><b>KSh 49021</b><br>
+      <a class="mdl-button mdl-color--pink alignleft" href="#">VIEW <i class="material-icons">visibility</i></a>
+      <a class="mdl-button mdl-color--pink alignright" href="#">ADD <i class="material-icons">add_shopping_cart</i></a></td>
+    </tr>
+  </tbody>
+</table>
+	</div>
+	<div class="mdl-cell mdl-cell--2-col" style="background: url( <?php _show_( hIMAGES.'tag.png' ); ?> ); background-repeat:repeat; background-size: initial;background-blend-mode: lighten;"></div>
+</div><?php
 include 'footer.php'; ?>

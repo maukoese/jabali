@@ -712,8 +712,8 @@ class _hUsers {
         <div id="editModal" class="modal">
           <div class="modal-content mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
           <div class="mdl-card__title">
-            <a href="./user?edit=<?php _show_( $usersDetails['h_code'] ); ?>&key=<?php _show_( $usersDetails['h_alias'] ); ?>" class="material-icons mdl-badge mdl-badge--overlap">open_in_new</a>
-            <span class="mdl-button">Edit <?php _show_( $usersDetails['h_alias'] ); ?></span>
+            <a href="./user?edit=<?php _show_( $usersDetails['h_code'] ); ?>&key=<?php _show_( $usersDetails['h_alias'] ); ?>" class="material-icons mdl-button--icon">open_in_new</a>
+            <span class="mdl-card__title-text">Edit <?php _show_( $usersDetails['h_alias'] ); ?></span>
               <div class="mdl-layout-spacer"></div>
               <div class="mdl-card__subtitle-text">
                   <span class="close">
@@ -724,11 +724,11 @@ class _hUsers {
             </div>
 
             <div class="mdl-card__supporting-text">
-              <form enctype="multipart/form-data" name="registerUser" method="POST" action="<?php _show_( hADMIN.'user?view='.$userDetails['h_code'].'&key='.$userDetails['h_alias'] ); ?>" >
+              <form enctype="multipart/form-data" name="registerUser" method="POST" action="<?php _show_( hADMIN.'user?view='.$usersDetails['h_code'].'&key='.$usersDetails['h_alias'] ); ?>" >
 
-                      <div class="input-field mdl-js-textfield getmdl-select">
+                      <div class="input-field inline mdl-js-textfield getmdl-select">
                       <i class="material-icons prefix">donut_large</i>
-                       <input class="mdl-textfield__input" id="h_type" name="h_type" type="text" readonly tabIndex="-1" placeholder="<?php _show_( ucfirst( $userDetails['h_type'] ) ); ?>" value="<?php _show_( ucwords( $usersDetails['h_type'] ) ); ?>">
+                       <input class="mdl-textfield__input" id="h_type" name="h_type" type="text" readonly tabIndex="-1" placeholder="<?php _show_( ucfirst( $usersDetails['h_type'] ) ); ?>" value="<?php _show_( ucwords( $usersDetails['h_type'] ) ); ?>">
                          <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="h_type"><?php 
                            if ( $_SESSION['myCap'] == "admin" ) {
                             _show_( '<li class="mdl-menu__item" data-val="admin">Admin</li>' );
@@ -744,9 +744,9 @@ class _hUsers {
                       <label for="h_phone" class="center-align">Phone Number</label>
                       </div>
 
-                      <div class="input-field mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
+                      <div class="input-field inline mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
                         <i class="material-icons prefix">room</i>
-                      <input class="mdl-textfield__input" type="text" id="counties" name="h_location" readonly tabIndex="-1" placeholder="<?php _show_( ucwords( $userDetails['h_location'] ) ); ?>" value="<?php _show_( ucwords( $usersDetails['h_location'] ) ); ?>">
+                      <input class="mdl-textfield__input" type="text" id="counties" name="h_location" readonly tabIndex="-1" placeholder="<?php _show_( ucwords( $usersDetails['h_location'] ) ); ?>" value="<?php _show_( ucwords( $usersDetails['h_location'] ) ); ?>">
                       <ul for="counties" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
                           <?php 
                           $county_list = "baringo, bomet, bungoma, busia, elgeyo-marakwet, embu, garissa, homa bay, isiolo, kakamega, kajiado, kapenguria, kericho, kiambu, kilifi, kirinyanga, kisii, kisumu, kitui, kwale, laikipia, lamu, machakos, makueni, mandera, marsabit, meru, migori, mombasa, muranga, nairobi, nakuru, nandi, narok, nyamira, nyandarua, nyeri, ol kalou, samburu, siaya, taita-taveta, tana river, tharaka-nithi, trans-nzoia, turkana, uasin-gishu, vihiga, wajir, west pokot";
@@ -771,8 +771,8 @@ class _hUsers {
                       <label for="email" class="center-align">Email Address</label>
                       </div>
 
-                      <?php if ( $userDetails['h_type'] !== "organization" ) { ?>
-                      <div class="input-field mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
+                      <?php if ( $usersDetails['h_type'] !== "organization" ) { ?>
+                      <div class="input-field inline mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
                         <i class="material-icons prefix">business</i>
                       <input class="mdl-textfield__input" type="text" id="centers" name="h_organization" readonly tabIndex="-1" placeholder="Change Center">
                       <ul for="centers" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">

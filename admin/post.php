@@ -37,9 +37,6 @@ if ( isset( $_GET['view'] )){
     $hPost -> getDrafts ();
   } else {
 		$hPost -> getPost( $_GET['view'] );
-    if ( isCap( 'admin' ) ) {
-    newButton('post', 'article', 'create' );
-  }
 	}
 
 }

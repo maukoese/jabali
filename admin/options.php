@@ -427,7 +427,7 @@ if ( isset( $_GET['settings'] ) ) {
                     <div class="input-field inline">
                         <input type="radio" id="princess" name="theme" value="princess" <?php isTheme ('princess' ); ?>>
                         <label for="princess"><p class="cholder" for="princess">
-                            <span class="ccolor mdl-color--pink"></span><span class="ccolor csec mdl-color--blue"></span>
+                            <span class="ccolor mdl-color--pink"></span><span class="ccolor csec mdl-color--cyan"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="princess">Princess Zahra</div>
 

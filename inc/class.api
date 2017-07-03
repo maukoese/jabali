@@ -1,0 +1,17 @@
+<?php
+/**
+* REST API Class 
+*/
+class _hApi
+{
+    
+    function __construct( $request, $class, $type)
+    {
+        # code...
+    }
+
+    function get($value='')
+    {
+        # code...
+    }
+}

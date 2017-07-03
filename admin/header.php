@@ -46,6 +46,7 @@ $dB = new MysqliDb ($GLOBALS['conn']); ?>
     <link rel="stylesheet" href="<?php echo hSTYLES; ?>material-icons.css">
     <link rel="stylesheet" href="<?php echo hSTYLES; ?>materialdesignicons.css">
     <link rel="stylesheet" href="<?php echo hSTYLES; ?>font-awesome.css">
+    <link rel="stylesheet" href="<?php echo hSTYLES; ?>datetimepicker.min.css">
     <link rel="stylesheet" href="<?php echo hSTYLES; ?>jabali.css">
     <style type="text/css">
     .mdl-menu__outline {
@@ -82,6 +83,7 @@ $dB = new MysqliDb ($GLOBALS['conn']); ?>
 
     <script src="<?php echo hSCRIPTS ?>jquery-3.2.1.min.js"></script>
     <script src="<?php echo hSCRIPTS ?>jquery-ui.min.js"></script>
+    <script src="<?php echo hSCRIPTS ?>datetimepicker.min.js"></script>
     <script src="<?php echo hSCRIPTS ?>ckeditor/ckeditor.js"></script>
     
   </head>

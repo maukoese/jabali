@@ -128,7 +128,7 @@ class _hPosts {
         </td>
         <td class="mdl-data-table__cell--non-numeric">
         <a href="./post?view=<?php _show_( $postsDetails['h_code'] ); ?>&key=<?php _show_( $postsDetails['h_alias'] ); ?>" ><i class="material-icons">open_in_new</i></a>  
-        <a href="./post?edit=<?php _show_( $postsDetails['h_code'] ); ?>&key=<?php _show_( ucwords( $postDetails['h_alias'] ) ); ?>" ><i class="material-icons">edit</i></a> 
+        <a href="./post?edit=<?php _show_( $postsDetails['h_code'] ); ?>&key=<?php _show_( ucwords( $postsDetails['h_alias'] ) ); ?>" ><i class="material-icons">edit</i></a> 
         <a href="./post?delete=<?php _show_( $postsDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a>
         </td>
         </tr>
@@ -321,7 +321,7 @@ class _hPosts {
     $getDrafts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE (h_type = 'article' AND h_status = 'draft' ) ORDER BY h_created ASC LIMIT 4" );
     if ( $getDrafts -> num_rows > 0) {
       while ( $draft = mysqli_fetch_assoc( $getDrafts)){ ?>
-        <b><a href="./post?edit=<?php _show_( $draft['h_code'] ); ?>&key=<?php _show_( $draft['h_alias'] ); ?>"><?php _show_( $draft['h_alias'] ); ?></b></a>
+        <a href="./post?edit=<?php _show_( $draft['h_code'] ); ?>&key=<?php _show_( $draft['h_alias'] ); ?>"><b><?php _show_( $draft['h_alias'] ); ?></b></a>
         <a href="./?ddelete=<?php _show_( $draft['h_code'] ); ?>"><i class="mdi mdi-delete alignright"></i></a>
       <br><?php 
       }
@@ -339,7 +339,7 @@ class _hPosts {
                     <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone">
                       <h4><?php _show_( $postDetails['h_subtitle'] ); ?></h4>
                       <h6>Published: <?php _show_( $postDetails['h_created'] ); ?><br>
-                      Authored by: <?php _show_( $postDetails['h_by'] ); ?><br>
+                      Authored by: <a href="./user?view=<?php _show_( $postDetails['h_author'] ); ?>&key=<?php _show_( $postDetails['h_by'] ); ?>"><?php _show_( $postDetails['h_by'] ); ?></a><br>
                       Category: <?php _show_( $postDetails['h_category'] ); ?><br>
                       Tagged: <?php _show_( ucwords( $postDetails['h_tags'] ) ); ?></br>
                       Readings: <?php _show_( ucwords( $postDetails['h_tags'] ) ); ?></h6>
@@ -357,7 +357,7 @@ class _hPosts {
                   <button id="demo_menu-top-right" class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-color--accent">
                   <i class="material-icons mdl-color-text--white">more_vert</i>
                </button>
-               <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+               <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect mdl-color--<?php primaryColor(); ?>"
                   for="demo_menu-top-right">
                   <a href="./post?view=<?php _show_( $postDetails['h_code'] ); ?>&fav=<?php _show_( $postDetails['h_code'] ); ?>&key=<?php _show_( ucwords( $postDetails['h_alias'] ) ); ?>" class="mdl-list__item"><i class="mdi mdi-heart mdl-list__item-icon"></i><span style="padding-left: 20px">Favorite</span></a>
                   <a href="./note?post=<?php _show_( $postDetails['h_code'] ); ?>&author=<?php _show_( $_SESSION['myCode'] ); ?>" class="mdl-list__item"><i class="mdi mdi-note-multiple mdl-list__item-icon"></i><span style="padding-left: 20px">Notes</span></a><?php if ( isCap( 'admin' ) || isAuthor( $postDetails['h_author'] ) ) { ?>

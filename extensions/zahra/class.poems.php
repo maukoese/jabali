@@ -44,7 +44,7 @@ class _hPoems extends _hPosts {
                 <img src="<?php _show_( $postDetails['h_avatar'] ); ?>" width="100%">
                 <h4><?php _show_( $postDetails['h_subtitle'] ); ?></h4>
                 <h6>Published: <?php _show_( $postDetails['h_created'] ); ?><br>
-                Authored by: <?php _show_( $postDetails['h_by'] ); ?><br>
+                Authored by: <a href="./user?view=<?php _show_( $postDetails['h_author'] ); ?>&key=<?php _show_( $postDetails['h_by'] ); ?>"><?php _show_( $postDetails['h_by'] ); ?></a><br>
                 Category: <?php _show_( $postDetails['h_category'] ); ?><br>
                 Tagged: <?php _show_( ucwords( $postDetails['h_tags'] ) ); ?></br>
                 Readings: <?php _show_( ucwords( $postDetails['h_tags'] ) ); ?></h6>
@@ -56,7 +56,7 @@ class _hPoems extends _hPosts {
             <button id="demo_menu-top-right" class="mdl-button mdl-js-button mdl-button--icon" data-upgraded=",MaterialButton">
             <i class="material-icons">more_vert</i>
             </button>
-              <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+              <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect mdl-color--<?php primaryColor(); ?>"
               for="demo_menu-top-right">
               <a href="./index?x=zahra&poem=<?php _show_( $postDetails['h_code'] ); ?>&fav=<?php _show_( $postDetails['h_code'] ); ?>" class="mdl-list__item"><i class="mdi mdi-heart mdl-list__item-icon"></i><span style="padding-left: 20px">Favorite</span></a>
               <a href="./note?poem=<?php _show_( $postDetails['h_code'] ); ?>&author=<?php _show_( $_SESSION['myCode'] ); ?>" class="mdl-list__item"><i class="mdi mdi-note-multiple mdl-list__item-icon"></i><span style="padding-left: 20px">Notes</span></a><?php if ( isCap( 'admin' ) || isAuthor( $postDetails['h_author'] ) ) { ?>
@@ -244,7 +244,8 @@ class _hPoems extends _hPosts {
       
         <div class="mdl-cell mdl-cell--12-col mdl-grid">
           <div class="input-field mdl-cell mdl-cell--6-col">
-            <i class="material-icons prefix">schedule</i>
+        <?php if( $_GET['create']) { ?>
+            <i class="material-icons prefix">today</i>
             <input  id="h_created" name="h_created" type="text" value="<?php if( $_GET['create']){ echo date( 'Y-m-d' ); } else { _show_( $poem[0]['h_created'] ); } ?>"" >
             <label for="h_created" class="center-align">Publish Date</label>
             <script>
@@ -252,6 +253,9 @@ class _hPoems extends _hPosts {
               $("#h_created").datepicker({ dateFormat: "yy-mm-dd" }).val()
               });
             </script>
+            <?php } else { ?>
+            <p><i class="material-icons prefix">today</i>   <span class="alignright"><?php _show_( $poem[0]['h_created'] ); ?></span></p><br>
+              <p><i class="material-icons prefix">perm_identity</i>   <span class="alignright"><a href="./user?view=<?php _show_( $poem[0]['h_author'] ); ?>&key=<?php _show_( $poem[0]['h_by'] ); ?>"><?php _show_( $poem[0]['h_by'] ); ?></a></span></p><?php } ?>
           </div>
           <input type="hidden" name="h_author" value="<?php if( $_GET['create']) { echo $_SESSION['myCode']; } else { _show_( $poem[0]['h_author'] ); } ?>">
           <input type="hidden" name="h_by" value="<?php if( $_GET['create']) { echo $_SESSION['myAlias']; } else { _show_( $poem[0]['h_by'] ); } ?>">

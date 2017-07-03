@@ -38,13 +38,13 @@ $new_version = $nJD['version']; ?>
 			Found some bugs? Tell us!";
 		} elseif ( $curr_version < $new_version) { ?>
 		<div class="mdl-card__title">
-	      <span class="mdl-button">Jabali <?php _show_( $new_version ); ?> is Available!</span>
+	      <span class="mdl-card__title-text">Jabali <?php _show_( $new_version ); ?> is Available!</span>
 	        <div class="mdl-layout-spacer"></div>
-	        <div class="mdl-card__subtitle-text mdl-button">
+	        <div class="mdl-card__subtitle-text mdl-button mdl-button--icon">
 	            <a id="updatenow" href="./update?new=true">
 	            	<i class="material-icons">system_update_alt</i>
 	            </a><div class="mdl-tooltip" for="updatenow">Update Now</div>
-	        </div><div class="mdl-card__subtitle-text mdl-button">
+	        </div><div class="mdl-card__subtitle-text mdl-button mdl-button--icon">
 	            <a id="dlnow" href="<?php _show_( $nJD['download'] ); ?>">
 	            	<i class="material-icons">file_download</i>
 	            </a><div class="mdl-tooltip" for="dlnow">Download Jabali</div>
