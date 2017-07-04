@@ -1,4 +1,4 @@
-# jabali
+# Jabali Framework
 Web App Development Framework And CMS with Material Design.
 
 <h2>Getting Started</h2>
