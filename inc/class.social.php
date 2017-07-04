@@ -26,11 +26,7 @@ class _hSocial {
   function bottomshare( $code) { 
     $getPostCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE h_code = '".$code."'" );
     if ( $getPostCode -> num_rows > 0) {
-      while ( $postDetails = mysqli_fetch_assoc( $getPostCode)){
-        $post[] = $postDetails;
-      }
-    }
-    ?>
+      while ( $post = mysqli_fetch_assoc( $getPostCode)){ ?>
     <div class="fixed-action-btn">
       <a class="btn-floating btn-large mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ) { primaryColor(); } else { echo "grey"; } ?>">
         <i class="large material-icons">share</i>
@@ -40,10 +36,13 @@ class _hSocial {
         <li class="waves-effect waves-light"><a href="./options?settings=social"><i class="mdl-color-text--red fa fa-instagram fa-2x" role="presentation"></i></a></li>
         <li class="waves-effect waves-light"><a href="./options?settings=social"><i class="mdl-color-text--light-blue fa fa-twitter fa-2x" role="presentation"></i></a></li>
         <li class="waves-effect waves-light"><a href="./options?settings=social"><i class="mdl-color-text--red fa fa-envelope fa-2x" role="presentation"></i></a></li>
-        <li class="waves-effect waves-light"><a href="sms://<?php _show_( $_SESSION['myPhone'] ); ?>?body=<?php _show_( $post[0]['h_alias'].' '.hADMIN ); ?>post?view=<?php _show_( $post[0]['h_code'] ); ?>"><i class="mdl-color-text--black mdi mdi-message fa-2x" role="presentation"></i></a></li>
-        <li class="waves-effect waves-light"><a href="whatsapp://send?text=<?php _show_( $post[0]['h_alias'].' '.hADMIN ); ?>post=view=<?php _show_( $post[0]['h_code'] ); ?>"><i class="mdl-color-text--green fa fa-whatsapp fa-2x" role="presentation"></i></a></li>
+        <li class="waves-effect waves-light"><a href="sms://<?php _show_( $_SESSION['myPhone'] ); ?>?body=<?php _show_( $post['h_alias'].' '.hROOT ); ?><?php _show_( $post['h_link'] ); ?>"><i class="mdl-color-text--black mdi mdi-message fa-2x" role="presentation"></i></a></li>
+        <li class="waves-effect waves-light"><a href="whatsapp://send?text=<?php _show_( $post['h_alias'] ); _show_( hROOT.$post['h_link'] ); ?>"><i class="mdl-color-text--green fa fa-whatsapp fa-2x" role="presentation"></i></a></li>
      </ul>
     </div><?php 
+      }
+    }
+    
   }
 
   function bottomsocial( $facebook,$twitter, $github, $linkedin, $tel, $mail) { ?>

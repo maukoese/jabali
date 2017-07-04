@@ -28,6 +28,7 @@ if ( isset( $_POST['preferences'] ) ) {
     $hOpt -> update ( 'name', $_POST['name'], $date );
     $hOpt -> update ( 'description', $_POST['description'], $date );
     $hOpt -> update ( 'email', $_POST['email'], $date );
+    $hOpt -> update ( 'phone', $_POST['phone'], $date );
     $hOpt -> update ( 'copyright', $_POST['copyright'], $date );
     $hOpt -> update ( 'attribution', $_POST['attribution'], $date );
     $hOpt -> update ( 'header_logo', $header_logo, $date );
@@ -37,9 +38,21 @@ if ( isset( $_POST['preferences'] ) ) {
 }
 
 if ( isset( $_POST['utype'] ) ) {
-    $h_types = array('type', 'level' ); //Add to array new times
-    $h_types = serialize( $h_types );
-    $hOpt -> create ( 'User Type', 'name', $h_type, date('Y-m-d') );
+    $hUserType = new _hOptions();
+
+    $type = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['type'] );
+    $level = $_POST['level'];
+
+    $usertypes = json_decode( getOption( 'usertypes' ), true );
+    $types = count( $usertypes );
+    $types2 = ++$types;
+
+    for ($countyp=0; $countyp < count( $usertypes ); $countyp++) { 
+        array( $usertypes[$countyp]['name'] => $usertypes[$countyp]['level'] );
+    }
+    $t = array_push( $usertypes, array( 'name' => $type, 'level' => $level ) );
+    $usertypes = json_encode( $t );
+    $hUserType -> update ( 'User Type', 'usertypes', $usertypes, date('Y-m-d') );
 }
 
 if ( isset( $_POST['social'] ) ) {
@@ -71,14 +84,20 @@ if ( isset( $_GET['settings'] ) ) {
 
                     <div class="input-field">
                             <i class="material-icons prefix">details</i>
-                        <textarea id="description" name="description" class="materialize-textarea col s12" ><?php showOption( "description" ); ?></textarea>
-                        <label for="description" data-error="wrong" data-success="right" class="center-align">Site Description </label>
+                        <input id="description" type="text" name="description" value="<?php showOption( 'description' ); ?>">
+                        <label for="description" class="center-align">Site Description </label>
                     </div>
 
                     <div class="input-field">
                             <i class="material-icons prefix">mail</i>
                         <input id="email" type="text" name="email" value="<?php showOption( 'email' ); ?>">
                         <label for="email" class="center-align">Admin Email </label>
+                    </div>
+
+                    <div class="input-field">
+                            <i class="material-icons prefix">phone</i>
+                        <input id="phone" type="text" name="phone" value="<?php showOption( 'phone' ); ?>">
+                        <label for="phone" class="center-align">Admin Phone </label>
                     </div>
 
                     <div class="input-field">
@@ -160,7 +179,12 @@ if ( isset( $_GET['settings'] ) ) {
                       <input type="checkbox" id="registration" name="registration" <?php showOption( 'registration' ); ?> value="checked" />
                       <label for="registration">Allow User Registrations?</label>
                     </div>
-                    <div class="mdl-cell"></div>
+                    <div class="mdl-cell mdl-cell--6-col"></div>
+                    <div class="input-field mdl-cell mdl-cell--8-col">
+                            <i class="material-icons prefix">room</i>
+                        <input id="map" type="text" name="map" value="<?php showOption( 'map' ); ?>">
+                        <label for="map" class="center-align">Map Embed Link (iframe) </label>
+                    </div>
                     <div class="input-field mdl-cell">
                     <button class="mdl-button mdl-button--fab alignright" type="submit" name="preferences"><i class="material-icons">save</i></button>
                     </div>
@@ -235,7 +259,13 @@ if ( isset( $_GET['settings'] ) ) {
             </div>
             <div class="mdl-cell mdl-cell--6-col" >
             <h6>User Defined Types</h6>
-                <a href="?sort=images" class="mdl-list__item"><i class="mdi mdi-account mdl-list__item-icon"></i><span style="padding-left: 20px">Subscriber</span></a>
+                <?php $usertypes = json_decode( getOption( 'usertypes' ), true );
+                echo $usertypes[0]['name'];
+                echo $usertypes[0]['level'];
+                echo "<br>";
+                $types = count( $usertypes );
+                $types = ++$types;
+                echo $types; ?>
             </div>
         </div>
                 <h6>Add New User Type</h6>
@@ -243,13 +273,13 @@ if ( isset( $_GET['settings'] ) ) {
 
                 <div class="input-field mdl-cell">
                         <i class="material-icons prefix">label</i>
-                    <input id="merchant" type="text" name="merchant" placeholder="e.g Accountant">
+                    <input id="merchant" type="text" name="type" placeholder="e.g Accountant">
                     <label for="merchant" data-error="wrong" data-success="right" class="center-align">Label</label>
                 </div>
 
                 <div class="input-field mdl-cell mdl-js-textfield getmdl-select">
                 <i class="material-icons prefix">lock</i>
-                 <input class="mdl-textfield__input" id="h_type" name="h_type" type="text" readonly tabIndex="-1" placeholder="Select Level" >
+                 <input class="mdl-textfield__input" id="h_type" name="level" type="text" readonly tabIndex="-1" placeholder="Select Level" >
                   <label for="h_type">
                       <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
                   </label>

@@ -46,9 +46,9 @@ include 'sheader.php'; ?>
 	<div class="mdl-cell mdl-cell--2-col" style="background: url( <?php _show_( hIMAGES.'tag.png' ); ?> ); background-repeat:repeat; background-size: initial;background-blend-mode: lighten;"></div>
 
 	<div class="mdl-cell mdl-cell--2-col" style="background: url( <?php _show_( hIMAGES.'tag.png' ); ?> ); background-repeat:repeat; background-size: initial;background-blend-mode: lighten;"></div>
-	<div class="mdl-cell mdl-cell--8-col mdl-grid">
+	<div class="mdl-cell mdl-cell--8-col mdl-grid mdl-color--grey-400">
 	<div class="mdl-cell mdl-cell--5-col mdl-card">
-		<img src="<?php _show_( hIMAGES.'marker.png' ); ?>" width="100%;" >
+		<img src="<?php _show_( hIMAGES.'logo.png' ); ?>" width="100%;" >
 		<div class="mdl-card__supporting_text">
 			<img src="<?php _show_( hIMAGES.'marker.png' ); ?>" width="22%;" >
 			<img src="<?php _show_( hIMAGES.'marker.png' ); ?>" width="22%;" >
@@ -65,7 +65,7 @@ include 'sheader.php'; ?>
       <h6>Category</h6>
       <a class="waves-effect waves-light btn-large mdl-color--pink"><i class="material-icons right">add_shopping_cart</i>BUY NOW</a>
 
-      <h6>KSh 10000<span class="alignright"><i class="material-icons">star</i><i class="material-icons">star</i><i class="material-icons">star</i><i class="material-icons">star</i></span></h6>
+      <h6>KSh 10000 <span class=""><i class="material-icons">star</i><i class="material-icons">star</i><i class="material-icons">star</i><i class="material-icons">star</i></span></h6>
       <form action="#">
     <p>
       <input type="checkbox" id="test5" />
@@ -77,11 +77,25 @@ include 'sheader.php'; ?>
     </p>
 
     <p>
+    <span>
     <input class="with-gap" name="group3" type="radio" id="test5" checked />
     <label for="test5"><i class="fa fa-paypal"></i></label>
+    </span>
+    <span>
+    <input class="with-gap" name="group3" type="radio" id="test5" checked />
+    <label for="test5"><i class="fa fa-paypal"></i></label>
+    </span>
+    <span>
+    <input class="with-gap" name="group3" type="radio" id="test5" checked />
+    <label for="test5"><i class="material-icons">smartphone</i></label>
+    </span>
+    <span>
+    <input class="with-gap" name="group3" type="radio" id="test5" checked />
+    <label for="test5"><i class="fa fa-money"></i></label>
+    </span>
   </p>
     </form><br>
-      <a class="waves-effect waves-light btn-large mdl-color--grey-400"><i class="material-icons right">mail</i>CONTACT SELLER</a>
+      <a class="waves-effect waves-light btn-large mdl-color--pink"><i class="material-icons right">mail</i>CONTACT SELLER</a>
 	</div>
 	</div>
 	<div class="mdl-cell mdl-cell--2-col" style="background: url( <?php _show_( hIMAGES.'tag.png' ); ?> ); background-repeat:repeat; background-size: initial;background-blend-mode: lighten;"></div>

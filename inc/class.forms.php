@@ -9,28 +9,10 @@
 
 class _hForms {
 
-  function messageForm( $type ) { ?>
-    <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-card--expand mdl-color--<?php primaryColor(); ?>">
-        <div class="mdl-card__title">
-        <i class="material-icons">mail</i>
-          <span class="mdl-button"><?php 
-          if ( isset( $_GET['code'] ) ) {
-             $getUser = mysqli_query( $GLOBALS['conn'], "SELECT * FROM husers WHERE h_code = '".$_GET['code']."'" );
-             if ( $getUser -> num_rows > 0 ) {
-               while ( $user = mysqli_fetch_assoc( $getUser ) ) {
-                 $userDeet[] = $user;
-               }
-             }
-            if ( !empty( $userDeet ) ) { 
-              _show_( 'Message To '.$userDeet[0]["h_alias"] ); 
-              } 
-          } ?>
-          </span>
-        <div class="mdl-layout-spacer"></div>
-        </div>
+  function messageForm() { ?>
+      <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-card--expand mdl-color--<?php primaryColor(); ?>">
           <div class="mdl-card__supporting-text mdl-card--expand">
-              <form enctype="multipart/form-data" name="messageForm" method="POST" action="./message?create=message">
+              <form enctype="multipart/form-data" name="messageForm" method="POST" action="">
                 <title>Compose <?php echo ucfirst( $_GET['create'] ); ?> [ <?php showOption( 'name' ); ?> ]</title>
                 
                   <div class="input-field">
@@ -41,7 +23,7 @@ class _hForms {
 
                   <?php if ( $_GET['code']  ) { ?> <input type="hidden" name="h_for" value="<?php _show_( $_GET['code'] ); ?>"> <?php } else { ?>
 
-                  <div class="input-field getmdl-select getmdl-select__fix-height">
+                  <div class="input-field inline getmdl-select getmdl-select__fix-height">
                     <i class="material-icons prefix">perm_identity</i>
                   <input class="mdl-textfield__input" type="text" id="h_for" name="h_for" readonly tabIndex="-1" placeholder="Select Receipient">
                   <ul for="h_for" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
@@ -54,6 +36,19 @@ class _hForms {
                        ?>
                   </ul>
                   </div><?php } ?>
+                  <div class="input-field inline getmdl-select getmdl-select__fix-height">
+                    <i class="material-icons prefix">perm_identity</i>
+                  <input class="mdl-textfield__input" type="text" id="h_forc" name="h_forc" readonly tabIndex="-1" placeholder="Cc/Bcc">
+                  <ul for="h_forc" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
+                      <?php 
+                      $centers = mysqli_query( $GLOBALS['conn'], "SELECT h_alias, h_avatar, h_code FROM husers ORDER BY h_alias" );
+                      if ( $centers -> num_rows > 0 );
+                      while ( $center = mysqli_fetch_assoc( $centers ) ) {
+                          echo '<li class="mdl-menu__item" data-val="'.$center['h_code'].'">'.$center['h_alias'].'<span style=""><img class="alignright" style="padding-right:20px;margin:auto;" src="'.$center['h_avatar'].'" height="18px;"></span></li>';
+                      }
+                       ?>
+                  </ul>
+                  </div>
 
                   <input type="hidden" name="h_author" value="<?php echo $_SESSION['myCode']; ?>">
                   <input type="hidden" name="h_by" value="<?php echo $_SESSION['myAlias']; ?>">
@@ -81,42 +76,7 @@ class _hForms {
                   <button class="mdl-button mdl-button--fab alignright" type="submit" name="create"><i class="material-icons">send</i></button></div>
               </form>
           </div>
-      </div>
-
-      <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-color--<?php primaryColor(); ?> mdl-card"><?php 
-          $getNotes = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmessages LIMIT 5" );
-          if ( $getNotes -> num_rows >= 0 ) { ?>
-            <div class="mdl-card__title">
-            <i class="material-icons">query_builder</i>
-              <span class="mdl-button">Recent Messages</span>
-            <div class="mdl-layout-spacer"></div>
-            </div>
-            <div class="mdl-card__supporting-text">
-              <ul class="collapsible popout" data-collapsible="accordion"><?php 
-                  while ( $note = mysqli_fetch_assoc( $getNotes ) ) { ?>
-                  <li>
-                    <div class="collapsible-header"><i class="material-icons">label_outline</i>
-                      
-                        <b><?php _show_( $note['h_alias'] ); ?></b><span class="alignright"><?php 
-                        _show_( $note['h_created'] ); ?></span>
-                    </div>
-                    <div class="collapsible-body"><span class="alignright">
-                        <a href="./notification?create=note&code=<?php _show_( $note['h_author'] ); ?>" ><i class="material-icons">reply</i></a> 
-                        <a href="./notification?view=<?php _show_( $note['h_code'] ); ?>" ><i class="material-icons">open_in_new</i></a> 
-                        <a href="./notification?delete=<?php _show_( $note['h_code'] ); ?>" ><i class="material-icons">delete</i></a>
-                        </span>
-                        <span><?php 
-                        _show_( $note['h_description'] ); ?></span>
-                    </div>
-                  </li><?php 
-                  } ?>
-            </ul>
-            </div><?
-          } else {
-            _show_( "No Messages" );
-          } ?>
-      </div>
-    </div><?php 
+      </div><?php 
   }
 
   function contactForm() { ?>
@@ -166,6 +126,30 @@ class _hForms {
           </div>
       </div>
     </div><?php 
+  }
+
+  function commentForm() { ?>
+      <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-shadow--2dp mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ){ primaryColor(); } else { echo "grey"; } ?>">
+            <form class=" mdl-grid" method="POST" action="" style="width: 100%">
+              <div class="input-field mdl-cell mdl-cell--6-col">
+                <i class="material-icons prefix">perm_identity</i>
+              <input id="h_by" name="h_by" type="text" value="<?php if ( isset( $_SESSION['myAlias'] ) ){ _show_( $_SESSION['myAlias'] ); } ?>">
+              <label for="h_by">Your Name</label>
+              </div>
+
+              <div class="input-field mdl-cell mdl-cell--5-col">
+                <i class="material-icons prefix">mail_outline</i>
+              <input id="h_email" name="h_email" type="text" value="<?php if ( isset( $_SESSION['myEmail'] ) ){ _show_( $_SESSION['myEmail'] ); } ?>">
+              <label for="h_email">Your Email</label>
+              </div>
+
+              <div class="input-field mdl-cell mdl-cell--10-col">
+              <p>Your Message</p>
+              <textarea class="materialize-textarea col s12" type="text" id="h_description" rows="5" name="h_description"></textarea><script>CKEDITOR.replace( 'h_description' );</script>
+              </div><br>
+              <button type="submit" name="" class="mdl-button mdl-button--fab alignright"><i  class="material-icons">send</i></button>
+            </form>
+      </div><?php 
   }
 
   function faqForm() { ?>
@@ -250,7 +234,7 @@ class _hForms {
             <span class="mdl-button">Other Details</span>
             <div class="mdl-layout-spacer"></div>
             <div class="mdl-card__subtitle-text">
-            <a href="?view=list">
+            <a href="?view=list&type=article">
               <i class="material-icons">clear</i>
             </a>
             </div>
@@ -287,11 +271,6 @@ class _hForms {
                 <i class="material-icons prefix">schedule</i>
                 <input  id="h_created_t" name="h_created_t" type="text" value="<?php echo date( 'H:i:s' ); ?>" >
                 <label for="h_created_t" class="center-align">Time</label>
-                <script>
-                  $(function() {
-                  $("#h_created").datepicker({ dateFormat: "yy-mm-dd" }).val()
-                  });
-                </script>
               </div>
               </div>
 
@@ -385,6 +364,12 @@ class _hForms {
                 </textarea>
               </div>
             </div>
+
+            <div class="mdl-card__menu mdl-button mdl-button--icon">
+            <a href="<?php _show_( hROOT.$postDetails['h_link'] ); ?>" target="_blank" >
+              <i class="material-icons">open_in_new</i>
+            </a>
+            </div>
           </div>
         <?php if ( !isset( $_GET['x']) ) { ?>
         <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-card--expand mdl-color--<?php primaryColor(); ?>">
@@ -414,9 +399,28 @@ class _hForms {
               <textarea id="h_category" name="h_category" class="materialize-textarea col s12"><?php _show_( $postDetails['h_category'] ); ?></textarea>
               <label for="h_category" class="center-align">Categories</label>
               </div><?php 
-              } ?>
+              }  
+              $date = $postDetails['h_created'];
+              $date = explode(" ", $date); ?>
 
-              <p>Published On <?php _show_( $postDetails['h_created'] ); ?></p>
+              <div class="mdl-grid">
+              <div class="input-field mdl-cell mdl-cell--6-col">
+              <i class="material-icons prefix">today</i>
+                <input type="text" id="h_created" name="h_created" value="<?php _show_( $date[0] ); ?>" >
+                <script>
+                  $(function() {
+                  $("#h_created").datepicker({ dateFormat: "yy-mm-dd" }).val()
+                  });
+                </script>
+              <label for="h_created" class="center-align">Published on</label>
+              </div>
+
+              <div class="input-field mdl-cell mdl-cell--6-col">
+              <i class="material-icons prefix">schedule</i>
+                <input type="text" id="h_created_t" name="h_created_t" value="<?php _show_( $date[1] ); ?>" >
+              <label for="h_created_t" class="center-align">at</label>
+              </div>
+              </div>
               <p>Author: <a href="./user?view=<?php _show_( $postDetails['h_author'] ); ?>&key=<?php _show_( $postDetails['h_by'] ); ?>"><?php _show_( $postDetails['h_by'] ); ?></a></p>
 
               <div class="input-field inline mdl-card mdl-shadow--2dp">
@@ -472,7 +476,7 @@ class _hForms {
     }
   }
 
-  function commentForm() {
+  function ccommentForm() {
     $getUser = mysqli_query( $GLOBALS['conn'], "SELECT * FROM husers WHERE h_code = '".$GET['code']."'" );
     $h_email = "";
     if ( $getUser -> num_rows > 0 ) {
@@ -715,7 +719,7 @@ class _hForms {
       while ( $userDetails = mysqli_fetch_assoc( $getUserCode ) ){
         $names = explode( " ", $userDetails['h_alias'] );
 
-        ?><title>Editing <?php _show_( $userDetails['h_alias']." [ ".showOption( 'name' )." ]</title>" ); ?>
+        ?><title>Editing <?php _show_( $userDetails['h_alias'] ); ?> [ <?php showOption( 'name' ); ?> ]</title>
         <form enctype="multipart/form-data" name="registerUser" method="POST" action="<?php _show_( hADMIN.'user?view='.$code.'&key='.$userDetails['h_alias'] ); ?>" class="mdl-grid" >
           <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
               <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
@@ -794,7 +798,7 @@ class _hForms {
                       </textarea>
                       <script>CKEDITOR.replace( 'h_description' );</script>
                       </div><?php 
-                      $social = json_decode( $userDetails['h_social'] ); 
+                      $social = json_decode( $userDetails['h_social'] );
                       foreach ($social as $key => $value) { ?>
                       <div class="input-field mdl-cell mdl-cell--3-col">
                       <i class="fa fa-<?php _show_( $key ); ?> prefix"></i>
@@ -864,7 +868,8 @@ class _hForms {
                         <input type="checkbox" id="switch-2" class="mdl-switch__input" checked> <span style="padding-left: 20px;">Online/Offline</span>         
                       </label>
                       </div>
-                      <input type="hidden" name="code" value="<?php _show_( $code ); ?>" >
+                      <input type="hidden" name="h_code" value="<?php _show_( $code ); ?>" >
+                      <input type="hidden" name="h_pass" value="<?php _show_( $userDetails['h_password'] ); ?>" >
                           <button type="submit" name="update" class="mdl-button mdl-button--fab alignright"><i class="material-icons">save</i></button>
                       </center><br><br>
 

@@ -29,7 +29,7 @@ if ( file_exists('./inc/config.php' ) ) {
     } ?>">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="description" content="<?php showOption( 'description' ); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Add to homescreen for Chrome on Android -->
@@ -87,14 +87,14 @@ if ( file_exists('./inc/config.php' ) ) {
 </head>
 <div class="mdl-layout mdl-layout-transparent mdl-layout__header--waterfall mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
   <body>
-  <header class="mdl-layout__header mdl-color-text--grey-600 mdl-layout__header mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ) { primaryColor(); } else { echo "madge"; } ?>">
+  <header class="mdl-layout__header mdl-color-text--grey-600 mdl-layout__header mdl-color--pink">
     <div class="mdl-layout__header-row">
       <a href="<?php if ( file_exists('./inc/config.php' ) ) {
       echo hROOT;
       } else { echo './'; } ?>">
         <span class="mdl-layout-title"><img src="<?php if ( file_exists('./inc/config.php' ) ) {
-          echo hIMAGES.'ecom.png';
-          } else { echo './assets/images/ecom.png'; } ?>" width="120px;">
+          echo hIMAGES.'head-w.png';
+          } else { echo './inc/assets/images/head-w.png'; } ?>" width="120px;">
         </span>
       </a>
       <div class="mdl-layout-spacer"></div>
@@ -118,7 +118,7 @@ if ( file_exists('./inc/config.php' ) ) {
 
       <a id="admin" href="#" class="mdi mdi-menu mdl-badge mdl-badge--overlap mdl-button--icon"></a>
       <div class="mdl-tooltip" for="admin">Admin</div>
-        <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-color--pink" for="admin">
+        <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right mdl-color--pink" for="admin">
         <a href="./login" class="mdl-list__item"><i class="mdi mdi-exit-to-app mdl-list__item-icon"></i><span style="padding-left: 20px">LOGIN</span></a>
         <a href="./register" class="mdl-list__item"><i class="mdi mdi-account-plus mdl-list__item-icon"></i><span style="padding-left: 20px">REGISTER</span></a>
         <a href="./login" class="mdl-list__item"><i class="mdi mdi-help mdl-list__item-icon"></i><span style="padding-left: 20px">FAQ</span></a>

@@ -15,12 +15,11 @@ $dB = new MysqliDb ($GLOBALS['conn']); ?>
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at https://opensource.org/licenses/MIT
 -->
-
-<html lang="en" class="mdc-typography">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="description" content="<?php showOption( 'description' ); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
     <!-- Add to homescreen for Chrome on Android -->
@@ -110,8 +109,12 @@ $dB = new MysqliDb ($GLOBALS['conn']); ?>
             }
           } elseif ( isset( $_GET['x'] ) && $_GET['create'] !== "" ) {
             echo ucwords( "Create ".$_GET['create'] );
+          } elseif ( isset( $_GET['x'] ) && $_GET['settings'] !== "" && !isset( $_GET['key'] ) ) {
+            echo ucwords( $_GET['settings'].' Options' );
           } elseif ( isset( $_GET['create'] ) ) {
             echo "Add New ".ucwords( $_GET['create'].' ' );
+          } elseif ( isset( $_GET['add'] ) ) {
+            echo "Add New ".ucwords( $_GET['add'].' ' );
           } elseif ( isset( $_GET['chat'] ) ) {
             if ( $_GET['chat'] == "list" ) {
               echo "Chats List";
@@ -128,12 +131,12 @@ $dB = new MysqliDb ($GLOBALS['conn']); ?>
             echo "Pay Via ".strtoupper( $_GET['method'] );
           }
           ?></span>
-          <div class="mdl-layout-spacer"></div><?php 
-          if ( isCap( 'admin' ) ) { ?>
+          <div class="mdl-layout-spacer"></div>
           <a href="<?php _show_( hROOT ); ?>" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification" id="home"
                >
               visibility
-          </a><div class="mdl-tooltip" for="home">View Site</div>
+          </a><div class="mdl-tooltip" for="home">View Site</div><?php 
+          if ( isCap( 'admin' ) ) { ?>
 
           <span class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon" id="happs">apps</span>
             <div class="mdl-tooltip" for="happs">Options</div><?php } ?>
@@ -172,12 +175,17 @@ $dB = new MysqliDb ($GLOBALS['conn']); ?>
               notifications_none
           </a><div class="mdl-tooltip" for="h_notifications">Notifications</div>
 
-          <a href="./message?view=unread&key=unread messages" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_messages"
+          <a href="./message?view=inbox&key=my inbox" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_messages"
                  data-badge="<?php getMsgCount() ?>">
                 mail_outline
             </a><div class="mdl-tooltip" for="h_messages"><?php getMsgCount(); ?> Messages</div>
-
-          <a href="#" class="material-icons mdl-js-button mdl-badge mdl-badge--overlap mdl-button--icon" id="hdrbtn">exit_to_app</a><div class="mdl-tooltip" for="hdrbtn">Logout</div>
+          
+          <a href="#" class="material-icons mdl-js-button mdl-badge mdl-badge--overlap mdl-button--icon" id="hvdrbtn">perm_identity</a>
+          <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-color--<?php primaryColor(); ?>" for="hvdrbtn">
+          <a id="profile" href="./user?view=<?php _show_( $_SESSION['myCode'] ); ?>&key=<?php _show_( $_SESSION['myAlias'] ); ?>" class="mdl-list__item"><i class="mdi mdi-account mdl-list__item-icon alignright"></i><span style="padding-left: 20px"><?php _show_( $_SESSION['myAlias'] ); ?></span></a>
+          <a id="profedit" href="./user?edit=<?php _show_( $_SESSION['myCode'] ); ?>&key=<?php _show_( $_SESSION['myAlias'] ); ?>" class="mdl-list__item"><i class="mdi mdi-account-edit mdl-list__item-icon"></i><span style="padding-left: 20px">Edit Account</span></a>
+          <a id="hdrbtn" href="#" class="mdl-list__item"><i class="mdi mdi-exit-to-app mdl-list__item-icon"></i><span style="padding-left: 20px">Logout</span></a>
+          </ul>
           <div id="exitModal" class="modal">
               <div class="modal-content mdl-card mdl-shadow--2dp mdl-color--orange">
                 <div class="mdl-card__title">
@@ -203,7 +211,7 @@ $dB = new MysqliDb ($GLOBALS['conn']); ?>
                     </span>
                   </div>
                 </div>
-            </div>
+          </div>
 
         <script>
         var emodal = document.getElementById('exitModal' );
@@ -247,15 +255,21 @@ $dB = new MysqliDb ($GLOBALS['conn']); ?>
           */
           $hMenu -> drawer(); ?>
           <div class="mdl-layout-spacer"></div>
+          <a class="mdl-navigation__link" id="extensions" href="#"><i class="mdl-color-text--white material-icons" role="presentation">power</i>Extensions</a>
+          <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor(); ?>" for="extensions">
+          <a class="mdl-navigation__link" href="./extensions?view=active"><i class="mdl-color-text--white material-icons" role="presentation">schedule</i><span>Active Extensions</span></a>
+          <a class="mdl-navigation__link" href="./extensions?view=installed"><i class="mdl-color-text--white material-icons" role="presentation">link</i><span>Installed Extensions</span></a>
+          <a class="mdl-navigation__link" href="./extensions?add=new"><i class="mdl-color-text--white material-icons" role="presentation">file_download</i><span>Add Extensions</span></a>
+          </ul>
           
           <a id="hpref" class="mdl-navigation__link" href="#"><i class="mdl-color-text--white material-icons" role="presentation">settings</i>Preferences</a>
             <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor(); ?>" for="hpref">
             <a class="mdl-navigation__link" href="./options?settings=color"><i class="mdl-color-text--white material-icons" role="presentation">color_lens</i><span>Color Options</span></a><?php 
           if ( isCap( 'admin' ) ) { ?>
           <a class="mdl-navigation__link" href="./menus?settings=menu"><i class="mdl-color-text--white material-icons" role="presentation">menu</i><span>Menu Options</span></a>
-          <a class="mdl-navigation__link" href="./options?settings=user"><i class="mdl-color-text--white material-icons" role="presentation">tune</i><span>User Options</span></a>
+          <a class="mdl-navigation__link" href="./options?settings=user"><i class="mdl-color-text--white material-icons" role="presentation">build</i><span>User Options</span></a>
           <a class="mdl-navigation__link" href="./options?settings=social"><i class="mdl-color-text--white material-icons" role="presentation">public</i><span>Social Settings</span></a>
-          <a class="mdl-navigation__link" href="./options?settings=general"><i class="mdl-color-text--white material-icons" role="presentation">settings</i><span>General Settings</span></a>
+          <a class="mdl-navigation__link" href="./options?settings=general"><i class="mdl-color-text--white material-icons" role="presentation">tune</i><span>General Settings</span></a>
           <a class="mdl-navigation__link" href="./update?settings=update"><i class="mdl-color-text--white material-icons" role="presentation">update</i><span>Jabali Updates</span></a>
           <?php } ?>
             </ul>

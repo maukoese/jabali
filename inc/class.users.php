@@ -22,48 +22,6 @@ class _hUsers {
   var $h_style; 
   var $h_type; 
   var $h_updated;
-
-
-  function loginUser( $user) {
-    if ( isEmail( $user) ) {
-      $result = mysqli_query( $GLOBALS['conn'], "SELECT * FROM husers WHERE h_email = '".$user."'" );
-    } else {
-      $result = mysqli_query( $GLOBALS['conn'], "SELECT * FROM husers WHERE h_username = '".$user."'" );
-    }
-
-    if ( $result->num_rows > 0 ) {
-      while ( $row = mysqli_fetch_assoc( $result) ) {
-        $userDetails[] = $row;
-      }
-    } else {
-      ?><div class="alert mdl-color--red">
-          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-          Oops! Something went wrong. Please try again
-          </div><?php 
-    }
-
-    if ( !empty( $userDetails) && $userDetails[0]['h_password'] = $password ) { 
-      $_SESSION['myAlias'] = $userDetails[0]['h_alias'];
-      $_SESSION['myUsername'] = $userDetails[0]['h_username'];
-      $_SESSION['myCode'] = $userDetails[0]['h_code'];
-      $_SESSION['myEmail'] = $userDetails[0]['h_email'];
-      $_SESSION['myPhone'] = $userDetails[0]['h_phone'];
-      $_SESSION['myOrg'] = $userDetails[0]['h_organization'];
-      $_SESSION['myCap'] = $userDetails[0]['h_type'];
-      $_SESSION['myLocation'] = $userDetails[0]['h_location'];
-      $_SESSION['myAvatar'] = $userDetails[0]['h_avatar'];
-      $_SESSION['myGender'] = $userDetails[0]['h_gender'];
-
-      header('Location: ./admin/user?view='.$_SESSION['myCode'].'&key='.$_SESSION['myAlias'].'' );
-      exit();
-
-    } else {
-      ?><div class="alert mdl-color--red">
-      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-      Wrong Password
-      </div><?php 
-    }
- }
   
  function emailUser( $email, $subject, $key) {
    if ( $subject == "create" ) { 
@@ -162,7 +120,7 @@ class _hUsers {
 
   }
 
-  function updateUser( $code) {
+  function updateUser( $code ) {
     
     $date = date( "YmdHms" );
     $email = $_SESSION['myEmail'];
@@ -182,6 +140,7 @@ class _hUsers {
     } else {
       $h_avatar = $_POST['h_avatar'];
     }
+    $h_avatar = hUPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'.$_FILES['h_avatar']['name'];
 
     $h_organization = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_organization'] );
     $h_created = date('Ymd' );
@@ -202,6 +161,8 @@ class _hUsers {
     
     if ( $_POST['h_password'] !== "" ) {
       $h_password = md5( $_POST['h_password'] );
+    } else {
+      $h_password = $_POST['h_pass'];
     }
 
     $h_phone = $_POST['h_phone'];
@@ -253,8 +214,7 @@ class _hUsers {
         <tr>
         <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
         <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
-        <th class="mdl-data-table__cell--non-numeric">PHONE</th><?php if ( $type !== "organization" ) { ?>
-        <th class="mdl-data-table__cell--non-numeric">ORG</th><?php } ?>
+        <th class="mdl-data-table__cell--non-numeric">PHONE</th>
         <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
@@ -271,10 +231,7 @@ class _hUsers {
         </td>
         <td class="mdl-data-table__cell--non-numeric">
           <?php _show_( $usersDetails['h_phone'] ); ?>
-        </td><?php if ( $type !== "organization" ) { ?>
-        <td class="mdl-data-table__cell--non-numeric">
-          <?php _show_( $usersDetails['h_organization'] ); ?>
-        </td><?php } ?>
+        </td>
         <td class="mdl-data-table__cell--non-numeric">
           <?php _show_( ucwords( $usersDetails['h_location'] ) ); ?>
         </td>
@@ -298,8 +255,7 @@ class _hUsers {
         <tr>
         <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
         <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
-        <th class="mdl-data-table__cell--non-numeric">PHONE</th><?php if ( $type !== "organization" ) { ?>
-        <th class="mdl-data-table__cell--non-numeric">ORG</th><?php } ?>
+        <th class="mdl-data-table__cell--non-numeric">PHONE</th>
         <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
@@ -343,8 +299,6 @@ class _hUsers {
         <tr>
         <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
         <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
-        <th class="mdl-data-table__cell--non-numeric">PHONE</th><?php if ( $type !== "organization" ) { ?>
-        <th class="mdl-data-table__cell--non-numeric">ORG</th><?php } ?>
         <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
@@ -361,10 +315,7 @@ class _hUsers {
         </td>
         <td class="mdl-data-table__cell--non-numeric">
           <?php _show_( $usersDetails['h_phone'] ); ?>
-        </td><?php if ( $type !== "organization" ) { ?>
-        <td class="mdl-data-table__cell--non-numeric">
-          <?php _show_( $usersDetails['h_organization'] ); ?>
-        </td><?php } ?>
+        </td>
         <td class="mdl-data-table__cell--non-numeric">
           <?php _show_( ucwords( $usersDetails['h_location'] ) ); ?>
         </td>
@@ -388,8 +339,7 @@ class _hUsers {
         <tr>
         <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
         <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
-        <th class="mdl-data-table__cell--non-numeric">PHONE</th><?php if ( $type !== "organization" ) { ?>
-        <th class="mdl-data-table__cell--non-numeric">ORG</th><?php } ?>
+        <th class="mdl-data-table__cell--non-numeric">PHONE</th>
         <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
@@ -595,7 +545,6 @@ class _hUsers {
         <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
         <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
         <th class="mdl-data-table__cell--non-numeric">PHONE</th>
-        <th class="mdl-data-table__cell--non-numeric">ORG</th>
         <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
@@ -612,9 +561,6 @@ class _hUsers {
         </td>
         <td class="mdl-data-table__cell--non-numeric">
           <?php _show_( $usersDetails['h_phone'] ); ?>
-        </td>
-        <td class="mdl-data-table__cell--non-numeric">
-          <?php _show_( $usersDetails['h_organization'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric">
           <?php _show_( ucwords( $usersDetails['h_location'] ) ); ?>
@@ -641,7 +587,6 @@ class _hUsers {
         <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
         <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
         <th class="mdl-data-table__cell--non-numeric">PHONE</th>
-        <th class="mdl-data-table__cell--non-numeric">ORG</th>
         <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
@@ -679,9 +624,8 @@ class _hUsers {
         <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
         <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
         <th class="mdl-data-table__cell--non-numeric">PHONE</th>
-        <th class="mdl-data-table__cell--non-numeric">ORG</th>
         <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
-        <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
+        <th class="mdl-data-table__cell">ACTIONS</th>
         </tr>
         </thead><?php 
       while ( $usersDetails = mysqli_fetch_assoc( $getUsers)){
@@ -698,12 +642,9 @@ class _hUsers {
           <?php _show_( $usersDetails['h_phone'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric">
-          <?php _show_( $usersDetails['h_organization'] ); ?>
-        </td>
-        <td class="mdl-data-table__cell--non-numeric">
           <?php _show_( ucwords( $usersDetails['h_location'] ) ); ?>
         </td>
-        <td class="mdl-data-table__cell--non-numeric">
+        <td class="mdl-data-table__cell">
         <a href="./user?view=<?php _show_( $usersDetails['h_code'] ); ?>&key=<?php _show_( $usersDetails['h_alias'] ); ?>" ><i class="material-icons">perm_identity</i></a> 
         <a href="tel:<?php _show_( $usersDetails['h_phone'] ); ?>" ><i class="material-icons">phone</i></a> 
         <a href="./message?create=message&code=<?php _show_( $usersDetails['h_code'] ); ?>" ><i class="material-icons">message</i></a><?php 
@@ -958,14 +899,14 @@ class _hUsers {
                             </ul>
                             </div><?
                           } else { ?>
-                          <div class="mdl-card__title">
+                          <div class="mdl-card__title"><?php if( !isProfile( $_SESSION['myCode'] ) ) { ?>
                             <div class="mdl-card__title-text">
                               <span><b>Contact </b><?php _show_( ucfirst( $name[0] ) ); ?></span>
                             </div>
                             <div class="mdl-layout-spacer"></div>
-                            <div class="mdl-card__subtitle-text"><?php if( isCap('admin') || isProfile($_SESSION['myCode']) ) { ?>
-                              <a href="./message?create=message&code=<?php _show_( $userDetails['h_code'] ); ?>" class="material-icons mdl-badge mdl-badge--overlap">message</a><?php } ?>
-                            </div>
+                            <div class="mdl-card__subtitle-text">
+                              <a href="./message?create=message&code=<?php _show_( $userDetails['h_code'] ); ?>" class="material-icons mdl-badge mdl-badge--overlap">message</a>
+                            </div><?php } ?>
                           </div><?php 
                         }
                       ?>

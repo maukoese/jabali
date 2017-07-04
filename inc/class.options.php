@@ -5,7 +5,7 @@ class _hOptions {
 	* Create menu
 	**/
 	function create ( $h_alias, $h_code, $h_description, $h_updated ) {
-		if( mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ( '".$h_alias."', '".$h_code."', '".$h_description."', '".$h_updated."' )" ) ){
+		if( mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ( '".$h_alias."', '".$h_code."', '".$h_description."', '".$h_updated."' )" ) ) {
 			echo "<script type = \"text/javascript\">
                   alert(\"Preferences Updated Successfully!\" );
               </script>";

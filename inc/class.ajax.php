@@ -28,7 +28,7 @@
  * @author      Serkan Yerşen <serkanyersen@gmail.com>
  * @copyright   2012 Serkan Yerşen.
  * @license     http://www.opensource.org/licenses/mit-license.php  MIT License
- * @link        http://serkanyersen.github.com/AjaxHandler/
+ * @link        https://github.com/serkanyersen/AjaxHandler
  * @version     0.5
  */
 

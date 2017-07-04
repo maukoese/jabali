@@ -78,7 +78,7 @@ class _hActions {
 				  	<title>Login <?php _show_( ucfirst( $_GET['alert'] ) ); ?> [ <?php showOption( 'name' ); ?> ]</title>
 				  	<div style="padding-top:40px;" class="mdl-grid" >
 					  	<div class="mdl-cell mdl-cell--2-col"></div>
-						<div id="login_div" class="mdl-cell mdl-cell--8-col mdl-shadow--2dp mdl-color--madge">
+						<div id="login_div" class="mdl-cell mdl-cell--8-col>
 							<center><?php echo '<a href="'.hROOT.'"><img src="'.hIMAGES.'logo-w.png" width="150px;"></a>'; 
 							  if ( isset( $_GET['alert'] ) ) {
 							      if ( $_GET['alert'] == "password" ) { ?>
@@ -92,7 +92,7 @@ class _hActions {
 							      }
 							  } ?>
 							</center>
-						  <form enctype="multipart/form-data" method="POST" action="" class="mdl-grid">
+						  <form enctype="multipart/form-data" method="POST" action="" class="mdl-grid mdl-color--madge"">
 						      <div class="input-field mdl-cell mdl-cell--11-col">
 						      <i class="material-icons prefix">perm_identity</i>
 						      <input name="user" id="email" type="text">
@@ -173,8 +173,8 @@ class _hActions {
 			  	<title>Login <?php _show_( ucfirst( $_GET['alert'] ) ); ?> [ <?php showOption( 'name' ); ?> ]</title>
 			  	<div class="mdl-grid" >
 			  	<div class="mdl-cell mdl-cell--2-col"></div>
-				<div id="login_div" class="mdl-cell mdl-cell--8-col">
-					<center><?php echo '<a href="'.hROOT.'"><img src="'.hIMAGES.'ecom.png" width="150px;"></a>'; 
+				<div id="login_div" class="mdl-cell mdl-cell--8-col mdl-color--madge">
+					<center><?php echo '<a href="'.hROOT.'"><img src="'.hIMAGES.'logo-w.png" width="150px;"></a>'; 
 						if ( isset( $_GET['alert'] ) ) {
 						  if ( $_GET['alert'] == "password" ) { ?>
 						  <div id="fail" class="alert mdl-color--red">
@@ -227,6 +227,7 @@ class _hActions {
 				</div>
 			  	<div class="mdl-cell mdl-cell--2-col"></div>
 			  	</div><?php
+			  	include 'footer.php';
 			}
 		}
 	}
@@ -435,46 +436,54 @@ class _hActions {
 	}
 
 	function registerUser() {
+		$conn = _hActions::connectDB();
+		define('hIMAGES', hROOT.'inc/assets/images/');
+		
 		if ( _hActions::emailExists( $_POST['h_email'] ) )
 		{
 			header( "Location: ./register?create=exists" );
 		} else 
 		{
-			$date = date('YmdHms' );
-			if ( isset( $_SESSION['myEmail'] ) ) {
-			$email = $_SESSION['myEmail'];
-			} else {
-			$email = hEMAIL;
-			}
+		    $date = date( "YmdHms" );
+		    $email = $_POST['h_email'];
 
-			$hash = str_shuffle(md5( $email.$date ) );
-			$abbr = substr( $_POST['lname'], 0,3 );
+		    $hash = str_shuffle(md5( $email.$date ) );
+		    $abbr = substr( $_POST['lname'], 0,3 );
 
-			$h_alias = $_POST['fname'].' '.$_POST['lname'];
-			$h_author = substr( $hash, 20 );
-			$h_avatar = hIMAGES.'avatar.svg';
-			$h_organization = $_POST['h_organization'];
-			$h_code = substr( $hash, 20 );
-			$h_created = date('Ymd' );
-			$h_email = $_POST['h_email'];
-			$h_gender = strtolower( $_POST['h_gender'] );
-			$h_key = $hash;
-			$h_level = $_POST['h_level'];
-			$h_link = hADMIN."user?view=$h_code";
-			$h_location = strtolower( $_POST['h_location'] );
-			$h_notes = "Account created on ".$date;
-			$h_password = md5( $_POST['h_password'] );
-			$h_phone = $_POST['h_phone'];
-			$h_status = "pending";
-			$h_style = "zahra";
-			$h_type = strtolower( $_POST['h_type'] );
-			$h_username = strtolower( $_POST['fname'].$abbr );
+		    $h_alias = $_POST['fname'].' '.$_POST['lname'];
+		    $h_author = substr( $hash, 20 );
+		    
+		    $h_avatar = hIMAGES.'avatar.svg';
+		    $h_organization = mysqli_real_escape_string( $conn, $_POST['h_organization'] );
+		    $h_code = md5(date('l jS \of F Y h:i:s A').rand(10,1000) );
+		    $h_description = "";
+		    $h_created = date('Ymd' );
+		    $h_email = mysqli_real_escape_string( $conn, $_POST['h_email'] );
+		    $h_gender = strtolower( $_POST['h_gender'] );
+		    $h_key = $hash;
+		    $h_level = mysqli_real_escape_string( $conn, $_POST['h_level'] );
+		    $h_link = hROOT."user?view=$h_code&key=$h_alias";
+		    $h_location = strtolower( $_POST['h_location'] );
+		    $h_notes = "Account created on ".$date;
+		    $h_password = md5( $_POST['h_password'] );
+		    $h_phone = mysqli_real_escape_string( $conn, $_POST['h_phone'] );
 
-			if ( mysqli_query( $GLOBALS['conn'], "INSERT INTO husers (h_alias, h_author, h_avatar, h_organization, h_code, h_created, h_email, h_gender, h_key, h_level, h_link, h_location, h_notes, h_password, h_phone, h_status, h_style, h_type, h_username) 
-			VALUES ('".$h_alias."', '".$h_author."', '".$h_avatar."', '".$h_organization."', '".$h_code."', '".$h_created."', '".$h_email."', '".$h_gender."', '".$h_key."', '".$h_level."', '".$h_link."', '".$h_location."', '".$h_notes."', '".$h_password."', '".$h_phone."', '".$h_status."', '".$h_style."', '".$h_type."', '".$h_username."' )" ) ) {
+		    if ( !$_POST['h_status'] ) {
+		      $h_status = "pending";
+		    } else {
+		      $h_status = $_POST['h_status'];
+		    }
+		    $h_social = '{"facebook":"https://www.facebook.com/","twitter":"https://twitter.com/","instagram":"https://instagram.com/","github":"https://github.com/"}';
+		    $h_style = "zahra";
+		    $h_type = strtolower( $_POST['h_type'] );
+		    $h_username = strtolower( $_POST['fname'].$abbr );
+
+			if ( mysqli_query( $GLOBALS['conn'], "INSERT INTO husers (h_alias, h_author, h_avatar, h_organization, h_code, h_created, h_description, h_email, h_gender, h_key, h_level, h_link, h_location, h_notes, h_password, h_phone, h_social, h_status, h_style, h_type, h_username) 
+    VALUES ('".$h_alias."', '".$h_author."', '".$h_avatar."', '".$h_organization."', '".$h_code."', '".$h_created."', '".$h_description."', '".$h_email."', '".$h_gender."', '".$h_key."', '".$h_level."', '".$h_link."', '".$h_location."', '".$h_notes."', '".$h_password."', '".$h_phone."', '".$h_social."', '".$h_status."', '".$h_style."', '".$h_type."', '".$h_username."' )" ) ) {
 			header( "Location: ./register?create=success" );
 			} else {
-			header( "Location: ./register?create=fail" );
+			//header( "Location: ./register?create=fail" );
+			echo "Error: " . $conn -> error;
 			}
 		}
 	}
@@ -500,53 +509,27 @@ class _hActions {
 				<div class="mdl-grid">
 						<div class="mdl-cell mdl-cell--9-col mdl-grid"><?php 
 							while ( $postsDetails = mysqli_fetch_assoc( $getPosts)){ ?>
-								<div class="mdl-cell card radius mdl-color--madge mdl-shadow--4dp">
-									<div class="card__image border-tlr-radius">
-									    <img src="<?php _show_( $postsDetails['h_avatar'] ); ?>" alt="image" class="border-tlr-radius">
-									</div>
-									<div class="card__content card__padding">
-									    <div class="card__share">
-									        <div class="card__social">  
-									            <a class="share-icon facebook" href="#"><span class="fa fa-facebook"></span></a>
-									            <a class="share-icon twitter" href="#"><span class="fa fa-twitter"></span></a>
-									            <a class="share-icon googleplus" href="#"><span class="fa fa-pinterest"></span></a>
-									        </div>
-									        <a id="<?php _show_( $postsDetails['h_code'] ); ?>" class="share-toggle share-icon" href=""></a>
-									        <script>
-									        	$(document).ready(function($) {
-
-												    $('#<?php _show_( $postsDetails['h_code'] ); ?>').on('click', function(e){ 
-												        e.preventDefault() // prevent default action - hash doesn't appear in url
-												        $(this).parent().find( 'div' ).toggleClass( 'card__social--active' );
-												        $(this).toggleClass('share-expanded');
-												    });
-												  
-												});
-									        </script>
-									    </div>
-
-									    <div class="card__meta">
-									        <a href="#"><?php _show_( $postsDetails['h_category'] ); ?></a>
-									    </div>
-
-									    <article class="card__article">
-									    <?php _show_( substr( $postsDetails['h_description'], 0, 200 ) ); ?>
-									    </article>
-									</div>
-									<div class="card__action">
-									    
-									    <div class="card__author">
-									        <div class="card__author-content">
-									            <a class="mdl-button mdl-button--colored" href="<?php _show_( hROOT.$postsDetails['h_link'] ); ?>">READ MORE</a>
-
-									            <a class="mdl-button mdl-button--icon alignright" href="<?php _show_( hROOT.$postsDetails['h_link'] ); ?>"><i class="material-icons">perm_identity</i></a>
-									        </div>
-									    </div>
-									</div>
-									<div class="mdl-card__menu">
-										<h5><?php _show_( $postsDetails['h_alias'] ); ?></h5>
-									</div>
-								</div><?php
+							<div class="mdl-cell card">
+    <div class="card-image waves-effect waves-block waves-light">
+      <img class="activator" src="<?php _show_( $postsDetails['h_avatar'] ); ?>">
+    </div>
+    <div class="card-content mdl-color-text--black">
+      <span class="card-title activator grey-text text-darken-4"><?php _show_( $postsDetails['h_alias'] ); ?><i class="material-icons right">more_vert</i></span>
+      <span><i class="material-icons">today</i><?php $date = $postsDetails['h_created'];
+              $date = explode(" ", $date); _show_( $date[0] ); ?></span>
+      <a class="mdl-button mdl-button--colored alignright" href="<?php _show_( hROOT.$postsDetails['h_link'] ); ?>">read more</a>
+    </div>
+    <div class="card-reveal mdl-color-text--black">
+      <span class="card-title grey-text text-darken-4"><i class="material-icons left">perm_identity</i> <a href="./user/<?php _show_( $postsDetails['h_by'] ); ?>"><?php _show_( $postsDetails['h_by'] ); ?></a><i class="material-icons right">close</i></span><br>
+      <article>
+      	<?php _show_( substr( $postsDetails['h_description'], 0, 250 ) ); 
+      ?> ...
+      	
+      </article> <a class="mdl-button mdl-button--colored" href="<?php _show_( hROOT.$postsDetails['h_link'] ); ?>">read more</a><br>
+      <p>Posted In: <a href="./category/<?php _show_( $postsDetails['h_category'] ); ?>"><?php _show_( ucwords( $postsDetails['h_category'] ) ); ?></a></p>
+      <p>Tagged: <a href="./tag/<?php _show_( $postsDetails['h_tags'] ); ?>"><?php _show_( ucwords( $postsDetails['h_tags'] ) ); ?></a></p>
+    </div>
+  </div><?php
 							} ?>
 						</div>
 						<div class="mdl-cell mdl-cell--3-col" >
@@ -567,28 +550,24 @@ class _hActions {
 		} else {
 			$getPosts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE h_link = '".$code."'" );
 			if ( $getPosts -> num_rows > 0) { ?>
-				<div class="mdl-grid">
-				<div class="mdl-cell mdl-cell--12-col mdl-shadow--4dp mdl-grid"><?php 
+				<div class="mdl-grid"><?php 
 					while ( $postsDetails = mysqli_fetch_assoc( $getPosts)){  ?>
 						<title><?php _show_( $postsDetails['h_alias']); ?> [ <?php showOption( 'name' ); ?> ]</title>
-					      <div class="mmm-ribbon mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ){ primaryColor(); } else { echo "madge"; } ?>" style="background: url( <?php _show_( $postsDetails['h_avatar']); ?> ); background-repeat:no-repeat; background-size: cover;">
+					      <div class="mmm-ribbon mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ){ primaryColor(); } else { echo "madge"; } ?>" style="background: url( <?php _show_( $postsDetails['h_avatar']); ?> ); background-repeat:no-repeat; background-size: cover; background-position: center;">
+					      <center><b><h1><?php _show_( $postsDetails['h_alias']); ?></h1></b>
+					      <span><h6>Published by <b><?php _show_( $postsDetails['h_by']); ?></b> on <b><?php $date = $postsDetails['h_created'];
+              $date = explode(" ", $date); _show_( $date[0].' at '.$date[1] ); ?></b></h6></span></center>
 					      </div>
 					      
 					        <div class="demo-container">
 					          	<div class="demo-content mdl-color--white content mdl-color-text--black mdl-grid">
-						            <div class="mdl-cell mdl-cell--6-col mdl-color-text--grey-800 "><b><h3><?php _show_( $postsDetails['h_alias']); ?></h3></b>
-						            </div>
-						            <div class="mdl-cell mdl-cell--3-col mdl-color-text--grey-800 "><h6><b>Posted In: </b><?php _show_( $postsDetails['h_category']); ?></h6>
-						            </div>
-						            <div class="mdl-cell mdl-cell--3-col mdl-color-text--grey-800 "><h6><b>Tagged: </b><?php _show_( $postsDetails['h_tags']); ?></h6>
-						            </div>
 						            <article class="mdl-color-text--black">
 						            	<?php _show_( $postsDetails['h_description']); ?>
 						            </article>
+						            <?php $hForm -> commentForm(); ?>
 						        </div>
 					      </div>
 					<?php } ?>
-				</div>
 				</div><?php _hSocial::bottomShare( $postsDetails['h_code'] );
 				include 'footer.php';
 			} else {
@@ -603,26 +582,140 @@ class _hActions {
 		include 'header.php';
 		$getPosts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE h_link = 'home'" );
 		if ( $getPosts -> num_rows > 0) { ?>
-			<div class="mdl-grid">
-				<div class="mdl-cell mdl-cell--12-col mdl-shadow--4dp mdl-grid"><?php 
+			<div class="mdl-grid"><?php 
 					while ( $postsDetails = mysqli_fetch_assoc( $getPosts)){  ?>
 						<title><?php showOption( 'name' ); ?> [ <?php showOption( 'description' ); ?> ]</title>
-					      <div class="mmm-ribbon mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ){ primaryColor(); } else { echo "madge"; } ?>" style="background: url( <?php _show_( $postsDetails['h_avatar']); ?> ); background-repeat:no-repeat; background-size: cover;">
+					      <div class="mmm-ribbon mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ){ primaryColor(); } else { echo "madge"; } ?>" style="background: url( <?php _show_( $postsDetails['h_avatar']); ?> ); background-repeat:no-repeat; background-size: cover; background-position: center; min-height: 600px; max-height: 650px;">
+					      <center><b><h1><br><?php showOption ( 'name' ); ?></h1></b>
+					      <span><h3><b><?php showOption ( 'description' ); ?></b></h3></span>
+					      <a class="btn btn-large mdl-color--red" href="#">GET STARTED</a></center>
 					      </div>
 					      
-					        <div class="demo-container mdl-grid">
-					          <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--12-col">
-					            <b><h3><?php _show_( $postsDetails['h_alias']); ?></h3></b>
-					            <br><br>
-					            <div>
-					            <article class="mdl-color-text--black">
-					            	<?php _show_( $postsDetails['h_description']); ?>
-					            </article>
-					            </div>
-					        </div>
+					        <div class="demo-container">
+					          	<div class="demo-content mdl-color--white content mdl-color-text--black mdl-grid mdl-shadow--2dp">
+					          	<div class="mdl-cell mdl-cell--12-col mdl-grid mdl-shadow--2dp">
+					          	<div class="mdl-cell mdl-cell--12-col">
+					          	<center>
+							      <h3 class=""><?php showOption( 'name' ) ?></h3>
+						      	</center>
+						      	</div>
+					          		<div class="mdl-cell mdl-cell--3-col mdl-color--madge card">
+										    <div class="card-image waves-effect waves-block waves-light">
+										      <center>
+										      <h1 class="fa fa-user fa-4x"></h1>
+										      </center>
+										    </div>
+										    <div class="card-content mdl-color-text--black">
+										      <center><b class="card-title grey-text text-darken-4">Bold</b>
+										      <p>The foundational elements of print-based design – typography, grids, space, scale, color, and use of imagery – guide visual treatments. These elements do far more than please the eye.</p></center>
+										    </div>
+					          		</div>
+					          		<div class="mdl-cell mdl-cell--3-col mdl-color--madge card">
+										    <div class="card-image waves-effect waves-block waves-light">
+										      <center>
+										      <h1 class="fa fa-user fa-4x"></h1>
+										      </center>
+										    </div>
+										    <div class="card-content mdl-color-text--black">
+										      <center><b class="card-title grey-text text-darken-4">Bold</b>
+										      <p>The foundational elements of print-based design – typography, grids, space, scale, color, and use of imagery – guide visual treatments. These elements do far more than please the eye.</p></center>
+										    </div>
+					          		</div>
+					          		<div class="mdl-cell mdl-cell--3-col mdl-color--madge card">
+										    <div class="card-image waves-effect waves-block waves-light">
+										      <center>
+										      <h1 class="fa fa-user fa-4x"></h1>
+										      </center>
+										    </div>
+										    <div class="card-content mdl-color-text--black">
+										      <center><b class="card-title grey-text text-darken-4">Bold</b>
+										      <p>The foundational elements of print-based design – typography, grids, space, scale, color, and use of imagery – guide visual treatments. These elements do far more than please the eye.</p></center>
+										    </div>
+					          		</div>
+					          		<div class="mdl-cell mdl-cell--3-col mdl-color--madge card">
+										    <div class="card-image waves-effect waves-block waves-light">
+										      <center>
+										      <h1 class="fa fa-user fa-4x"></h1>
+										      </center>
+										    </div>
+										    <div class="card-content mdl-color-text--black">
+										      <center><b class="card-title grey-text text-darken-4">Bold</b>
+										      <p>The foundational elements of print-based design – typography, grids, space, scale, color, and use of imagery – guide visual treatments. These elements do far more than please the eye.</p></center>
+										    </div>
+					          		</div>
+					          	</div>
+					          	<div class="mdl-cell mdl-cell--12-col mdl-grid mdl-shadow--2dp">
+
+					          	<div class="mdl-cell mdl-cell--12-col">
+					          	<center>
+							      <h3 class="">Blog</h3>
+						      	</center>
+						      	</div>
+					          		<?php $posts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE h_type = 'article' AND h_status = 'published' LIMIT 3");
+					          		if ( $posts -> num_rows > 0 ) {
+					          		 	while ( $postsDetails = mysqli_fetch_assoc( $posts ) ) { ?>
+					          		 	<div class="mdl-cell card mdl-shadow--2dp">
+										    <div class="card-image waves-effect waves-block waves-light">
+										      <img class="activator" src="<?php _show_( $postsDetails['h_avatar'] ); ?>">
+										    </div>
+										    <div class="card-content mdl-color-text--black">
+										      <span class="card-title activator grey-text text-darken-4"><?php _show_( $postsDetails['h_alias'] ); ?><i class="material-icons right">more_vert</i></span>
+										      <span><i class="material-icons">today</i><?php $date = $postsDetails['h_created'];
+										              $date = explode(" ", $date); _show_( $date[0] ); ?></span>
+										      <a class="mdl-button mdl-button--colored alignright" href="<?php _show_( hROOT.$postsDetails['h_link'] ); ?>">read more</a>
+										    </div>
+										    <div class="card-reveal mdl-color-text--black">
+										      <span class="card-title grey-text text-darken-4"><i class="material-icons left">perm_identity</i> <a href="./user/<?php _show_( $postsDetails['h_by'] ); ?>"><?php _show_( $postsDetails['h_by'] ); ?></a><i class="material-icons right">close</i></span><br>
+										      <article>
+										      	<?php _show_( substr( $postsDetails['h_description'], 0, 250 ) ); 
+										      ?> ...
+										      	
+										      </article> <a class="mdl-button mdl-button--colored" href="<?php _show_( hROOT.$postsDetails['h_link'] ); ?>">read more</a><br>
+										      <p>Posted In: <a href="./category/<?php _show_( $postsDetails['h_category'] ); ?>"><?php _show_( ucwords( $postsDetails['h_category'] ) ); ?></a></p>
+										      <p>Tagged: <a href="./tag/<?php _show_( $postsDetails['h_tags'] ); ?>"><?php _show_( ucwords( $postsDetails['h_tags'] ) ); ?></a></p>
+										    </div>
+									  	</div><?php 
+					          		 	}
+					          		 } ?>
+					          	<div class="mdl-cell mdl-cell--12-col">
+					          	<center>
+							      <a class="btn btn-large mdl-color--red" href="./blog">View All Posts</a>
+						      	</center>
+						      	<form>
+						      		<button type="submit" name="rate" value="1" class="material-icons mdl-button--icon mdl-color--red">star</button>
+						      		<button type="submit" name="rate" value="2" class="material-icons mdl-button--icon mdl-color--red">star</button>
+						      		<button type="submit" name="rate" value="3" class="material-icons mdl-button--icon mdl-color--red">star</button>
+						      		<button type="submit" name="rate" value="4" class="material-icons mdl-button--icon mdl-button--colored">star</button>
+						      		<button type="submit" name="rate" value="5" class="material-icons mdl-button--icon mdl-button--colored">star</button>
+						      	</form>
+						      	</div>
+					          	</div>
+					          	<div class="mdl-cell mdl-cell--12-col mdl-grid mdl-shadow--2dp">
+					          		<div class="mdl-cell mdl-cell--8-col mdl-color--madge">
+					          			<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15955.735909615176!2d36.7762801!3d-1.206367!3m2!1i1024!2i768!4f13.1!4m3!3e6!4m0!4m0!5e0!3m2!1sen!2ske!4v1499095612591" width="100%" height="400" frameborder="0" style="border:0" allowfullscreen>
+					          			</iframe>
+					          		</div>
+					          		<div class="mdl-cell mdl-cell--4-col mdl-color--madge">
+					          			<center><h5>Get In Touch</h5></center>
+					          			<form class="mdl-grid">
+					          				<div class="input-field mdl-cell mdl-cell--12-col">
+					          					<i class="material-icons prefix">mail</i>
+					          					<input type="text" name="">
+					          					<label>Your Email</label>
+					          				</div>
+
+					          				<div class="input-field mdl-cell mdl-cell--12-col">
+					          					<i class="material-icons prefix">description</i>
+					          					<textarea class="materialize-textarea"></textarea>
+					          					<label>Your Message</label>
+					          				</div>
+					          					<button type="submit" class="mdl-button mdl-button--fab mdl-button--colored right"><i class="material-icons">send</i></button>
+					          			</form>
+					          		</div>
+					          	</div>
+						        </div>
 					      </div>
 					<?php } ?>
-				</div>
 			</div><?php
 		} else { ?>
 		<title>Error 404</title>

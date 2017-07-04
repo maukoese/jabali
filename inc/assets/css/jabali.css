@@ -7760,7 +7760,6 @@ input.mdl-button[type="submit"] {
  112px);
   padding: 0 0 0 56px;
   display: flex;
-  background-color: cyan;
   overflow-y: hidden;
   overflow-x: scroll; }
   .mdl-layout__tab-bar::-webkit-scrollbar {
@@ -12312,7 +12311,7 @@ a {
 
 .mmm-ribbon {
   width: 100%;
-  height: 50vh;
+  height: 60vh;
   background-color: cyan;
   -webkit-flex-shrink: 0;
       -ms-flex-negative: 0;
@@ -12327,7 +12326,7 @@ a {
 
 .demo-content {
   border-radius: 2px;
-  padding: 80px 56px;
+  padding: 20px 26px;
   margin-top: -80px;
   margin-bottom: 15px;
 }

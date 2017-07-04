@@ -8,7 +8,7 @@
 **/
 
 if ( file_exists('./inc/config.php' ) ) {
-	header( "Location: ./install?module=app" );
+	header( "Location: ./install.php?module=app" );
 }
 
 if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" && $_POST['password'] != "" && $_POST['name'] != "" ) {
@@ -19,7 +19,9 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 	$dbpass = $_POST["password"];
 	$home = $_POST["home"];
 
-	function conFigure( $dbhost, $dbname, $dbuser, $dbpass, $home) {
+	$dbprefix = $_POST['prefix'];
+
+	function conFigure( $dbhost, $dbname, $dbuser, $dbpass, $home, $dbprefix ) {
 		$dbfile = fopen( "./inc/config.php", "w" ) or die( "Unable to create configuration file!" );
 		$txt = "<?php ";
 		fwrite( $dbfile, $txt );
@@ -73,8 +75,10 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 		fwrite( $dbfile, $txt );
 		$text = 'define( "hROOT", "'.$home.'" );';
 		fwrite( $dbfile, $text );
-		$txt = "\n";
+		$txt = "\n\n";
 		fwrite( $dbfile, $txt );
+		$text = 'define( "hDBPREFIX", "'.$dbprefix.'" );';
+		fwrite( $dbfile, $text );
 		$txt = "?>";
 		fwrite( $dbfile, $txt );
 		fclose( $dbfile );
@@ -82,72 +86,111 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 		return true;
 	}
 
-	if ( conFigure( $dbhost, $dbname, $dbuser, $dbpass, $home) ) {
-		header( "Location: ./install?module=app" );
+	if ( conFigure( $dbhost, $dbname, $dbuser, $dbpass, $home, $dbprefix ) ) {
+		header( "Location: ./install.php?module=app" );
 	}
 } else { 
 
-    function is_localhost() {
+    function isLocalhost() {
     $whitelist = array( '127.0.0.1', '::1' );
     if ( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) )
         return true;
 	}
 
-    $protocol = ((!empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] != 'off' ) || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";  ?>	
+    $protocol = ((!empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] != 'off' ) || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://"; ?>
+    <!doctype html>
+	<!--
+	  Jabali Framework
+	  © 2017 Mauko Maunde. All rights reserved.
 
-    <link rel="stylesheet" href="./assets/css/materialize.css">
-    <link rel="stylesheet" href="./assets/css/material-icons.css">
-    <link rel="stylesheet" href="./assets/css/jabali.css">
-    <script src="./assets/js/jquery-3.1.1.min.js"></script>
-    <script src="./assets/js/materialize.min.js"></script>
-    <script src="./assets/js/material.js"></script>
+	  Licensed under the MIT license (the "License" );
+	  you may not use this file except in compliance with the License.
+	  You may obtain a copy of the License at https://opensource.org/licenses/MIT
+	-->
+	<html lang="en" xmlns="http://www.w3.org/1999/html">
+	<head>
+    <link rel="stylesheet" href="./inc/assets/css/materialize.css">
+    <link rel="stylesheet" href="./inc/assets/css/material-icons.css">
+    <link rel="stylesheet" href="./inc/assets/css/jabali.css">
+    <script src="./inc/assets/js/jquery-3.2.1.min.js"></script>
+    <script src="./inc/assets/js/materialize.min.js"></script>
+    <script src="./inc/assets/js/material.js"></script>
 	<title>Setup [ JABALI ]</title>
-	<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-		<main class="mdl-layout__content mdl-color--blue mdl-grid">
-			<div style="padding-top:40px;" class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
-			    <div id="login_div">
-			        <center><img src="./assets/images/logo.png"></center>
-			        <form enctype="multipart/form-data" method="POST" action="./setup">
-			        <div class="input-field">
+	</head>
+
+	<div class="mdl-layout mdl-layout-transparent mdl-js-layout">
+	<body>
+		<main class="mdl-layout__content">
+			<div class="mdl-grid">
+				<div class="mdl-cell mdl-cell--2-col"></div>
+		        <form method="POST" action="" class="mdl-grid mdl-cell mdl-cell--8-col mdl-color--blue">
+			        <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+				        <center>
+				        	<img src="./inc/assets/images/logo-w.png" width="200px;">
+				        </center>
+			        </div>
+
+			        <div class="mdl-cell mdl-cell--2-col"></div>
+			        <div class="input-field mdl-cell mdl-cell--9-col">
 			        <i class="material-icons prefix">perm_identity</i>
 			        <input name="host" id="host" type="text" value="localhost">
 			        <label for="host" class="center-align">Database Host</label>
 			        </div>
 
-			        <div class="input-field">
+			        <div class="mdl-cell mdl-cell--2-col"></div>
+			        <div class="input-field mdl-cell mdl-cell--9-col">
 			        <i class="material-icons prefix">perm_identity</i>
 			        <input name="user" id="user" type="text" value="username">
 			        <label for="user" class="center-align">Database Username</label>
 			        </div>
 
-			        <div class="input-field">
+			        <div class="mdl-cell mdl-cell--2-col"></div>
+			        <div class="input-field mdl-cell mdl-cell--9-col">
 			        <i class="material-icons prefix">lock</i>
 			        <input name="password" id="password" type="text" value="password">
 			        <label for="password">Database Password</label>
 			        </div>
 
-			        <div class="input-field">
+			        <div class="mdl-cell mdl-cell--2-col"></div>
+			        <div class="input-field mdl-cell mdl-cell--9-col">
 			        <i class="material-icons prefix">perm_identity</i>
 			        <input name="name" id="name" type="text" value="jabali">
 			        <label for="name" class="center-align">Database Name</label>
 			        </div>
 
-			        <div class="input-field">
-			        <i class="material-icons prefix">public</i>
-			        <input name="home" id="home" type="text" value="<?php 
-					if ( is_localhost() ) { 
+			        <div class="mdl-cell mdl-cell--2-col"></div>
+			        <div class="input-field mdl-cell mdl-cell--7-col">
+			        <i class="material-icons prefix">label_outline</i>
+			        <input name="prefix" id="prefix" type="text" value="db_">
+			        <label for="prefix" class="center-align">Database Prefix</label>
+			        </div>
+
+			        <input name="home" id="home" type="hidden" value="<?php 
+					if ( isLocalhost() ) { 
 			        	echo $protocol . $_SERVER['HTTP_HOST'] . '/' . basename( __DIR__ ) . '/'; 
 			        } else { 
 			        	echo $protocol . $_SERVER['HTTP_HOST'] . '/'; } ?>">
-			        <label for="home" class="center-align">Home Url</label>
-			        </div>
 
-			        <button class="mdl-button mdl-button--fab mdl-js-button mdl-button--raised mdl-button--colored alignright" type="submit" name="setup"><i class="material-icons">forward</i></button>
-			        </form>
-			    </div>
+			        <div class="input-field mdl-cell mdl-cell--2-col">
+			        <button class="mdl-button mdl-button--fab mdl-js-button mdl-button--raised mdl-button--colored alignright" type="submit" name="setup"><i class="material-icons">arrow_forward</i></button>
+			        </div>
+		        </form>
+				<div class="mdl-cell mdl-cell--2-col"></div>
 			</div>
 		</main>
+	</body>
 	</div>
+	<script src="./inc/assets/js/d3.js"></script>
+	<script src="./inc/assets/js/getmdl-select.min.js"></script>
+	<script src="./inc/assets/js/material.js"></script>
+	<script src="./inc/assets/js/materialize.min.js"></script>
+	<script src="./inc/assets/js/nv.d3.js"></script>
+	<script src="./inc/assets/js/widgets/employer-form/employer-form.js"></script>
+	<script src="./inc/assets/js/widgets/line-chart/line-chart-nvd3.js"></script>
+	<script src="./inc/assets/js/list.js"></script>
+	<script src="./inc/assets/js/widgets/pie-chart/pie-chart-nvd3.js"></script>
+	<script src="./inc/assets/js/widgets/table/table.js"></script>
+	<script src="./inc/assets/js/widgets/todo/todo.js"></script>
+	</html>
 <?php 
-}
-include 'footer.php'; ?>
+} ?>

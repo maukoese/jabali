@@ -127,9 +127,9 @@ class _hPosts {
         <?php _show_( $postsDetails['h_status'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric">
-        <a href="./post?view=<?php _show_( $postsDetails['h_code'] ); ?>&key=<?php _show_( $postsDetails['h_alias'] ); ?>" ><i class="material-icons">open_in_new</i></a>  
+        <a href="./post?view=<?php _show_( $postsDetails['h_code'] ); ?>&key=<?php _show_( $postsDetails['h_alias'] ); ?>" ><i class="material-icons">open_in_new</i></a><?php if ( isCap( 'admin' ) || isAuthor( $postDetails['h_author'] ) ) { ?>
         <a href="./post?edit=<?php _show_( $postsDetails['h_code'] ); ?>&key=<?php _show_( ucwords( $postsDetails['h_alias'] ) ); ?>" ><i class="material-icons">edit</i></a> 
-        <a href="./post?delete=<?php _show_( $postsDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a>
+        <a href="./post?delete=<?php _show_( $postsDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a> <?php } ?>
         </td>
         </tr>
         </tbody><?php 
@@ -226,9 +226,9 @@ class _hPosts {
           <td class="mdl-data-table__cell--non-numeric">
           <a href="./post?view=<?php _show_( $postsDetails['h_code'] ); ?>&key=<?php _show_( $postsDetails['h_alias'] ); ?>" ><i class="material-icons">open_in_new</i></a> 
           <a href="tel:<?php _show_( $postsDetails['h_phone'] ); ?>" ><i class="material-icons">phone</i></a> 
-          <a href="?post?view=<?php _show_( $_SESSION['myCode'] ); ?>&action=chat&by=<?php _show_( $postsDetails['h_code'] ); ?>" ><i class="material-icons">message</i></a>  
+          <a href="?post?view=<?php _show_( $_SESSION['myCode'] ); ?>&action=chat&by=<?php _show_( $postsDetails['h_code'] ); ?>" ><i class="material-icons">message</i></a><?php if ( isCap( 'admin' ) || isAuthor( $postDetails['h_author'] ) ) { ?>  
           <a href="./post?edit=<?php _show_( $postsDetails['h_code'] ); ?>&key=<?php _show_( ucwords( $postDetails['h_alias'] ) ); ?>" ><i class="material-icons">edit</i></a> 
-          <a href="./post?delete=<?php _show_( $postsDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a>
+          <a href="./post?delete=<?php _show_( $postsDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
           </td>
           </tr>
           </tbody><?php 
@@ -287,9 +287,9 @@ class _hPosts {
           <td class="mdl-data-table__cell--non-numeric">
           <?php _show_( $postsDetails['h_created'] ); ?>
           </td>
-          <td class="mdl-data-table__cell">
+          <td class="mdl-data-table__cell"><?php if ( isCap( 'admin' ) || isAuthor( $postDetails['h_author'] ) ) { ?>
           <a href="./post?edit=<?php _show_( $postsDetails['h_code'] ); ?>&key=<?php _show_( ucwords( $postDetails['h_alias'] ) ); ?>" ><i class="material-icons">edit</i></a> 
-          <a href="./post?delete=<?php _show_( $postsDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a>
+          <a href="./post?delete=<?php _show_( $postsDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
           </td>
           </tr>
           </tbody><?php 

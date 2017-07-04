@@ -46,15 +46,6 @@ if ( isset( $_POST['update'] ) ) {
 <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><?php
 if (isset( $_GET['add'] )) { ?>
           <title>Add New Menu [ <?php showOption( 'name' ); ?> ]</title>
-         <div class="mdl-card__title">
-           <span class="mdl-button">Add Menu Item</span>
-             <div class="mdl-layout-spacer"></div>
-             <div class="mdl-card__subtitle-text mdl-button">
-             <a href="./menus">
-                 <i class="material-icons">arrow_back</i>
-              </a>
-             </div>
-         </div>
          <div class="mdl-card__supporting-text">
            <form class="" action="?add<?php if ( !empty( $_GET['add'] )) {
                 echo "=".$_GET['add'];
@@ -127,18 +118,11 @@ if (isset( $_GET['add'] )) { ?>
                 }
            } ?>
      <title>Edit Menu [ <?php showOption( 'name' ); ?> ]</title>
-     <div class="mdl-card__title">
-       <a href="./menus">
-           <i class="material-icons">menu</i>
-        </a>
-      <span class="mdl-button"><?php _show_( $menu[0]['h_alias'] ); ?> Menu</span>
-        <div class="mdl-layout-spacer"></div>
-        <div class="mdl-card__subtitle-text mdl-button">
+        <div class="mdl-card__menu mdl-button mdl-button--icon">
           <a href="?delete=<?php _show_( $menu[0]['h_code'] ); ?>">
                <i class="material-icons">delete</i>
           </a>
         </div>
-    </div>
     <div class="mdl-card__supporting-text">
       <form class="" action="?edit=<?php _show_( $menu[0]['h_code'] ); ?>" method="POST" >
         <div class="input-field">
@@ -219,13 +203,6 @@ if (isset( $_GET['add'] )) { ?>
       </center><?php
 } else { ?>
   <title>Menus [ <?php showOption( 'name' ); ?> ]</title>
-    <div class="mdl-card__title">
-      <span class="mdl-button">Menus</span>
-        <div class="mdl-layout-spacer"></div>
-        <div class="mdl-card__subtitle-text mdl-button">
-            <i class="material-icons">menu</i>
-        </div>
-    </div>
     <div class="mdl-card__supporting-text">
         <ul id="tabs-swipe-demo" style="border-radius: 5px;" class="tabs mdl-card__title mdl-card--expand">
           <li class="tab col s3"><a class="active" href="#drawer">drawer</a></li>
@@ -246,9 +223,7 @@ if (isset( $_GET['add'] )) { ?>
                       </a>
                   <a href="#users" class="mdl-tabs__tab">Users
                   </a>
-                  <a href="#extensions" class="mdl-tabs__tab">Extensions
-                  </a>
-                  <a href="#messages" class="mdl-tabs__tab">Messages
+                  <a href="#comments" class="mdl-tabs__tab">Comments
                   </a>
                   <a href="#udef" class="mdl-tabs__tab">User Defined
                   </a>
@@ -273,15 +248,9 @@ if (isset( $_GET['add'] )) { ?>
                     $hMenu -> subMenu( 'users' ); ?>
                 </div>
 
-
-                <div class="mdl-tabs__panel" id="extensions"><?php
-                    $hMenu -> theMenu( 'extensions' );
-                    $hMenu -> subMenu( 'extensions' ); ?>
-                </div>
-
-                <div class="mdl-tabs__panel" id="messages"><?php
-                    $hMenu -> theMenu( 'messages' );
-                    $hMenu -> subMenu( 'messages' ); ?>
+                <div class="mdl-tabs__panel" id="comments"><?php
+                    $hMenu -> theMenu( 'comments' );
+                    $hMenu -> subMenu( 'comments' ); ?>
                 </div>
 
                 <div class="mdl-tabs__panel" id="udef"><?php
@@ -289,11 +258,11 @@ if (isset( $_GET['add'] )) { ?>
 
                 </div>
             </div>
-              <a href="?add=drawer"><button class="mdl-button mdl-color--red alignrght "><i class="material-icons">add</i>Add New Item</button></a>
+              <a href="?add=menu"><button class="mdl-button mdl-color--red alignrght "><i class="material-icons">add</i>Add New Item</button></a>
           </div>
         </div>
         <div id="header"><?php
-          $hMenu -> subMenu( 'articles' ); ?>
+          $hMenu -> headMenu(); ?>
         </div>
         <div id="main"><?php
           $hMenu -> subMenu( 'articles' ); ?>
@@ -309,15 +278,17 @@ if (isset( $_GET['add'] )) { ?>
     <div class="mdl-card__title">
       <span class="mdl-button">Tips</span>
         <div class="mdl-layout-spacer"></div>
-        <div class="mdl-card__subtitle-text mdl-button">
-            <i class="material-icons">info</i>
+        <div class="mdl-card__subtitle-text mdl-button mdl-button--icon">
+             <a href="./menus?settings=menu">
+                 <i class="material-icons">arrow_back</i>
+              </a>
         </div>
     </div>
     <div class="mdl-card__supporting-text">
         <ul class="collapsible popout" data-collapsible="accordion">
             <li>
               <div class="collapsible-header active"><i class="material-icons">label</i>
-                  <b>Adding Menus</b>
+                  <b>Adding Main Menus</b>
               </div>
               <div class="collapsible-body">
                <article>
@@ -328,7 +299,7 @@ if (isset( $_GET['add'] )) { ?>
             </li>
             <li>
               <div class="collapsible-header"><i class="material-icons">label_outline</i>
-                  <b>Adding Items</b>
+                  <b>Adding Dropdown Items</b>
               </div>
               <div class="collapsible-body">
               <article>

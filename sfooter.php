@@ -1,8 +1,7 @@
 <?php 
 if ( !isset($_SESSION) ) { session_start(); } ?>
 </main>
-<a class="addfab btn-floating accent" href=""><i class="material-icons">keyboard_arrow_up</i></a>
-<footer class="mdl-footer mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ) { primaryColor(); } else { echo "madge"; } ?>">
+<footer class="mdl-footer mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ) { primaryColor(); } else { echo "pink"; } ?>">
 	<div style="float:left;padding-left:20px;"><?php showOption( 'copyright' ); ?></div>
 	<span style="float:right;padding-right:20px;"><a href="<?php showOption( 'attribution_link' ); ?>"><?php showOption( 'attribution' ); ?></a></span>
 </footer><?php

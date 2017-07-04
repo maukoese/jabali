@@ -9,7 +9,7 @@
 date_default_timezone_set( "Africa/Nairobi" );
 $dbfile = 'inc/config.php';
 if ( !file_exists( $dbfile) ) {
-	header( "Location: ./setup" );
+  header( "Location: ./setup.php" );
 }
 
 $year = date( "Y" );
@@ -18,7 +18,7 @@ $day = date( "d" );
 $directory = "uploads/$year/$month/$day/";
 
 if ( !is_dir( $directory) ) {
-	mkdir( $directory, 755, true );
+  mkdir( $directory, 755, true );
 }
 
 include 'inc/config.php';
@@ -29,27 +29,27 @@ $action -> connectDB();
 session_start(); 
 
 if ( isset( $_POST['login'] ) && $_POST['user'] != "" && $_POST['password'] != "" ) {
-	call_user_func_array(array($action, 'loginUser'), array());
+  call_user_func_array(array($action, 'loginUser'), array());
 }
 
 if ( isset( $_POST['create'] ) ) {
-	call_user_func_array(array($action, 'registerUser'), array());
+  call_user_func_array(array($action, 'registerUser'), array());
 }
 
 if ( isset( $_POST['reset'] ) && $_POST['h_password'] !== "" ) {
-	call_user_func_array(array($action, 'resetPass'), array());
+  call_user_func_array(array($action, 'resetPass'), array());
 }
 
 if ( isset( $_GET['q'] ) ) {
-	$actions = array( 'login', 'reset', 'register', 'forgot' );
+  $actions = array( 'login', 'reset', 'register', 'forgot' );
 
-	if ( !is_file( $_GET['q'] ) && !is_dir( $_GET['q'] ) && in_array($_GET['q'], $actions) ) {
-		call_user_func_array( array( $action, $_GET['q'] ), array() );
-	} else {
-		call_user_func_array( array($action, 'fetchPosts' ), array( 'article', $_GET['q'] ) );
-	}
+  if ( !is_file( $_GET['q'] ) && !is_dir( $_GET['q'] ) && in_array($_GET['q'], $actions) ) {
+    call_user_func_array( array( $action, $_GET['q'] ), array() );
+  } else {
+    call_user_func_array( array($action, 'fetchPosts' ), array( 'article', $_GET['q'] ) );
+  }
 } else {
-	call_user_func_array( array($action, 'home' ), array() );
+  call_user_func_array( array($action, 'home' ), array() );
 }
 
 include 'footer.php'; ?>

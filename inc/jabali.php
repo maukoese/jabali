@@ -22,7 +22,7 @@ function installJabali() {
 	h_avatar VARCHAR(100), 
 	h_organization VARCHAR(100),
 	h_code VARCHAR(16),
-	h_created DATE,
+	h_created DATETIME,
 	h_custom VARCHAR(12),
 	h_description TEXT,
 	h_email VARCHAR(50),
@@ -37,7 +37,7 @@ function installJabali() {
 	h_notes TEXT,
 	h_password VARCHAR(50),
 	h_phone VARCHAR(20),
-	h_social JSON,
+	h_social TEXT,
 	h_status VARCHAR(20),
 	h_style VARCHAR(100),
 	h_type VARCHAR(50),
@@ -53,7 +53,7 @@ function installJabali() {
 	h_by VARCHAR(20), 
 	h_organization VARCHAR(20),
 	h_code VARCHAR(16),
-	h_created DATE,
+	h_created DATETIME,
 	h_custom VARCHAR(12),
 	h_description TEXT,
 	h_email VARCHAR(50),
@@ -76,7 +76,7 @@ function installJabali() {
 	h_by VARCHAR(20), 
 	h_organization VARCHAR(20),
 	h_code VARCHAR(16),
-	h_created DATE,
+	h_created DATETIME,
 	h_email VARCHAR(50),
 	h_key VARCHAR(100),
 	h_level VARCHAR(12),
@@ -94,7 +94,7 @@ function installJabali() {
 	h_author VARCHAR(20),
 	h_by VARCHAR(20),
 	h_code VARCHAR(16),
-	h_created DATE,
+	h_created DATETIME,
 	h_description TEXT,
 	h_email VARCHAR(50),
 	h_for VARCHAR(20),
@@ -112,7 +112,7 @@ function installJabali() {
 	h_author VARCHAR(20),
 	h_by VARCHAR(20),
 	h_code VARCHAR(16),
-	h_created DATE,
+	h_created DATETIME,
 	h_description TEXT,
 	h_email VARCHAR(50),
 	h_for VARCHAR(20),
@@ -132,7 +132,7 @@ function installJabali() {
 	h_by VARCHAR(20), 
 	h_organization VARCHAR(20),
 	h_code VARCHAR(16),
-	h_created DATE,
+	h_created DATETIME,
 	h_custom VARCHAR(12),
 	h_description TEXT,
 	h_email VARCHAR(50),
@@ -157,7 +157,7 @@ function installJabali() {
 	h_category VARCHAR(20), 
 	h_organization VARCHAR(20),
 	h_code VARCHAR(16),
-	h_created DATE,
+	h_created DATETIME,
 	h_description TEXT,
 	h_email VARCHAR(50),
 	h_fav INT(5),
@@ -181,7 +181,7 @@ function installJabali() {
 	id INT(10) NOT NULL AUTO_INCREMENT,
 	h_author VARCHAR(20),
 	h_by VARCHAR(100),
-	h_created DATE,
+	h_created DATETIME,
 	h_description TEXT,
 	h_for VARCHAR(20),
 	h_link VARCHAR(100),
@@ -211,7 +211,7 @@ function installJabali() {
 	h_alias VARCHAR(200),
 	h_code VARCHAR(100) UNIQUE,
 	h_description TEXT,
-	h_updated DATE,
+	h_updated DATETIME,
 	PRIMARY KEY(id)
 	)" );
 
@@ -240,7 +240,7 @@ function installJabali() {
 	h_social VARCHAR(500),
 	h_status VARCHAR(20),
 	h_support VARCHAR(500),
-	h_updated DATE,
+	h_updated DATETIME,
 	h_website VARCHAR(500),
 	PRIMARY KEY(h_code)
 	)" );
@@ -287,7 +287,8 @@ if ( is_localhost() ) {
 define( 'hABS', $_SERVER['DOCUMENT_ROOT'].'/'.$base.'/' );
 define( 'hABSAD', $_SERVER['DOCUMENT_ROOT'].'/'.$base.'/admin/' );
 define( 'hABSINC', $_SERVER['DOCUMENT_ROOT'].'/'.$base.'/inc/' );
-define( 'hABSX', $_SERVER['DOCUMENT_ROOT'].'/'.$base.'/extensions/' );
+define( 'hABSX', $_SERVER['DOCUMENT_ROOT'].'/'.$base.'/inc/extensions/' );
+define( 'hABSTEMPLE', $_SERVER['DOCUMENT_ROOT'].'/'.$base.'/inc/templates/' );
 define( 'hABSUP', $_SERVER['DOCUMENT_ROOT'].'/'.$base.'/uploads/' );
 
 /**
@@ -296,7 +297,7 @@ define( 'hABSUP', $_SERVER['DOCUMENT_ROOT'].'/'.$base.'/uploads/' );
 define( 'hADMIN', hROOT.'admin/' );
 define( 'hINC', hROOT.'inc/' );
 define( 'hUPLOADS', hROOT.'uploads/' );
-define( 'hEXTENSIONS', hROOT.'extensions/' );
+define( 'hEXTENSIONS', hINC.'extensions/' );
 
 /**
 * Assets
@@ -564,7 +565,7 @@ function secondaryColor() {
 			} elseif ( $themes['h_style'] == "stack" ) {
 				echo "brown";
 			} elseif ( $themes['h_style'] == "hot" ) {
-				echo "red";
+				echo "blue";
 			} elseif ( $themes['h_style'] == "princess" ) {
 				echo "cyan";
 			} elseif ( $themes['h_style'] == "haze" ) {
@@ -869,4 +870,15 @@ $hWidget = new _hWidgets();
 include 'class.social.php';
 $hSocial = new _hSocial();
 
+// loading the class
+if ( !class_exists('\App\Shortcodes') ) {
+    require ( 'class.shortcodes.php' );
+}
+function add_shortcode($tag, $callback) {
+    return \App\Shortcodes::instance()->register($tag, $callback);
+}
+
+function do_shortcode($str) {
+    return \App\Shortcodes::instance()->doShortcode($str);
+}
 ?>

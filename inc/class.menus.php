@@ -119,7 +119,13 @@ class _hMenus {
           <div class="mdl-grid">
             <div class="mdl-cell mdl-cell--2-col">
             <a href="?edit=<?php _show_( $menu[0]['h_code'] ); ?>&key=menu"
-              <i class="material-icons"><?php _show_( $menu[0]['h_avatar'] ); ?></i>
+              <i class="material-icons"><?php
+              if ( $menu[0]['h_avatar'] == "" ) {
+                    $icon = 'edit';
+               } else {
+                    $icon = $menu[0]['h_avatar'];
+                    } 
+                    _show_( $icon ); ?></i>
           </a>
             </div>
 
@@ -157,7 +163,13 @@ function subMenu( $code ) {
           
                <tr>
                     <td class="mdl-data-table__cell--non-numeric"><a href="?edit=<?php _show_( $menui['h_code'] ); ?>&key=menu">
-                         <i class="material-icons"><?php _show_( $menui['h_avatar'] ); ?></i></a>
+                         <i class="material-icons"><?php
+              if ( $menui['h_avatar'] == "" ) {
+                    $icon = 'edit';
+               } else {
+                    $icon = $menu[0]['h_avatar'];
+                    } 
+                    _show_( $icon ); ?></i></a>
                          </td>
                     <td class="mdl-data-table__cell--non-numeric"><?php _show_( $menui['h_alias'] ); ?></td>
                     <td class="mdl-data-table__cell--non-numeric"><?php _show_( $menui['h_link'] ); ?></td>
@@ -171,7 +183,7 @@ function subMenu( $code ) {
 }
 
 function uMenu( ) {
-     $getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmenus WHERE h_author !='jabali'");
+     $getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmenus WHERE h_author !='jabali' AND h_location= 'drawer'");
      if ( $getMenu -> num_rows > 0 ) {
           while ($menus = mysqli_fetch_assoc( $getMenu )) {
                $menu[] = $menus; 
@@ -191,7 +203,13 @@ function uMenu( ) {
           
                 <tr>
                     <td class="mdl-data-table__cell--non-numeric"><a href="?edit=<?php _show_( $menui['h_code'] ); ?>&key=menu">
-                         <i class="material-icons"><?php _show_( $menui['h_avatar'] ); ?></i></a>
+                         <i class="material-icons"><?php
+              if ( $menui['h_avatar'] == "" ) {
+                    $icon = 'edit';
+               } else {
+                    $icon = $menu[0]['h_avatar'];
+                    } 
+                    _show_( $icon ); ?></i></a>
                          </td>
                     <td class="mdl-data-table__cell--non-numeric"><?php _show_( $menui['h_alias'] ); ?></td>
                     <td class="mdl-data-table__cell--non-numeric"><?php _show_( $menui['h_link'] ); ?></td>
@@ -201,6 +219,50 @@ function uMenu( ) {
      <?php } _show_( '
                </tbody>
           </table>' );
+     } else {
+          _show_( '<h1> No Menus Found</h1>');
+     }
+}
+
+function headMenu( ) {
+     $getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmenus WHERE h_author !='jabali' AND h_location= 'header'");
+     if ( $getMenu -> num_rows > 0 ) {
+          while ($menus = mysqli_fetch_assoc( $getMenu )) {
+               $menu[] = $menus; 
+          }
+
+          _show_( '<table class="mdl-data-table mdl-js-data-table">
+               <thead>
+                    <tr>
+                         <th class="mdl-data-table__cell--non-numeric">ICON</th>
+                         <th class="mdl-data-table__cell--non-numeric">MENU</th>
+                         <th class="mdl-data-table__cell--non-numeric">LINK</th>
+                    </tr>
+               </thead>
+               <tbody>' );
+
+          foreach ($menu as $menui) { ?>
+          
+                <tr>
+                    <td class="mdl-data-table__cell--non-numeric"><a href="?edit=<?php _show_( $menui['h_code'] ); ?>&key=menu">
+                         <i class="material-icons"><?php
+              if ( $menui['h_avatar'] == "" ) {
+                    $icon = 'edit';
+               } else {
+                    $icon = $menu[0]['h_avatar'];
+                    } 
+                    _show_( $icon ); ?></i></a>
+                         </td>
+                    <td class="mdl-data-table__cell--non-numeric"><?php _show_( $menui['h_alias'] ); ?></td>
+                    <td class="mdl-data-table__cell--non-numeric"><?php _show_( $menui['h_link'] ); ?></td>
+               </tr>
+                    
+
+     <?php } _show_( '
+               </tbody>
+          </table>' );
+     } else {
+          _show_( '<h1> No Menus Found</h1>');
      }
 }
 

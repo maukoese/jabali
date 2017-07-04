@@ -13,7 +13,7 @@ if ( isset( $_GET['edit'] ) ) {
 }
 
 if ( isset( $_GET['delete'] ) ) {
-  $hPost -> delete();
+  $hPost -> delete( $_GET['delete'] );
 	$hPost -> getPosts( 'h_created' );
   if ( isCap( 'admin' ) ) {
     newButton('post', 'article', 'create' );
@@ -48,11 +48,11 @@ if ( $_FILES['h_avatar'] == "" ) {
   $h_avatar = hIMAGES.'placeholder.svg';
 } else {
   $uploads = hABSUP .date('Y' ).'/'.date('m' ).'/'.date('d' ).'/';
-  $upload = $uploads . basename( $_FILES['h_avatar']['name'] );
 
   if ( file_exists( $upload) ) {
-    echo "Sorry, file already exists.";
-    $uploadOk = 0;
+    $upload = $uploads . basename( $_FILES['h_avatar']['name'] )."_".date('H_m_s');
+  } else {
+    $upload = $uploads . basename( $_FILES['h_avatar']['name'] );
   }
 
   if ( move_uploaded_file( $_FILES['h_avatar']["tmp_name"], $upload) ) {
@@ -72,6 +72,8 @@ if ( isset( $_POST['create'] ) ) {
   $h_code = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_code'] );
 }
 $h_created = $_POST['h_created'];
+$h_created_t = $_POST['h_created_t'];
+$h_created = $h_created.' '.$h_created_t;
 $h_desc = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_desc'] ); 
 $h_email = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_email'] ); 
 $h_fav = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_fav'] ); 

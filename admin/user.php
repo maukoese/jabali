@@ -41,7 +41,7 @@ if ( isset( $_GET['view'] )){
 			if ( isset( $_GET['location'] ) ) {
 				$hUser -> getUsersLoc( $_GET['location'] );
 				if ( isCap( 'admin' ) ) {
-					newButton('user', 'doctor', 'create' );
+					newButton('user', 'author', 'create' );
 				}
 			} else {
 				$hUser -> getUsersType( $_GET['type'] );
@@ -52,18 +52,18 @@ if ( isset( $_GET['view'] )){
 		} elseif ( isset( $_GET['location'] ) ) {
 			$hUser -> getUsersLoc( $_GET['location'] );
 			if ( isCap( 'admin' ) ) {
-				newButton('user', 'doctor', 'create' );
+				newButton('user', 'author', 'create' );
 			}
 		} else {
 			$hUser -> getUsers();
 			if ( isCap( 'admin' ) ) {
-				newButton('user', 'doctor', 'create' );
+				newButton('user', 'author', 'create' );
 			}
 		}
 	} elseif ( $_GET['view'] == "pending" ) {
 		$hUser -> getPendingUsers();
 		if ( isCap( 'admin' ) ) {
-			newButton('user', 'doctor', 'create' );
+			newButton('user', 'author', 'create' );
 		}
 	} else {
 		$hUser -> getUserCode( $_GET['view'] );

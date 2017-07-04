@@ -23,7 +23,7 @@ class _hWidgets {
 		  }
 		  if ( !empty( $posts ) ) {
 		    foreach ($posts as $post) { ?>
-		      <a href="<?php _show_( $post['h_link'] ); ?>" class="mdl-list__item"><i class="mdi mdi-label mdl-list__item-icon"></i><span style="padding-left: 20px"><?php _show_( $post['h_alias'] ); ?></span></a><?php 
+		      <a href="<?php _show_( hROOT.$post['h_link'] ); ?>" class="mdl-list__item"><i class="material-icons mdl-list__item-icon">keyboard_arrow_right</i><span style="padding-left: 20px"><?php _show_( $post['h_alias'] ); ?></span></a><?php 
 		    } 
 		  } ?>
 		  </div><?php

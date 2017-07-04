@@ -20,39 +20,14 @@ class _hMessages {
   var $h_type; 
 
   
-  function createMessage() {
-
-    $date = date( "YmdHms" );
-    if ( isset( $_SESSION['myEmail'] ) ) {
-      $email = $_SESSION['myEmail'];
-    } else {
-      $email = hEMAIL;
-    }
-
-    $h_alias = $_POST['h_alias'];
-    $h_author = $_POST['h_author'];
-    $h_by = $_POST['h_by'];
-    $h_key = str_shuffle(md5( $email.$date ) );
-    $h_code = substr( $h_key, rand(0, 15), 12 ); 
-    $h_created = date(Ymd );
-    $h_desc = $_POST['h_description']; 
-    $h_email = $_POST['h_email'];
-    $h_for = $_POST['h_for'];
-    $h_level = $_POST['h_level']; 
-    $h_link = hADMIN."message?view=".$h_code;
-    $h_phone = $_POST['h_phone'];
-    $h_status = "unread";
-    $h_type = $_POST['h_type'];
-
-     if ( mysqli_query( $GLOBALS['conn'], "INSERT INTO hmessages (h_alias, h_author, h_by, h_code, h_created, h_description, h_email, h_for, h_key, h_level, h_link, h_phone, h_status, h_type) 
+  function create($h_alias, $h_author, $h_by, $h_code, $h_created, $h_description, $h_email, $h_for, $h_key, $h_level, $h_link, $h_phone, $h_status, $h_type) {
+  if ( mysqli_query( $GLOBALS['conn'], "INSERT INTO hmessages (h_alias, h_author, h_by, h_code, h_created, h_description, h_email, h_for, h_key, h_level, h_link, h_phone, h_status, h_type) 
     VALUES ('".$h_alias."', '".$h_author."', '".$h_by."', '".$h_code."', '".$h_created."', '".$h_desc."', '".$h_email."', '".$h_for."', '".$h_key."', '".$h_level."', '".$h_link."', '".$h_phone."', '".$h_status."', '".$h_type."' )" ) ) {
        echo "<script type = \"text/javascript\">
                     alert(\"Message Sent\" );
                 </script>";
      } else {
-       echo '<script type = \"text/javascript\">
-              alert(\"Error: "'.$GLOBALS['conn']->error.'!\" );
-          </script>';
+       echo $GLOBALS['conn']->error.'!';
       }
   }
 
@@ -62,7 +37,6 @@ class _hMessages {
   <title><?php _show_( ucfirst( $type) ); ?>'s  List - <?php getMsgCount(); ?> Unread [ <?php showOption( 'name' ); ?> ]</title><?php 
     $getMessagesBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmessages WHERE (h_type = '".$type."' AND h_for = '".$_SESSION['myCode']."' ) " );
     if ( $getMessagesBy -> num_rows > 0) { ?>
-      <div style="margin:1%;" >
       <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><thead>
         <tr>
         <th class="mdl-data-table__cell--non-numeric">MESSAGE</th>
@@ -97,10 +71,8 @@ class _hMessages {
         </tr>
         </tbody><?php 
       } ?>
-        </table>
-        </div><?php 
+        </table><?php 
     } else { ?>
-      <div style="margin:1%;" >
       <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><thead>
         <tr>
         <th class="mdl-data-table__cell--non-numeric">MESSAGE</th>
@@ -115,8 +87,7 @@ class _hMessages {
         <td><p>No <?php _show_( ucfirst( $type) ); ?>s Found</p></td>
         </tr>
         </tbody>
-        </table>
-        </div><?php 
+        </table><?php 
     }
   }
 
@@ -243,52 +214,40 @@ class _hMessages {
     <title>Unread Messages - <?php getMsgCount(); ?> [ <?php showOption( 'name' ); ?> ]</title><?php 
     $getMessages = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmessages WHERE (h_status = 'unread' AND h_for = '".$_SESSION['myCode']."' ) ORDER BY h_created DESC" );
     if ( $getMessages -> num_rows > 0) { ?>
-      <div style="margin:1%;" >
       <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><thead>
         <tr>
-        <th class="mdl-data-table__cell--non-numeric">MESSAGE</th>
-        <th class="mdl-data-table__cell--non-numeric">SENDER</th>
-        <th class="mdl-data-table__cell--non-numeric">SENT ON</th>
-        <th class="mdl-data-table__cell--non-numeric">STATUS</th>
-        <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
+        <th class="mdl-data-table__cell--non-numeric">Flag</th>
+        <th class="mdl-data-table__cell--non-numeric">Sender</th>
+        <th class="mdl-data-table__cell--non-numeric">Message</th>
+        <th class="mdl-data-table__cell--non-numeric">Date</th>
         </tr>
         </thead><?php 
       while ( $messagesDetails = mysqli_fetch_assoc( $getMessages)){ ?>
         <tbody>
         <tr>
         <td class="mdl-data-table__cell--non-numeric">
-          <?php _show_( $messagesDetails['h_alias'] ); ?>
+          <i class="material-icons">flag</i>
         </td>
         <td class="mdl-data-table__cell--non-numeric">
-          <?php _show_( $messagesDetails['h_by'] ); ?>
+          <a href="user?view=<?php _show_( $messagesDetails['h_author'] ); ?>&key=<?php _show_( $messagesDetails['h_by'] ); ?>"><?php _show_( $messagesDetails['h_by'] ); ?></a>
+        </td>
+        <td class="mdl-data-table__cell--non-numeric">
+          <?php _show_( $messagesDetails['h_alias'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric">
           <?php _show_( $messagesDetails['h_created'] ); ?>
         </td>
-        <td class="mdl-data-table__cell--non-numeric">
-          <?php _show_( $messagesDetails['h_status'] ); ?>
-        </td>
-        <td class="mdl-data-table__cell--non-numeric">
-        <a href="./message?create=<?php _show_( $messagesDetails['h_type'] ); ?>&code=<?php _show_( $messagesDetails['h_author'] ); ?>" ><i class="material-icons">reply</i></a> 
-        <a href="./message?view=<?php _show_( $messagesDetails['h_code'] ); ?>&key=<?php _show_( $messagesDetails['h_alias'] ); ?>" ><i class="material-icons">open_in_new</i></a> 
-        <a href="tel:<?php _show_( $messagesDetails['h_phone'] ); ?>" ><i class="material-icons">phone</i></a> 
-        <!-- <a href="./message?chat=<?php _show_( $messagesDetails['h_author'] ); ?>" ><i class="material-icons">question_answer</i></a>  -->
-        <a href="./message?delete=<?php _show_( $messagesDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a>
-        </td>
         </tr>
         </tbody><?php 
       } ?>
-        </table>
-        </div><?php 
+        </table><?php 
     } else { ?>
-      <div style="margin:1%;" >
       <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><thead>
         <tr>
-        <th class="mdl-data-table__cell--non-numeric">MESSAGE</th>
-        <th class="mdl-data-table__cell--non-numeric">SENDER</th>
-        <th class="mdl-data-table__cell--non-numeric">SENT ON</th>
-        <th class="mdl-data-table__cell--non-numeric">STATUS</th>
-        <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
+        <th class="mdl-data-table__cell--non-numeric">Flag</th>
+        <th class="mdl-data-table__cell--non-numeric">Sender</th>
+        <th class="mdl-data-table__cell--non-numeric">Message</th>
+        <th class="mdl-data-table__cell--non-numeric">Date</th>
         </tr>
         </thead>
         <tbody>
@@ -298,8 +257,7 @@ class _hMessages {
         </td>
         </tr>
         </tbody>
-        </table>
-        </div><?php 
+        </table><?php 
     }
   }
 

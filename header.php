@@ -29,7 +29,7 @@ if ( file_exists('./inc/config.php' ) ) {
     } ?>">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="description" content="<?php showOption( 'description' ); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Add to homescreen for Chrome on Android -->

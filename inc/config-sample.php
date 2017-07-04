@@ -12,4 +12,6 @@ define( "hDBUSER", "root" );
 define( "hDBPASS", "" );
 define( "hDBHOST", "localhost" );
 define( "hROOT", "http://localhost/jabali/" );
+
+define( "hDBPREFIX", "db_" );
 ?>
