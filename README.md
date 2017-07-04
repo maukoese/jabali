@@ -2,7 +2,7 @@
 Web App Development Framework And CMS with Material Design.
 
 <h2>Getting Started</h2>
-1. Download the zip file from http://code.mauko.co.ke/dl/jabali.zip and extract it in your server.
+1. Download the zip file from http://code.mauko.co.ke/dl/jabali/jabali_17.07.zip and extract it in your server.
 
 2. Go to http://yoursiteurl/ - It will redirect you to the installation page 
 
