@@ -344,23 +344,22 @@ class _hForms {
 
 
               <div class="input-field mdl-cell mdl-cell--5-col mdl-grid">
-              <i class="material-icons prefix">link</i>
+                <i class="material-icons prefix">link</i>
                 <input id="h_link" type="text" name="h_link" value="<?php _show_( $postDetails['h_link'] ); ?>">
                 <label for="h_link"  class="center-align"><?php _show_( hROOT ); ?></label>
               </div>
 
               <div class="input-field mdl-cell mdl-cell--12-col">
-              <h6><?php echo ucfirst( $postDetails['h_type'] ); ?> Content</h6>
-              <textarea class="materialize-textarea col s12" type="text" id="message" rows="5" name="h_desc">
-                <?php _show_( $postDetails['h_description'] ); ?>
-              </textarea><script>CKEDITOR.replace( 'message' );</script>
+                <h6><?php _show_( ucfirst( $postDetails['h_type'] ) ); ?> Content</h6>
+                <textarea class="materialize-textarea col s12" type="text" id="message" rows="5" name="h_desc">
+                  <?php _show_( $postDetails['h_description'] ); ?>
+                </textarea><script>CKEDITOR.replace( 'message' );</script>
               </div>
 
               <div class="input-field mdl-cell mdl-cell--12-col">
-              <h6><?php echo ucfirst( $postDetails['h_type'] ); ?> Notes</h6>
-              <textarea class="materialize-textarea col s12" type="text" id="message" rows="5" name="h_notes">
+                <h6><?php _show_( ucfirst( $postDetails['h_type'] ) ); ?> Notes</h6>
+                <textarea class="materialize-textarea col s12" type="text" id="message" rows="5" name="h_notes">
                 <?php _show_( $postDetails['h_notes'] ); ?>
-
                 </textarea>
               </div>
             </div>

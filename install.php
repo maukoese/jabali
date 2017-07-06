@@ -149,11 +149,10 @@ if (isset($_POST['register']) ) {
 		$hMenu -> create ( 'All Users', 'jabali', 'supervisor_account', 'allusers', 'users', './user?view=list&key=users', 'drawer', 'visible', 'null' );
 		$hMenu -> create ( 'Pending Users', 'jabali', 'done', 'draftusers', 'users', './user?view=pending&key=users', 'drawer', 'visible', 'null' );
 
-	//Messages Menu
-	$hMenu -> create ( 'Comments', 'jabali', 'comment', 'comment', '', '#', 'drawer', 'visible', 'drop' );
-		//Messages SubMenus
-		$hMenu -> create ( 'All Comments', 'jabali', 'comment', 'mymessages', 'comment', './comments?view=list&key=all comments', 'drawer', 'visible', 'null' );
-		$hMenu -> create ( 'Pending Comments', 'jabali', 'comment', 'sentmessages', 'comment', './comments?view=pending&key=pending comments', 'drawer', 'visible', 'null' );
+	$hMenu -> create ( 'Comments', 'jabali', 'comment', 'comments', '', '#', 'drawer', 'visible', 'drop' );
+        //Messages SubMenus
+        $hMenu -> create ( 'All Comments', 'jabali', 'comment', 'allcomments', 'comments', './comments?view=list&key=all comments', 'drawer', 'visible', 'null' );
+        $hMenu -> create ( 'Pending Comments', 'jabali', 'comment', 'pendingcomments', 'comments', './comments?view=pending&key=pending comments', 'drawer', 'visible', 'null' );
 
 
 	/*

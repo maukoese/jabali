@@ -42,7 +42,7 @@ if ( isset( $_GET['view'] )){
 
 }
 
-if ( isset( $_POST['create'] ) || isset( $_POST['create'] ) ) {
+if ( isset( $_POST['create'] ) || isset( $_POST['update'] ) ) {
 
   $h_alias = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_alias'] ); 
   $h_author = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_author'] );
@@ -67,6 +67,7 @@ if ( isset( $_POST['create'] ) || isset( $_POST['create'] ) ) {
   $h_by = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_by'] );
   $h_category = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_category'] ); 
   $h_organization = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_organization'] );
+  
   if ( isset( $_POST['create'] ) ) {
     $h_key = str_shuffle( generateCode() );
     $h_code = substr( $h_key, rand(0, 15), 12 );
@@ -74,6 +75,7 @@ if ( isset( $_POST['create'] ) || isset( $_POST['create'] ) ) {
     $h_key = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_key'] );
     $h_code = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_code'] );
   }
+
   $h_created = $_POST['h_created'];
   $h_created_t = $_POST['h_created_t'];
   $h_created = $h_created.' '.$h_created_t;
@@ -98,12 +100,12 @@ if ( isset( $_POST['create'] ) || isset( $_POST['create'] ) ) {
   $h_type = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_type'] ); 
   $h_updated = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_updated'] );
 
-}
+  if ( isset( $_POST['create'] ) ) {
+  	$hPost -> create( $h_alias, $h_author, $h_avatar, $h_by, $h_category, $h_organization, $h_code, $h_created, $h_desc, $h_email, $h_fav, $h_key, $h_level, $h_link, $h_location, $h_notes, $h_phone, $h_reading, $h_status, $h_subtitle, $h_tags, $h_type, $h_updated );
+  } elseif ( isset( $_POST['update'] ) ) {
+  	$hPost -> update( $h_alias, $h_author, $h_avatar, $h_by, $h_category, $h_organization, $h_code, $h_created, $h_desc, $h_email, $h_fav, $h_key, $h_level, $h_link, $h_location, $h_notes, $h_phone, $h_reading, $h_status, $h_subtitle, $h_tags, $h_type, $h_updated );
+  } 
 
-if ( isset( $_POST['create'] ) ) {
-	$hPost -> create( $h_alias, $h_author, $h_avatar, $h_by, $h_category, $h_organization, $h_code, $h_created, $h_desc, $h_email, $h_fav, $h_key, $h_level, $h_link, $h_location, $h_notes, $h_phone, $h_reading, $h_status, $h_subtitle, $h_tags, $h_type, $h_updated );
-} elseif ( isset( $_POST['update'] ) ) {
-	$hPost -> update( $h_alias, $h_author, $h_avatar, $h_by, $h_category, $h_organization, $h_code, $h_created, $h_desc, $h_email, $h_fav, $h_key, $h_level, $h_link, $h_location, $h_notes, $h_phone, $h_reading, $h_status, $h_subtitle, $h_tags, $h_type, $h_updated );
 } ?>
 </div><?php
 

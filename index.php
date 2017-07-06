@@ -26,8 +26,6 @@ include 'inc/class.actions.php';
 $action = new _hActions;
 $action -> connectDB();
 
-session_start(); 
-
 if ( isset( $_POST['login'] ) && $_POST['user'] != "" && $_POST['password'] != "" ) {
   call_user_func_array(array($action, 'loginUser'), array());
 }
