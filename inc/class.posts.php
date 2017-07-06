@@ -1,35 +1,10 @@
-<?php 
+<?php
 
 class _hPosts {
-  var $h_alias; 
-  var $h_author; 
-  var $h_avatar; 
-  var $h_by; 
-  var $h_category; 
-  var $h_organization; 
-  var $h_code; 
-  var $h_created; 
-  var $h_custom; 
-  var $h_description; 
-  var $h_email; 
-  var $h_fav; 
-  var $h_key; 
-  var $h_level; 
-  var $h_link; 
-  var $h_location; 
-  var $h_notes; 
-  var $h_phone; 
-  var $h_reading; 
-  var $h_status; 
-  var $h_style; 
-  var $h_subtitle; 
-  var $h_tags; 
-  var $h_type; 
-  var $h_updated;
-  
+
   function create( $h_alias, $h_author, $h_avatar, $h_by, $h_category, $h_organization, $h_code, $h_created, $h_desc, $h_email, $h_fav, $h_key, $h_level, $h_link, $h_location, $h_notes, $h_phone, $h_reading, $h_status, $h_subtitle, $h_tags, $h_type, $h_updated ) {
 
-    if ( mysqli_query( $GLOBALS['conn'], "INSERT INTO hposts (h_alias, h_author, h_avatar, h_by, h_category, h_organization, h_code, h_created, h_description, h_email, h_fav, h_key, h_level, h_link, h_location, h_notes, h_phone, h_reading, h_status, h_subtitle, h_tags, h_type, h_updated) 
+    if ( mysqli_query( $GLOBALS['conn'], "INSERT INTO hposts (h_alias, h_author, h_avatar, h_by, h_category, h_organization, h_code, h_created, h_description, h_email, h_fav, h_key, h_level, h_link, h_location, h_notes, h_phone, h_reading, h_status, h_subtitle, h_tags, h_type, h_updated)
       VALUES ('".$h_alias."', '".$h_author."', '".$h_avatar."', '".$h_by."', '".$h_category."', '".$h_organization."', '".$h_code."', '".$h_created."', '".$h_desc."', '".$h_email."', '".$h_fav."', '".$h_key."', '".$h_level."', '".$h_link."', '".$h_location."', '".$h_notes."', '".$h_phone."', '".$h_reading."', '".$h_status."', '".$h_subtitle."', '".$h_tags."', '".$h_type."', '".$h_updated."' )" ) ) {
       echo "<script type = \"text/javascript\">
               alert(\"" . ucwords( $h_type ) . " Created Successfully!\" );
@@ -104,7 +79,7 @@ class _hPosts {
         <th class="mdl-data-table__cell--non-numeric">STATUS</th>
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
-        </thead><?php 
+        </thead><?php
         while ( $postsDetails = mysqli_fetch_assoc( $getPostsBy)){ ?>
         <tbody>
         <tr>
@@ -128,14 +103,14 @@ class _hPosts {
         </td>
         <td class="mdl-data-table__cell--non-numeric">
         <a href="./post?view=<?php _show_( $postsDetails['h_code'] ); ?>&key=<?php _show_( $postsDetails['h_alias'] ); ?>" ><i class="material-icons">open_in_new</i></a><?php if ( isCap( 'admin' ) || isAuthor( $postDetails['h_author'] ) ) { ?>
-        <a href="./post?edit=<?php _show_( $postsDetails['h_code'] ); ?>&key=<?php _show_( ucwords( $postsDetails['h_alias'] ) ); ?>" ><i class="material-icons">edit</i></a> 
+        <a href="./post?edit=<?php _show_( $postsDetails['h_code'] ); ?>&key=<?php _show_( ucwords( $postsDetails['h_alias'] ) ); ?>" ><i class="material-icons">edit</i></a>
         <a href="./post?delete=<?php _show_( $postsDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a> <?php } ?>
         </td>
         </tr>
-        </tbody><?php 
+        </tbody><?php
         } ?>
         </table>
-        </div><?php 
+        </div><?php
     } else {
       ?><div class="mdl-cell mdl-cell--12-col"><table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
       <thead>
@@ -155,12 +130,12 @@ class _hPosts {
         <td><p>No <?php _show_( ucwords( $type) ); ?>s Found</p></td>
         </tr>
         </tbody>
-        </table><?php 
+        </table><?php
     }
   }
 
   function getPosts( $sort ) { ?>
-    <title>All Articles [ <?php showOption( 'name' ); ?> ]</title><?php 
+    <title>All Articles [ <?php showOption( 'name' ); ?> ]</title><?php
       $getPosts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE (h_type = 'article' AND h_status = 'published' ) ORDER BY ".$sort." DESC" );
       if ( $getPosts -> num_rows > 0) { ?>
         <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-color--<?php primaryColor(); ?>" >
@@ -204,7 +179,7 @@ class _hPosts {
           <th class="mdl-data-table__cell--non-numeric">CREATED</th>
           <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
           </tr>
-          </thead><?php 
+          </thead><?php
           while ( $postsDetails = mysqli_fetch_assoc( $getPosts)){ ?>
           <tbody>
           <tr>
@@ -224,19 +199,19 @@ class _hPosts {
           <?php _show_( $postsDetails['h_created'] ); ?>
           </td>
           <td class="mdl-data-table__cell--non-numeric">
-          <a href="./post?view=<?php _show_( $postsDetails['h_code'] ); ?>&key=<?php _show_( $postsDetails['h_alias'] ); ?>" ><i class="material-icons">open_in_new</i></a> 
-          <a href="tel:<?php _show_( $postsDetails['h_phone'] ); ?>" ><i class="material-icons">phone</i></a> 
-          <a href="?post?view=<?php _show_( $_SESSION['myCode'] ); ?>&action=chat&by=<?php _show_( $postsDetails['h_code'] ); ?>" ><i class="material-icons">message</i></a><?php if ( isCap( 'admin' ) || isAuthor( $postDetails['h_author'] ) ) { ?>  
-          <a href="./post?edit=<?php _show_( $postsDetails['h_code'] ); ?>&key=<?php _show_( ucwords( $postDetails['h_alias'] ) ); ?>" ><i class="material-icons">edit</i></a> 
+          <a href="./post?view=<?php _show_( $postsDetails['h_code'] ); ?>&key=<?php _show_( $postsDetails['h_alias'] ); ?>" ><i class="material-icons">open_in_new</i></a>
+          <a href="tel:<?php _show_( $postsDetails['h_phone'] ); ?>" ><i class="material-icons">phone</i></a>
+          <a href="?post?view=<?php _show_( $_SESSION['myCode'] ); ?>&action=chat&by=<?php _show_( $postsDetails['h_code'] ); ?>" ><i class="material-icons">message</i></a><?php if ( isCap( 'admin' ) || isAuthor( $postDetails['h_author'] ) ) { ?>
+          <a href="./post?edit=<?php _show_( $postsDetails['h_code'] ); ?>&key=<?php _show_( ucwords( $postDetails['h_alias'] ) ); ?>" ><i class="material-icons">edit</i></a>
           <a href="./post?delete=<?php _show_( $postsDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
           </td>
           </tr>
-          </tbody><?php 
+          </tbody><?php
           } ?>
           </table>
           </div><br>
-          </div><?php 
-      } else { 
+          </div><?php
+      } else {
         tableHeader("POST", "AUTHOR", "CATEGORY", "TAGS", "CREATED", "STATUS", "ACTIONS"); ?>
           <tr>
             <td class="mdl-data-table__cell--non-numeric"><p>No Posts Found</p></td>
@@ -245,7 +220,7 @@ class _hPosts {
   }
 
   function getDrafts() { ?>
-    <title>Draft Posts [ <?php showOption( 'name' ); ?> ]</title><?php 
+    <title>Draft Posts [ <?php showOption( 'name' ); ?> ]</title><?php
       $getPosts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE (h_type = 'article' AND h_status = 'draft' ) ORDER BY h_created DESC" );
       if ( $getPosts -> num_rows > 0) { ?>
           <div class="mdl-cell--12-col" >
@@ -268,7 +243,7 @@ class _hPosts {
           <th class="mdl-data-table__cell--non-numeric">CREATED</th>
           <th class="mdl-data-table__cell">ACTIONS</th>
           </tr>
-          </thead><?php 
+          </thead><?php
           while ( $postsDetails = mysqli_fetch_assoc( $getPosts)){ ?>
           <tbody>
           <tr>
@@ -288,14 +263,14 @@ class _hPosts {
           <?php _show_( $postsDetails['h_created'] ); ?>
           </td>
           <td class="mdl-data-table__cell"><?php if ( isCap( 'admin' ) || isAuthor( $postDetails['h_author'] ) ) { ?>
-          <a href="./post?edit=<?php _show_( $postsDetails['h_code'] ); ?>&key=<?php _show_( ucwords( $postDetails['h_alias'] ) ); ?>" ><i class="material-icons">edit</i></a> 
+          <a href="./post?edit=<?php _show_( $postsDetails['h_code'] ); ?>&key=<?php _show_( ucwords( $postDetails['h_alias'] ) ); ?>" ><i class="material-icons">edit</i></a>
           <a href="./post?delete=<?php _show_( $postsDetails['h_code'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
           </td>
           </tr>
-          </tbody><?php 
+          </tbody><?php
           } ?>
           </table>
-          </div><?php 
+          </div><?php
       } else {
         ?><div style="margin:1%;" ><table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
         <thead>
@@ -313,7 +288,7 @@ class _hPosts {
           <td><p>No Posts Found</p></td>
           </tr>
           </tbody>
-          </table><?php 
+          </table><?php
       }
   }
 
@@ -323,102 +298,102 @@ class _hPosts {
       while ( $draft = mysqli_fetch_assoc( $getDrafts)){ ?>
         <a href="./post?edit=<?php _show_( $draft['h_code'] ); ?>&key=<?php _show_( $draft['h_alias'] ); ?>"><b><?php _show_( $draft['h_alias'] ); ?></b></a>
         <a href="./?ddelete=<?php _show_( $draft['h_code'] ); ?>"><i class="mdi mdi-delete alignright"></i></a>
-      <br><?php 
+      <br><?php
       }
     }
   }
 
   function getPost( $code) {
     $getPostCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE h_code = '".$code."'" );
-    if ( $getPostCode -> num_rows > 0) {
-      while ( $postDetails = mysqli_fetch_assoc( $getPostCode)){ ?>
-      <title><?php _show_( ucwords( $postDetails['h_alias'] ) ); ?> [ <?php showOption( 'name' ); ?> ]</title>
+    if ( $getPostCode -> num_rows > 0 ) {
+      while( $postDetails = mysqli_fetch_assoc( $getPostCode ) ){ ?>
+        <title><?php _show_( ucwords( $postDetails['h_alias'] ) ); ?> [ <?php showOption( 'name' ); ?> ]</title>
         <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
-              <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
-                  <div class="mdl-card__supporting-text mdl-card--expand mdl-grid">
-                    <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone">
-                      <h4><?php _show_( $postDetails['h_subtitle'] ); ?></h4>
-                      <h6>Published: <?php _show_( $postDetails['h_created'] ); ?><br>
-                      Authored by: <a href="./user?view=<?php _show_( $postDetails['h_author'] ); ?>&key=<?php _show_( $postDetails['h_by'] ); ?>"><?php _show_( $postDetails['h_by'] ); ?></a><br>
-                      Category: <?php _show_( $postDetails['h_category'] ); ?><br>
-                      Tagged: <?php _show_( ucwords( $postDetails['h_tags'] ) ); ?></br>
-                      Readings: <?php _show_( ucwords( $postDetails['h_tags'] ) ); ?></h6>
-                    </div>
-                    <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone">
-                      <img src="<?php _show_( $postDetails['h_avatar'] ); ?>" width="100%">
-                    </div>
-                  </div>
-                  <div class="mdl-card__supporting-text mdl-card--expand">
-                  <span>
-                    <?php _show_( $postDetails['h_description'] ); ?>
-                  </span>
-                  </div>
-                  <div class="mdl-card__menu">
-                  <button id="demo_menu-top-right" class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-color--accent">
-                  <i class="material-icons mdl-color-text--white">more_vert</i>
-               </button>
-               <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect mdl-color--<?php primaryColor(); ?>"
-                  for="demo_menu-top-right">
-                  <a href="./post?view=<?php _show_( $postDetails['h_code'] ); ?>&fav=<?php _show_( $postDetails['h_code'] ); ?>&key=<?php _show_( ucwords( $postDetails['h_alias'] ) ); ?>" class="mdl-list__item"><i class="mdi mdi-heart mdl-list__item-icon"></i><span style="padding-left: 20px">Favorite</span></a>
-                  <a href="./note?post=<?php _show_( $postDetails['h_code'] ); ?>&author=<?php _show_( $_SESSION['myCode'] ); ?>" class="mdl-list__item"><i class="mdi mdi-note-multiple mdl-list__item-icon"></i><span style="padding-left: 20px">Notes</span></a><?php if ( isCap( 'admin' ) || isAuthor( $postDetails['h_author'] ) ) { ?>
-                  <a href="./post?edit=<?php _show_( $postDetails['h_code'] ); ?>&key=<?php _show_( ucwords( $postDetails['h_alias'] ) ); ?>" class="mdl-list__item"><i class="mdi mdi-pencil mdl-list__item-icon"></i><span style="padding-left: 20px">Edit</span></a><?php } ?>
-               </ul>
-                  </div>
+          <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+            <div class="mdl-card__supporting-text mdl-card--expand mdl-grid">
+              <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone">
+                <h4><?php _show_( $postDetails['h_subtitle'] ); ?></h4>
+                <h6>Published: <?php _show_( $postDetails['h_created'] ); ?></h6>
+                <h6>Authored by: <a href="./user?view=<?php _show_( $postDetails['h_author'].'&key='.$postDetails['h_by'] ); ?>"><?php _show_( $postDetails['h_by'] ); ?></a></h6>
+                <h6>Category: <?php _show_( $postDetails['h_category'] ); ?></h6>
+                <h6>Tagged: <?php _show_( ucwords( $postDetails['h_tags'] ) ); ?></h6>
+                <h6>Readings: <?php _show_( ucwords( $postDetails['h_tags'] ) ); ?></h6>
               </div>
+              <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone">
+                <img src="<?php _show_( $postDetails['h_avatar'] ); ?>" width="100%">
+              </div>
+            </div>
+            <div class="mdl-card__supporting-text mdl-card--expand">
+              <span><?php _show_( $postDetails['h_description'] ); ?></span>
+            </div>
+            <div class="mdl-card__menu">
+              <button id="demo_menu-top-right" class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-color--accent">
+              <i class="material-icons mdl-color-text--white">more_vert</i>
+              </button>
+              <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect mdl-color--<?php primaryColor(); ?>"
+              for="demo_menu-top-right">
+              <a href="./post?view=<?php _show_( $postDetails['h_code'] ); ?>&fav=<?php _show_( $postDetails['h_code'] ); ?>&key=<?php _show_( ucwords( $postDetails['h_alias'] ) ); ?>" class="mdl-list__item"><i class="mdi mdi-heart mdl-list__item-icon"></i><span style="padding-left: 20px">Favorite</span></a>
+              <a href="./note?post=<?php _show_( $postDetails['h_code'] ); ?>&author=<?php _show_( $_SESSION['myCode'] ); ?>" class="mdl-list__item"><i class="mdi mdi-note-multiple mdl-list__item-icon"></i><span style="padding-left: 20px">Notes</span></a><?php if ( isCap( 'admin' ) || isAuthor( $postDetails['h_author'] ) ) { ?>
+              <a href="./post?edit=<?php _show_( $postDetails['h_code'] ); ?>&key=<?php _show_( ucwords( $postDetails['h_alias'] ) ); ?>" class="mdl-list__item"><i class="mdi mdi-pencil mdl-list__item-icon"></i><span style="padding-left: 20px">Edit</span></a><?php } ?>
+              </ul>
+            </div>
+          </div>
         </div>
-
         <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
-            <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><?php 
-              $getNotes = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmessages LIMIT 5" );
+          <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><?php
+            $getNotes = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmessages LIMIT 5" );
               if ( $getNotes -> num_rows >= 0) { ?>
                 <div class="mdl-card__title">
                   <i class="material-icons">comment</i>
-                    <span class="mdl-button">Comments</span>
+                  <span class="mdl-button">Comments</span>
                   <div class="mdl-layout-spacer"></div>
                 </div>
                 <div class="mdl-card__supporting-text mdl-card--expand">
-                  <ul class="collapsible popout" data-collapsible="accordion"><?php 
-                      while ( $note = mysqli_fetch_assoc( $getNotes) ) { ?>
-                      <li>
-                        <div class="collapsible-header"><i class="material-icons">label_outline</i>
-                          
-                            <b><?php _show_( $note['h_alias'] ); ?></b><span class="alignright"><?php 
-                            _show_( $note['h_created'] ); ?></span>
-                        </div>
-                        <div class="collapsible-body"><span class="alignright">
-                            <a href="./notification?create=note&code=<?php _show_( $note['h_author'] ); ?>" ><i class="material-icons">reply</i></a> 
-                            <a href="./notification?view=<?php _show_( $note['h_code'] ); ?>" ><i class="material-icons">open_in_new</i></a> 
-                            <a href="./notification?delete=<?php _show_( $note['h_code'] ); ?>" ><i class="material-icons">delete</i></a>
-                            </span>
-                            <span><?php 
-                            _show_( $note['h_description'] ); ?></span>
-                        </div>
-                      </li><?php 
-                      } ?>
-                  </ul><?
-              } else {
-                echo "No Messages";
-              } ?>
-                    <p>Add Comment</p>
-                    <form>
-                    <div class="input-field">
-                    <input id="h_alias" name=="h_alias" type="text">
-                    <label for="h_alias">Title</label>
-                    </div>
+                  <ul class="collapsible popout" data-collapsible="accordion"><?php
+                  while ( $note = mysqli_fetch_assoc( $getNotes) ) { ?>
+                  <li>
+                  <div class="collapsible-header"><i class="material-icons">label_outline</i>
 
-                    <div class="input-field">
-                    <textarea class="materialize-textarea col s12" id="h_description" name="h_description" ><?php _show_( $userDetails['h_description'] ); ?></textarea>
-                    <label for="h_description">Your Comment</label>
-                    </div>
-                    <button type="submit" name="" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect alignright"><i  class="material-icons">send</i></button>
-                    </form>
-                </div>
+                  <b><?php _show_( $note['h_alias'] ); ?></b><span class="alignright"><?php
+                  _show_( $note['h_created'] ); ?></span>
+                  </div>
+                  <div class="collapsible-body"><span class="alignright">
+                  <a href="./notification?create=note&code=<?php _show_( $note['h_author'] ); ?>" ><i class="material-icons">reply</i></a>
+                  <a href="./notification?view=<?php _show_( $note['h_code'] ); ?>" ><i class="material-icons">open_in_new</i></a>
+                  <a href="./notification?delete=<?php _show_( $note['h_code'] ); ?>" ><i class="material-icons">delete</i></a>
+                  </span>
+                  <span><?php
+                  _show_( $note['h_description'] ); ?></span>
+                  </div>
+                  </li><?php
+                  } ?>
+                  </ul><?php
+              } else {
+              echo "No Messages";
+              } ?>
+            <p>Add Comment</p>
+            <form>
+              <div class="input-field">
+                <input id="h_alias" name=="h_alias" type="text">
+                <label for="h_alias">Title</label>
+              </div>
+
+              <div class="input-field">
+                <textarea class="materialize-textarea col s12" id="h_description" name="h_description" ><?php _show_( $userDetails['h_description'] ); ?></textarea>
+                <label for="h_description">Your Comment</label>
+              </div>
+
+              <div class="input-field">
+                <button type="submit" name="" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect alignright"><i  class="material-icons">send</i></button>
+              </div>
+            </form>
             </div>
-        </div><?php 
+          </div>
+        </div><?php
       }
     } else {
-      echo 'Post Not Found';
+      _show_( 'No Post Found' );
     }
   }
 
-}
+} ?>

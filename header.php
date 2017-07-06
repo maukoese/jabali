@@ -39,7 +39,7 @@ if ( file_exists('./inc/config.php' ) ) {
     <!-- Add to homescreen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+    <meta name="apple-mobile-web-app-title" content="<?php showOption( 'name' ); ?>">
 
 
     <!-- Tile icon for Win8 (144x144 + tile color) -->
@@ -68,6 +68,10 @@ if ( file_exists('./inc/config.php' ) ) {
     }
     .accent, .mdl-button--fab.mdl-button--colored, .mdl-badge[data-badge]:after {
         background-color: <?php if ( isset( $_SESSION['myCode'] ) ) { secondaryColor(); } else { echo "red"; } ?>;
+    }
+
+    .cke_bottom {
+      background: <?php if ( isset( $_SESSION['myCode'] ) ) { secondaryColor(); } else { echo "red"; } ?>;
     }
     .mdl-data-table {
     color: white;
@@ -123,7 +127,8 @@ if ( file_exists('./inc/config.php' ) ) {
     <!-- Bottom row, not visible on scroll -->
     <div class="mdl-layout__header-row" style="overflow-x: auto;">
       <div class="mdl-layout-spacer"></div>
-        <?php _hMenus::header(); ?>
+        <?php $header = new _hMenus();
+        $header -> header(); ?>
     </div>
   </header>
   <main class="mdl-layout__content mdl-color-text--white">

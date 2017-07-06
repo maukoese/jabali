@@ -11215,7 +11215,6 @@ main {
     letter-spacing: 1px; }
   .mdl-layout__drawer .mdl-navigation {
     flex-grow: 1;
-    padding-top: 48px;
     padding-bottom: 8px; }
     .mdl-layout__drawer .mdl-navigation .mdl-layout-spacer {
       border-bottom: 1px solid rgba(255,255,255, 0.1);

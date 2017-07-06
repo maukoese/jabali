@@ -1,4 +1,5 @@
 <?php  
+include '../inc/config.php';
 include '../inc/jabali.php';
 include './header.php';
 
@@ -270,7 +271,7 @@ if (isset( $_GET['add'] )) { ?>
         <div id="footer"><?php
           $hMenu -> subMenu( 'articles' ); ?>
         </div>
-    </div><? } ?>
+    </div><?php } ?>
 </div>
 
 <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
@@ -313,4 +314,4 @@ if (isset( $_GET['add'] )) { ?>
 </div>
 
 </div><?php 
-include './footer.php';
+include './footer.php'; ?>

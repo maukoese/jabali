@@ -1,4 +1,5 @@
 <?php  
+include '../inc/config.php';
 include '../inc/jabali.php';
 include './header.php'; ?>
 

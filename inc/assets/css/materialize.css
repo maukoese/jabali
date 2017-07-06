@@ -5022,7 +5022,7 @@ button.btn-floating {
 
 .fixed-action-btn {
   position: fixed;
-  right: 23px;
+  left: 23px;
   bottom: 23px;
   padding-top: 15px;
   margin-bottom: 0;

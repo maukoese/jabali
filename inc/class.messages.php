@@ -578,7 +578,7 @@ class _hMessages {
                           </li><?php 
                           } ?>
                     </ul>
-                    </div><?
+                    </div><?php
                   } else {
                     echo "No Messages";
                   } ?>

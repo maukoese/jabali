@@ -46,7 +46,7 @@ function installJabali() {
 	PRIMARY KEY(h_code)
 	)" );
 
-	$resources = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hresources (
+	$hresources = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hresources (
 	h_alias VARCHAR(100),
 	h_author VARCHAR(12),
 	h_avatar VARCHAR(20),
@@ -70,7 +70,7 @@ function installJabali() {
 	PRIMARY KEY(h_code)
 	)" );
 
-	$services = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hservices (
+	$hservices = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hservices (
 	h_alias VARCHAR(100),
 	h_author VARCHAR(12),
 	h_by VARCHAR(20), 
@@ -198,7 +198,7 @@ function installJabali() {
 	PRIMARY KEY(id)
 	)" );
 
-	$faqs = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hfaqs (
+	$hfaqs = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hfaqs (
 	h_alias VARCHAR(100),
 	h_code VARCHAR(16),
 	h_description TEXT,
@@ -251,13 +251,12 @@ function installJabali() {
 		return false;
 	}
 
-return true;
+	return true;
 } 
 
 /**
 * Include the main configuration file
 **/
-include 'config.php';
 function connectDb() {
 	$GLOBALS['conn'] = mysqli_connect( hDBHOST, hDBUSER, hDBPASS, hDBNAME );
 
@@ -266,7 +265,6 @@ function connectDb() {
 		exit();
 	}
 	return true;
-	
 }
 
 function is_localhost() {
@@ -333,6 +331,7 @@ function getFile( $path, $file ) {
 * Load stylesheets
 **/
 function getStyle( $link ) { ?>
+
 	<link rel="stylesheet" type="text/css" href="<?php echo $link; ?>"><?php 
 }
 
@@ -340,6 +339,7 @@ function getStyle( $link ) { ?>
 * Load Javascript
 **/
 function getScript( $link ) { ?>
+
 	<script src="<?php echo $link; ?>"></script><?php 
 }
 
@@ -656,10 +656,12 @@ function showOption( $code ) {
 }
 
 function getHeader() {
+
 	include './header.php';
 }
 
 function getFooter() {
+
 	include './footer.php';
 }
 
@@ -741,6 +743,7 @@ function tableHeader( $collums ) { ?>
 * 
 **/
 function tableFooter() { ?>
+
 			</tbody>
 		</table>
 	</div><?php
@@ -781,6 +784,7 @@ function newButton( $hclass, $htype, $hicon ) {
 }
 
 function jabaliAction( $function, $arguments ) {
+
 	call_user_func( $function, $arguments );
 }
 
@@ -824,6 +828,7 @@ function error404( $code ) { ?>
 }
 
 function snuffle() {
+
 	exit();
 }
 
@@ -875,10 +880,11 @@ if ( !class_exists('\App\Shortcodes') ) {
     require ( 'class.shortcodes.php' );
 }
 function add_shortcode($tag, $callback) {
+
     return \App\Shortcodes::instance()->register($tag, $callback);
 }
 
 function do_shortcode($str) {
+
     return \App\Shortcodes::instance()->doShortcode($str);
-}
-?>
+} ?>

@@ -8,7 +8,6 @@ class _hActions {
 	* 
 	**/
 	function connectDB() {
-		include 'inc/config.php';
 		$conn = mysqli_connect( hDBHOST, hDBUSER, hDBPASS, hDBNAME );
 
 		if ( mysqli_connect_errno() ) {
@@ -67,7 +66,6 @@ class _hActions {
 	}
 
 	function login() {
-		session_start();
 		if ( isset( $_SESSION['myCode'] ) ) {
 			header( 'Location: admin/index?page=my dashboard' );
 			exit();
@@ -514,15 +512,14 @@ class _hActions {
       <img class="activator" src="<?php _show_( $postsDetails['h_avatar'] ); ?>">
     </div>
     <div class="card-content mdl-color-text--black">
-      <span class="card-title activator grey-text text-darken-4"><?php _show_( $postsDetails['h_alias'] ); ?><i class="material-icons right">more_vert</i></span>
-      <span><i class="material-icons">today</i><?php $date = $postsDetails['h_created'];
+      <a href="<?php _show_( hROOT.$postsDetails['h_link'] ); ?>"><span class="card-title grey-text text-darken-4"><?php _show_( $postsDetails['h_alias'] ); ?><i class="material-icons right">arrow_forward</i></span></a>
+      <span class="mdl-list__item mdl-color-text--black"><i class="material-icons mdl-list__item-icon mdl-color-text--black">today</i><span style="padding-left: 20px"><?php $date = $postsDetails['h_created'];
               $date = explode(" ", $date); _show_( $date[0] ); ?></span>
-      <a class="mdl-button mdl-button--colored alignright" href="<?php _show_( hROOT.$postsDetails['h_link'] ); ?>">read more</a>
     </div>
     <div class="card-reveal mdl-color-text--black">
       <span class="card-title grey-text text-darken-4"><i class="material-icons left">perm_identity</i> <a href="./user/<?php _show_( $postsDetails['h_by'] ); ?>"><?php _show_( $postsDetails['h_by'] ); ?></a><i class="material-icons right">close</i></span><br>
       <article>
-      	<?php _show_( substr( $postsDetails['h_description'], 0, 250 ) ); 
+      	<?php _show_( substr( $postsDetails['h_description'], 0, 240 ) ); 
       ?> ...
       	
       </article> <a class="mdl-button mdl-button--colored" href="<?php _show_( hROOT.$postsDetails['h_link'] ); ?>">read more</a><br>
@@ -660,8 +657,8 @@ class _hActions {
 										    </div>
 										    <div class="card-content mdl-color-text--black">
 										      <span class="card-title activator grey-text text-darken-4"><?php _show_( $postsDetails['h_alias'] ); ?><i class="material-icons right">more_vert</i></span>
-										      <span><i class="material-icons">today</i><?php $date = $postsDetails['h_created'];
-										              $date = explode(" ", $date); _show_( $date[0] ); ?></span>
+										      <span class="mdl-list__item mdl-color-text--black"><i class="material-icons mdl-list__item-icon mdl-color-text--black">today</i><span style="padding-left: 20px"><?php $date = $postsDetails['h_created'];
+              $date = explode(" ", $date); _show_( $date[0] ); ?></span>
 										      <a class="mdl-button mdl-button--colored alignright" href="<?php _show_( hROOT.$postsDetails['h_link'] ); ?>">read more</a>
 										    </div>
 										    <div class="card-reveal mdl-color-text--black">

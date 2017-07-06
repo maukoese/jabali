@@ -1,4 +1,5 @@
 <?php
+include '../inc/config.php';
 include '../inc/jabali.php';
 include './header.php';
 
@@ -57,26 +58,7 @@ $hPost -> create( $h_alias, $h_author, $h_avatar, $h_by, $h_category, $h_organiz
         <?php $hWidget -> dashDrafts(); ?>
       </div>
       <div class="mdl-cell mdl-cell--7-col mdl-card mdl-color--<?php primaryColor(); ?>">
-          <?php $hWidget -> stats();
-          $field1 = array ( "length" => "mdl-cell mdl-cell--6-col", "icon" =>" label", "icon-class" => "material-icons prefix", "genre" => "textarea", "class" => "", "type" => "text", "name" => "myName", "id" => "myName", "placeholder" => "My Name", "value" => "");
-          $field2 = array ( "length" => "mdl-cell mdl-cell--6-col", "genre" =>"button", "class" => "mdl-button", "type" => "submit", "name" => "myName", "id" => "myName", "placeholder" => "My Name", "value" => "save");
-          form( 'testForm', 'multipart/form-data', 'POST', '#', 'mdl-grid', array( $field1, $field2 ) );  ?>
-
-            <div id="datetimepicker2" class="input-field mdl-cell mdl-cell--6-col">
-              <input data-format="MM/dd/yyyy HH:mm:ss" type="text">
-              <span class="add-on">
-                <i class="material-icons">schedule
-                </i>
-              </span>
-            </div>
-          <script type="text/javascript">
-            $(function() {
-              $('#datetimepicker2').datetimepicker({
-                language: 'en',
-                pick12HourFormat: false
-              });
-            });
-          </script>
+          <?php $hWidget -> stats(); ?>
       </div>
       <div class="mdl-cell mdl-cell--5-col mdl-card mdl-color--<?php primaryColor(); ?>" >
         <?php $hWidget -> jabaliCentral(); ?>

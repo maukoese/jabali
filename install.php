@@ -8,6 +8,7 @@ if ( file_exists( './inc/.zahra' ) ) {
 	header( "Location: ./login" );
 }
 
+require './inc/config.php';
 require './inc/jabali.php';
 connectDb();
 
@@ -24,12 +25,14 @@ if (isset($_POST['register']) ) {
     $h_avatar = hIMAGES.'avatar.svg';
     $h_organization = "hq";
     $h_code = $h_author;
-    $h_created = date('Y-md-' );
+    $h_created = date('Y-m-d' );
+    $h_gender = "other";
     $h_key = $hash;
     $h_level = "admin";
+    $h_link = "";
     $h_location = "nairobi";
     $h_notes = "Account created on ".$h_created;
-    $h_password = md5($_POST['h_password'] );
+    $h_password = md5( $_POST['h_password'] );
     $h_social = '{"facebook":"https://www.facebook.com/","twitter":"https://twitter.com/","instagram":"https://instagram.com/","github":"https://github.com/"}';
     $h_status = "active";
     $h_style = "zahra";
@@ -143,15 +146,8 @@ if (isset($_POST['register']) ) {
 	//Users Menu
 	$hMenu -> create ( 'Users', 'jabali', 'group', 'users', '', '#', 'drawer', 'visible', 'drop' );
 		//Users SubMenus
-		$hMenu -> create ( 'All Users', 'jabali', 'supervisor_account', 'allusers', 'users', './user?view=list', 'drawer', 'visible', 'null' );
-		$hMenu -> create ( 'Pending Users', 'jabali', 'done', 'draftusers', 'users', './user?view=pending', 'drawer', 'visible', 'null' );
-
-	//Extensions
-	$hMenu -> create ( 'Extensions', 'jabali', 'power', 'extensions', '', '#', 'drawer', 'visible', 'drop' );
-		//Extensions SubMenus
-		$hMenu -> create ( 'Installed Extensions', 'jabali', 'link', 'installedx', 'extensions', './extensions?view=installed', 'drawer', 'visible', 'null' );
-		$hMenu -> create ( 'Active Extensions', 'jabali', 'schedule', 'activex', 'extensions', './extensions?view=active', 'drawer', 'visible', 'null' );
-		$hMenu -> create ( 'Add Extensions', 'jabali', 'file_download', 'newx', 'extensions', './extensions?add=new', 'drawer', 'visible', 'null' );
+		$hMenu -> create ( 'All Users', 'jabali', 'supervisor_account', 'allusers', 'users', './user?view=list&key=users', 'drawer', 'visible', 'null' );
+		$hMenu -> create ( 'Pending Users', 'jabali', 'done', 'draftusers', 'users', './user?view=pending&key=users', 'drawer', 'visible', 'null' );
 
 	//Messages Menu
 	$hMenu -> create ( 'Comments', 'jabali', 'comment', 'comment', '', '#', 'drawer', 'visible', 'drop' );
@@ -164,7 +160,7 @@ if (isset($_POST['register']) ) {
 	*Create Admin Account
 	*/
     if ( mysqli_query( $GLOBALS['conn'], "INSERT INTO husers (h_alias, h_author, h_avatar, h_organization, h_code, h_created, h_email, h_gender, h_key, h_level, h_link, h_location, h_notes, h_password, h_social, h_status, h_style, h_type, h_username) 
-    VALUES ('".$h_alias."', '".$h_author."', '".$h_avatar."', '".$h_organization."', '".$h_code."', '".$h_created."', '".$h_email."', '".$h_gender."', '".$h_key."', '".$h_level."', '".$h_link."', '".$h_location."', '".$h_notes."', '".$h_password."', '".$h_social."', ".$h_status."', '".$h_style."', '".$h_type."', '".$h_username."' )" ) ) {
+    VALUES ('".$h_alias."', '".$h_author."', '".$h_avatar."', '".$h_organization."', '".$h_code."', '".$h_created."', '".$h_email."', '".$h_gender."', '".$h_key."', '".$h_level."', '".$h_link."', '".$h_location."', '".$h_notes."', '".$h_password."', '".$h_social."', '".$h_status."', '".$h_style."', '".$h_type."', '".$h_username."' )" ) ) {
 
     	/*
 		* Add Zahra file to prevent hacks
@@ -181,83 +177,81 @@ if (isset($_POST['register']) ) {
     }
 }
 
-if (isset($_GET['module']) ) { ?>
-	<title>Install <?php _show_( ucwords($_GET['module']) ); ?> [ JABALI ]</title><?php 
-	installJabali();
-	if ( !file_exists("./inc/.zahra") ) { ?>
-	<!DOCTYPE html>
-	<html>
-	<head>
-		<link rel="stylesheet" href="./inc/assets/css/materialize.css">
-		<link rel="stylesheet" href="./inc/assets/css/material-icons.css">
-		<link rel="stylesheet" href="./inc/assets/css/jabali.css">
-		<script src="./inc/assets/js/jquery-3.2.1.min.js"></script>
-		<script src="./inc/assets/js/materialize.min.js"></script>
-		<script src="./inc/assets/js/material.js"></script>
-		<title>Admin Setup [ JABALI ]</title>
-	</head>
-	<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-		<body>
-			<main class="mdl-layout__content mdl-grid">
-				<div class="mdl-cell mdl-cell--2-col"></div>
-				<div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-color--blue">
-				    <div id="login_div" class="mdl-grid">
-				    <div class="mdl-cell mdl-cell--12-col">
-				    <center><?php frontlogo(); ?>
-	                <div id="success" class="alert mdl-color--green">
-	                    <span>Jabali Succesfully Installed<br>Set up your admin account</span>
-	                </div>
-	                </center>
-	                </div>
-			          <form method="POST" action="" class="mdl-grid mdl-cell mdl-cell--12-col">
+if ( !file_exists("./inc/.zahra") ) { ?>
+    <title>Install <?php _show_( ucwords($_GET['module']) ); ?> [ JABALI ]</title><?php 
+    installJabali(); ?>
+    <!DOCTYPE html>
+    <html>
+    <head>
+    	<link rel="stylesheet" href="./inc/assets/css/materialize.css">
+    	<link rel="stylesheet" href="./inc/assets/css/material-icons.css">
+    	<link rel="stylesheet" href="./inc/assets/css/jabali.css">
+    	<script src="./inc/assets/js/jquery-3.2.1.min.js"></script>
+    	<script src="./inc/assets/js/materialize.min.js"></script>
+    	<script src="./inc/assets/js/material.js"></script>
+    	<title>Admin Setup [ JABALI ]</title>
+    </head>
+    <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+    	<body>
+    		<main class="mdl-layout__content mdl-grid">
+    			<div class="mdl-cell mdl-cell--2-col"></div>
+    			<div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-color--blue">
+    			    <div id="login_div" class="mdl-grid">
+    			    <div class="mdl-cell mdl-cell--12-col">
+    			    <center><?php frontlogo(); ?>
+                    <div id="success" class="alert mdl-color--green">
+                        <span>Jabali Succesfully Installed<br>Set up your admin account</span>
+                    </div>
+                    </center>
+                    </div>
+    		          <form method="POST" action="" class="mdl-grid mdl-cell mdl-cell--12-col">
 
-			          <div class="input-field mdl-cell mdl-cell--12-col">
-			          <i class="material-icons prefix">label</i>
-			          <input name="h_name" id="h_name" type="text">
-			          <label for="h_name" class="center-align">Site Name</label>
-			          </div>
+    		          <div class="input-field mdl-cell mdl-cell--12-col">
+    		          <i class="material-icons prefix">label</i>
+    		          <input name="h_name" id="h_name" type="text">
+    		          <label for="h_name" class="center-align">Site Name</label>
+    		          </div>
 
-			          <div class="input-field mdl-cell mdl-cell--12-col">
-			          <i class="material-icons prefix">mail</i>
-			          <input name="h_email" id="h_email" type="text">
-			          <label for="h_email" class="center-align">Email Address</label>
-			          </div>
+    		          <div class="input-field mdl-cell mdl-cell--12-col">
+    		          <i class="material-icons prefix">mail</i>
+    		          <input name="h_email" id="h_email" type="text">
+    		          <label for="h_email" class="center-align">Email Address</label>
+    		          </div>
 
-			          <div class="input-field mdl-cell mdl-cell--12-col">
-			          <i class="material-icons prefix">perm_identity</i>
-			          <input name="h_username" id="h_username" type="text">
-			          <label for="h_username" class="center-align">Username</label>
-			          </div>
+    		          <div class="input-field mdl-cell mdl-cell--12-col">
+    		          <i class="material-icons prefix">perm_identity</i>
+    		          <input name="h_username" id="h_username" type="text">
+    		          <label for="h_username" class="center-align">Username</label>
+    		          </div>
 
-			          <div class="input-field mdl-cell mdl-cell--11-col">
-			          <i class="material-icons prefix">lock</i>
-			          <input name="password" id="password" type="password">
-			          <label for="password">Password</label>
-			          </div>
-			          <div class="input-field mdl-cell mdl-cell--1-col">
-			          <button class="mdl mdl-button mdl-button--fab mdl-js-button mdl-button--raised mdl-button--colored alignright" type="submit" name="register"><i class="material-icons">send</i></button>
-			          </div>
+    		          <div class="input-field mdl-cell mdl-cell--11-col">
+    		          <i class="material-icons prefix">lock</i>
+    		          <input name="h_password" id="password" type="password">
+    		          <label for="password">Password</label>
+    		          </div>
+    		          <div class="input-field mdl-cell mdl-cell--1-col">
+    		          <button class="mdl mdl-button mdl-button--fab mdl-js-button mdl-button--raised mdl-button--colored alignright" type="submit" name="register"><i class="material-icons">send</i></button>
+    		          </div>
 
-			          <br>
-			          <br>
-			          </form>
-				    </div>
-			    </div>
-				<div class="mdl-cell mdl-cell--2-col"></div>
-		    </main>
-		</body>
-	</div>
-		<script src="./inc/assets/js/d3.js"></script>
-		<script src="./inc/assets/js/getmdl-select.min.js"></script>
-		<script src="./inc/assets/js/material.js"></script>
-		<script src="./inc/assets/js/materialize.min.js"></script>
-		<script src="./inc/assets/js/nv.d3.js"></script>
-		<script src="./inc/assets/js/widgets/employer-form/employer-form.js"></script>
-		<script src="./inc/assets/js/widgets/line-chart/line-chart-nvd3.js"></script>
-		<script src="./inc/assets/js/list.js"></script>
-		<script src="./inc/assets/js/widgets/pie-chart/pie-chart-nvd3.js"></script>
-		<script src="./inc/assets/js/widgets/table/table.js"></script>
-		<script src="./inc/assets/js/widgets/todo/todo.js"></script>
-	</html><?php 
-	}
+    		          <br>
+    		          <br>
+    		          </form>
+    			    </div>
+    		    </div>
+    			<div class="mdl-cell mdl-cell--2-col"></div>
+    	    </main>
+    	</body>
+    </div>
+    	<script src="./inc/assets/js/d3.js"></script>
+    	<script src="./inc/assets/js/getmdl-select.min.js"></script>
+    	<script src="./inc/assets/js/material.js"></script>
+    	<script src="./inc/assets/js/materialize.min.js"></script>
+    	<script src="./inc/assets/js/nv.d3.js"></script>
+    	<script src="./inc/assets/js/widgets/employer-form/employer-form.js"></script>
+    	<script src="./inc/assets/js/widgets/line-chart/line-chart-nvd3.js"></script>
+    	<script src="./inc/assets/js/list.js"></script>
+    	<script src="./inc/assets/js/widgets/pie-chart/pie-chart-nvd3.js"></script>
+    	<script src="./inc/assets/js/widgets/table/table.js"></script>
+    	<script src="./inc/assets/js/widgets/todo/todo.js"></script>
+    </html>
 } ?>

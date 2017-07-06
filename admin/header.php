@@ -29,7 +29,7 @@ $dB = new MysqliDb ($GLOBALS['conn']); ?>
     <!-- Add to homescreen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+    <meta name="apple-mobile-web-app-title" content="<?php showOption( 'name' ); ?>">
     <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
 
     <!-- Tile icon for Win8 (144x144 + tile color) -->
@@ -93,7 +93,7 @@ $dB = new MysqliDb ($GLOBALS['conn']); ?>
           <span class="mdl-layout-title"><?php 
           if ( isset( $_GET['type'] ) ) {
             echo ucwords( $_GET['type'].'s ' );
-          } elseif ( isset( $_GET['view'] ) && $_GET['key'] !== "" ) {
+          } elseif ( isset( $_GET['view'] ) ) {
             if ( $_GET['view'] == "list" ) {
               echo ucwords( $_GET['key']." List" );
             } else {
@@ -248,19 +248,19 @@ $dB = new MysqliDb ($GLOBALS['conn']); ?>
           $hMenu -> drawerdef( 'articles' );
           $hMenu -> drawerdef( 'pages' );
           $hMenu -> drawerdef( 'users' );
-          $hMenu -> drawerdef( 'extensions' );
-          $hMenu -> drawerdef( 'messages' );
+          $hMenu -> drawerdef( 'comments' );
           /*
           * User Defined Menus
           */
           $hMenu -> drawer(); ?>
-          <div class="mdl-layout-spacer"></div>
+          <div class="mdl-layout-spacer"></div><?php 
+          if ( isCap( 'admin' ) ) { ?>
           <a class="mdl-navigation__link" id="extensions" href="#"><i class="mdl-color-text--white material-icons" role="presentation">power</i>Extensions</a>
           <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor(); ?>" for="extensions">
           <a class="mdl-navigation__link" href="./extensions?view=active"><i class="mdl-color-text--white material-icons" role="presentation">schedule</i><span>Active Extensions</span></a>
           <a class="mdl-navigation__link" href="./extensions?view=installed"><i class="mdl-color-text--white material-icons" role="presentation">link</i><span>Installed Extensions</span></a>
           <a class="mdl-navigation__link" href="./extensions?add=new"><i class="mdl-color-text--white material-icons" role="presentation">file_download</i><span>Add Extensions</span></a>
-          </ul>
+          </ul><?php } ?>
           
           <a id="hpref" class="mdl-navigation__link" href="#"><i class="mdl-color-text--white material-icons" role="presentation">settings</i>Preferences</a>
             <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor(); ?>" for="hpref">

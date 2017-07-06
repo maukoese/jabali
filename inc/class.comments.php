@@ -251,7 +251,7 @@ class _hComments {
                           </li><?php 
                           } ?>
                     </ul>
-                    </div><?
+                    </div><?php
                   } else {
                   echo '<div class="mdl-card__title">
         <i class="material-icons">notifications_none</i>
