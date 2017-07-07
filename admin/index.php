@@ -46,7 +46,7 @@ $hPost -> create( $h_alias, $h_author, $h_avatar, $h_by, $h_category, $h_organiz
   if ( isset( $_GET['x'] ) ) {
     require_once hABSX.$_GET['x'].'/'.$_GET['x'].'.php';
   } else { ?>
-    <title><? _show_( ucwords( $_SESSION['myCap'] ) ); ?> Dashboard [ <?php showOption( 'name' ); ?> ]</title>
+    <title><?php _show_( ucwords( $_SESSION['myCap'] ) ); ?> Dashboard [ <?php showOption( 'name' ); ?> ]</title>
     <div class="mdl-cell--12-col mdl-grid">
     	<div class="mdl-cell mdl-cell--3-col mdl-card mdl-color--<?php primaryColor(); ?>" >
           <?php $hWidget -> quickLinks(); ?>

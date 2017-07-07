@@ -20,7 +20,7 @@ if (isset($_POST['register']) ) {
 
     $hash = str_shuffle(md5($h_email.$date ) );
 
-    $h_alias = "Admin";
+    $h_alias = "Admin User";
     $h_author = substr( $hash, 20 );
     $h_avatar = hIMAGES.'avatar.svg';
     $h_organization = "hq";

@@ -42,7 +42,7 @@ if ( isset( $_GET['view'] )){
 
 }
 
-if ( isset( $_POST['create'] ) || isset( $_POST['update'] ) ) {
+if ( isset( $_POST['create'] ) || isset( $_POST['update'] ) ) { 
 
   $h_alias = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_alias'] ); 
   $h_author = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_author'] );
