@@ -22,7 +22,7 @@ if ( !is_dir( $directory) ) {
 }
 
 include 'inc/config.php';
-include 'inc/class.actions.php';
+include 'inc/classes/class.actions.php';
 $action = new _hActions;
 $action -> connectDB();
 

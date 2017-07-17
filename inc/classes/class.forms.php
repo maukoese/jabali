@@ -671,6 +671,7 @@ class _hForms {
               <label for="remember-me">Activate Account</label>
             </div>
           </div>
+          </div>
         <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
           <div style="height:0px; overflow:hidden">
             <input type="file" id="h_avatar" name="h_avatar" />

@@ -367,8 +367,8 @@ if ( isset( $_GET['settings'] ) ) {
         }
 ?>
     <title>Theme Color Options [ <?php showOption( 'name' ); ?> ]</title>
-    <div class="mdl-grid mdl-cell mdl-cell--12-col" >
-        <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-grid">
+    <div class="mdl-grid mdl-grid--no-spacing mdl-cell mdl-cell--12-col" >
+        <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-grid mdl-shadow--2dp">
         	<div class=" mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
         		<style type="text/css">
                 .cholder {
@@ -377,7 +377,7 @@ if ( isset( $_GET['settings'] ) ) {
 
                 .ccolor {
                     height: 30px;
-                    width: 50px;
+                    width: 40px;
                     border-radius: 8%;
                     border: white 1px solid;
                 }
@@ -562,10 +562,17 @@ if ( isset( $_GET['settings'] ) ) {
                             <span class="ccolor mdl-color--madge"></span><span class="ccolor csec mdl-color--sony"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="madge">Madge Sony</div>
+
+                    <div class="input-field inline">
+                        <input type="radio" id="madge" name="theme" value="madge" <?php isTheme ('madge' ); ?>>
+                        <label for="madge"><p class="cholder" for="madge">
+                            <span class="ccolor mdl-color--black"></span><span class="ccolor csec mdl-color--cyan"></span>
+                        </p></label>
+                    </div><div class="mdl-tooltip" for="madge">Madge Sony</div>
                     
 
                     <div class="input-field"><br>
-                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" type="submit" name="mystyle" style="float:right;"><i class="material-icons">save</i></button>
+                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored alignright" type="submit" name="mystyle"><i class="material-icons">save</i></button>
                     </div>
                 </form>
                 </div>
@@ -609,14 +616,14 @@ if ( isset( $_GET['settings'] ) ) {
                         <label for="customs" data-error="wrong" data-success="right" class="center-align">Custom CSS </label>
                     </div>
 
-                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" type="submit" name="custom" style="float:right;"><i class="material-icons">save</i></button>
+                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored alignright" type="submit" name="custom"><i class="material-icons">save</i></button>
                 </form>
                 </div>
             </div>
         </div>
 
-        <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-grid mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
-            <div class="mdl-cell mdl-cell--12-col mdl-card">
+        <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-grid mdl-shadow--2dp">
+            <div class="mdl-cell mdl-cell--12-col mdl-card mdl-color--<?php primaryColor(); ?>">
                 <div class="mdl-card__title">
                     <div class="mdl-card__title-text">
                         Color Palette
@@ -627,7 +634,7 @@ if ( isset( $_GET['settings'] ) ) {
                         <i class="material-icons">palette</i>
                     </div>
                 </div>
-                <div class="mdl-card_supporting-text"><br>
+                <div class="mdl-card_supporting-text" style="margin: 5%;"><br>
                    <p class="cholder">
                         <span class="ccolor mdl-color--red"></span><span class="clabel"> Red</span><span class="clabel"> ( red )</span>
                     </p><br>

@@ -836,48 +836,48 @@ function snuffle() {
 * Autoload Classes
 **/
 
-include 'class.dbobject.php';
-include 'class.mysqlidb.php';
+include 'classes/class.dbobject.php';
+include 'classes/class.mysqlidb.php';
 
-include 'class.global.php';
+include 'classes/class.global.php';
 $hGlobal = new _hGlobal();
 
-include 'class.options.php';
+include 'classes/class.options.php';
 $hOpt = new _hOptions();
 
-include 'class.menus.php';
+include 'classes/class.menus.php';
 $hMenu = new _hMenus();
 
-include 'class.forms.php';
+include 'classes/class.forms.php';
 $hForm = new _hForms();
 
-include 'class.users.php';
+include 'classes/class.users.php';
 $hUser = new _hUsers();
 
-include 'class.posts.php';
+include 'classes/class.posts.php';
 $hPost = new _hPosts();
 
-include 'class.resources.php';
+include 'classes/class.resources.php';
 $hResource = new _hResources();
 
-include 'class.services.php';
+include 'classes/class.services.php';
 $hService = new _hServices();
 
-include 'class.messages.php';
+include 'classes/class.messages.php';
 $hMessage = new _hMessages();
 
-include 'class.comments.php';
+include 'classes/class.comments.php';
 $hComment = new _hComments();
 
-include 'class.widgets.php';
+include 'classes/class.widgets.php';
 $hWidget = new _hWidgets();
 
-include 'class.social.php';
+include 'classes/class.social.php';
 $hSocial = new _hSocial();
 
 // loading the class
 if ( !class_exists('\App\Shortcodes') ) {
-    require ( 'class.shortcodes.php' );
+    require ( 'classes/class.shortcodes.php' );
 }
 function add_shortcode($tag, $callback) {
 

@@ -987,6 +987,12 @@ p {
   letter-spacing: 0;
   margin-bottom: 16px; }
 
+  article p {
+    margin-bottom: 30px;
+    color: #555;
+    font-size: 1.2em;
+    line-height: 1.8em; }
+
 a {
   font-weight: 500; }
 
