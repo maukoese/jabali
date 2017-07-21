@@ -9,8 +9,8 @@
 
 define( "hDBNAME", "jabali" );
 define( "hDBUSER", "root" );
-define( "hDBPASS", "" );
+define( "hDBPASS", "toortoor" );
 define( "hDBHOST", "localhost" );
-define( "hROOT", "http://localhost:8080/jabali/" );
+define( "hROOT", "http://localhost/jabali/" );
 
 define( "hDBPREFIX", "db_" ); ?>

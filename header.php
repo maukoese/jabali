@@ -4,11 +4,6 @@ session_start();
 if ( isset( $_GET['logout'] ) ) {
   session_unset();
   session_destroy();
-}
-
-include './inc/jabali.php';
-if ( file_exists('./inc/config.php' ) ) {
-    connectDb();
 } ?>
 <!doctype html>
 <!--

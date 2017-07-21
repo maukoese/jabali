@@ -23,6 +23,7 @@ if ( !is_dir( $directory) ) {
 
 include 'inc/config.php';
 include 'inc/classes/class.actions.php';
+global $action;
 $action = new _hActions;
 $action -> connectDB();
 
@@ -64,8 +65,40 @@ if ( isset( $_POST['reset'] ) && $_POST['h_password'] !== "" ) {
 //     header( 'HTTP/1/404 Not Found');
 //   }
 // }
-$path = ltrim( $_SERVER['REQUEST_URI'], '/' );
-$elements = explode('/', $path );
-echo $path;
-echo $elements;
-include 'footer.php'; ?>
+
+/**
+* @package Jabali Framework
+* @subpackage Home
+* @link https://docs.mauko.co.ke/jabali/home
+* @author Mauko Maunde
+* @version 0.17.06
+**/
+include 'inc/jabali.php';
+connectDb();
+
+$protocol = ((!empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] != 'off' ) || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+if ( is_localhost() ) { 
+$url = ltrim( $_SERVER['REQUEST_URI'] . '/' ); 
+} else { 
+$url = $_SERVER['REQUEST_URI'] . '/'; 
+}
+
+$element = ltrim('/', $url);
+$elements = explode('/', $element);
+$actions = array( 'login', 'reset', 'register', 'forgot' );
+$act = in_array( $act, $actions );
+
+if(empty($elements[0])) {
+	call_user_func_array( array( $action, 'home' ), array() );
+} else switch(array_shift($elements)) {
+    case $act:
+    call_user_func_array( array( $action, $act ), array() );
+        break;
+    case 'blog':
+    echo $elements;
+    echo "<br>";
+    echo $elements[0];
+    	call_user_func_array( array($action, 'fetchPosts' ), array( 'article', 'blog' ) );
+    	break;
+}
+include 'footer.php';
