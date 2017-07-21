@@ -38,16 +38,34 @@ if ( isset( $_POST['reset'] ) && $_POST['h_password'] !== "" ) {
   call_user_func_array(array($action, 'resetPass'), array());
 }
 
-if ( isset( $_GET['q'] ) ) {
-  $actions = array( 'login', 'reset', 'register', 'forgot' );
+// if ( isset( $_GET['q'] ) ) {
+//   $actions = array( 'login', 'reset', 'register', 'forgot' );
 
-  if ( !is_file( $_GET['q'] ) && !is_dir( $_GET['q'] ) && in_array($_GET['q'], $actions) ) {
-    call_user_func_array( array( $action, $_GET['q'] ), array() );
-  } else {
-    call_user_func_array( array($action, 'fetchPosts' ), array( 'article', $_GET['q'] ) );
-  }
-} else {
-  call_user_func_array( array($action, 'home' ), array() );
-}
+//   if ( !is_file( $_GET['q'] ) && !is_dir( $_GET['q'] ) && in_array($_GET['q'], $actions) ) {
+//     call_user_func_array( array( $action, $_GET['q'] ), array() );
+//   } else {
+//     call_user_func_array( array($action, 'fetchPosts' ), array( 'article', $_GET['q'] ) );
+//   }
+// } else {
+//   call_user_func_array( array($action, 'home' ), array() );
+// }
 
+// $path = ltrim( $_SERVER['REQUEST_URI'], '/' );
+// $elements = explode('/', $path );
+// $actions = array( 'login', 'reset', 'register', 'forgot' );
+// if ( empty( $elements[0] ) ) {
+//   call_user_func_array( array($action, 'home' ), array() );
+// } else {
+//   switch( array_shift( $elements ) ) {
+//     case $actions:
+//       call_user_func_array( array( $action, $elements[1] ), array() );
+//       break;
+//     default: 
+//     header( 'HTTP/1/404 Not Found');
+//   }
+// }
+$path = ltrim( $_SERVER['REQUEST_URI'], '/' );
+$elements = explode('/', $path );
+echo $path;
+echo $elements;
 include 'footer.php'; ?>
