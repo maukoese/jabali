@@ -64,10 +64,6 @@ if( empty( $elements[0] ) ) {
 	call_user_func_array( array( $action, 'home' ), array() );
 } else {
 
-	$one = $elements[0];
-	$two = $elements[1];
-	$three = $elements[3];
-
 	if ( $elements[0] == 'login' ) {
 		call_user_func_array(array( $action, 'login' ), array() ); 
 	} elseif ( $elements[0] == 'reset' ) { 
