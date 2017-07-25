@@ -176,8 +176,7 @@ if (isset($_POST['register']) ) {
     }
 }
 
-if ( !file_exists("./inc/.zahra") ) { ?>
-    <title>Install <?php _show_( ucwords($_GET['module']) ); ?> [ JABALI ]</title><?php 
+if ( !file_exists( "./inc/.zahra" ) ) {    
     installJabali(); ?>
     <!DOCTYPE html>
     <html>
@@ -252,5 +251,5 @@ if ( !file_exists("./inc/.zahra") ) { ?>
     	<script src="./inc/assets/js/widgets/pie-chart/pie-chart-nvd3.js"></script>
     	<script src="./inc/assets/js/widgets/table/table.js"></script>
     	<script src="./inc/assets/js/widgets/todo/todo.js"></script>
-    </html>
+    </html><?php
 } ?>

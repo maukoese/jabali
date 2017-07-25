@@ -1,0 +1,11 @@
+# JABALI INIT
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /jabali/
+RewriteRule ^index\.php$ - [L]
+RewriteRule ^([^\.]+)$ $1.php [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /jabali/index.php [L]
+</IfModule>
+# JABALI EXIT
