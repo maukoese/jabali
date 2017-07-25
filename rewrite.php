@@ -50,41 +50,23 @@ if ( isset( $_POST['reset'] ) && $_POST['h_password'] !== "" ) {
 include 'inc/jabali.php';
 connectDb();
 
-$url = $_SERVER['REQUEST_URI'];
-
+$protocol = ((!empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] != 'off' ) || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 if ( is_localhost() ) { 
-	$url = ltrim( $url, '/'.dirname(__FILE__) );
+	$url = $_SERVER['REQUEST_URI'];
 } else { 
 	$url = $_SERVER['REQUEST_URI'] . '/'; 
 }
 
-$elements = split('/', $url );
+$elements = explode('/', $url );
+$actions = array( 'login', 'reset', 'register', 'forgot' );
 
-if( empty( $elements[0] ) ) {
+if(empty($elements[0])) {
 	call_user_func_array( array( $action, 'home' ), array() );
+} elseif ( in_array( $elements[0], $actions ) ) {
+	echo $elements[0];
+	call_user_func_array( array( $action, $elements[0] ), array() );
 } else {
-
-	$one = $elements[0];
-	$two = $elements[1];
-	$three = $elements[3];
-
-	if ( $elements[0] == 'login' ) {
-		call_user_func_array(array( $action, 'login' ), array() ); 
-	} elseif ( $elements[0] == 'reset' ) { 
-		call_user_func_array(array( $action, 'reset' ), array() );
-	} elseif ( $elements[0] == 'register' ) {
-		call_user_func_array(array( $action, 'register' ), array() );
-	} elseif ( $elements[0] == 'forgot' ) {
-		call_user_func_array(array( $action, 'forgot' ), array() );
-	} elseif ( $elements[0] == 'blog' ) {
-		call_user_func_array(array( $action, 'blog' ), array() );
-	} elseif ( $elements[0] == 'category') {
-		call_user_func_array( array($action, 'category' ), array( $elements[1] ) );
-	} elseif ( $elements[0] == 'tag') {
-		call_user_func_array( array($action, 'tags' ), array( $elements[1] ) );
-	} else {
-		call_user_func_array( array($action, 'fetchPosts' ), array( $one ) );
-	}
+	call_user_func_array( array($action, 'fetchPosts' ), array( 'article', $elements[0] ) );
 }
 
 include 'footer.php';

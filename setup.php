@@ -7,8 +7,50 @@
 * @version 0.17.06
 **/
 
+
+function isLocalhost() {
+    $whitelist = array( '127.0.0.1', '::1' );
+    if ( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ) {
+        return true;
+    }
+}
+
 if ( file_exists('./inc/config.php' ) ) {
 	header( "Location: ./install.php" );
+}
+
+if ( !file_exists( '.htaccess' ) ) {
+	$rewrite = fopen( '.htaccess', 'w' );
+	$text = "RewriteEngine On";
+	fwrite( $rewrite,  $text );
+	$txt = "\n";
+	fwrite( $rewrite,  $txt );
+
+	if ( isLocalhost() ) {
+		$text = 'RewriteBase '.dirname( __FILE__ ).'';
+	} else {
+		$base = 'RewriteBase /';
+	}
+
+	fwrite( $rewrite, $base );
+	$txt = "\n";
+	fwrite( $rewrite,  $txt );
+	$text = 'RewriteCond %{REQUEST_FILENAME} !-d';
+	fwrite( $rewrite,  $text );
+	$txt = "\n";
+	fwrite( $rewrite,  $txt );
+	$text = 'RewriteCond %{REQUEST_FILENAME} !-f';
+	fwrite( $rewrite,  $text );
+	$txt = "\n";
+	fwrite( $rewrite,  $txt );
+	$text = 'RewriteRule . index.php [L]';
+	fwrite( $rewrite,  $text );
+	$txt = "\n";
+	fwrite( $rewrite,  $txt );
+	$text = 'RewriteRule ^([^\.]+)$ $1.php [NC]';
+	fwrite( $rewrite,  $text );
+	$txt = "\n";
+	fwrite( $rewrite,  $txt );
 }
 
 if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" && $_POST['prefix'] != "" && $_POST['name'] != "" ) {
@@ -89,14 +131,7 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 	if ( conFigure( $dbhost, $dbname, $dbuser, $dbpass, $home, $dbprefix ) ) {
 		header( "Location: ./install.php" );
 	}
-} else { 
-
-    function isLocalhost() {
-	    $whitelist = array( '127.0.0.1', '::1' );
-	    if ( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ) {
-	        return true;
-	    }
-    }
+} else {
 
     $protocol = ((!empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] != 'off' ) || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://"; ?>
     <!doctype html>

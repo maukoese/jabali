@@ -7,7 +7,7 @@
 * @version 0.17.06
 **/
 
-define( "hDBNAME", "jabali" );
+define( "hDBNAME", "jabal" );
 define( "hDBUSER", "root" );
 define( "hDBPASS", "toortoor" );
 define( "hDBHOST", "localhost" );

@@ -492,66 +492,15 @@ class _hActions {
 		return $types;
 	}
 
-	function fetchPosts( $type, $code ) { 
+	function fetchPosts( $code ) { 
 		include 'header.php' ;
-		$taxonomies = array( 'category', 'categories', 'tag', 'tags');
-		$types = _hActions::postTypes();
-		$actions = new _hActions();
-		if ( in_array( $code, $taxonomies ) || in_array( $code, $types ) ) {
-			call_user_func_array( array( $actions, $code), array( $args ) );
-		} else {}
-		if ( $code == "blog") { ?>
-			<title>Blog [ <?php showOption( 'name' ); ?> ]</title><?php
-			$getPosts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE (h_type = '".$type."' AND h_status = 'published' ) ORDER BY h_created DESC" );
-			if ( $getPosts -> num_rows > 0) { ?>
-				<div class="mdl-grid">
-						<div class="mdl-cell mdl-cell--9-col mdl-grid"><?php 
-							while ( $postsDetails = mysqli_fetch_assoc( $getPosts)){ ?>
-							<div class="mdl-cell card">
-    <div class="card-image waves-effect waves-block waves-light">
-      <img class="activator" src="<?php _show_( $postsDetails['h_avatar'] ); ?>">
-    </div>
-    <div class="card-content mdl-color-text--black">
-      <a href="<?php _show_( hROOT.$postsDetails['h_link'] ); ?>"><span class="card-title grey-text text-darken-4"><?php _show_( $postsDetails['h_alias'] ); ?><i class="material-icons right">arrow_forward</i></span></a>
-      <span class="mdl-list__item mdl-color-text--black"><i class="material-icons mdl-list__item-icon mdl-color-text--black">today</i><span style="padding-left: 20px"><?php $date = $postsDetails['h_created'];
-              $date = explode(" ", $date); _show_( $date[0] ); ?></span>
-    </div>
-    <div class="card-reveal mdl-color-text--black">
-      <span class="card-title grey-text text-darken-4"><i class="material-icons left">perm_identity</i> <a href="./user/<?php _show_( $postsDetails['h_by'] ); ?>"><?php _show_( $postsDetails['h_by'] ); ?></a><i class="material-icons right">close</i></span><br>
-      <article>
-      	<?php _show_( substr( $postsDetails['h_description'], 0, 240 ) ); 
-      ?> ...
-      	
-      </article> <a class="mdl-button mdl-button--colored" href="<?php _show_( hROOT.$postsDetails['h_link'] ); ?>">read more</a><br>
-      <p>Posted In: <a href="./category/<?php _show_( $postsDetails['h_category'] ); ?>"><?php _show_( ucwords( $postsDetails['h_category'] ) ); ?></a></p>
-      <p>Tagged: <a href="./tag/<?php _show_( $postsDetails['h_tags'] ); ?>"><?php _show_( ucwords( $postsDetails['h_tags'] ) ); ?></a></p>
-    </div>
-  </div><?php
-							} ?>
-						</div>
-						<div class="mdl-cell mdl-cell--3-col" >
-							<form>
-								<center>
-									<div class="input-field">
-										<i class="material-icons prefix">search</i>
-										<input type="text" placeholder="Search Blog">
-									</div>
-								</center>
-							</form>
-						</div>
-					</div><?php 
-			include 'footer.php';
-			} else {
-				_hActions::error404( 'posts' );
-			}
-		} else {
 			$getPosts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE h_link = '".$code."'" );
 			if ( $getPosts -> num_rows > 0) { ?>
 				<div class="mdl-grid"><?php 
 					while ( $postsDetails = mysqli_fetch_assoc( $getPosts)){  ?>
 						<title><?php _show_( $postsDetails['h_alias']); ?> [ <?php showOption( 'name' ); ?> ]</title>
 					      <div class="mmm-ribbon mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ){ primaryColor(); } else { echo "madge"; } ?>" style="background: url( <?php _show_( $postsDetails['h_avatar']); ?> ); background-repeat:no-repeat; background-size: cover; background-position: center;">
-					      <center><b><h1><?php _show_( $postsDetails['h_alias']); ?></h1></b>
+					      <center><h1><b><?php _show_( $postsDetails['h_alias']); ?></b></h1>
 					      <span><h6>Published by <b><?php _show_( $postsDetails['h_by']); ?></b> on <b><?php $date = $postsDetails['h_created'];
               $date = explode(" ", $date); _show_( $date[0].' at '.$date[1] ); ?></b></h6></span></center>
 					      </div>
@@ -561,7 +510,7 @@ class _hActions {
 						            <article class="mdl-color-text--black">
 						            	<?php _show_( $postsDetails['h_description']); ?>
 						            </article>
-						            <?php $hForm -> commentForm(); ?>
+						            <?php _hForms::commentForm(); ?>
 						        </div>
 					      </div>
 					<?php } ?>
@@ -570,9 +519,161 @@ class _hActions {
 			} else {
 				_hActions::error404( 'post' );
 			}
-
-			}  
+ 
 	  	include 'footer.php';
+	}
+
+	function blog() { 
+		include 'header.php' ; ?>
+		<title>Blog [ <?php showOption( 'name' ); ?> ]</title><?php
+		$this -> connectDB();
+		$getPosts = mysqli_query( $conn, "SELECT * FROM hposts WHERE h_status = 'published' ORDER BY h_created DESC" );
+		if ( $getPosts -> num_rows > 0) { ?>
+			<div class="mdl-grid">
+				<div class="mdl-cell mdl-cell--9-col mdl-grid"><?php 
+				while ( $postsDetails = mysqli_fetch_assoc( $getPosts)){ ?>
+					<div class="mdl-cell card">
+						<div class="card-image waves-effect waves-block waves-light">
+							<img class="activator" src="<?php _show_( $postsDetails['h_avatar'] ); ?>">
+						</div>
+
+						<div class="card-content mdl-color-text--black">
+							<a href="<?php _show_( hROOT.$postsDetails['h_link'] ); ?>"><span class="card-title grey-text text-darken-4"><?php _show_( $postsDetails['h_alias'] ); ?><i class="material-icons right">arrow_forward</i></span></a>
+							<span class="mdl-list__item mdl-color-text--black"><i class="material-icons mdl-list__item-icon mdl-color-text--black">today</i><span style="padding-left: 20px"><?php $date = $postsDetails['h_created'];
+							$date = explode(" ", $date); _show_( $date[0] ); ?></span>
+						</div>
+
+						<div class="card-reveal mdl-color-text--black">
+							<span class="card-title grey-text text-darken-4"><i class="material-icons left">perm_identity</i> <a href="./user/<?php _show_( $postsDetails['h_by'] ); ?>"><?php _show_( $postsDetails['h_by'] ); ?></a><i class="material-icons right">close</i></span><br>
+							<article>
+							<?php _show_( substr( $postsDetails['h_description'], 0, 240 ) ); 
+							?> ...
+
+							</article> 
+							<a class="mdl-button mdl-button--colored" href="<?php _show_( hROOT.$postsDetails['h_link'] ); ?>">read more</a><br>
+							<p>Posted In: <a href="./category/<?php _show_( $postsDetails['h_category'] ); ?>"><?php _show_( ucwords( $postsDetails['h_category'] ) ); ?></a></p>
+							<p>Tagged: <a href="./tag/<?php _show_( $postsDetails['h_tags'] ); ?>"><?php _show_( ucwords( $postsDetails['h_tags'] ) ); ?></a></p>
+						</div>
+					</div><?php 
+				} ?>
+				</div>
+				<div class="mdl-cell mdl-cell--3-col" >
+				<form>
+					<center>
+						<div class="input-field">
+							<i class="material-icons prefix">search</i>
+							<input type="text" placeholder="Search Blog">
+						</div>
+					</center>
+				</form>
+				</div>
+			</div><?php 
+			include 'footer.php';
+		} else {
+			_hActions::error404( 'posts' );
+		}
+	}
+
+	function category( $cat ) { 
+		include 'header.php' ; ?>
+		<title>Category : <?php _show_( ucwords( $cat ) ); ?> [ <?php showOption( 'name' ); ?> ]</title><?php
+		$this -> connectDB();
+		$getPosts = mysqli_query( $conn, "SELECT * FROM hposts WHERE ( h_status = 'published' AND h_category = '".$cat."' ) ORDER BY h_created DESC" );
+		if ( $getPosts -> num_rows > 0) { ?>
+			<div class="mdl-grid">
+				<div class="mdl-cell mdl-cell--9-col mdl-grid"><?php 
+				while ( $postsDetails = mysqli_fetch_assoc( $getPosts)){ ?>
+					<div class="mdl-cell card">
+						<div class="card-image waves-effect waves-block waves-light">
+							<img class="activator" src="<?php _show_( $postsDetails['h_avatar'] ); ?>">
+						</div>
+
+						<div class="card-content mdl-color-text--black">
+							<a href="<?php _show_( hROOT.$postsDetails['h_link'] ); ?>"><span class="card-title grey-text text-darken-4"><?php _show_( $postsDetails['h_alias'] ); ?><i class="material-icons right">arrow_forward</i></span></a>
+							<span class="mdl-list__item mdl-color-text--black"><i class="material-icons mdl-list__item-icon mdl-color-text--black">today</i><span style="padding-left: 20px"><?php $date = $postsDetails['h_created'];
+							$date = explode(" ", $date); _show_( $date[0] ); ?></span>
+						</div>
+
+						<div class="card-reveal mdl-color-text--black">
+							<span class="card-title grey-text text-darken-4"><i class="material-icons left">perm_identity</i> <a href="./user/<?php _show_( $postsDetails['h_by'] ); ?>"><?php _show_( $postsDetails['h_by'] ); ?></a><i class="material-icons right">close</i></span><br>
+							<article>
+							<?php _show_( substr( $postsDetails['h_description'], 0, 240 ) ); 
+							?> ...
+
+							</article> 
+							<a class="mdl-button mdl-button--colored" href="<?php _show_( hROOT.$postsDetails['h_link'] ); ?>">read more</a><br>
+							<p>Posted In: <a href="./category/<?php _show_( $postsDetails['h_category'] ); ?>"><?php _show_( ucwords( $postsDetails['h_category'] ) ); ?></a></p>
+							<p>Tagged: <a href="./tag/<?php _show_( $postsDetails['h_tags'] ); ?>"><?php _show_( ucwords( $postsDetails['h_tags'] ) ); ?></a></p>
+						</div>
+					</div><?php 
+				} ?>
+				</div>
+				<div class="mdl-cell mdl-cell--3-col" >
+				<form>
+					<center>
+						<div class="input-field">
+							<i class="material-icons prefix">search</i>
+							<input type="text" placeholder="Search Blog">
+						</div>
+					</center>
+				</form>
+				</div>
+			</div><?php 
+			include 'footer.php';
+		} else {
+			_hActions::error404( 'posts' );
+		}
+	}
+
+	function tags( $tag ) { 
+		include 'header.php' ; ?>
+		<title>Tag : <?php _show_( ucwords( $tag ) ); ?> [ <?php showOption( 'name' ); ?> ]</title><?php
+		$this -> connectDB();
+		$getPosts = mysqli_query( $conn, "SELECT * FROM hposts WHERE ( h_status = 'published' AND h_tags = '".$tag."' ) ORDER BY h_created DESC" );
+		if ( $getPosts -> num_rows > 0) { ?>
+			<div class="mdl-grid">
+				<div class="mdl-cell mdl-cell--9-col mdl-grid"><?php 
+				while ( $postsDetails = mysqli_fetch_assoc( $getPosts)){ ?>
+					<div class="mdl-cell card">
+						<div class="card-image waves-effect waves-block waves-light">
+							<img class="activator" src="<?php _show_( $postsDetails['h_avatar'] ); ?>">
+						</div>
+
+						<div class="card-content mdl-color-text--black">
+							<a href="<?php _show_( hROOT.$postsDetails['h_link'] ); ?>"><span class="card-title grey-text text-darken-4"><?php _show_( $postsDetails['h_alias'] ); ?><i class="material-icons right">arrow_forward</i></span></a>
+							<span class="mdl-list__item mdl-color-text--black"><i class="material-icons mdl-list__item-icon mdl-color-text--black">today</i><span style="padding-left: 20px"><?php $date = $postsDetails['h_created'];
+							$date = explode(" ", $date); _show_( $date[0] ); ?></span>
+						</div>
+
+						<div class="card-reveal mdl-color-text--black">
+							<span class="card-title grey-text text-darken-4"><i class="material-icons left">perm_identity</i> <a href="./user/<?php _show_( $postsDetails['h_by'] ); ?>"><?php _show_( $postsDetails['h_by'] ); ?></a><i class="material-icons right">close</i></span><br>
+							<article>
+							<?php _show_( substr( $postsDetails['h_description'], 0, 240 ) ); 
+							?> ...
+
+							</article> 
+							<a class="mdl-button mdl-button--colored" href="<?php _show_( hROOT.$postsDetails['h_link'] ); ?>">read more</a><br>
+							<p>Posted In: <a href="./category/<?php _show_( $postsDetails['h_category'] ); ?>"><?php _show_( ucwords( $postsDetails['h_category'] ) ); ?></a></p>
+							<p>Tagged: <a href="./tag/<?php _show_( $postsDetails['h_tags'] ); ?>"><?php _show_( ucwords( $postsDetails['h_tags'] ) ); ?></a></p>
+						</div>
+					</div><?php 
+				} ?>
+				</div>
+				<div class="mdl-cell mdl-cell--3-col" >
+				<form>
+					<center>
+						<div class="input-field">
+							<i class="material-icons prefix">search</i>
+							<input type="text" placeholder="Search Blog">
+						</div>
+					</center>
+				</form>
+				</div>
+			</div><?php 
+			include 'footer.php';
+		} else {
+			_hActions::error404( 'posts' );
+		}
 	}
 
 	function home() {
@@ -582,8 +683,8 @@ class _hActions {
 			<div class="mdl-grid"><?php 
 					while ( $postsDetails = mysqli_fetch_assoc( $getPosts)){  ?>
 						<title><?php showOption( 'name' ); ?> [ <?php showOption( 'description' ); ?> ]</title>
-					      <div class="mmm-ribbon mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ){ primaryColor(); } else { echo "madge"; } ?>" style="background: url( <?php _show_( $postsDetails['h_avatar']); ?> ); background-repeat:no-repeat; background-size: cover; background-position: center; min-height: 600px; max-height: 650px;">
-					      <center><b><h1><br><?php showOption ( 'name' ); ?></h1></b>
+					      <div class="mmm-ribbon mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ){ primaryColor(); } else { echo "madge"; } ?>" style="background: url( <?php _show_( $postsDetails['h_avatar']); ?> ); background-repeat:no-repeat; background-size: cover; background-position: center; min-height: 600px; max-height: 750px;">
+					      <center><h1><br><b><?php showOption ( 'name' ); ?></b></h1>
 					      <span><h3><b><?php showOption ( 'description' ); ?></b></h3></span>
 					      <a class="btn btn-large mdl-color--red" href="#">GET STARTED</a></center>
 					      </div>
