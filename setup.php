@@ -168,7 +168,7 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 
 					        <div class="mdl-cell mdl-cell--2-col"></div>
 					        <div class="input-field mdl-cell mdl-cell--9-col">
-						        <i class="material-icons prefix">perm_identity</i>
+						        <i class="material-icons prefix">public</i>
 						        <input name="host" id="host" type="text" value="localhost">
 						        <label for="host" class="center-align">Database Host</label>
 					        </div>
@@ -189,7 +189,7 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 
 					        <div class="mdl-cell mdl-cell--2-col"></div>
 					        <div class="input-field mdl-cell mdl-cell--9-col">
-						        <i class="material-icons prefix">perm_identity</i>
+						        <i class="material-icons prefix">label</i>
 						        <input name="name" id="name" type="text" value="jabali">
 						        <label for="name" class="center-align">Database Name</label>
 					        </div>

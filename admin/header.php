@@ -255,12 +255,7 @@ $dB = new MysqliDb ($GLOBALS['conn']); ?>
           $hMenu -> drawer(); ?>
           <div class="mdl-layout-spacer"></div><?php 
           if ( isCap( 'admin' ) ) { ?>
-          <a class="mdl-navigation__link" id="extensions" href="#"><i class="mdl-color-text--white material-icons" role="presentation">power</i>Extensions</a>
-          <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor(); ?>" for="extensions">
-          <a class="mdl-navigation__link" href="./extensions?view=active"><i class="mdl-color-text--white material-icons" role="presentation">schedule</i><span>Active Extensions</span></a>
-          <a class="mdl-navigation__link" href="./extensions?view=installed"><i class="mdl-color-text--white material-icons" role="presentation">link</i><span>Installed Extensions</span></a>
-          <a class="mdl-navigation__link" href="./extensions?add=new"><i class="mdl-color-text--white material-icons" role="presentation">file_download</i><span>Add Extensions</span></a>
-          </ul><?php } ?>
+          <a class="mdl-navigation__link" id="extensions" href="./extensions"><i class="mdl-color-text--white material-icons" role="presentation">power</i>Extensions</a><?php } ?>
           
           <a id="hpref" class="mdl-navigation__link" href="#"><i class="mdl-color-text--white material-icons" role="presentation">settings</i>Preferences</a>
             <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor(); ?>" for="hpref">

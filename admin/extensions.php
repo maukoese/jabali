@@ -45,136 +45,25 @@ if ( isset( $_GET['install'] ) ) {
 	<div class="mdl-grid">
   <div class="mdl-cell mdl-cell--8-col mdl-card mdl-shadow--2dp  mdl-color--<?php primaryColor(); ?>">
 
-  <ul id="tabs-swipe-demo" style="border-radius: 5px;" class="tabs mdl-card__title mdl-card--expand">
-      <li class="tab col s3"><a class="active" href="#test-swipe-1">All</a></li>
-      <li class="tab col s3"><a href="#test-swipe-2">Ecommerce</a></li>
-      <li class="tab col s3"><a href="#test-swipe-3">Accounting</a></li>
-      <li class="tab col s3"><a href="#test-swipe-4">Education</a></li>
-      <li class="tab col s3"><a href="#test-swipe-5">Events</a></li>
-  </ul>
-
   <div class="mdl-card__supporting-text">
-  <div id="test-swipe-1" class="col s12"><?php 
-  	$getXs = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hextensions" );
-  	if ( $getXs -> num_rows > 0) {
-  	 	while ( $xDeet = mysqli_fetch_assoc( $getXs) ) { ?>
-  	 		<div class="mdl-cell mdl-card">
-          <div class="mdl-card-media">
-              <img src="<?php _show_( $xDeet['h_avatar'] ); ?>" width="100%" style="overflow: hidden;" >
-          </div>
-          <div class="mdl-card__title mdl-card--expand">
-            <?php _show_( $xDeet['h_alias'] ); ?>
-          </div>
-  	 			<div class="mdl-card__supporting-text">
-            <?php _show_( $xDeet['h_description'] ); ?>
-          </div>
-          <div class="mdl-card__menu">
-          <a href="?install=<?php echo strtolower( $xDeet["h_alias"] ); ?>" class="mdl-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons">file_download</i></a>
-          <a href="?activate=<?php echo $xDeet["h_code"]; ?>" class="mdl-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons">play_arrow</i></a>
-          </div>
-  	 		</div><?php 
-  	 	} 
-  	} else {
-      echo "No Extensions Found";
-    } ?>
-  </div>
-  <div id="test-swipe-2" class="col s12"><?php 
-    $getXs = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hextensions" );
-    if ( $getXs -> num_rows > 0) {
-      while ( $xDeet = mysqli_fetch_assoc( $getXs) ) { ?>
-        <div class="mdl-cell mdl-card">
-          <div class="mdl-card-media">
-              <img src="<?php _show_( $xDeet['h_avatar'] ); ?>" width="100%" style="overflow: hidden;" >
-          </div>
-          <div class="mdl-card__title mdl-card--expand">
-            <?php _show_( $xDeet['h_alias'] ); ?>
-          </div>
-          <div class="mdl-card__supporting-text">
-            <?php _show_( $xDeet['h_description'] ); ?>
-          </div>
-          <div class="mdl-card__menu">
-          <a href="?install=<?php echo strtolower( $xDeet["h_alias"] ); ?>" class="mdl-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons">file_download</i></a>
-          <a href="?activate=<?php echo $xDeet["h_code"]; ?>" class="mdl-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons">play_arrow</i></a>
-          </div>
-        </div><?php 
-      } 
-    } else {
-      echo "No Extensions Found";
-    } ?>
-  </div>
-  <div id="test-swipe-3" class="col s12"><?php 
-    $getXs = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hextensions" );
-    if ( $getXs -> num_rows > 0) {
-      while ( $xDeet = mysqli_fetch_assoc( $getXs) ) { ?>
-        <div class="mdl-cell mdl-card">
-          <div class="mdl-card-media">
-              <img src="<?php _show_( $xDeet['h_avatar'] ); ?>" width="100%" style="overflow: hidden;" >
-          </div>
-          <div class="mdl-card__title mdl-card--expand">
-            <?php _show_( $xDeet['h_alias'] ); ?>
-          </div>
-          <div class="mdl-card__supporting-text">
-            <?php _show_( $xDeet['h_description'] ); ?>
-          </div>
-          <div class="mdl-card__menu">
-          <a href="?install=<?php echo strtolower( $xDeet["h_alias"] ); ?>" class="mdl-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons">file_download</i></a>
-          <a href="?activate=<?php echo $xDeet["h_code"]; ?>" class="mdl-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons">play_arrow</i></a>
-          </div>
-        </div><?php 
-      } 
-    } else {
-      echo "No Extensions Found";
-    } ?>
-  </div>
-  <div id="test-swipe-4" class="col s12"><?php 
-    $getXs = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hextensions" );
-    if ( $getXs -> num_rows > 0) {
-      while ( $xDeet = mysqli_fetch_assoc( $getXs) ) { ?>
-        <div class="mdl-cell mdl-card">
-          <div class="mdl-card-media">
-              <img src="<?php _show_( $xDeet['h_avatar'] ); ?>" width="100%" style="overflow: hidden;" >
-          </div>
-          <div class="mdl-card__title mdl-card--expand">
-            <?php _show_( $xDeet['h_alias'] ); ?>
-          </div>
-          <div class="mdl-card__supporting-text">
-            <?php _show_( $xDeet['h_description'] ); ?>
-          </div>
-          <div class="mdl-card__menu">
-          <a href="?install=<?php echo strtolower( $xDeet["h_alias"] ); ?>" class="mdl-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons">file_download</i></a>
-          <a href="?activate=<?php echo $xDeet["h_code"]; ?>" class="mdl-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons">play_arrow</i></a>
-          </div>
-        </div><?php 
-      } 
-    } else {
-      echo "No Extensions Found";
-    } ?>
-  </div>
-
-  <div id="test-swipe-5" class="col s12"><?php 
-    $getXs = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hextensions" );
-    if ( $getXs -> num_rows > 0) {
-      while ( $xDeet = mysqli_fetch_assoc( $getXs) ) { ?>
-        <div class="mdl-cell mdl-card">
-          <div class="mdl-card-media">
-              <img src="<?php _show_( $xDeet['h_avatar'] ); ?>" width="100%" style="overflow: hidden;" >
-          </div>
-          <div class="mdl-card__title mdl-card--expand">
-            <?php _show_( $xDeet['h_alias'] ); ?>
-          </div>
-          <div class="mdl-card__supporting-text">
-            <?php _show_( $xDeet['h_description'] ); ?>
-          </div>
-          <div class="mdl-card__menu">
-          <a href="?install=<?php echo strtolower( $xDeet["h_alias"] ); ?>" class="mdl-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons">file_download</i></a>
-          <a href="?activate=<?php echo $xDeet["h_code"]; ?>" class="mdl-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons">play_arrow</i></a>
-          </div>
-        </div><?php 
-      } 
-    } else {
-      echo "No Extensions Found";
-    } ?>
-  </div>
+    <table class="mdl-data-table mdl-js-data-table">
+    <tbody>
+      <tr>
+      <td class="mdl-data-table__cell--non-numeric">Extension Name</td>
+      <td class="mdl-data-table__cell--non-numeric">
+        <div class="switch">
+          <label>
+            Inactive
+            <input id="ext" type="checkbox">
+            <span class="lever"></span>
+            Active
+          </label>
+        </div>
+      </td>
+      <td class="mdl-data-table__cell"><a href="#" class="material-icons">public</a></td>
+      </tr>
+    </tbody>
+    </table>
   </div>
   </div>
   <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--2dp  mdl-color--<?php primaryColor(); ?>">
