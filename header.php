@@ -61,7 +61,7 @@ if ( isset( $_GET['logout'] ) ) {
     .accent, a {
         color: <?php if ( isset( $_SESSION['myCode'] ) ) { secondaryColor(); } else { echo "red"; } ?>;
     }
-    .accent, .mdl-button--fab.mdl-button--colored, .mdl-badge[data-badge]:after {
+    .accent, .mdl-button--fab.mdl-button--colored, .mdl-button.mdl-button--colored, .mdl-badge[data-badge]:after {
         background-color: <?php if ( isset( $_SESSION['myCode'] ) ) { secondaryColor(); } else { echo "red"; } ?>;
     }
 

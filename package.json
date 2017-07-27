@@ -1,7 +1,7 @@
 {
 	"name": "Jabali Framework",
 	"slug": "jabali",
-	"version": "0.17.07",
+	"version": "0.17.08",
 	"author": "Mauko Maunde",
 	"screenshot": "http://localhost/jabali/assets/images/avatar.svg",
 	"description": "Opensource web application framework with material design components for quick deployment.",

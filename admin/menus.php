@@ -84,7 +84,7 @@ if (isset( $_GET['add'] )) { ?>
                <i class="material-icons prefix">label_outline</i>
               <input class="mdl-textfield__input" id="h_for" name="h_for" type="text" readonly tabIndex="-1"  placeholder="For..." >
                 <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="h_for" style="max-height: 300px !important; overflow-y: auto;"><?php
-               $getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmenus WHERE h_type = 'drop'");
+               $getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."menus WHERE h_type = 'drop'");
                if ( $getMenu -> num_rows > 0 ) {
                     while ($menu = mysqli_fetch_assoc( $getMenu )) {
                          echo '<li class="mdl-menu__item" data-val="'.$menu['h_alias'].'">'.ucwords( $menu['h_alias'] ).'</i></li>'; 
@@ -112,7 +112,7 @@ if (isset( $_GET['add'] )) { ?>
            </form>
          </div><?php 
 } elseif ( isset( $_GET['edit'] ) ) { 
-          $getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmenus WHERE h_code = '".$_GET['edit']."'");
+          $getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."menus WHERE h_code = '".$_GET['edit']."'");
            if ( $getMenu -> num_rows > 0 ) {
                 while ($menus = mysqli_fetch_assoc( $getMenu )) {
                      $menu[] = $menus; 
@@ -155,7 +155,7 @@ if (isset( $_GET['add'] )) { ?>
           <i class="material-icons prefix">label_outline</i>
          <input class="mdl-textfield__input" id="h_for" name="h_for" type="text" readonly tabIndex="-1"  value="<?php _show_( ucwords( $menu[0]['h_for'] ) ); ?>" >
            <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="h_for" style="max-height: 300px !important; overflow-y: auto;"><?php
-          $getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmenus WHERE h_type = 'drop'");
+          $getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."menus WHERE h_type = 'drop'");
           if ( $getMenu -> num_rows > 0 ) {
                while ($tmenu = mysqli_fetch_assoc( $getMenu )) {
                     echo '<li class="mdl-menu__item" data-val="'.$tmenu['h_alias'].'">'.ucwords( $tmenu['h_alias'] ).'</i></li>'; 

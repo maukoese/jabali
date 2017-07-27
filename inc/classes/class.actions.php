@@ -71,8 +71,7 @@ class _hActions {
 			exit();
 		} else {
 			if ( isset( $_GET['provider'] ) ) { 
-				if ( $_GET['provider'] == "jabali" ) {
-				  	include 'header.php'; ?>
+				if ( $_GET['provider'] == "jabali" ) { ?>
 				  	<title>Login <?php _show_( ucfirst( $_GET['alert'] ) ); ?> [ <?php showOption( 'name' ); ?> ]</title>
 				  	<div style="padding-top:40px;" class="mdl-grid" >
 					  	<div class="mdl-cell mdl-cell--2-col"></div>
@@ -117,12 +116,8 @@ class _hActions {
 						  </form>
 						</div>
 					  	<div class="mdl-cell mdl-cell--2-col"></div>
-				  	</div><?php
-				  	include 'footer.php'; 
-				} else { 
-					require_once( 'inc/config.php' );
-				  	require_once( 'inc/jabali.php' );
-				  	connectDb(); ?>
+				  	</div><?php 
+				} else { ?>
 				  	<title>Login <?php _show_( ucfirst( $_GET['alert'] ) ); ?> [ <?php showOption( 'name' ); ?> ]</title><?php
 				  	include 'inc/lib/hybridauth/config.php';
 				  	require_once( 'inc/lib/hybridauth/Hybrid/Auth.php' );
@@ -166,8 +161,7 @@ class _hActions {
 				        echo "<hr /><h3>Trace</h3> <pre>" . $e->getTraceAsString() . "</pre>";
 				    }
 				}
-			} else {
-			  	include 'header.php'; ?>
+			} else { ?>
 			  	<title>Login <?php _show_( ucfirst( $_GET['alert'] ) ); ?> [ <?php showOption( 'name' ); ?> ]</title>
 			  	<div class="mdl-grid" >
 			  	<div class="mdl-cell mdl-cell--2-col"></div>
@@ -225,7 +219,6 @@ class _hActions {
 				</div>
 			  	<div class="mdl-cell mdl-cell--2-col"></div>
 			  	</div><?php
-			  	include 'footer.php';
 			}
 		}
 	}
@@ -492,8 +485,10 @@ class _hActions {
 		return $types;
 	}
 
-	function fetchPosts( $code ) { 
-		include 'header.php' ;
+	function fetchPosts( $code ) {
+		if ( $code === 'blog' ) {
+			_hActions::blog();
+		} else {
 			$getPosts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts WHERE h_link = '".$code."'" );
 			if ( $getPosts -> num_rows > 0) { ?>
 				<div class="mdl-grid"><?php 
@@ -502,7 +497,7 @@ class _hActions {
 					      <div class="mmm-ribbon mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ){ primaryColor(); } else { echo "madge"; } ?>" style="background: url( <?php _show_( $postsDetails['h_avatar']); ?> ); background-repeat:no-repeat; background-size: cover; background-position: center;">
 					      <center><h1><b><?php _show_( $postsDetails['h_alias']); ?></b></h1>
 					      <span><h6>Published by <b><?php _show_( $postsDetails['h_by']); ?></b> on <b><?php $date = $postsDetails['h_created'];
-              $date = explode(" ", $date); _show_( $date[0].' at '.$date[1] ); ?></b></h6></span></center>
+	          $date = explode(" ", $date); _show_( $date[0].' at '.$date[1] ); ?></b></h6></span></center>
 					      </div>
 					      
 					        <div class="demo-container">
@@ -515,19 +510,15 @@ class _hActions {
 					      </div>
 					<?php } ?>
 				</div><?php _hSocial::bottomShare( $postsDetails['h_code'] );
-				include 'footer.php';
 			} else {
 				_hActions::error404( 'post' );
 			}
- 
-	  	include 'footer.php';
+		}
 	}
 
-	function blog() { 
-		include 'header.php' ; ?>
+	function blog() { ?>
 		<title>Blog [ <?php showOption( 'name' ); ?> ]</title><?php
-		$this -> connectDB();
-		$getPosts = mysqli_query( $conn, "SELECT * FROM ". hDBPREFIX ."posts WHERE h_status = 'published' ORDER BY h_created DESC" );
+		$getPosts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts WHERE h_status = 'published' ORDER BY h_created DESC" );
 		if ( $getPosts -> num_rows > 0) { ?>
 			<div class="mdl-grid">
 				<div class="mdl-cell mdl-cell--9-col mdl-grid"><?php 
@@ -568,7 +559,6 @@ class _hActions {
 				</form>
 				</div>
 			</div><?php 
-			include 'footer.php';
 		} else {
 			_hActions::error404( 'posts' );
 		}
@@ -676,8 +666,114 @@ class _hActions {
 		}
 	}
 
+	function users( $profile ) {
+		if ( $profile == 'all' || $profile == "" ) { ?>
+			<title>All Users [ <?php showOption( 'name' ); ?> ]</title><?php
+			$getProfiles = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."users WHERE h_status = 'active'" );
+			if ( $getProfiles -> num_rows > 0) { ?>
+				<div class="mdl-grid">
+					<div class="mdl-cell mdl-cell--12-col mdl-grid"><?php 
+					while ( $profilesDetails = mysqli_fetch_assoc( $getProfiles)){ ?>
+						<div class="mdl-cell card">
+							<div class="card-image waves-effect waves-block waves-light">
+								<img class="activator" src="<?php _show_( $profilesDetails['h_avatar'] ); ?>">
+							</div>
+
+							<div class="card-content mdl-color-text--black">
+								<a href="<?php _show_( hROOT.'users/'.$profilesDetails['h_username'] ); ?>"><span class="card-title grey-text text-darken-4"><?php _show_( $profilesDetails['h_alias'] ); ?><i class="material-icons right">arrow_forward</i></span></a>
+							</div>
+
+							<div class="card-reveal mdl-color-text--black">
+								<span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i></span><br>
+								<span class="mdl-list__item mdl-color-text--black"><i class="material-icons mdl-list__item-icon mdl-color-text--black">perm_identity</i><span style="padding-left: 20px"></span>@<?php _show_( $profilesDetails['h_username'] ); ?></span>
+								<span class="mdl-list__item mdl-color-text--black"><i class="material-icons mdl-list__item-icon mdl-color-text--black">label_outline</i><span style="padding-left: 20px"><?php _show_( ucwords( $profilesDetails['h_type'] ) ); ?></span></span>
+								<span class="mdl-list__item mdl-color-text--black"><i class="material-icons mdl-list__item-icon mdl-color-text--black">label_outline</i><span style="padding-left: 20px"><?php _show_( ucwords( $profilesDetails['h_type'] ) ); ?></span></span>
+								<span class="mdl-list__item mdl-color-text--black"><i class="material-icons mdl-list__item-icon mdl-color-text--black">business</i><span style="padding-left: 20px"><?php _show_( ucwords( $profilesDetails['h_organization'] ) ); ?></span></span>
+								<span class="mdl-list__item mdl-color-text--black"><i class="material-icons mdl-list__item-icon mdl-color-text--black">room</i><span style="padding-left: 20px"><?php _show_( ucwords( $profilesDetails['h_location'] ) ); ?></span></span>
+								<span class="mdl-list__item mdl-color-text--black"><i class="material-icons mdl-list__item-icon mdl-color-text--black">today</i><span style="padding-left: 20px"><?php $date = $profilesDetails['h_created'];
+								$date = explode(" ", $date); _show_( $date[0] ); ?></span></span><br><?php
+		                          $social = json_decode( $profilesDetails['h_social'] ); 
+		                          foreach ($social as $key => $value) { ?>
+		                          <div style="display: inline;">
+		                          <a href="<?php _show_( $value ); ?>" type="text" value="<?php _show_( $value ); ?>">
+		                          <i class="fa fa-<?php _show_( $key ); ?> fa-2x"></i></a>
+		                          </div><?php } ?>
+		                          	<a href="tel:<?php _show_( $profilesDetails['h_phone'] ); ?>"><i class="fa fa-phone fa-2x"></i></a>
+		                          	<a href="mailto:<?php _show_( $profilesDetails['h_email'] ); ?>"><i class="fa fa-envelope fa-2x"></i></a>
+		                          <span class="right">
+									<a class="mdl-button mdl-button--colored" href="<?php _show_( hROOT.'users/'.$profilesDetails['h_username'] ); ?>">view full profile</a>
+		                          </span>
+								<center>
+								</center><br>
+							</div>
+						</div><?php 
+					} ?>
+					</div>
+				</div><?php 
+				include 'footer.php';
+			} else {
+				_hActions::error404( 'users' );
+			}
+		} else { 
+			$getProfile = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."users WHERE h_username = '". $profile ."'" );
+			if ( $getProfile -> num_rows > 0) { ?>
+				<div class="mdl-grid"><?php 
+					while ( $profileDetails = mysqli_fetch_assoc( $getProfile)){ ?>
+						<title><?php _show_( $profileDetails['h_alias'] ); ?> [ <?php showOption( 'name' ); ?> ]</title>
+						<div class="mdl-cell mdl-cell--5-col card">
+							<div class="card-image waves-effect waves-block waves-light">
+								<img class="activator" src="<?php _show_( $profileDetails['h_avatar'] ); ?>">
+							</div>
+
+							<div class="card-reveal mdl-color-text--black">
+								<div class="mdl-grid">
+									<div class="mdl-cell mdl-cell--5-col waves-effect waves-block waves-light">
+										<img class="activator" src="<?php _show_( $profileDetails['h_avatar'] ); ?>">
+									</div>
+									<div class="mdl-cell mdl-cell--5-col waves-effect waves-block waves-light">
+										<img class="activator" src="<?php _show_( $profileDetails['h_avatar'] ); ?>">
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="mdl-cell mdl-cell--6-col mdl-color-text--black" >
+						<h3><?php _show_( $profileDetails['h_alias'] ); ?><i class="mdi mdi-<?php 
+                            if ( strtolower( $profileDetails['h_type'] ) == "organization" ) { 
+                                echo "city";
+                            } else {
+                                if ( strtolower( $profileDetails['h_gender'] ) == "male" ) {
+                                  echo "gender-male";
+                                } elseif ( strtolower( $profileDetails['h_gender'] ) == "female" ) {
+                                  echo "gender-female";
+                                } elseif ( $profileDetails['h_gender'] == 'other' || $profileDetails['h_gender'] == "" ) {
+                                  echo "transgender";
+                                }
+                            } ?> mdl-button-icon mdl-badge mdl-badge--overlap alignright">
+                              </i></h3>
+							<article>
+								<?php _show_( $profileDetails['h_description'] ); ?>
+							</article><?php
+                          $social = json_decode( $profileDetails['h_social'] ); 
+                          foreach ($social as $key => $value) { ?>
+                          <div style="display: inline;">
+                          <a href="<?php _show_( $value ); ?>" type="text" value="<?php _show_( $value ); ?>">
+                          <i class="fa fa-<?php _show_( $key ); ?> fa-2x"></i></a>
+                          </div><?php } ?>
+                          <span class="right">
+                          	<a href="tel:<?php _show_( $profileDetails['h_phone'] ); ?>"><i class="fa fa-phone fa-2x"></i></a>
+                          	<a href="mailto:<?php _show_( $profileDetails['h_email'] ); ?>"><i class="fa fa-envelope fa-2x"></i></a>
+                          </span>
+						</div><?php 
+					} ?>
+				</div><?php
+			} else {
+				_hActions::error404( 'users' );
+			}
+		}
+	}
+
 	function home() {
-		include 'header.php';
 		$getPosts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts WHERE h_link = 'home'" );
 		if ( $getPosts -> num_rows > 0) { ?>
 			<div class="mdl-grid"><?php 

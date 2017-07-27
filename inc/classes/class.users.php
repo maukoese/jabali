@@ -813,7 +813,7 @@ class _hUsers {
                         <div class="mdl-card__supporting-text mdl-card--expand mdl-grid">
                           <div class="mdl-cell mdl-cell--7-col-desktop mdl-cell--7-col-tablet mdl-cell--12-col-phone">
                             <h5><i class="mdi mdi-<?php 
-                            if ( strtolower( $userDetails['h_type'] ) == "center" ) { 
+                            if ( strtolower( $userDetails['h_type'] ) == "organization" ) { 
                                 echo "city";
                             } else {
                                 if ( strtolower( $userDetails['h_gender'] ) == "male" ) {
@@ -827,7 +827,7 @@ class _hUsers {
                               </i>
                             <h5>
                             <h6><b>Email:</b> <a href="mailto:<?php _show_( $userDetails['h_email'] ); ?>"><?php _show_( $userDetails['h_email'] ); ?></a><br><?php if ( $userDetails['h_type'] !== "organization" ) { ?>
-                            <b>Organization:</b> <a href="./resource?center=<?php _show_( $userDetails['h_organization'] ); ?>"><?php _show_( $userDetails['h_organization'] ); ?></a><br><?php } ?>
+                            <b>Organization:</b> <a href="./resource?organization=<?php _show_( ucwords( $userDetails['h_organization'] ) ); ?>"><?php _show_( $userDetails['h_organization'] ); ?></a><br><?php } ?>
                             <b>Location:</b> <a href="./resource?location=<?php _show_( $userDetails['h_location'] ); ?>"><?php _show_( ucwords( $userDetails['h_location'] ) ); ?></a><br>
                             <b>Phone:</b> <a href="tel:<?php _show_( $userDetails['h_phone'] ); ?>"><?php _show_( $userDetails['h_phone'] ); ?></a></h6>
                             <a href="tel:<?php _show_( $userDetails['h_phone'] ); ?>"><i class="material-icons">phone</i></a>

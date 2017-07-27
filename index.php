@@ -24,6 +24,7 @@ if ( !is_dir( $directory) ) {
 include 'inc/config.php';
 include 'inc/jabali.php';
 connectDb();
+
 include 'inc/classes/class.actions.php';
 global $action;
 $action = new _hActions;
@@ -49,37 +50,41 @@ if ( is_localhost() ) {
 	$url = $_SERVER['REQUEST_URI'] . '/'; 
 }
 
-$elements = split('/', $url );
+$elements = explode('/', $url );
+$match = $elements[0];
+
+include 'header.php' ;
 
 if( empty( $elements[0] ) ) {
 	call_user_func_array( array( $action, 'home' ), array() );
-} else {
-	$match = $elements[0];
-	switch ( $match ) {
-		case "login":
-			call_user_func_array(array( $action, 'login' ), array() );
-			break;
-		case 'register':
-			call_user_func_array(array( $action, 'register' ), array() );
-			break;
-		case 'reset':
-			call_user_func_array(array( $action, 'reset' ), array() );
-			break;
-		case 'forgot':
-			call_user_func_array(array( $action, 'forgot' ), array() );
-			break;
-		case "blog":
-			call_user_func_array(array( $action, 'blog' ), array() );
-			break;
-		case 'category':
-			call_user_func_array( array($action, 'category' ), array( $elements[1] ) );
-			break;
-		case 'tag':
-			call_user_func_array( array($action, 'tags' ), array( $elements[1] ) );
-			break;
-		default:
-			call_user_func_array( array($action, 'fetchPosts' ), array( $elements[1] ) );
-	}
+} else switch ( $match ) {
+	case 'login':
+		call_user_func_array( array( $action, 'login' ), array( $elements[1] ) );
+		break;
+	case 'register':
+		call_user_func_array( array( $action, 'register' ), array( $elements[1] ) );
+		break;
+	case 'reset':
+		call_user_func_array( array( $action, 'reset' ), array( $elements[1] ) );
+		break;
+	case 'forgot':
+		call_user_func_array( array( $action, 'forgot' ), array( $elements[1] ) );
+		break;
+	case 'blog':
+		call_user_func_array( array( $action, 'blog' ), array( $elements[1] ) );
+		break;
+	case 'categories':
+		call_user_func_array( array( $action, 'categories' ), array( $elements[1] ) );
+		break;
+	case 'tags':
+		call_user_func_array( array( $action, 'tags' ), array( $elements[1] ) );
+		break;
+	case 'users':
+		call_user_func_array( array( $action, 'users' ), array( $elements[1] ) );
+		break;
+	default:
+		call_user_func_array( array( $action, 'fetchPosts' ), array( $match ) );
 }
 
+connectDb();
 include 'footer.php';

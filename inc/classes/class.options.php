@@ -5,7 +5,7 @@ class _hOptions {
 	* Create menu
 	**/
 	function create ( $h_alias, $h_code, $h_description, $h_updated ) {
-		if( mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."optons(h_alias, h_code, h_description, h_updated) VALUES ( '".$h_alias."', '".$h_code."', '".$h_description."', '".$h_updated."' )" ) ) {
+		if( mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."options (h_alias, h_code, h_description, h_updated ) VALUES ( '".$h_alias."', '".$h_code."', '".$h_description."', '".$h_updated."' )" ) ) {
 			echo "<script type = \"text/javascript\">
                   alert(\"Preferences Updated Successfully!\" );
               </script>";
@@ -15,7 +15,7 @@ class _hOptions {
 	}
 
 	function update ( $h_code, $h_description, $h_updated ) {
-		if( mysqli_query( $GLOBALS['conn'], "UPDATE ". hDBPREFIX ."optons SET h_description = '".$h_description."', h_updated = '".$h_updated."' WHERE h_code='".$h_code."'" ) ){
+		if( mysqli_query( $GLOBALS['conn'], "UPDATE ". hDBPREFIX ."options SET h_description = '".$h_description."', h_updated = '".$h_updated."' WHERE h_code='".$h_code."'" ) ){
 			echo "<script type = \"text/javascript\">
                   alert(\"Preferences Updated Successfully!\" );
               </script>";

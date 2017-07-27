@@ -544,7 +544,7 @@ class MysqliDb
      *
      * @uses $MySqliDb->setQueryOption('name');
      *
-     * @param string|array $options The optons name of the query.
+     * @param string|array $options The options name of the query.
      * 
      * @throws Exception
      * @return MysqliDb

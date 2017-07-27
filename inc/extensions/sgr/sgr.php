@@ -46,11 +46,11 @@ function setupSGR() {
 
   if ( $hproducts && $horders && $hpayments) {
 
-    mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."optons(h_alias, h_code, h_description, h_updated) VALUES ('Merchant Name', 'merchant', 'Jabali', '".$created."' )" );
-    mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."optons(h_alias, h_code, h_description, h_updated) VALUES ('Callback URL', 'callback', '".hROOT."callback', '".$created."' )" );
-    mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."optons(h_alias, h_code, h_description, h_updated) VALUES ('Paybill Number', 'paybill', '898998', '".$created."' )" );
-    mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."optons(h_alias, h_code, h_description, h_updated) VALUES ('Timestamp', 'timestamp', '20160510161908', '".$created."' )" );
-    mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."optons(h_alias, h_code, h_description, h_updated) VALUES ('SAG Password', 'sag', 'ZmRmZDYwYzIzZDQxZDc5ODYwMTIzYjUxNzNkZDMwMDRjNGRkZTY2ZDQ3ZTI0YjVjODc4ZTExNTNjMDA1YTcwNw==', '".$created."' )" );
+    mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."options(h_alias, h_code, h_description, h_updated) VALUES ('Merchant Name', 'merchant', 'Jabali', '".$created."' )" );
+    mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."options(h_alias, h_code, h_description, h_updated) VALUES ('Callback URL', 'callback', '".hROOT."callback', '".$created."' )" );
+    mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."options(h_alias, h_code, h_description, h_updated) VALUES ('Paybill Number', 'paybill', '898998', '".$created."' )" );
+    mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."options(h_alias, h_code, h_description, h_updated) VALUES ('Timestamp', 'timestamp', '20160510161908', '".$created."' )" );
+    mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."options(h_alias, h_code, h_description, h_updated) VALUES ('SAG Password', 'sag', 'ZmRmZDYwYzIzZDQxZDc5ODYwMTIzYjUxNzNkZDMwMDRjNGRkZTY2ZDQ3ZTI0YjVjODc4ZTExNTNjMDA1YTcwNw==', '".$created."' )" );
   }
 }
 

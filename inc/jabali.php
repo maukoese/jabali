@@ -206,7 +206,7 @@ function installJabali() {
 	PRIMARY KEY(h_code)
 	)" );
 
-	$hoptons = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS ". hDBPREFIX ."options (
+	$hoptions = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS ". hDBPREFIX ."options (
 	id INT(10) NOT NULL AUTO_INCREMENT,
 	h_alias VARCHAR(200),
 	h_code VARCHAR(100) UNIQUE,
@@ -245,7 +245,7 @@ function installJabali() {
 	PRIMARY KEY(h_code)
 	)" );
 
-	if ( $husers && $hresources && $hmessages && $hcomments && $huploads && $posts && $hnotes && $hratings && $hfaqs && $hoptons && $hextensions ) {
+	if ( $husers && $hresources && $hmessages && $hcomments && $huploads && $posts && $hnotes && $hratings && $hfaqs && $hoptions && $hextensions ) {
 		return true; 
 	} else {
 		return false;

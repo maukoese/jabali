@@ -376,9 +376,9 @@ if ( isset( $_GET['settings'] ) ) {
                     }
 
                 .ccolor {
-                    height: 30px;
-                    width: 40px;
-                    border-radius: 8%;
+                    height: 50px;
+                    width: 50px;
+                    border-radius: 50%;
                     border: white 1px solid;
                 }
 

@@ -6,7 +6,7 @@ class _hMenus {
 	* Create menu
 	**/
 	function create ( $h_alias, $h_author, $h_avatar, $h_code, $h_for, $h_link, $h_location, $h_status, $h_type ) {
-		if( mysqli_query( $GLOBALS['conn'], "INSERT INTO hmenus ( h_alias, h_author, h_avatar, h_code, h_for, h_link, h_location, h_status, h_type ) VALUES ( '".$h_alias."', '".$h_author."', '".$h_avatar."', '".$h_code."', '".$h_for."', '".$h_link."', '".$h_location."', '".$h_status."', '".$h_type."')" ) ) {
+		if( mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."menus ( h_alias, h_author, h_avatar, h_code, h_for, h_link, h_location, h_status, h_type ) VALUES ( '".$h_alias."', '".$h_author."', '".$h_avatar."', '".$h_code."', '".$h_for."', '".$h_link."', '".$h_location."', '".$h_status."', '".$h_type."')" ) ) {
                _show_( "<script type = \"text/javascript\">
                         alert(\"Menu Created Successfully!\" );
                     </script>" );
@@ -18,7 +18,7 @@ class _hMenus {
 	}
 
 	function update ( $h_alias, $h_author, $h_avatar, $h_code, $h_for, $h_link, $h_location, $h_status, $h_type ) {
-		if( mysqli_query( $GLOBALS['conn'], "UPDATE hmenus SET h_alias='".$h_alias."', h_author='".$h_author."', h_avatar='".$h_avatar."', h_code='".$h_code."', h_for='".$h_for."', h_link='".$h_link."', h_location='".$h_location."', h_status='".$h_status."', h_type='".$h_type."' WHERE h_code ='".$h_code."' " ) ) {
+		if( mysqli_query( $GLOBALS['conn'], "UPDATE ". hDBPREFIX ."menus SET h_alias='".$h_alias."', h_author='".$h_author."', h_avatar='".$h_avatar."', h_code='".$h_code."', h_for='".$h_for."', h_link='".$h_link."', h_location='".$h_location."', h_status='".$h_status."', h_type='".$h_type."' WHERE h_code ='".$h_code."' " ) ) {
                _show_( "<script type = \"text/javascript\">
               alert(\"Menu Updated Successfully!\" );
           </script>" );
@@ -28,19 +28,19 @@ class _hMenus {
 	}
 
 	function delete ( $h_code ) {
-		mysqli_query( $GLOBALS['conn'], "DELETE FROM hmenus WHERE h_code = '".$h_code."' " );
+		mysqli_query( $GLOBALS['conn'], "DELETE FROM ". hDBPREFIX ."menus WHERE h_code = '".$h_code."' " );
 	}
 
 	/**
 	* Show default drawer menus
 	**/
 	function drawerdef($code) {
-		$getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmenus WHERE h_type = 'drop' AND h_author = 'jabali' AND h_location = 'drawer' AND h_status = 'visible' AND h_code = '".$code."'" );
+		$getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."menus WHERE h_type = 'drop' AND h_author = 'jabali' AND h_location = 'drawer' AND h_status = 'visible' AND h_code = '".$code."'" );
 		if ( $getMenu -> num_rows > 0 ) {
 			while ( $menus = mysqli_fetch_assoc( $getMenu) ) {
 				echo '<a class="mdl-navigation__link" id= "'.$menus['h_code'].'" href="'.$menus["h_link"].'"><i class="mdl-color-text--white material-icons" role="presentation">'.$menus["h_avatar"].'</i>'.$menus["h_alias"].'</a>';
 				if ( $menus['h_type'] == "drop" ) {
-					$subMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmenus WHERE h_type != 'drop' AND h_location = 'drawer' AND h_status = 'visible' AND h_for = '".$menus['h_code']."'" );
+					$subMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."menus WHERE h_type != 'drop' AND h_location = 'drawer' AND h_status = 'visible' AND h_for = '".$menus['h_code']."'" );
 					if ( $subMenu -> num_rows > 0 ) { ?>
 						<ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor(); ?>" for="<?php _show_( $menus['h_code'] ); ?>"><?php
 						while ( $menusub = mysqli_fetch_assoc( $subMenu) ) {
@@ -57,12 +57,12 @@ class _hMenus {
 	* Show user defined drawer menus
 	**/
 	function drawer() {
-		$getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmenus WHERE h_type = 'drop' AND h_author != 'jabali' AND h_location = 'drawer' AND h_status = 'visible'" );
+		$getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."menus WHERE h_type = 'drop' AND h_author != 'jabali' AND h_location = 'drawer' AND h_status = 'visible'" );
 		if ( $getMenu -> num_rows > 0 ) {
 			while ( $menus = mysqli_fetch_assoc( $getMenu) ) {
 				echo '<a class="mdl-navigation__link" id= "'.$menus['h_code'].'" href="'.$menus["h_link"].'"><i class="mdl-color-text--white material-icons" role="presentation">'.$menus["h_avatar"].'</i>'.$menus["h_alias"].'</a>';
 				if ( $menus['h_type'] == "drop" ) {
-					$subMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmenus WHERE h_type != 'drop' AND h_location = 'drawer' AND h_status = 'visible' AND h_for = '".$menus['h_code']."'" );
+					$subMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."menus WHERE h_type != 'drop' AND h_location = 'drawer' AND h_status = 'visible' AND h_for = '".$menus['h_code']."'" );
 					if ( $subMenu -> num_rows > 0 ) { ?>
 						<ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor(); ?>" for="<?php _show_( $menus['h_code'] ); ?>"><?php
 						while ( $menusub = mysqli_fetch_assoc( $subMenu) ) {
@@ -79,12 +79,12 @@ class _hMenus {
 	* Header menu
 	**/
 	function header() {
-          $getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmenus WHERE h_location = 'header' AND h_status = 'visible' ORDER BY h_code DESC" );
+          $getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."menus WHERE h_location = 'header' AND h_status = 'visible' ORDER BY h_code DESC" );
           if ( $getMenu -> num_rows > 0 ) {
                while ( $menus = mysqli_fetch_assoc( $getMenu) ) {
                     echo '<a class="mdl-list__item" id= "'.$menus['h_code'].'" href="'.$menus["h_link"].'">'.$menus["h_alias"].'</a>';
                     if ( $menus['h_type'] == "drop" ) {
-                         $subMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmenus WHERE h_type != 'drop' AND h_location = 'drawer' AND h_status = 'visible' AND h_for = '".$menus['h_code']."'" );
+                         $subMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."menus WHERE h_type != 'drop' AND h_location = 'drawer' AND h_status = 'visible' AND h_for = '".$menus['h_code']."'" );
                          if ( $subMenu -> num_rows > 0 ) { ?>
                               <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-left mdl-color--<?php primaryColor(); ?>" for="<?php _show_( $menus['h_code'] ); ?>"><?php
                               while ( $menusub = mysqli_fetch_assoc( $subMenu) ) {
@@ -110,7 +110,7 @@ class _hMenus {
 	//Options
 
 	function theMenu( $code ) {
-     $getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmenus WHERE h_code ='".$code."'");
+     $getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."menus WHERE h_code ='".$code."'");
      if ( $getMenu -> num_rows > 0 ) {
           while ($menus = mysqli_fetch_assoc( $getMenu )) {
                $menu[] = $menus; 
@@ -143,7 +143,7 @@ class _hMenus {
 }
 
 function subMenu( $code ) {
-     $getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmenus WHERE h_for ='".$code."'");
+     $getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."menus WHERE h_for ='".$code."'");
      if ( $getMenu -> num_rows > 0 ) {
           while ($menus = mysqli_fetch_assoc( $getMenu )) {
                $menu[] = $menus; 
@@ -183,7 +183,7 @@ function subMenu( $code ) {
 }
 
 function uMenu( ) {
-     $getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmenus WHERE h_author !='jabali' AND h_location= 'drawer'");
+     $getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."menus WHERE h_author !='jabali' AND h_location= 'drawer'");
      if ( $getMenu -> num_rows > 0 ) {
           while ($menus = mysqli_fetch_assoc( $getMenu )) {
                $menu[] = $menus; 
@@ -225,7 +225,7 @@ function uMenu( ) {
 }
 
 function headMenu( ) {
-     $getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmenus WHERE h_author !='jabali' AND h_location= 'header'");
+     $getMenu = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."menus WHERE h_author !='jabali' AND h_location= 'header'");
      if ( $getMenu -> num_rows > 0 ) {
           while ($menus = mysqli_fetch_assoc( $getMenu )) {
                $menu[] = $menus; 
