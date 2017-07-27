@@ -21,36 +21,73 @@ if ( file_exists('./inc/config.php' ) ) {
 
 if ( !file_exists( '.htaccess' ) ) {
 	$rewrite = fopen( '.htaccess', 'w' );
+
+	$text = '# JABALI INIT';
+	fwrite( $rewrite,  $text );
+
+	$txt = "\n";
+	fwrite( $rewrite,  $txt );
+
+	$text = '<IfModule mod_rewrite.c>';
+	fwrite( $rewrite,  $text );
+
+	$txt = "\n";
+	fwrite( $rewrite,  $txt );
+
 	$text = "RewriteEngine On";
 	fwrite( $rewrite,  $text );
+
 	$txt = "\n";
 	fwrite( $rewrite,  $txt );
 
 	if ( isLocalhost() ) {
-		$text = 'RewriteBase '.dirname( __FILE__ ).'';
+		$base = 'RewriteBase /'.basename ( __DIR__ ).'/';
 	} else {
 		$base = 'RewriteBase /';
 	}
-
 	fwrite( $rewrite, $base );
+
 	$txt = "\n";
 	fwrite( $rewrite,  $txt );
-	$text = 'RewriteCond %{REQUEST_FILENAME} !-d';
+
+	$text = 'RewriteRule ^index\.php$ - [L]';
 	fwrite( $rewrite,  $text );
+
 	$txt = "\n";
 	fwrite( $rewrite,  $txt );
-	$text = 'RewriteCond %{REQUEST_FILENAME} !-f';
-	fwrite( $rewrite,  $text );
-	$txt = "\n";
-	fwrite( $rewrite,  $txt );
-	$text = 'RewriteRule . index.php [L]';
-	fwrite( $rewrite,  $text );
-	$txt = "\n";
-	fwrite( $rewrite,  $txt );
+
 	$text = 'RewriteRule ^([^\.]+)$ $1.php [NC]';
 	fwrite( $rewrite,  $text );
+
 	$txt = "\n";
 	fwrite( $rewrite,  $txt );
+
+	$text = 'RewriteCond %{REQUEST_FILENAME} !-d';
+	fwrite( $rewrite,  $text );
+
+	$txt = "\n";
+	fwrite( $rewrite,  $txt );
+
+	$text = 'RewriteCond %{REQUEST_FILENAME} !-f';
+	fwrite( $rewrite,  $text );
+
+	$txt = "\n";
+	fwrite( $rewrite,  $txt );
+
+	$text = 'RewriteRule . /'.basename ( __DIR__ ).'/index.php [L]';
+	fwrite( $rewrite,  $text );
+
+	$txt = "\n";
+	fwrite( $rewrite,  $txt );
+
+	$text = '</IfModule>';
+	fwrite( $rewrite,  $text );
+
+	$txt = "\n";
+	fwrite( $rewrite,  $txt );
+
+	$text = '# JABALI EXIT';
+	fwrite( $rewrite,  $text );
 }
 
 if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" && $_POST['prefix'] != "" && $_POST['name'] != "" ) {

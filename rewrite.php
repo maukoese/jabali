@@ -45,7 +45,7 @@ connectDb();
 $url = $_SERVER['REQUEST_URI'];
 
 if ( is_localhost() ) { 
-	$url = ltrim( $url, '/'.__DIR__ );
+	$url = ltrim( $url, '/'.basename ( __DIR__ ) );
 } else { 
 	$url = $_SERVER['REQUEST_URI'] . '/'; 
 }
