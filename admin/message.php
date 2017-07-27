@@ -13,7 +13,7 @@ if ( isset( $_GET['chat'] ) ) {
 }
 
 if ( isset( $_GET['delete'] ) ) {
-  mysqli_query( $GLOBALS['conn'], "DELETE FROM hmessages WHERE h_code='".$_GET['delete']."'" );
+  mysqli_query( $GLOBALS['conn'], "DELETE FROM ". hDBPREFIX ."messages WHERE h_code='".$_GET['delete']."'" );
   $hMessage -> getMessages();
 }
 

@@ -25,7 +25,7 @@ if ( !file_exists( '.htaccess' ) ) {
 	$text = '# JABALI INIT';
 	fwrite( $rewrite,  $text );
 
-	$txt = "\n";
+	$txt = "\n\n";
 	fwrite( $rewrite,  $txt );
 
 	$text = '<IfModule mod_rewrite.c>';
@@ -83,7 +83,7 @@ if ( !file_exists( '.htaccess' ) ) {
 	$text = '</IfModule>';
 	fwrite( $rewrite,  $text );
 
-	$txt = "\n";
+	$txt = "\n\n";
 	fwrite( $rewrite,  $txt );
 
 	$text = '# JABALI EXIT';

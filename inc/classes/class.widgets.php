@@ -15,7 +15,7 @@ class _hWidgets {
 		      </div>
 		</div>
 		  <div class="mdl-card__supporting-text"><?php 
-		  $getRecents = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts ORDER BY h_created ASC LIMIT 6" );
+		  $getRecents = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts ORDER BY h_created ASC LIMIT 6" );
 		  if ( $getRecents -> num_rows > 0 ) {
 		     while ( $recent = mysqli_fetch_assoc( $getRecents ) ) {
 		       $posts[] = $recent;
@@ -114,7 +114,7 @@ class _hWidgets {
               </div>
         </div>
           <div class="mdl-card__supporting-text"><?php 
-          $getRecents = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts ORDER BY h_created ASC LIMIT 5" );
+          $getRecents = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts ORDER BY h_created ASC LIMIT 5" );
           if ( $getRecents -> num_rows > 0 ) {
              while ( $recent = mysqli_fetch_assoc( $getRecents ) ) {
                $bposts[] = $recent;

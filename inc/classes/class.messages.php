@@ -35,7 +35,7 @@ class _hMessages {
 
   function getMessagesType( $type) { ?>
   <title><?php _show_( ucfirst( $type) ); ?>'s  List - <?php getMsgCount(); ?> Unread [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $getMessagesBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmessages WHERE (h_type = '".$type."' AND h_for = '".$_SESSION['myCode']."' ) " );
+    $getMessagesBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."messages WHERE (h_type = '".$type."' AND h_for = '".$_SESSION['myCode']."' ) " );
     if ( $getMessagesBy -> num_rows > 0) { ?>
       <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><thead>
         <tr>
@@ -93,7 +93,7 @@ class _hMessages {
 
   function getMessages() { ?>
     <title>All Messages - <?php getMsgCount(); ?> Unread [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $getMessages = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmessages WHERE h_for = '".$_SESSION['myCode']."' ORDER BY h_created DESC" );
+    $getMessages = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."messages WHERE h_for = '".$_SESSION['myCode']."' ORDER BY h_created DESC" );
     if ( $getMessages -> num_rows > 0) { ?>
       <div style="margin:1%;" >
       <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><thead>
@@ -156,7 +156,7 @@ class _hMessages {
 
   function getSentMessages() { ?>
     <title>Sent Messages [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $getMessages = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmessages WHERE h_author = '".$_SESSION['myCode']."' ORDER BY h_created DESC" );
+    $getMessages = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."messages WHERE h_author = '".$_SESSION['myCode']."' ORDER BY h_created DESC" );
     if ( $getMessages -> num_rows > 0) { ?>
       <div style="margin:1%;" >
       <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><thead>
@@ -212,7 +212,7 @@ class _hMessages {
 
   function getUnreadMessages() { ?>
     <title>Unread Messages - <?php getMsgCount(); ?> [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $getMessages = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmessages WHERE (h_status = 'unread' AND h_for = '".$_SESSION['myCode']."' ) ORDER BY h_created DESC" );
+    $getMessages = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."messages WHERE (h_status = 'unread' AND h_for = '".$_SESSION['myCode']."' ) ORDER BY h_created DESC" );
     if ( $getMessages -> num_rows > 0) { ?>
       <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><thead>
         <tr>
@@ -262,7 +262,7 @@ class _hMessages {
   }
 
   function getMessageCode( $code) {
-    $getMessageCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmessages WHERE h_code = '".$code."'" );
+    $getMessageCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."messages WHERE h_code = '".$code."'" );
     mysqli_query( $GLOBALS['conn'], "UPDATE hmessages SET h_status = 'read' WHERE h_code = '".$code."'" );
     if ( $getMessageCode -> num_rows > 0) {
       while ( $messageDetails = mysqli_fetch_assoc( $getMessageCode)){ ?>
@@ -321,7 +321,7 @@ class _hMessages {
 
   function getComments() { ?>
     <title>All Comments - <?php getMsgCount(); ?> Unread [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $getMessages = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmessages WHERE h_type = 'comment' ORDER BY h_created DESC" );
+    $getMessages = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."messages WHERE h_type = 'comment' ORDER BY h_created DESC" );
     if ( $getMessages -> num_rows > 0) { ?>
       <div style="margin:1%;" >
       <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><thead>
@@ -384,7 +384,7 @@ class _hMessages {
 
   function getCommentsFor( $for) { ?>
     <title>Comments on - <?php getMsgCount(); ?> Unread [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $getMessages = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmessages WHERE h_for = '".$for."' ORDER BY h_created DESC" );
+    $getMessages = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."messages WHERE h_for = '".$for."' ORDER BY h_created DESC" );
     if ( $getMessages -> num_rows > 0) { ?>
       <div style="margin:1%;" >
       <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><thead>
@@ -446,7 +446,7 @@ class _hMessages {
   }
 
   function getComment( $code) {
-    $getMessageCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmessages WHERE h_code = '".$code."'" );
+    $getMessageCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."messages WHERE h_code = '".$code."'" );
     mysqli_query( $GLOBALS['conn'], "UPDATE hmessages SET h_status = 'read' WHERE h_code = '".$code."'" );
     if ( $getMessageCode -> num_rows > 0) {
       while ( $messageDetails = mysqli_fetch_assoc( $getMessageCode)){ ?>
@@ -504,7 +504,7 @@ class _hMessages {
   }
 
   function getChatCode( $code) {
-    $getMessageCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmessages WHERE h_author = '".$code."'" );
+    $getMessageCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."messages WHERE h_author = '".$code."'" );
     if ( $getMessageCode -> num_rows > 0) {
       while ( $messageDetail = mysqli_fetch_assoc( $getMessageCode)){
         $messageDetails[] = $messageDetail;
@@ -551,7 +551,7 @@ class _hMessages {
                 </div>
 
                 <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-color--<?php primaryColor(); ?> mdl-card"><?php 
-                  $getNotes = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmessages LIMIT 5" );
+                  $getNotes = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."messages LIMIT 5" );
                   if ( $getNotes -> num_rows >= 0) { ?>
                     <div class="mdl-card__title">
                     <i class="material-icons">query_builder</i>

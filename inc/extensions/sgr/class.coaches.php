@@ -4,7 +4,7 @@ class _hCoaches extends _hResources {
 
   function getCoaches() { ?>
     <title>All Coaches [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $coaches = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hresources LEFT JOIN hcoaches ON hcoaches.h_code = hresources.h_code WHERE h_type = 'coach'" );
+    $coaches = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."resources LEFT JOIN hcoaches ON hcoaches.h_code = hresources.h_code WHERE h_type = 'coach'" );
     if ( $coaches -> num_rows > 0) {
       while( $row = mysqli_fetch_assoc( $coaches) ) {
         $coaches_array[] = $row;
@@ -65,7 +65,7 @@ class _hCoaches extends _hResources {
 
   function getCoachesClass( $class ) { ?>
     <title><?php _show_( ucwords( $class ) ); ?> Coaches [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $coaches = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hresources LEFT JOIN hcoaches ON hcoaches.h_code = hresources.h_code WHERE hresources.h_type = 'coach' AND hcoaches.h_type = '".$class."'" );
+    $coaches = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."resources LEFT JOIN hcoaches ON hcoaches.h_code = hresources.h_code WHERE hresources.h_type = 'coach' AND hcoaches.h_type = '".$class."'" );
     if ( $coaches -> num_rows > 0) {
       while( $row = mysqli_fetch_assoc( $coaches) ) {
         $coaches_array[] = $row;
@@ -110,7 +110,7 @@ class _hCoaches extends _hResources {
   }
 
   function getCoach( $code) {
-    $coach = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hresources LEFT JOIN hcoaches ON hcoaches.h_code = hresources.h_code WHERE hresources.h_code='". $_GET["view"] ."'" );
+    $coach = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."resources LEFT JOIN hcoaches ON hcoaches.h_code = hresources.h_code WHERE hresources.h_code='". $_GET["view"] ."'" );
     if ( $coach -> num_rows > 0) { 
       while( $coach_array = mysqli_fetch_assoc( $coach) ) {
         $coach_deets[] = $coach_array;?>

@@ -4,7 +4,7 @@ class _hPosts {
 
   function create( $h_alias, $h_author, $h_avatar, $h_by, $h_category, $h_organization, $h_code, $h_created, $h_desc, $h_email, $h_fav, $h_key, $h_level, $h_link, $h_location, $h_notes, $h_phone, $h_reading, $h_status, $h_subtitle, $h_tags, $h_type, $h_updated ) {
 
-    if ( mysqli_query( $GLOBALS['conn'], "INSERT INTO hposts (h_alias, h_author, h_avatar, h_by, h_category, h_organization, h_code, h_created, h_description, h_email, h_fav, h_key, h_level, h_link, h_location, h_notes, h_phone, h_reading, h_status, h_subtitle, h_tags, h_type, h_updated)
+    if ( mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."posts ( h_alias, h_author, h_avatar, h_by, h_category, h_organization, h_code, h_created, h_description, h_email, h_fav, h_key, h_level, h_link, h_location, h_notes, h_phone, h_reading, h_status, h_subtitle, h_tags, h_type, h_updated )
       VALUES ('".$h_alias."', '".$h_author."', '".$h_avatar."', '".$h_by."', '".$h_category."', '".$h_organization."', '".$h_code."', '".$h_created."', '".$h_desc."', '".$h_email."', '".$h_fav."', '".$h_key."', '".$h_level."', '".$h_link."', '".$h_location."', '".$h_notes."', '".$h_phone."', '".$h_reading."', '".$h_status."', '".$h_subtitle."', '".$h_tags."', '".$h_type."', '".$h_updated."' )" ) ) {
       echo "<script type = \"text/javascript\">
               alert(\"" . ucwords( $h_type ) . " Created Successfully!\" );
@@ -16,7 +16,7 @@ class _hPosts {
 
   function update( $h_alias, $h_author, $h_avatar, $h_by, $h_category, $h_organization, $h_code, $h_created, $h_desc, $h_email, $h_fav, $h_key, $h_level, $h_link, $h_location, $h_notes, $h_phone, $h_reading, $h_status, $h_subtitle, $h_tags, $h_type, $h_updated ) {
 
-    if ( mysqli_query( $GLOBALS['conn'], "UPDATE hposts SET h_alias ='".$h_alias."', h_author = '".$h_author."', h_avatar = '".$h_avatar."', h_category = '".$h_category."', h_organization = '".$h_organization."', h_code = '".$h_code."', h_created = '".$h_created."', h_description = '".$h_desc."', h_email = '".$h_email."', h_fav = '".$h_fav."', h_key = '".$h_key."', h_level = '".$h_level."', h_link = '".$h_link."', h_location = '".$h_location."', h_notes = '".$h_notes."', h_phone = '".$h_phone."', h_reading = '".$h_reading."', h_status = '".$h_status."', h_subtitle = '".$h_subtitle."', h_tags = '".$h_tags."', h_type = '".$h_type."', h_updated = '".$h_updated."' WHERE h_code = '".$h_code."'" ) ) {
+    if ( mysqli_query( $GLOBALS['conn'], "UPDATE ". hDBPREFIX ."posts SET h_alias ='".$h_alias."', h_author = '".$h_author."', h_avatar = '".$h_avatar."', h_category = '".$h_category."', h_organization = '".$h_organization."', h_code = '".$h_code."', h_created = '".$h_created."', h_description = '".$h_desc."', h_email = '".$h_email."', h_fav = '".$h_fav."', h_key = '".$h_key."', h_level = '".$h_level."', h_link = '".$h_link."', h_location = '".$h_location."', h_notes = '".$h_notes."', h_phone = '".$h_phone."', h_reading = '".$h_reading."', h_status = '".$h_status."', h_subtitle = '".$h_subtitle."', h_tags = '".$h_tags."', h_type = '".$h_type."', h_updated = '".$h_updated."' WHERE h_code = '".$h_code."'" ) ) {
       echo "<script type = \"text/javascript\">
               alert(\"" . ucwords( $h_alias ) . " Updated Successfully!\" );
           </script>";
@@ -26,7 +26,7 @@ class _hPosts {
   }
 
   function delete( $code ) {
-    mysqli_query( $GLOBALS['conn'], "DELETE FROM hposts WHERE h_code = '".$code."'" );
+    mysqli_query( $GLOBALS['conn'], "DELETE FROM ". hDBPREFIX ."posts WHERE h_code = '".$code."'" );
   }
 
   function getPostsType( $type ) { ?>
@@ -36,7 +36,7 @@ class _hPosts {
     } else {
       $sort = "h_created";
     }
-    $getPostsBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE h_status = 'published' AND h_type='".$type."' ORDER BY ".$sort." ASC" );
+    $getPostsBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts WHERE h_status = 'published' AND h_type='".$type."' ORDER BY ".$sort." ASC" );
     if ( $getPostsBy -> num_rows > 0) { ?>
         <div class="mdl-cell mdl-cell--3-col" >
           <form>
@@ -136,7 +136,7 @@ class _hPosts {
 
   function getPosts( $sort ) { ?>
     <title>All Articles [ <?php showOption( 'name' ); ?> ]</title><?php
-      $getPosts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE (h_type = 'article' AND h_status = 'published' ) ORDER BY ".$sort." DESC" );
+      $getPosts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts WHERE (h_type = 'article' AND h_status = 'published' ) ORDER BY ".$sort." DESC" );
       if ( $getPosts -> num_rows > 0) { ?>
         <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-color--<?php primaryColor(); ?>" >
       <div class="mdl-cell mdl-cell--3-col" >
@@ -221,7 +221,7 @@ class _hPosts {
 
   function getDrafts() { ?>
     <title>Draft Posts [ <?php showOption( 'name' ); ?> ]</title><?php
-      $getPosts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE (h_type = 'article' AND h_status = 'draft' ) ORDER BY h_created DESC" );
+      $getPosts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts WHERE (h_type = 'article' AND h_status = 'draft' ) ORDER BY h_created DESC" );
       if ( $getPosts -> num_rows > 0) { ?>
           <div class="mdl-cell--12-col" >
             <form>
@@ -293,7 +293,7 @@ class _hPosts {
   }
 
   function dashDrafts() {
-    $getDrafts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE (h_type = 'article' AND h_status = 'draft' ) ORDER BY h_created ASC LIMIT 4" );
+    $getDrafts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts WHERE (h_type = 'article' AND h_status = 'draft' ) ORDER BY h_created ASC LIMIT 4" );
     if ( $getDrafts -> num_rows > 0) {
       while ( $draft = mysqli_fetch_assoc( $getDrafts)){ ?>
         <a href="./post?edit=<?php _show_( $draft['h_code'] ); ?>&key=<?php _show_( $draft['h_alias'] ); ?>"><b><?php _show_( $draft['h_alias'] ); ?></b></a>
@@ -304,7 +304,7 @@ class _hPosts {
   }
 
   function getPost( $code) {
-    $getPostCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE h_code = '".$code."'" );
+    $getPostCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts WHERE h_code = '".$code."'" );
     if ( $getPostCode -> num_rows > 0 ) {
       while( $postDetails = mysqli_fetch_assoc( $getPostCode ) ){ ?>
         <title><?php _show_( ucwords( $postDetails['h_alias'] ) ); ?> [ <?php showOption( 'name' ); ?> ]</title>
@@ -341,7 +341,7 @@ class _hPosts {
         </div>
         <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
           <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><?php
-            $getNotes = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmessages LIMIT 5" );
+            $getNotes = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."messages LIMIT 5" );
               if ( $getNotes -> num_rows >= 0) { ?>
                 <div class="mdl-card__title">
                   <i class="material-icons">comment</i>

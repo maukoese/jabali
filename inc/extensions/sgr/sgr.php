@@ -1,13 +1,13 @@
 <?php 
 function setupSGR() {
-  $hcoaches = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hcoaches (
+  $hcoaches = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS ". hDBPREFIX ."coaches (
   h_code VARCHAR(16), 
   h_price VARCHAR(10),
   h_type VARCHAR(10),
   PRIMARY KEY(h_code)
   )" );
 
-  $horders = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS horders(
+  $horders = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS ". hDBPREFIX ."orders(
   h_alias VARCHAR(300),
   h_amount VARCHAR(20),
   h_author VARCHAR(20),
@@ -25,7 +25,7 @@ function setupSGR() {
   PRIMARY KEY(h_code)
   )" );
 
-  $hpayments = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hpayments(
+  $hpayments = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS ". hDBPREFIX ."payments(
   h_alias VARCHAR(300),
   h_amount VARCHAR(20),
   h_author VARCHAR(20),
@@ -46,11 +46,11 @@ function setupSGR() {
 
   if ( $hproducts && $horders && $hpayments) {
 
-    mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Merchant Name', 'merchant', 'Jabali', '".$created."' )" );
-    mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Callback URL', 'callback', '".hROOT."callback', '".$created."' )" );
-    mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Paybill Number', 'paybill', '898998', '".$created."' )" );
-    mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('Timestamp', 'timestamp', '20160510161908', '".$created."' )" );
-    mysqli_query( $GLOBALS['conn'], "INSERT INTO hoptions(h_alias, h_code, h_description, h_updated) VALUES ('SAG Password', 'sag', 'ZmRmZDYwYzIzZDQxZDc5ODYwMTIzYjUxNzNkZDMwMDRjNGRkZTY2ZDQ3ZTI0YjVjODc4ZTExNTNjMDA1YTcwNw==', '".$created."' )" );
+    mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."optons(h_alias, h_code, h_description, h_updated) VALUES ('Merchant Name', 'merchant', 'Jabali', '".$created."' )" );
+    mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."optons(h_alias, h_code, h_description, h_updated) VALUES ('Callback URL', 'callback', '".hROOT."callback', '".$created."' )" );
+    mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."optons(h_alias, h_code, h_description, h_updated) VALUES ('Paybill Number', 'paybill', '898998', '".$created."' )" );
+    mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."optons(h_alias, h_code, h_description, h_updated) VALUES ('Timestamp', 'timestamp', '20160510161908', '".$created."' )" );
+    mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."optons(h_alias, h_code, h_description, h_updated) VALUES ('SAG Password', 'sag', 'ZmRmZDYwYzIzZDQxZDc5ODYwMTIzYjUxNzNkZDMwMDRjNGRkZTY2ZDQ3ZTI0YjVjODc4ZTExNTNjMDA1YTcwNw==', '".$created."' )" );
   }
 }
 

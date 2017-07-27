@@ -109,7 +109,7 @@ class _hUsers {
     $h_type = strtolower( $_POST['h_type'] );
     $h_username = strtolower( $_POST['fname'].$abbr );
 
-    if ( mysqli_query( $GLOBALS['conn'], "INSERT INTO husers (h_alias, h_author, h_avatar, h_organization, h_code, h_created, h_description, h_email, h_gender, h_key, h_level, h_link, h_location, h_notes, h_password, h_phone, h_social, h_status, h_style, h_type, h_username) 
+    if ( mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."users (h_alias, h_author, h_avatar, h_organization, h_code, h_created, h_description, h_email, h_gender, h_key, h_level, h_link, h_location, h_notes, h_password, h_phone, h_social, h_status, h_style, h_type, h_username) 
     VALUES ('".$h_alias."', '".$h_author."', '".$h_avatar."', '".$h_organization."', '".$h_code."', '".$h_created."', '".$h_description."', '".$h_email."', '".$h_gender."', '".$h_key."', '".$h_level."', '".$h_link."', '".$h_location."', '".$h_notes."', '".$h_password."', '".$h_phone."', '".$h_social."', '".$h_status."', '".$h_style."', '".$h_type."', '".$h_username."' )" ) ) {
       echo "<script type = \"text/javascript\">
               alert(\"User Created Successfully!\" );
@@ -177,7 +177,7 @@ class _hUsers {
     $h_type = $_POST['h_type'];
     $h_type = strtolower( $h_type );
 
-    if ( mysqli_query( $GLOBALS['conn'], "UPDATE husers SET h_alias = '".$h_alias."', h_avatar = '".$h_avatar."', h_organization = '".$h_organization."', h_created = '".$h_created."', h_description = '".$h_description."', h_email = '".$h_email."', h_gender = '".$h_gender."', h_key = '".$h_key."', h_level = '".$h_level."', h_link = '".$h_link."', h_location = '".$h_location."', h_notes = '".$h_notes."', h_password = '".$h_password."', h_phone = '".$h_phone."', h_social ='".$h_social."', h_type = '".$h_type."' WHERE h_code = '".$code."'" ) ) {
+    if ( mysqli_query( $GLOBALS['conn'], "UPDATE ". hDBPREFIX ."users SET h_alias = '".$h_alias."', h_avatar = '".$h_avatar."', h_organization = '".$h_organization."', h_created = '".$h_created."', h_description = '".$h_description."', h_email = '".$h_email."', h_gender = '".$h_gender."', h_key = '".$h_key."', h_level = '".$h_level."', h_link = '".$h_link."', h_location = '".$h_location."', h_notes = '".$h_notes."', h_password = '".$h_password."', h_phone = '".$h_phone."', h_social ='".$h_social."', h_type = '".$h_type."' WHERE h_code = '".$code."'" ) ) {
       echo "<script type = \"text/javascript\">
               alert(\" $h_alias Updated Successfully!\" );
           </script>";
@@ -191,12 +191,12 @@ class _hUsers {
 
   function deleteUser( $h_code) {
     
-    $deleteUser = mysqli_query( $GLOBALS['conn'], "DELETE FROM husers WHERE h_code='".$h_code."'" );
+    $deleteUser = mysqli_query( $GLOBALS['conn'], "DELETE FROM ". hDBPREFIX ."users WHERE h_code='".$h_code."'" );
   }
 
   function getUsersType( $type) { ?>
     <title><?php _show_( ucfirst( $type) ); ?>s List [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $getUsersBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM husers WHERE h_status = 'active' AND h_type='".$type."'" );
+    $getUsersBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."users WHERE h_status = 'active' AND h_type='".$type."'" );
     if ( $getUsersBy -> num_rows > 0) {
       ?>
       <div class="mdl-grid">
@@ -275,7 +275,7 @@ class _hUsers {
 
   function getUsersAuthor( $author) { ?>
     <title>Users List [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $getUsersBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM husers WHERE h_status = 'active' AND h_author='".$author."'" );
+    $getUsersBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."users WHERE h_status = 'active' AND h_author='".$author."'" );
     if ( $getUsersBy -> num_rows > 0) {
       ?>
       <div class="mdl-grid">
@@ -359,7 +359,7 @@ class _hUsers {
 
   function getUsersLoc( $location) { ?>
     <title><?php _show_( ucfirst( $type) ); ?>s List [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $getUsersBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM husers WHERE h_status = 'active' AND location='".$location."'" );
+    $getUsersBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."users WHERE h_status = 'active' AND location='".$location."'" );
     if ( $getUsersBy -> num_rows > 0) {
       ?>
       <div class="mdl-grid">
@@ -443,7 +443,7 @@ class _hUsers {
 
   function getUsersTypeLoc( $type, $location) { ?>
     <title><?php _show_( ucfirst( $type) ); ?>s List [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $getUsersBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM husers WHERE h_status = 'active' AND location='".$location."'" );
+    $getUsersBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."users WHERE h_status = 'active' AND location='".$location."'" );
     if ( $getUsersBy -> num_rows > 0) {
       ?>
       <div class="mdl-grid">
@@ -525,7 +525,7 @@ class _hUsers {
 
   function getPendingUsers() { ?>
     <title>All Users [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $getUsers = mysqli_query( $GLOBALS['conn'], "SELECT * FROM husers WHERE h_status = 'pending' ORDER BY h_created DESC" );
+    $getUsers = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."users WHERE h_status = 'pending' ORDER BY h_created DESC" );
 
     if ( $getUsers -> num_rows > 0) { ?>
       <div class="mdl-grid">
@@ -604,7 +604,7 @@ class _hUsers {
 
   function getUsers() { ?>
     <title>All Users [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $getUsers = mysqli_query( $GLOBALS['conn'], "SELECT * FROM husers WHERE h_status = 'active' ORDER BY h_created DESC" );
+    $getUsers = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."users WHERE h_status = 'active' ORDER BY h_created DESC" );
 
     if ( $getUsers -> num_rows > 0) { ?>
       <div class="mdl-grid">
@@ -718,7 +718,7 @@ class _hUsers {
                       <input class="mdl-textfield__input" type="text" id="centers" name="h_organization" readonly tabIndex="-1" placeholder="Change Center">
                       <ul for="centers" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
                           <?php 
-                          $centers = mysqli_query( $GLOBALS['conn'], "SELECT h_alias, h_code FROM husers WHERe h_type = 'center' ORDER BY h_alias" );
+                          $centers = mysqli_query( $GLOBALS['conn'], "SELECT h_alias, h_code FROM ". hDBPREFIX ."users WHERe h_type = 'center' ORDER BY h_alias" );
                           if ( $centers -> num_rows > 0 );
                           while ( $center = mysqli_fetch_assoc( $centers) ) {
                               echo '<li class="mdl-menu__item" data-val="'.$center['h_code'].'">'.$center['h_alias'].'</li>';
@@ -786,7 +786,7 @@ class _hUsers {
   }
 
   function getCenters() {
-    $centers = mysqli_query( $GLOBALS['conn'], "SELECT h_alias, h_code FROM husers WHERe h_type = 'center' ORDER BY h_alias" );
+    $centers = mysqli_query( $GLOBALS['conn'], "SELECT h_alias, h_code FROM ". hDBPREFIX ."users WHERe h_type = 'center' ORDER BY h_alias" );
     if ( $centers -> num_rows > 0) {;
       while ( $center = mysqli_fetch_assoc( $centers) ) {
           echo '<li class="mdl-menu__item" data-val="'.$center['h_code'].'">'.$center['h_alias'].'</li>';
@@ -796,7 +796,7 @@ class _hUsers {
   }
 
   function getUserCode( $code) {
-    $getUserCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM husers WHERE h_code = '".$code."'" );
+    $getUserCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."users WHERE h_code = '".$code."'" );
     if ( $getUserCode -> num_rows > 0) {
       while ( $userDetails = mysqli_fetch_assoc( $getUserCode)){
         if ( $_SESSION['myCode'] !== $userDetails['h_code'] ) {
@@ -867,7 +867,7 @@ class _hUsers {
 
                 <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
                     <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><?php 
-                          $getNotes = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hcomments WHERE h_author = '".$userDetails['h_code']."'" );
+                          $getNotes = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."comments WHERE h_author = '".$userDetails['h_code']."'" );
                           if ( $getNotes -> num_rows > 0) { ?>
                             <div class="mdl-card__title">
                             <i class="material-icons">query_builder</i>

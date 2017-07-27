@@ -28,7 +28,7 @@ class _hForms {
                     <i class="material-icons prefix">perm_identity</i>
                     <input class="mdl-textfield__input" type="text" id="h_for" name="h_for" readonly tabIndex="-1" placeholder="Select Receipient">
                     <ul for="h_for" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;"><?php
-                        $centers = mysqli_query( $GLOBALS['conn'], "SELECT h_alias, h_avatar, h_code FROM husers ORDER BY h_alias" );
+                        $centers = mysqli_query( $GLOBALS['conn'], "SELECT h_alias, h_avatar, h_code FROM ". hDBPREFIX ."users ORDER BY h_alias" );
                         if ( $centers -> num_rows > 0 );
                         while ( $center = mysqli_fetch_assoc( $centers ) ) {
                           _show_( '<li class="mdl-menu__item" data-val="'.$center['h_code'].'">'.$center['h_alias'].'<span style=""><img class="alignright" style="padding-right:20px;margin:auto;" src="'.$center['h_avatar'].'" height="18px;"></span></li>' );
@@ -41,7 +41,7 @@ class _hForms {
                   <i class="material-icons prefix">perm_identity</i>
                   <input class="mdl-textfield__input" type="text" id="h_forc" name="h_forc" readonly tabIndex="-1" placeholder="Cc/Bcc">
                   <ul for="h_forc" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;"><?php
-                      $centers = mysqli_query( $GLOBALS['conn'], "SELECT h_alias, h_avatar, h_code FROM husers ORDER BY h_alias" );
+                      $centers = mysqli_query( $GLOBALS['conn'], "SELECT h_alias, h_avatar, h_code FROM ". hDBPREFIX ."users ORDER BY h_alias" );
                       if ( $centers -> num_rows > 0 );
                       while ( $center = mysqli_fetch_assoc( $centers ) ) {
                         _show_( '<li class="mdl-menu__item" data-val="'.$center['h_code'].'">'.$center['h_alias'].'<span style=""><img class="alignright" style="padding-right:20px;margin:auto;" src="'.$center['h_avatar'].'" height="18px;"></span></li>' );
@@ -322,7 +322,7 @@ class _hForms {
   }
 
   function editPostForm( $code ) {
-    $getPostCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE h_code = '".$code."'" );
+    $getPostCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts WHERE h_code = '".$code."'" );
     if ( $getPostCode -> num_rows > 0 ) {
       while ( $postDetails = mysqli_fetch_assoc( $getPostCode ) ){
         $names = explode( " ", $postDetails['h_alias'] ); ?>
@@ -476,7 +476,7 @@ class _hForms {
   }
 
   function ccommentForm() {
-    $getUser = mysqli_query( $GLOBALS['conn'], "SELECT * FROM husers WHERE h_code = '".$GET['code']."'" );
+    $getUser = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."users WHERE h_code = '".$GET['code']."'" );
     $h_email = "h";
     if ( $getUser -> num_rows > 0 ) {
         while ( $userDeets = mysqli_fetch_assoc( $getUser ) ){
@@ -517,7 +517,7 @@ class _hForms {
                 </div>
             </div>
             <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-color--<?php primaryColor(); ?> mdl-card mdl-shadow--2dp mdl-card--expand"><?php
-                  $getNotes = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hcomments LIMIT 5" );
+                  $getNotes = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."comments LIMIT 5" );
                   if ( $getNotes -> num_rows >= 0 ) { ?>
                     <div class="mdl-card__title">
                     <i class="material-icons">query_builder</i>
@@ -637,7 +637,7 @@ class _hForms {
                 <input class="mdl-textfield__input" type="text" id="centers" name="h_organization" readonly tabIndex="-1" placeholder="Organization ( Optional )">
                 <ul for="centers" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
                 <?php
-                $centers = mysqli_query( $GLOBALS['conn'], "SELECT h_alias, h_code FROM husers WHERe h_type = 'center' ORDER BY h_alias" );
+                $centers = mysqli_query( $GLOBALS['conn'], "SELECT h_alias, h_code FROM ". hDBPREFIX ."users WHERe h_type = 'center' ORDER BY h_alias" );
                 if ( $centers -> num_rows > 0 ) {
                 while ( $center = mysqli_fetch_assoc( $centers ) ) {
                 echo '<li class="mdl-menu__item" data-val="'.$center['h_code'].'">'.$center['h_alias'].'</li>';
@@ -707,7 +707,7 @@ class _hForms {
   }
 
   function editUserForm( $code ) {
-    $getUserCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM husers WHERE h_code = '".$code."'" );
+    $getUserCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."users WHERE h_code = '".$code."'" );
     if ( $getUserCode -> num_rows > 0 ) {
       while ( $userDetails = mysqli_fetch_assoc( $getUserCode ) ){
         $names = explode( " ", $userDetails['h_alias'] );
@@ -839,7 +839,7 @@ class _hForms {
                       <input class="mdl-textfield__input" type="text" id="centers" name="h_organization" readonly tabIndex="-1" placeholder="Change Center">
                       <ul for="centers" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
                           <?php
-                          $centers = mysqli_query( $GLOBALS['conn'], "SELECT h_alias, h_code FROM husers WHERe h_type = 'center' ORDER BY h_alias" );
+                          $centers = mysqli_query( $GLOBALS['conn'], "SELECT h_alias, h_code FROM ". hDBPREFIX ."users WHERe h_type = 'center' ORDER BY h_alias" );
                           if ( $centers -> num_rows > 0 ) {
                             while ( $center = mysqli_fetch_assoc( $centers ) ) {
                                 echo '<li class="mdl-menu__item" data-val="'.$center['h_code'].'">'.$center['h_alias'].'</li>';
@@ -965,7 +965,7 @@ class _hForms {
   }
 
   function editServiceForm( $code ) {
-    $getUserCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM husers WHERE h_code = '".$code."'" );
+    $getUserCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."users WHERE h_code = '".$code."'" );
     if ( $getUserCode -> num_rows > 0 ) {
       while ( $userDetails = mysqli_fetch_assoc( $getUserCode ) ){
         $names = explode( " ", $userDetails['h_alias'] );
@@ -1149,7 +1149,7 @@ class _hForms {
               <input class="mdl-textfield__input" type="text" id="centers" name="h_organization" readonly tabIndex="-1" placeholder="Organization">
               <ul for="centers" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
                   <?php
-                  $centers = mysqli_query( $GLOBALS['conn'], "SELECT h_alias, h_code FROM husers WHERe h_type = 'center' ORDER BY h_alias" );
+                  $centers = mysqli_query( $GLOBALS['conn'], "SELECT h_alias, h_code FROM ". hDBPREFIX ."users WHERe h_type = 'center' ORDER BY h_alias" );
                   if ( $centers -> num_rows > 0 );
                   while ( $center = mysqli_fetch_assoc( $centers ) ) {
                       echo '<li class="mdl-menu__item" data-val="'.$center['h_code'].'">'.$center['h_alias'].'</li>';
@@ -1175,7 +1175,7 @@ class _hForms {
               <input class="mdl-textfield__input" type="text" id="doctors" name="h_by" readonly tabIndex="-1" placeholder="Doctor In Charge">
               <ul for="doctors" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
                   <?php
-                  $centers = mysqli_query( $GLOBALS['conn'], "SELECT h_alias, h_code FROM husers WHERe h_type = 'doctor' ORDER BY h_alias" );
+                  $centers = mysqli_query( $GLOBALS['conn'], "SELECT h_alias, h_code FROM ". hDBPREFIX ."users WHERe h_type = 'doctor' ORDER BY h_alias" );
                   if ( $centers -> num_rows > 0 );
                   while ( $center = mysqli_fetch_assoc( $centers ) ) {
                       echo '<li class="mdl-menu__item" data-val="'.$center['h_code'].'">'.$center['h_alias'].'</li>';
@@ -1238,7 +1238,7 @@ class _hForms {
   }
 
   function editResourceForm( $code ) {
-    $getResourceCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hresources WHERE h_code = '".$code."'" );
+    $getResourceCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."resources WHERE h_code = '".$code."'" );
     if ( $getResourceCode -> num_rows > 0 ) {
       while ( $resourceDetails = mysqli_fetch_assoc( $getResourceCode ) ){
         $names = explode( " ", $resourceDetails['h_alias'] );

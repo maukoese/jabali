@@ -52,7 +52,7 @@ class _hResources {
     $h_status = "active";
     $h_type = strtolower( $_POST['h_type'] );
 
-    if ( mysqli_query( $GLOBALS['conn'], "INSERT INTO hresources (h_alias, h_by, h_author, h_avatar, h_organization, h_code, h_created, h_email, h_key, h_level, h_link, h_location, h_notes, h_phone, h_status, h_type) 
+    if ( mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."resources (h_alias, h_by, h_author, h_avatar, h_organization, h_code, h_created, h_email, h_key, h_level, h_link, h_location, h_notes, h_phone, h_status, h_type) 
     VALUES ('".$h_alias."', '".$h_author."', '".$h_avatar."', '".$h_by."', '".$h_organization."', '".$h_code."', '".$h_created."', '".$h_email."', '".$h_key."', '".$h_level."', '".$h_link."', '".$h_location."', '".$h_notes."', '".$h_phone."', '".$h_status."', '".$h_type."' )" ) ) {
       echo "<script type = \"text/javascript\">
                       alert(\"Resource Created Successfully!\" );
@@ -108,7 +108,7 @@ class _hResources {
   
   function deleteResource( $h_code) {
     
-    $deleteResource = mysqli_query( $GLOBALS['conn'], "DELETE FROM hresources WHERE h_code='".$h_code."'" );
+    $deleteResource = mysqli_query( $GLOBALS['conn'], "DELETE FROM ". hDBPREFIX ."resources WHERE h_code='".$h_code."'" );
     if ( !$createResource ->conn_error) {
       echo '<div><p>Resource Created Successfuly!</p></div>';
     } else {
@@ -118,7 +118,7 @@ class _hResources {
 
   function getResourcesType( $type) { ?>
       <title><?php _show_( ucfirst( $type) ); ?>s List [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $getResourcesBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hresources WHERE h_status = 'active' AND h_type='".$type."'" );
+    $getResourcesBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."resources WHERE h_status = 'active' AND h_type='".$type."'" );
     if ( $getResourcesBy -> num_rows > 0) {
       ?>
       <a href="./resource?create=<?php _show_( $type ); ?>" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
@@ -195,7 +195,7 @@ class _hResources {
 
   function getResourcesLoc( $location) { ?>
       <title>Resources In <?php _show_( ucwords( $location) ); ?> [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $getResourcesBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hresources WHERE h_type = 'center' AND h_status = 'active' AND h_location='".$location."'" );
+    $getResourcesBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."resources WHERE h_type = 'center' AND h_status = 'active' AND h_location='".$location."'" );
     if ( $getResourcesBy -> num_rows > 0) {
       ?>
       <a href="./resource?create=<?php _show_( $type ); ?>" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
@@ -271,7 +271,7 @@ class _hResources {
   }
 
   function getResourcesAuthor( $author) { 
-    $getUser = mysqli_query( $GLOBALS['conn'], "SELECT * FROM husers WHERE h_code = '".$author."'" );
+    $getUser = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."users WHERE h_code = '".$author."'" );
      if ( $getUser -> num_rows > 0) {
        while ( $user = mysqli_fetch_assoc( $getUser) ) {
          $userDeet[] = $user;
@@ -279,7 +279,7 @@ class _hResources {
      }
     ?>
     <title><?php _show_( $userDeet[0]['h_alias'] ); ?>'s Resources [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $getResourcesBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hresources WHERE h_author='".$author."'" );
+    $getResourcesBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."resources WHERE h_author='".$author."'" );
     if ( $getResourcesBy -> num_rows > 0) {
       ?>
       <div class="mdl-grid">
@@ -363,7 +363,7 @@ class _hResources {
 
   function getResources() {
       ?><title>All Resources [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $getResources = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hresources WHERE h_status = 'active' ORDER BY h_created DESC" );
+    $getResources = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."resources WHERE h_status = 'active' ORDER BY h_created DESC" );
 
     if ( $getResources -> num_rows > 0) {
       ?>
@@ -459,7 +459,7 @@ class _hResources {
   }
 
   function getResourceCode( $code) {
-    $getResourceCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hresources WHERE h_code = '".$code."'" );
+    $getResourceCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."resources WHERE h_code = '".$code."'" );
     if ( $getResourceCode -> num_rows > 0) {
       while ( $resourceDetails = mysqli_fetch_assoc( $getResourceCode)){
         if ( $_SESSION['myCode'] !== $resourceDetails['h_code'] ) {

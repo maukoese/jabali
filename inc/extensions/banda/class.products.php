@@ -8,7 +8,7 @@ class _hProducts extends _hPosts {
 
   function getProducts() { ?>
     <title>All Products [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $products = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts LEFT JOIN hproducts ON hproducts.h_code = hposts.h_code WHERE hposts.h_type = 'product'" );
+    $products = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts LEFT JOIN hproducts ON hproducts.h_code = . hDBPREFIX ."posts.h_code WHERE . hDBPREFIX ."posts.h_type = 'product'" );
     if ( $products -> num_rows > 0) {
       while( $product = mysqli_fetch_assoc( $products) ) { ?>
       <div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
@@ -64,7 +64,7 @@ class _hProducts extends _hPosts {
 
   function getProduct( $code) { ?>
     <title>Shop [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $product = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts LEFT JOIN hproducts ON hproducts.h_code = hposts.h_code WHERE hposts.h_code='". $_GET["product"] ."'" );
+    $product = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts LEFT JOIN hproducts ON hproducts.h_code = . hDBPREFIX ."posts.h_code WHERE . hDBPREFIX ."posts.h_code='". $_GET["product"] ."'" );
     if ( $product -> num_rows > 0) { 
       while( $product_array = mysqli_fetch_assoc( $product) ) {
         $product_deets[] = $product_array;
@@ -124,7 +124,7 @@ class _hProducts extends _hPosts {
 
   function productFields () { 
     if ( $_GET['edit'] ) {
-      $getPostCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts LEFT JOIN hproducts ON hproducts.h_code = hposts.h_code WHERE hposts.h_code='".$_GET['edit']."'" );
+      $getPostCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts LEFT JOIN hproducts ON hproducts.h_code = . hDBPREFIX ."posts.h_code WHERE . hDBPREFIX ."posts.h_code='".$_GET['edit']."'" );
       if ( $getPostCode -> num_rows > 0 ) {
         while ( $postDetails = mysqli_fetch_assoc( $getPostCode ) ){
           $product[] = $postDetails;

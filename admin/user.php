@@ -4,7 +4,7 @@ include '../inc/jabali.php';
 include './header.php';
 
 if ( isset( $_GET['activate'] ) ) {
-	mysqli_query( $GLOBALS['conn'], "UPDATE husers SET h_status = 'active' WHERE h_code='".$_GET['activate']."'" );
+	mysqli_query( $GLOBALS['conn'], "UPDATE ". hDBPREFIX ."users SET h_status = 'active' WHERE h_code='".$_GET['activate']."'" );
 	echo "<script type = \"text/javascript\">
               alert(\"User Activated Successfully!\" );
           </script>";
@@ -12,7 +12,7 @@ if ( isset( $_GET['activate'] ) ) {
 }
 
 if ( isset( $_GET['delete'] ) ) {
-	mysqli_query( $GLOBALS['conn'], "DELETE FROM husers WHERE h_code='".$_GET['delete']."'" );
+	mysqli_query( $GLOBALS['conn'], "DELETE FROM ". hDBPREFIX ."users WHERE h_code='".$_GET['delete']."'" );
 	$hUser -> getUsers();
 }
 

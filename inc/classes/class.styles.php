@@ -6,7 +6,7 @@ class _hStyles(){
 	* 
 	**/
 	function primaryColor( $code) {
-		$getColor = mysqli_query( $GLOBALS['conn'], "SELECT h_style FROM husers  WHERE h_code='".$code."'" );
+		$getColor = mysqli_query( $GLOBALS['conn'], "SELECT h_style FROM ". hDBPREFIX ."users  WHERE h_code='".$code."'" );
 		if ( $getColor) {
 			while ( $themes = mysqli_fetch_assoc( $getColor) ) {
 				if ( $themes['h_style'] == "love" ) {
@@ -58,7 +58,7 @@ class _hStyles(){
 	* 
 	**/
 	function accentColor( $code) {
-		$getColor = mysqli_query( $GLOBALS['conn'], "SELECT h_style FROM husers  WHERE h_code='".$code."'" );
+		$getColor = mysqli_query( $GLOBALS['conn'], "SELECT h_style FROM ". hDBPREFIX ."users  WHERE h_code='".$code."'" );
 		if ( $getColor) {
 			while ( $themes = mysqli_fetch_assoc( $getColor) ) {
 				if ( $themes['h_style'] == "love" ) {
@@ -80,7 +80,7 @@ class _hStyles(){
 	* 
 	**/
 	function textColor( $code) {
-		$getColor = mysqli_query( $GLOBALS['conn'], "SELECT h_style FROM husers  WHERE h_code='".$code."'" );
+		$getColor = mysqli_query( $GLOBALS['conn'], "SELECT h_style FROM ". hDBPREFIX ."users  WHERE h_code='".$code."'" );
 		if ( $getColor) {
 			while ( $themes = mysqli_fetch_assoc( $getColor) ) {
 				if ( $themes['h_style'] == "love" ) {

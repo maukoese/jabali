@@ -32,7 +32,7 @@ class _hActions {
 	}
 
 	function emailExists( $email ) {
-		$theEmail = mysqli_query( _hActions::connectDB(), "SELECT h_email FROM husers WHERE h_email ='".$email."'" );
+		$theEmail = mysqli_query( _hActions::connectDB(), "SELECT h_email FROM ". hDBPREFIX ."users WHERE h_email ='".$email."'" );
 		if ( $theEmail -> num_rows > 0 ) {
 			return true;
 		} else {
@@ -243,9 +243,9 @@ class _hActions {
 		$password = md5($password);
 
 		if ( _hActions::isEmail( $user ) ) {
-		  $result = mysqli_query( _hActions::connectDB(), "SELECT * FROM husers WHERE h_email = '".$user."'" );
+		  $result = mysqli_query( _hActions::connectDB(), "SELECT * FROM ". hDBPREFIX ."users WHERE h_email = '".$user."'" );
 		} else {
-		  $result = mysqli_query( _hActions::connectDB(), "SELECT * FROM husers WHERE h_username = '".$user."'" );
+		  $result = mysqli_query( _hActions::connectDB(), "SELECT * FROM ". hDBPREFIX ."users WHERE h_username = '".$user."'" );
 		}
 
 		if ( $result -> num_rows > 0 ) {
@@ -476,7 +476,7 @@ class _hActions {
 		    $h_type = strtolower( $_POST['h_type'] );
 		    $h_username = strtolower( $_POST['fname'].$abbr );
 
-			if ( mysqli_query( $GLOBALS['conn'], "INSERT INTO husers (h_alias, h_author, h_avatar, h_organization, h_code, h_created, h_description, h_email, h_gender, h_key, h_level, h_link, h_location, h_notes, h_password, h_phone, h_social, h_status, h_style, h_type, h_username) 
+			if ( mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."users (h_alias, h_author, h_avatar, h_organization, h_code, h_created, h_description, h_email, h_gender, h_key, h_level, h_link, h_location, h_notes, h_password, h_phone, h_social, h_status, h_style, h_type, h_username) 
     VALUES ('".$h_alias."', '".$h_author."', '".$h_avatar."', '".$h_organization."', '".$h_code."', '".$h_created."', '".$h_description."', '".$h_email."', '".$h_gender."', '".$h_key."', '".$h_level."', '".$h_link."', '".$h_location."', '".$h_notes."', '".$h_password."', '".$h_phone."', '".$h_social."', '".$h_status."', '".$h_style."', '".$h_type."', '".$h_username."' )" ) ) {
 			header( "Location: ./register?create=success" );
 			} else {
@@ -487,14 +487,14 @@ class _hActions {
 	}
 
 	function postTypes() {
-		$getTypes = mysqli_query( $GLOBALS['conn'], "SELECT DISTINCT h_type FROM hposts");
+		$getTypes = mysqli_query( $GLOBALS['conn'], "SELECT DISTINCT h_type FROM ". hDBPREFIX ."posts");
 		$types = mysqli_fetch_assoc( $getTypes );
 		return $types;
 	}
 
 	function fetchPosts( $code ) { 
 		include 'header.php' ;
-			$getPosts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE h_link = '".$code."'" );
+			$getPosts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts WHERE h_link = '".$code."'" );
 			if ( $getPosts -> num_rows > 0) { ?>
 				<div class="mdl-grid"><?php 
 					while ( $postsDetails = mysqli_fetch_assoc( $getPosts)){  ?>
@@ -527,7 +527,7 @@ class _hActions {
 		include 'header.php' ; ?>
 		<title>Blog [ <?php showOption( 'name' ); ?> ]</title><?php
 		$this -> connectDB();
-		$getPosts = mysqli_query( $conn, "SELECT * FROM hposts WHERE h_status = 'published' ORDER BY h_created DESC" );
+		$getPosts = mysqli_query( $conn, "SELECT * FROM ". hDBPREFIX ."posts WHERE h_status = 'published' ORDER BY h_created DESC" );
 		if ( $getPosts -> num_rows > 0) { ?>
 			<div class="mdl-grid">
 				<div class="mdl-cell mdl-cell--9-col mdl-grid"><?php 
@@ -578,7 +578,7 @@ class _hActions {
 		include 'header.php' ; ?>
 		<title>Category : <?php _show_( ucwords( $cat ) ); ?> [ <?php showOption( 'name' ); ?> ]</title><?php
 		$this -> connectDB();
-		$getPosts = mysqli_query( $conn, "SELECT * FROM hposts WHERE ( h_status = 'published' AND h_category = '".$cat."' ) ORDER BY h_created DESC" );
+		$getPosts = mysqli_query( $conn, "SELECT * FROM ". hDBPREFIX ."posts WHERE ( h_status = 'published' AND h_category = '".$cat."' ) ORDER BY h_created DESC" );
 		if ( $getPosts -> num_rows > 0) { ?>
 			<div class="mdl-grid">
 				<div class="mdl-cell mdl-cell--9-col mdl-grid"><?php 
@@ -629,7 +629,7 @@ class _hActions {
 		include 'header.php' ; ?>
 		<title>Tag : <?php _show_( ucwords( $tag ) ); ?> [ <?php showOption( 'name' ); ?> ]</title><?php
 		$this -> connectDB();
-		$getPosts = mysqli_query( $conn, "SELECT * FROM hposts WHERE ( h_status = 'published' AND h_tags = '".$tag."' ) ORDER BY h_created DESC" );
+		$getPosts = mysqli_query( $conn, "SELECT * FROM ". hDBPREFIX ."posts WHERE ( h_status = 'published' AND h_tags = '".$tag."' ) ORDER BY h_created DESC" );
 		if ( $getPosts -> num_rows > 0) { ?>
 			<div class="mdl-grid">
 				<div class="mdl-cell mdl-cell--9-col mdl-grid"><?php 
@@ -678,7 +678,7 @@ class _hActions {
 
 	function home() {
 		include 'header.php';
-		$getPosts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE h_link = 'home'" );
+		$getPosts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts WHERE h_link = 'home'" );
 		if ( $getPosts -> num_rows > 0) { ?>
 			<div class="mdl-grid"><?php 
 					while ( $postsDetails = mysqli_fetch_assoc( $getPosts)){  ?>
@@ -749,7 +749,7 @@ class _hActions {
 							      <h3 class="">Blog</h3>
 						      	</center>
 						      	</div>
-					          		<?php $posts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE h_type = 'article' AND h_status = 'published' LIMIT 3");
+					          		<?php $posts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts WHERE h_type = 'article' AND h_status = 'published' LIMIT 3");
 					          		if ( $posts -> num_rows > 0 ) {
 					          		 	while ( $postsDetails = mysqli_fetch_assoc( $posts ) ) { ?>
 					          		 	<div class="mdl-cell card mdl-shadow--2dp">
@@ -870,7 +870,7 @@ class _hActions {
 	function reset(){
 		include 'header.php';
 		if ( _hActions::emailExists( $_GET['email'] ) ) {
-	    $theUser = mysqli_query( $GLOBALS['conn'], "SELECT h_email, h_key FROM husers WHERE h_email = '".$_GET['email']."'" );
+	    $theUser = mysqli_query( $GLOBALS['conn'], "SELECT h_email, h_key FROM ". hDBPREFIX ."users WHERE h_email = '".$_GET['email']."'" );
 	    if ( $theUser -> num_rows > 0 ) {
 	      while ( $thisuser = mysqli_fetch_assoc( $theUser) ) {
 	        $user[] = $thisuser;
@@ -916,7 +916,7 @@ class _hActions {
 	}
 
 	function resetPass() {
-		if ( mysqli_query( $GLOBALS['conn'], "UPDATE husers SET h_password = '".md5( $_POST['h_password'] )."', h_key = '".md5(date('YmdHms' ))."' WHERE h_code = '".$_POST['h_code']."'" ) ) {
+		if ( mysqli_query( $GLOBALS['conn'], "UPDATE ". hDBPREFIX ."users SET h_password = '".md5( $_POST['h_password'] )."', h_key = '".md5(date('YmdHms' ))."' WHERE h_code = '".$_POST['h_code']."'" ) ) {
 	    if ( $hUser -> emailUser( $user[0]['h_email'], "reset", $user[0]['h_key'] ) ) {
 	      header( "Location: ./forgot?error=null" );
 	    } else {

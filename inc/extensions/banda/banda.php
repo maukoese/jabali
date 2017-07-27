@@ -8,11 +8,11 @@ include hABSX.'banda/cart.php';
 include hABSX.'banda/options.php';
 if ( isset( $_POST['mpesa'] ) ) {
     $date = date(Ymd );
-    mysqli_query( $GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['merchant']."', h_updated = '".$date."' WHERE h_code='merchant'" );
-    mysqli_query( $GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['callback']."', h_updated = '".$date."'  WHERE h_code='callback'" );
-    mysqli_query( $GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['paybill']."', h_updated = '".$date."'  WHERE h_code='paybill'" );
-    mysqli_query( $GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['timestamp']."', h_updated = '".$date."'  WHERE h_code='timestamp'" );
-    mysqli_query( $GLOBALS['conn'], "UPDATE hoptions SET h_description = '".$_POST['sag']."', h_updated = '".$date."'  WHERE h_code='sag'" );
+    mysqli_query( $GLOBALS['conn'], "UPDATE ". hDBPREFIX ."optons SET h_description = '".$_POST['merchant']."', h_updated = '".$date."' WHERE h_code='merchant'" );
+    mysqli_query( $GLOBALS['conn'], "UPDATE ". hDBPREFIX ."optons SET h_description = '".$_POST['callback']."', h_updated = '".$date."'  WHERE h_code='callback'" );
+    mysqli_query( $GLOBALS['conn'], "UPDATE ". hDBPREFIX ."optons SET h_description = '".$_POST['paybill']."', h_updated = '".$date."'  WHERE h_code='paybill'" );
+    mysqli_query( $GLOBALS['conn'], "UPDATE ". hDBPREFIX ."optons SET h_description = '".$_POST['timestamp']."', h_updated = '".$date."'  WHERE h_code='timestamp'" );
+    mysqli_query( $GLOBALS['conn'], "UPDATE ". hDBPREFIX ."optons SET h_description = '".$_POST['sag']."', h_updated = '".$date."'  WHERE h_code='sag'" );
 }
 
 include hABSX.'banda/class.products.php';

@@ -4,17 +4,17 @@ connectDb();
 
 if ( isset( $_GET['view'] ) ) {
 	if ( $_GET['view'] == "all" ) {
-		$user = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmessages" );
+		$user = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."messages" );
 	} else {
-		$user = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmessages WHERE h_code='".$_GET['view']."'" );
+		$user = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."messages WHERE h_code='".$_GET['view']."'" );
 	}
 }
 
 if ( isset( $_GET['chat'] ) ) {
 	if ( $_GET['chat'] == "all" ) {
-		$user = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmessages WHERE h_type='chat'" );
+		$user = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."messages WHERE h_type='chat'" );
 	} else {
-		$user = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmessages WHERE (h_type='chat' AND h_code='".$_GET['chat']."' )" );
+		$user = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."messages WHERE (h_type='chat' AND h_code='".$_GET['chat']."' )" );
 	}
 }
 

@@ -8,7 +8,7 @@ class _hEvents extends _hPosts {
 
   function getEvents() { ?>
     <title>All Events [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $events = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts LEFT JOIN hevents ON hevents.h_code = hposts.h_code WHERE h_type = 'event'" );
+    $events = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts LEFT JOIN hevents ON hevents.h_code = . hDBPREFIX ."posts.h_code WHERE h_type = 'event'" );
     if ( $events -> num_rows > 0) {
       while( $row = mysqli_fetch_assoc( $events) ) {
         $events_array[] = $row;
@@ -70,7 +70,7 @@ class _hEvents extends _hPosts {
 
   function getEvent( $code) { ?>
     <title>Shop [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $event = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts LEFT JOIN hevents ON hevents.h_code = hposts.h_code WHERE hposts.h_code='". $_GET["event"] ."'" );
+    $event = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts LEFT JOIN hevents ON hevents.h_code = . hDBPREFIX ."posts.h_code WHERE . hDBPREFIX ."posts.h_code='". $_GET["event"] ."'" );
     if ( $event -> num_rows > 0) { 
       while( $event_array = mysqli_fetch_assoc( $event) ) {
         $event_deets[] = $event_array;
@@ -130,7 +130,7 @@ class _hEvents extends _hPosts {
 
   function eventFields () { 
     if ( $_GET['edit'] ) {
-      $getPostCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts LEFT JOIN hevents ON hevents.h_code = hposts.h_code WHERE hposts.h_code='".$_GET['edit']."'" );
+      $getPostCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts LEFT JOIN hevents ON hevents.h_code = . hDBPREFIX ."posts.h_code WHERE . hDBPREFIX ."posts.h_code='".$_GET['edit']."'" );
       if ( $getPostCode -> num_rows > 0 ) {
         while ( $postDetails = mysqli_fetch_assoc( $getPostCode ) ){
           $event[] = $postDetails;

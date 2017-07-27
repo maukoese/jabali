@@ -43,7 +43,7 @@ class _hComments {
     $h_status = "unread";
     $h_type = $_POST['h_type'];
 
-     if ( mysqli_query( $GLOBALS['conn'], "INSERT INTO hcomments (h_alias, h_author, h_by, h_code, h_created, h_description, h_email, h_key, h_level, h_link, h_status, h_type) 
+     if ( mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."comments (h_alias, h_author, h_by, h_code, h_created, h_description, h_email, h_key, h_level, h_link, h_status, h_type) 
     VALUES ('".$h_alias."', '".$h_author."', '".$h_by."', '".$h_code."', '".$h_created."', '".$h_desc."', '".$h_email."', '".$h_key."', '".$h_level."', '".$h_link."', '".$h_status."', '".$h_type."' )" ) ) {
        echo "<script type = \"text/javascript\">
                     alert(\"Comment Sent\" );
@@ -61,7 +61,7 @@ class _hComments {
 
   function getCommentsType( $type) { ?>
   <title><?php _show_( ucfirst( $type) ); ?>s  List [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $getCommentsBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hcomments WHERE h_type = '".$type."' " );
+    $getCommentsBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."comments WHERE h_type = '".$type."' " );
     if ( $getCommentsBy -> num_rows > 0) { ?>
       <div style="margin:1%;" >
       <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><thead>
@@ -123,7 +123,7 @@ class _hComments {
 
   function getComments() { ?>
   <title>All Comments [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $getComments = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hcomments ORDER BY h_created DESC" );
+    $getComments = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."comments ORDER BY h_created DESC" );
     if ( $getComments -> num_rows > 0) { ?>
       <div style="margin:1%;" >
         <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
@@ -186,8 +186,8 @@ class _hComments {
   }
 
   function getComment( $code) {
-    $getComment = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hcomments WHERE h_code = '".$code."'" );
-    mysqli_query( $GLOBALS['conn'], "UPDATE hcomments SET h_status = 'read' WHERE h_code = '".$code."'" );
+    $getComment = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."comments WHERE h_code = '".$code."'" );
+    mysqli_query( $GLOBALS['conn'], "UPDATE ". hDBPREFIX ."comments SET h_status = 'read' WHERE h_code = '".$code."'" );
     if ( $getComment -> num_rows > 0) {
       while ( $commentDetails = mysqli_fetch_assoc( $getComment)){ ?>
       <title><?php _show_( $commentDetails['h_alias'] ); ?> [ <?php showOption( 'name' ); ?> ]</title>
@@ -221,7 +221,7 @@ class _hComments {
                 </div>
 
                 <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-color--<?php primaryColor(); ?> mdl-card mdl-shadow--2dp mdl-card--expand"><?php 
-                  $getNotes = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hcomments LIMIT 5" );
+                  $getNotes = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."comments LIMIT 5" );
                   if ( $getNotes -> num_rows >= 0) { ?>
                     <div class="mdl-card__title">
                     <i class="material-icons">query_builder</i>

@@ -5,7 +5,7 @@ class _hPoems extends _hPosts {
   function getPoems() { ?>
     <title>All Poems [ <?php showOption( 'name' ); ?> ]</title>
       <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone "><?php 
-              $getPoems = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE h_type = 'poem' AND h_status = 'published'" );
+              $getPoems = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts WHERE h_type = 'poem' AND h_status = 'published'" );
               if ( $getPoems -> num_rows >= 0) { ?>
                   <ul class="collapsible popout " data-collapsible="accordion"><?php 
                       while ( $note = mysqli_fetch_assoc( $getPoems) ) { ?>
@@ -28,7 +28,7 @@ class _hPoems extends _hPosts {
   }
 
   function getPoem( $code) {
-    $getPoemCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE h_code = '".$code."'" );
+    $getPoemCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts WHERE h_code = '".$code."'" );
     if ( $getPoemCode -> num_rows > 0) {
       while ( $postDetails = mysqli_fetch_assoc( $getPoemCode)){ ?>
       <title><?php _show_( $postDetails['h_alias'] ); ?> [ <?php showOption( 'name' ); ?> ]</title>
@@ -68,7 +68,7 @@ class _hPoems extends _hPosts {
 
                 <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
                     <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><?php 
-                      $getPoems = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmessages LIMIT 5" );
+                      $getPoems = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."messages LIMIT 5" );
                       if ( $getPoems -> num_rows >= 0) { ?>
                         <div class="mdl-card__title">
                           <i class="material-icons">comment</i>
@@ -121,7 +121,7 @@ class _hPoems extends _hPosts {
   }
 
   function getPage( $code) {
-    $getPoemCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE h_code = '".$code."'" );
+    $getPoemCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts WHERE h_code = '".$code."'" );
     if ( $getPoemCode -> num_rows > 0) {
       while ( $postDetails = mysqli_fetch_assoc( $getPoemCode)){ ?>
       <title><?php _show_( $postDetails['h_alias'] ); ?> [ <?php showOption( 'name' ); ?> ]</title>
@@ -174,7 +174,7 @@ class _hPoems extends _hPosts {
 
   function poemFields() {
     if ( $_GET['edit'] ) {
-      $getPostCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE h_code='".$_GET['edit']."'" );
+      $getPostCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts WHERE h_code='".$_GET['edit']."'" );
       if ( $getPostCode -> num_rows > 0 ) {
         while ( $postDetails = mysqli_fetch_assoc( $getPostCode ) ){
           $poem[] = $postDetails;

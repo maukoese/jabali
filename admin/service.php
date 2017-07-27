@@ -4,7 +4,7 @@ include '../inc/jabali.php';
 include './header.php';
 
 if ( isset( $_GET['delete'] ) ) {
-	mysqli_query( $GLOBALS['conn'], "DELETE FROM hservices WHERE h_code='".$_GET['delete']."'" );
+	mysqli_query( $GLOBALS['conn'], "DELETE FROM ". hDBPREFIX ."services WHERE h_code='".$_GET['delete']."'" );
 	$hService -> getServices();
 }
 

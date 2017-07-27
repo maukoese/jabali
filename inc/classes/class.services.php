@@ -45,7 +45,7 @@ class _hServices {
     $h_status = "pending";
     $h_type = strtolower( $_POST['h_type'] );
 
-    if ( mysqli_query( $GLOBALS['conn'], "INSERT INTO hservices (h_alias, h_author, h_by, h_organization, h_code, h_created, h_email, h_key, h_level, h_link, h_location, h_notes, h_status, h_type) 
+    if ( mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."services (h_alias, h_author, h_by, h_organization, h_code, h_created, h_email, h_key, h_level, h_link, h_location, h_notes, h_status, h_type) 
     VALUES ('".$h_alias."', '".$h_author."', '".$h_by."', '".$h_organization."', '".$h_code."', '".$h_created."', '".$h_email."', '".$h_key."', '".$h_level."', '".$h_link."', '".$h_location."', '".$h_notes."', '".$h_status."', '".$h_type."' )" ) ) {
       echo "<script type = \"text/javascript\">
                       alert(\"Service Created Successfully!\" );
@@ -85,7 +85,7 @@ class _hServices {
     $h_type = strtolower( $_POST['h_type'] );
     $h_servicename = strtolower( $_POST['fname'].$abbr );
 
-    if ( mysqli_query( $GLOBALS['conn'], "UPDATE hservices SET h_alias = '".$h_alias."', h_author = '".$h_author."', h_avatar = '".$h_avatar."', h_organization = '".$h_organization."', h_code = '".$h_code."', h_created = '".$h_created."', h_description = '".$h_description."', h_email = '".$h_email."', h_gender = '".$h_gender."', h_key = '".$h_key."', h_level = '".$h_level."', h_link = '".$h_link."', h_location = '".$h_location."', h_notes = '".$h_notes."', h_password = '".$h_password."', h_phone = '".$h_phone."', h_type = '".$h_type."' WHERE h_code = '".$h_code."'" ) ) {
+    if ( mysqli_query( $GLOBALS['conn'], "UPDATE ". hDBPREFIX ."services SET h_alias = '".$h_alias."', h_author = '".$h_author."', h_avatar = '".$h_avatar."', h_organization = '".$h_organization."', h_code = '".$h_code."', h_created = '".$h_created."', h_description = '".$h_description."', h_email = '".$h_email."', h_gender = '".$h_gender."', h_key = '".$h_key."', h_level = '".$h_level."', h_link = '".$h_link."', h_location = '".$h_location."', h_notes = '".$h_notes."', h_password = '".$h_password."', h_phone = '".$h_phone."', h_type = '".$h_type."' WHERE h_code = '".$h_code."'" ) ) {
       echo "<script type = \"text/javascript\">
                       alert(\"Service Updated Successfully!\" );
                   </script>";
@@ -100,7 +100,7 @@ class _hServices {
   
   function deleteService( $h_code) {
     
-    $deleteService = mysqli_query( $GLOBALS['conn'], "DELETE FROM hservices WHERE h_code='".$h_code."'" );
+    $deleteService = mysqli_query( $GLOBALS['conn'], "DELETE FROM ". hDBPREFIX ."services WHERE h_code='".$h_code."'" );
     if ( !$createService ->conn_error) {
       echo '<div><p>Service Created Successfuly!</p></div>';
     } else {
@@ -110,7 +110,7 @@ class _hServices {
 
   function getServicesType( $type) { ?>
   <title><?php _show_( ucfirst( $type) ); ?>s List [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $getServicesBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hservices WHERE h_status = 'active' AND h_type='".$type."'" );
+    $getServicesBy = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."services WHERE h_status = 'active' AND h_type='".$type."'" );
     if ( $getServicesBy -> num_rows > 0) {
       ?>
       <a href="./service?create=<?php _show_( $type ); ?>" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
@@ -188,7 +188,7 @@ class _hServices {
 
   function getPendingService( $author) { ?>
   <title><?php _show_( "Pending Requests" ); ?> [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $getServiceStatus = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hservices WHERE h_status = 'pending' AND h_type = 'request' AND h_author = '".$author."'" );
+    $getServiceStatus = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."services WHERE h_status = 'pending' AND h_type = 'request' AND h_author = '".$author."'" );
     if ( $getServiceStatus -> num_rows > 0) {
       ?>
       <a href="./service?create=request" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
@@ -266,7 +266,7 @@ class _hServices {
 
   function getServices() {
       ?><title>All Services [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $getServices = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hservices ORDER BY h_created DESC" );
+    $getServices = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."services ORDER BY h_created DESC" );
 
     if ( $getServices -> num_rows > 0) {
       ?>
@@ -343,7 +343,7 @@ class _hServices {
   }
 
   function getServiceCode( $code) {
-    $getServiceCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hservices WHERE h_code = '".$code."'" );
+    $getServiceCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."services WHERE h_code = '".$code."'" );
     if ( $getServiceCode -> num_rows > 0) {
       while ( $serviceDetails = mysqli_fetch_assoc( $getServiceCode)){
         if ( $_SESSION['myCode'] !== $serviceDetails['h_code'] ) {

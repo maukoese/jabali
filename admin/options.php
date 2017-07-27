@@ -5,7 +5,7 @@ include './header.php';
 
 if ( isset( $_POST['mystyle'] ) ) {
     $theme = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['theme'] );
-    mysqli_query( $GLOBALS['conn'], "UPDATE husers SET h_style = '".$theme."' WHERE h_code = '".$_SESSION['myCode']."'" );
+    mysqli_query( $GLOBALS['conn'], "UPDATE ". hDBPREFIX ."users SET h_style = '".$theme."' WHERE h_code = '".$_SESSION['myCode']."'" );
 }
 
 
@@ -356,7 +356,7 @@ if ( isset( $_GET['settings'] ) ) {
     } elseif ( $_GET['settings'] == "color" ) {
 
         function isTheme ( $theme) {
-            $themes = mysqli_query( $GLOBALS['conn'], "SELECT h_style FROM husers WHERE h_code = '".$_SESSION['myCode']."'" );
+            $themes = mysqli_query( $GLOBALS['conn'], "SELECT h_style FROM ". hDBPREFIX ."users WHERE h_code = '".$_SESSION['myCode']."'" );
             if ( $themes -> num_rows > 0) {
                 while ( $mytheme = mysqli_fetch_assoc( $themes) ) {
                     if ( $theme == $mytheme['h_style'] ) {

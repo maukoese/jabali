@@ -16,7 +16,7 @@ date_default_timezone_set( "Africa/Nairobi" );
 * Install main instance of Jabali
 **/
 function installJabali() {
-	$husers = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS husers(
+	$husers = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS ". hDBPREFIX ."users(
 	h_alias VARCHAR(100),
 	h_author VARCHAR(12),
 	h_avatar VARCHAR(100), 
@@ -46,7 +46,7 @@ function installJabali() {
 	PRIMARY KEY(h_code)
 	)" );
 
-	$hresources = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hresources (
+	$hresources = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS ". hDBPREFIX ."resources (
 	h_alias VARCHAR(100),
 	h_author VARCHAR(12),
 	h_avatar VARCHAR(20),
@@ -70,7 +70,7 @@ function installJabali() {
 	PRIMARY KEY(h_code)
 	)" );
 
-	$hservices = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hservices (
+	$hservices = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS ". hDBPREFIX ."services (
 	h_alias VARCHAR(100),
 	h_author VARCHAR(12),
 	h_by VARCHAR(20), 
@@ -89,7 +89,7 @@ function installJabali() {
 	PRIMARY KEY(h_code)
 	)" );
 
-	$hmessages = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hmessages(
+	$hmessages = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS ". hDBPREFIX ."messages(
 	h_alias VARCHAR(100),
 	h_author VARCHAR(20),
 	h_by VARCHAR(20),
@@ -107,7 +107,7 @@ function installJabali() {
 	PRIMARY KEY(h_code)
 	)" );
 
-	$hcomments = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hcomments(
+	$hcomments = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS ". hDBPREFIX ."comments(
 	h_alias VARCHAR(100),
 	h_author VARCHAR(20),
 	h_by VARCHAR(20),
@@ -125,7 +125,7 @@ function installJabali() {
 	PRIMARY KEY(h_code)
 	)" );
 
-	$huploads = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS huploads(
+	$huploads = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS ". hDBPREFIX ."uploads(
 	h_alias VARCHAR(100),
 	h_author VARCHAR(12),
 	h_avatar VARCHAR(20),
@@ -149,7 +149,7 @@ function installJabali() {
 	PRIMARY KEY(h_code)
 	)" );
 
-	$hposts = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hposts(
+	$posts = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS ". hDBPREFIX ."posts(
 	h_alias VARCHAR(300),
 	h_author VARCHAR(20),
 	h_by VARCHAR(100),
@@ -177,7 +177,7 @@ function installJabali() {
 	PRIMARY KEY(h_code)
 	)" );
 
-	$hnotes = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hnotes (
+	$hnotes = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS ". hDBPREFIX ."notes (
 	id INT(10) NOT NULL AUTO_INCREMENT,
 	h_author VARCHAR(20),
 	h_by VARCHAR(100),
@@ -189,7 +189,7 @@ function installJabali() {
 	PRIMARY KEY(id)
 	)" );
 
-	$hratings = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hratings (
+	$hratings = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS ". hDBPREFIX ."ratings (
 	id INT(10) NOT NULL AUTO_INCREMENT,
 	h_author VARCHAR(20),
 	h_code VARCHAR(16),
@@ -198,7 +198,7 @@ function installJabali() {
 	PRIMARY KEY(id)
 	)" );
 
-	$hfaqs = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hfaqs (
+	$hfaqs = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS ". hDBPREFIX ."faqs (
 	h_alias VARCHAR(100),
 	h_code VARCHAR(16),
 	h_description TEXT,
@@ -206,7 +206,7 @@ function installJabali() {
 	PRIMARY KEY(h_code)
 	)" );
 
-	$hoptions = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hoptions (
+	$hoptons = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS ". hDBPREFIX ."options (
 	id INT(10) NOT NULL AUTO_INCREMENT,
 	h_alias VARCHAR(200),
 	h_code VARCHAR(100) UNIQUE,
@@ -215,7 +215,7 @@ function installJabali() {
 	PRIMARY KEY(id)
 	)" );
 
-	$hextensions = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hmenus(
+	$hextensions = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS ". hDBPREFIX ."menus(
 	h_alias VARCHAR(100) UNIQUE,
 	h_author VARCHAR(100),
 	h_avatar VARCHAR(100), 
@@ -228,7 +228,7 @@ function installJabali() {
 	PRIMARY KEY(h_code)
 	)" );
 
-	$hextensions = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS hextensions(
+	$hextensions = mysqli_query( $GLOBALS['conn'], "CREATE TABLE IF NOT EXISTS ". hDBPREFIX ."extensions(
 	h_alias VARCHAR(300),
 	h_author VARCHAR(20),
 	h_avatar VARCHAR(100),
@@ -245,7 +245,7 @@ function installJabali() {
 	PRIMARY KEY(h_code)
 	)" );
 
-	if ( $husers && $hresources && $hmessages && $hcomments && $huploads && $hposts && $hnotes && $hratings && $hfaqs && $hoptions && $hextensions ) {
+	if ( $husers && $hresources && $hmessages && $hcomments && $huploads && $posts && $hnotes && $hratings && $hfaqs && $hoptons && $hextensions ) {
 		return true; 
 	} else {
 		return false;
@@ -316,8 +316,8 @@ define( 'hAPI', hROOT.'api/' );
 /**
 * 
 **/
-define( 'hEMAIL', 'portal@mtaandao.co.ke' );
-define( 'hPHONE', '254702630550' );
+define( 'hEMAIL', 'jabali@mauko.co.ke' );
+define( 'hPHONE', '25420 440 4993' );
 
 /**
 * Include Function
@@ -412,7 +412,7 @@ function isAuthor( $author ) {
 }
 
 function emailExists( $email ) {
-	$theEmail = mysqli_query( $GLOBALS['conn'], "SELECT h_email FROM husers WHERE h_email ='".$email."'" );
+	$theEmail = mysqli_query( $GLOBALS['conn'], "SELECT h_email FROM ". hDBPREFIX ."users WHERE h_email ='".$email."'" );
 	if ( $theEmail -> num_rows > 0 ) {
 		return true;
 	} else {
@@ -465,7 +465,7 @@ function uploadFile() {
 * 
 **/
 function getMsgCount() {
-    $getMessages = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hmessages WHERE (h_status = 'unread' AND h_for = '".$_SESSION['myCode']."' )" );
+    $getMessages = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."messages WHERE (h_status = 'unread' AND h_for = '".$_SESSION['myCode']."' )" );
     if ( $getMessages -> num_rows >= 0 ) {
       $messagecount = $getMessages -> num_rows;
       echo $messagecount;
@@ -478,7 +478,7 @@ function getMsgCount() {
 * 
 **/
 function getNoteCount() {
-	$getMessages = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hcomments" );
+	$getMessages = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."comments" );
 	if ( $getMessages -> num_rows >= 0 ) {
 	  	$messagecount = $getMessages -> num_rows;
 	  	echo $messagecount;
@@ -491,7 +491,7 @@ function getNoteCount() {
 * 
 **/
 function primaryColor() {
-	$getColor = mysqli_query( $GLOBALS['conn'], "SELECT h_style FROM husers  WHERE h_code='".$_SESSION['myCode']."'" );
+	$getColor = mysqli_query( $GLOBALS['conn'], "SELECT h_style FROM ". hDBPREFIX ."users  WHERE h_code='".$_SESSION['myCode']."'" );
 	if ( $getColor ) {
 		while ( $themes = mysqli_fetch_assoc( $getColor) ) {
 			if ( $themes['h_style'] == "love" ) {
@@ -551,7 +551,7 @@ function primaryColor() {
 * 
 **/
 function secondaryColor() {
-	$getColor = mysqli_query( $GLOBALS['conn'], "SELECT h_style FROM husers  WHERE h_code='".$_SESSION['myCode']."'" );
+	$getColor = mysqli_query( $GLOBALS['conn'], "SELECT h_style FROM ". hDBPREFIX ."users  WHERE h_code='".$_SESSION['myCode']."'" );
 	if ( $getColor ) {
 		while ( $themes = mysqli_fetch_assoc( $getColor) ) {
 			if ( $themes['h_style'] == "love" ) {
@@ -611,7 +611,7 @@ function secondaryColor() {
 * 
 **/
 function textColor() {
-	$getColor = mysqli_query( $GLOBALS['conn'], "SELECT h_style FROM husers  WHERE h_code='".$_SESSION['myCode']."'" );
+	$getColor = mysqli_query( $GLOBALS['conn'], "SELECT h_style FROM ". hDBPREFIX ."users  WHERE h_code='".$_SESSION['myCode']."'" );
 	if ( $getColor ) {
 		while ( $themes = mysqli_fetch_assoc( $getColor) ) {
 			if ( $themes['h_style'] == "love" ) {
@@ -633,7 +633,7 @@ function textColor() {
 * 
 **/
 function getOption( $code ) {
-    $getOptions = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hoptions WHERE h_code='".$code."'" );
+    $getOptions = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."options WHERE h_code='".$code."'" );
     if ( $getOptions -> num_rows > 0 ) {
         while ( $siteOption = mysqli_fetch_assoc( $getOptions) ) { 
            $option = $siteOption['h_description'];
@@ -647,7 +647,7 @@ function getOption( $code ) {
 * 
 **/
 function showOption( $code ) {
-    $getOptions = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hoptions WHERE h_code='".$code."'" );
+    $getOptions = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."options WHERE h_code='".$code."'" );
     if ( $getOptions -> num_rows > 0 ) {
         while ( $siteOption = mysqli_fetch_assoc( $getOptions) ) { 
             _show_( $siteOption['h_description'] );
@@ -794,7 +794,7 @@ function generateCode() {
 }
 
 function recordExists( $record ) {
-	$link = mysqli_query( $GLOBALS['conn'], "SELECT h_link FROM hposts WHERE h_link = '".$record."'");
+	$link = mysqli_query( $GLOBALS['conn'], "SELECT h_link FROM ". hDBPREFIX ."posts WHERE h_link = '".$record."'" );
 	if ( $link -> num_rows > 0 ) {
 		return true;
 	} else {

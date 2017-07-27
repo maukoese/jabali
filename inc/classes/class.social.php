@@ -24,7 +24,7 @@ class _hSocial {
   }
 
   function bottomshare( $code) { 
-    $getPostCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM hposts WHERE h_code = '".$code."'" );
+    $getPostCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts WHERE h_code = '".$code."'" );
     if ( $getPostCode -> num_rows > 0) {
       while ( $post = mysqli_fetch_assoc( $getPostCode)){ ?>
     <div class="fixed-action-btn">
