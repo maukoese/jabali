@@ -255,8 +255,7 @@ $dB = new MysqliDb ($GLOBALS['conn']); ?>
           $hMenu -> drawer(); ?>
           <div class="mdl-layout-spacer"></div><?php 
           if ( isCap( 'admin' ) ) { ?>
-          <a class="mdl-navigation__link" id="extensions" href="./extensions"><i class="mdl-color-text--white material-icons" role="presentation">power</i>Extensions</a><?php } ?>
-          
+          <a id="extensions" class="mdl-navigation__link" href="./extensions"><i class="mdl-color-text--white material-icons" role="presentation">power</i>Extensions</a><?php } ?>
           <a id="hpref" class="mdl-navigation__link" href="#"><i class="mdl-color-text--white material-icons" role="presentation">settings</i>Preferences</a>
             <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor(); ?>" for="hpref">
             <a class="mdl-navigation__link" href="./options?settings=color"><i class="mdl-color-text--white material-icons" role="presentation">color_lens</i><span>Color Options</span></a><?php 

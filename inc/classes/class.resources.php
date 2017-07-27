@@ -367,7 +367,7 @@ class _hResources {
 
     if ( $getResources -> num_rows > 0) {
       ?>
-      <a href="./resource?create=center" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+      <a href="./resource?create=organization" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
   <i class="material-icons">create</i></a>
       <div class="mdl-grid" id="mdl-table">
         <div class="mdl-cell--12-col" >

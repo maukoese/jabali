@@ -23,9 +23,9 @@ if (isset($_POST['register']) ) {
     $h_alias = "Admin User";
     $h_author = substr( $hash, 20 );
     $h_avatar = hIMAGES.'avatar.svg';
-    $h_organization = "hq";
+    $h_organization = "Hq";
     $h_code = $h_author;
-    $h_created = date('Y-m-d' );
+    $h_created = date( 'Y-m-d' ). ' ' .date( 'H:i:s' );
     $h_gender = "other";
     $h_key = $hash;
     $h_level = "admin";
@@ -45,7 +45,7 @@ if (isset($_POST['register']) ) {
 
 	<p>OVERVIEW</p>
 
-	<p>This website is operated by JABALI. Throughout the site, the terms &ldquo;we&rdquo;, &ldquo;us&rdquo; and &ldquo;our&rdquo; refer to JABALI. JABALI offers this website, including all information, tools and services available from this site to you, the user, conditioned upon your acceptance of all terms, conditions, policies and notices stated here. By visiting our site and/ or purchasing something from us, you engage in our &ldquo;Service&rdquo; and agree to be bound by the following terms and conditions (&ldquo;Terms of Service&rdquo;, &ldquo;Terms&rdquo;), including those additional terms and conditions and policies referenced herein and/or available by hyperlink. These Terms of Service apply to all users of the site, including without limitation users who are browsers, vendors, customers, merchants, and/ or contributors of content. Please read these Terms of Service carefully before accessing or using our website. By accessing or using any part of the site, you agree to be bound by these Terms of Service. If you do not agree to all the terms and conditions of this agreement, then you may not access the website or use any services. If these Terms of Service are considered an offer, acceptance is expressly limited to these Terms of Service. Any new features or tools which are added to the current store shall also be subject to the Terms of Service. You can review the most current version of the Terms of Service at any time on this page. We reserve the right to update, change or replace any part of these Terms of Service by posting updates and/or changes to our website. It is your responsibility to check this page periodically for changes. Your continued use of or access to the website following the posting of any changes constitutes acceptance of those changes. Our store is hosted on Shopify Inc. They provide us with the online e-commerce platform that allows us to sell our products and services to you.</p>
+	<p>This website is operated by ". $site_name .". Throughout the site, the terms &ldquo;we&rdquo;, &ldquo;us&rdquo; and &ldquo;our&rdquo; refer to ". $site_name .". ". $site_name ." offers this website, including all information, tools and services available from this site to you, the user, conditioned upon your acceptance of all terms, conditions, policies and notices stated here. By visiting our site and/ or purchasing something from us, you engage in our &ldquo;Service&rdquo; and agree to be bound by the following terms and conditions (&ldquo;Terms of Service&rdquo;, &ldquo;Terms&rdquo;), including those additional terms and conditions and policies referenced herein and/or available by hyperlink. These Terms of Service apply to all users of the site, including without limitation users who are browsers, vendors, customers, merchants, and/ or contributors of content. Please read these Terms of Service carefully before accessing or using our website. By accessing or using any part of the site, you agree to be bound by these Terms of Service. If you do not agree to all the terms and conditions of this agreement, then you may not access the website or use any services. If these Terms of Service are considered an offer, acceptance is expressly limited to these Terms of Service. Any new features or tools which are added to the current store shall also be subject to the Terms of Service. You can review the most current version of the Terms of Service at any time on this page. We reserve the right to update, change or replace any part of these Terms of Service by posting updates and/or changes to our website. It is your responsibility to check this page periodically for changes. Your continued use of or access to the website following the posting of any changes constitutes acceptance of those changes. Our store is hosted on Shopify Inc. They provide us with the online e-commerce platform that allows us to sell our products and services to you.</p>
 
 	<p>SECTION 1 - ONLINE STORE TERMS</p>
 
@@ -77,11 +77,11 @@ if (isset($_POST['register']) ) {
 
 	<p>SECTION 12 - PROHIBITED USES In addition to other prohibitions as set forth in the Terms of Service, you are prohibited from using the site or its content: (a) for any unlawful purpose; (b) to solicit others to perform or participate in any unlawful acts; (c) to violate any international, federal, provincial or state regulations, rules, laws, or local ordinances; (d) to infringe upon or violate our intellectual property rights or the intellectual property rights of others; (e) to harass, abuse, insult, harm, defame, slander, disparage, intimidate, or discriminate based on gender, sexual orientation, religion, ethnicity, race, age, national origin, or disability; (f) to submit false or misleading information; (g) to upload or transmit viruses or any other type of malicious code that will or may be used in any way that will affect the functionality or operation of the Service or of any related website, other websites, or the Internet; (h) to collect or track the personal information of others; (i) to spam, phish, pharm, pretext, spider, crawl, or scrape; (j) for any obscene or immoral purpose; or (k) to interfere with or circumvent the security features of the Service or any related website, other websites, or the Internet. We reserve the right to terminate your use of the Service or any related website for violating any of the prohibited uses.</p>
 
-	<p>SECTION 13 - DISCLAIMER OF WARRANTIES; LIMITATION OF LIABILITY We do not guarantee, represent or warrant that your use of our service will be uninterrupted, timely, secure or error-free. We do not warrant that the results that may be obtained from the use of the service will be accurate or reliable. You agree that from time to time we may remove the service for indefinite periods of time or cancel the service at any time, without notice to you. You expressly agree that your use of, or inability to use, the service is at your sole risk. The service and all products and services delivered to you through the service are (except as expressly stated by us) provided &#39;as is&#39; and &#39;as available&#39; for your use, without any representation, warranties or conditions of any kind, either express or implied, including all implied warranties or conditions of merchantability, merchantable quality, fitness for a particular purpose, durability, title, and non-infringement. In no case shall JABALI, our directors, officers, employees, affiliates, agents, contractors, interns, suppliers, service providers or licensors be liable for any injury, loss, claim, or any direct, indirect, incidental, punitive, special, or consequential damages of any kind, including, without limitation lost profits, lost revenue, lost savings, loss of data, replacement costs, or any similar damages, whether based in contract, tort (including negligence), strict liability or otherwise, arising from your use of any of the service or any products procured using the service, or for any other claim related in any way to your use of the service or any product, including, but not limited to, any errors or omissions in any content, or any loss or damage of any kind incurred as a result of the use of the service or any content (or product) posted, transmitted, or otherwise made available via the service, even if advised of their possibility. Because some states or jurisdictions do not allow the exclusion or the limitation of liability for consequential or incidental damages, in such states or jurisdictions, our liability shall be limited to the maximum extent permitted by law.</p>
+	<p>SECTION 13 - DISCLAIMER OF WARRANTIES; LIMITATION OF LIABILITY We do not guarantee, represent or warrant that your use of our service will be uninterrupted, timely, secure or error-free. We do not warrant that the results that may be obtained from the use of the service will be accurate or reliable. You agree that from time to time we may remove the service for indefinite periods of time or cancel the service at any time, without notice to you. You expressly agree that your use of, or inability to use, the service is at your sole risk. The service and all products and services delivered to you through the service are (except as expressly stated by us) provided &#39;as is&#39; and &#39;as available&#39; for your use, without any representation, warranties or conditions of any kind, either express or implied, including all implied warranties or conditions of merchantability, merchantable quality, fitness for a particular purpose, durability, title, and non-infringement. In no case shall ". $site_name .", our directors, officers, employees, affiliates, agents, contractors, interns, suppliers, service providers or licensors be liable for any injury, loss, claim, or any direct, indirect, incidental, punitive, special, or consequential damages of any kind, including, without limitation lost profits, lost revenue, lost savings, loss of data, replacement costs, or any similar damages, whether based in contract, tort (including negligence), strict liability or otherwise, arising from your use of any of the service or any products procured using the service, or for any other claim related in any way to your use of the service or any product, including, but not limited to, any errors or omissions in any content, or any loss or damage of any kind incurred as a result of the use of the service or any content (or product) posted, transmitted, or otherwise made available via the service, even if advised of their possibility. Because some states or jurisdictions do not allow the exclusion or the limitation of liability for consequential or incidental damages, in such states or jurisdictions, our liability shall be limited to the maximum extent permitted by law.</p>
 
 	<p>SECTION 14 - INDEMNIFICATION</p>
 
-	<p>You agree to indemnify, defend and hold harmless JABALI and our parent, subsidiaries, affiliates, partners, officers, directors, agents, contractors, licensors, service providers, subcontractors, suppliers, interns and employees, harmless from any claim or demand, including reasonable attorneys&rsquo; fees, made by any third-party due to or arising out of your breach of these Terms of Service or the documents they incorporate by reference, or your violation of any law or the rights of a third-party.</p>
+	<p>You agree to indemnify, defend and hold harmless ". $site_name ." and our parent, subsidiaries, affiliates, partners, officers, directors, agents, contractors, licensors, service providers, subcontractors, suppliers, interns and employees, harmless from any claim or demand, including reasonable attorneys&rsquo; fees, made by any third-party due to or arising out of your breach of these Terms of Service or the documents they incorporate by reference, or your violation of any law or the rights of a third-party.</p>
 
 	<p>SECTION 15 - SEVERABILITY</p>
 
@@ -113,7 +113,7 @@ if (isset($_POST['register']) ) {
 	$hOpt -> create ( 'Description', 'description', 'A Jabali System', $h_created );
 	$hOpt -> create ( 'Admin Email', 'email', $h_email, $h_created );
 	$hOpt -> create ( 'Admin Phone', 'phone', '+254705459494', $h_created );
-	$hOpt -> create ( 'Copyright', 'copyright', '© JABALI 2017', $h_created );
+	$hOpt -> create ( 'Copyright', 'copyright', '© ". $site_name ." 2017', $h_created );
 	$hOpt -> create ( 'Attribution', 'attribution', 'Mauko by Design', $h_created );
 	$hOpt -> create ( 'Attribution Link', 'attribution_link', 'http://mauko.co.ke', $h_created );
 	$hOpt -> create ( 'Header Logo', 'header_logo', hIMAGES."logo.png", $h_created );
@@ -159,24 +159,17 @@ if (isset($_POST['register']) ) {
 	*Create Admin Account
 	*/
     if ( mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."users (h_alias, h_author, h_avatar, h_organization, h_code, h_created, h_email, h_gender, h_key, h_level, h_link, h_location, h_notes, h_password, h_social, h_status, h_style, h_type, h_username) 
-    VALUES ('".$h_alias."', '".$h_author."', '".$h_avatar."', '".$h_organization."', '".$h_code."', '".$h_created."', '".$h_email."', '".$h_gender."', '".$h_key."', '".$h_level."', '".$h_link."', '".$h_location."', '".$h_notes."', '".$h_password."', '".$h_social."', '".$h_status."', '".$h_style."', '".$h_type."', '".$h_username."' )" ) ) {
+    VALUES ('".$h_alias."', '".$h_author."', '".$h_avatar."', '".$h_organization."', '".$h_code."', '".$h_created."', '".$h_email."', '".$h_gender."', '".$h_key."', '".$h_level."', '".$h_link."', '".$h_location."', '".$h_notes."', '".$h_password."', '".$h_social."', '".$h_status."', '".$h_style."', '".$h_type."', '".$h_username."')" ) ) {
 
-    	/*
-		* Add Zahra file to prevent hacks
-		* Must be deleted to reinstall
-		*/
-		$zahra = fopen("./inc/.zahra", "w") or die("Unable to open file!" );
-		$salts = sha1(date('YmdHs')).sha1(date('YmdHm' ) );
-		fwrite($zahra, $salts );
+        mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."posts (h_alias, h_avatar, h_link, h_status, h_type) 
+    VALUES ('Home', '".hIMAGES."404.jpg"."', 'home', 'published', 'page')" );
 
 		header("Location: ./login" );
 
     } else {
         echo '<span class="mdl-color--red">Error: <br>' . $GLOBALS['conn']->error . '</span>';
     }
-}
-
-if ( !file_exists( "./inc/.zahra" ) ) {    
+} else {   
     installJabali(); ?>
     <!DOCTYPE html>
     <html>
@@ -187,7 +180,7 @@ if ( !file_exists( "./inc/.zahra" ) ) {
     	<script src="./inc/assets/js/jquery-3.2.1.min.js"></script>
     	<script src="./inc/assets/js/materialize.min.js"></script>
     	<script src="./inc/assets/js/material.js"></script>
-    	<title>Admin Setup [ JABALI ]</title>
+    	<title>Admin Setup [ ". $site_name ." ]</title>
     </head>
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
     	<body>

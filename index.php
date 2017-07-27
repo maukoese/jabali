@@ -54,32 +54,35 @@ $elements = explode('/', $url );
 $match = $elements[0];
 
 include 'header.php' ;
+// if( $match = "login" ) {
+// 	call_user_func_array( array( $action, 'login' ), array( $elements[1] ) );
+// }
 
-if( empty( $elements[0] ) ) {
+if( empty( $match ) ) {
 	call_user_func_array( array( $action, 'home' ), array() );
 } else switch ( $match ) {
-	case 'login':
+	case "login":
 		call_user_func_array( array( $action, 'login' ), array( $elements[1] ) );
 		break;
-	case 'register':
+	case "register":
 		call_user_func_array( array( $action, 'register' ), array( $elements[1] ) );
 		break;
-	case 'reset':
+	case "reset":
 		call_user_func_array( array( $action, 'reset' ), array( $elements[1] ) );
 		break;
-	case 'forgot':
+	case "forgot":
 		call_user_func_array( array( $action, 'forgot' ), array( $elements[1] ) );
 		break;
-	case 'blog':
+	case "blog":
 		call_user_func_array( array( $action, 'blog' ), array( $elements[1] ) );
 		break;
-	case 'categories':
+	case "categories":
 		call_user_func_array( array( $action, 'categories' ), array( $elements[1] ) );
 		break;
-	case 'tags':
+	case "tags":
 		call_user_func_array( array( $action, 'tags' ), array( $elements[1] ) );
 		break;
-	case 'users':
+	case "users":
 		call_user_func_array( array( $action, 'users' ), array( $elements[1] ) );
 		break;
 	default:

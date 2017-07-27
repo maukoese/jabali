@@ -379,7 +379,7 @@ class _hPosts {
               </div>
 
               <div class="input-field">
-                <textarea class="materialize-textarea col s12" id="h_description" name="h_description" ><?php _show_( $userDetails['h_description'] ); ?></textarea>
+                <textarea class="materialize-textarea col s12" id="h_description" name="h_description" ></textarea>
                 <label for="h_description">Your Comment</label>
               </div>
 

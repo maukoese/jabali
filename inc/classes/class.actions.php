@@ -67,7 +67,7 @@ class _hActions {
 
 	function login() {
 		if ( isset( $_SESSION['myCode'] ) ) {
-			header( 'Location: admin/index?page=my dashboard' );
+			header( 'Location: '.hROOT.'admin/index?page=my dashboard' );
 			exit();
 		} else {
 			if ( isset( $_GET['provider'] ) ) { 
@@ -255,15 +255,15 @@ class _hActions {
 					$_SESSION['myAvatar'] = $userDetails['h_avatar'];
 					$_SESSION['myGender'] = $userDetails['h_gender'];
 
-					header( 'Location: admin/index?page=my dashboard' );
+					header( 'Location: '.hROOT.'admin/index?page=my dashboard' );
 					exit();
 				} else {
-					header('Location: ./login?alert=password' );
+					header('Location: '.hROOT.'login?alert=password' );
 					exit();
 				}
 			}
 		} else {
-			header('Location: ./login?alert=user' );
+			header('Location: '.hROOT.'login?alert=user' );
 			exit();
 		}
 	}
@@ -800,7 +800,7 @@ class _hActions {
 										      </center>
 										    </div>
 										    <div class="card-content mdl-color-text--black">
-										      <center><b class="card-title grey-text text-darken-4">Bold</b>
+										      <center><b class="card-title grey-text text-darken-4">Free</b>
 										      <p>The foundational elements of print-based design – typography, grids, space, scale, color, and use of imagery – guide visual treatments. These elements do far more than please the eye.</p></center>
 										    </div>
 					          		</div>
@@ -811,7 +811,7 @@ class _hActions {
 										      </center>
 										    </div>
 										    <div class="card-content mdl-color-text--black">
-										      <center><b class="card-title grey-text text-darken-4">Bold</b>
+										      <center><b class="card-title grey-text text-darken-4">Open-Source</b>
 										      <p>The foundational elements of print-based design – typography, grids, space, scale, color, and use of imagery – guide visual treatments. These elements do far more than please the eye.</p></center>
 										    </div>
 					          		</div>
@@ -822,7 +822,7 @@ class _hActions {
 										      </center>
 										    </div>
 										    <div class="card-content mdl-color-text--black">
-										      <center><b class="card-title grey-text text-darken-4">Bold</b>
+										      <center><b class="card-title grey-text text-darken-4">Modular</b>
 										      <p>The foundational elements of print-based design – typography, grids, space, scale, color, and use of imagery – guide visual treatments. These elements do far more than please the eye.</p></center>
 										    </div>
 					          		</div>
@@ -833,7 +833,7 @@ class _hActions {
 										      </center>
 										    </div>
 										    <div class="card-content mdl-color-text--black">
-										      <center><b class="card-title grey-text text-darken-4">Bold</b>
+										      <center><b class="card-title grey-text text-darken-4">Extendable</b>
 										      <p>The foundational elements of print-based design – typography, grids, space, scale, color, and use of imagery – guide visual treatments. These elements do far more than please the eye.</p></center>
 										    </div>
 					          		</div>

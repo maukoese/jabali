@@ -158,6 +158,11 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 		fwrite( $dbfile, $txt );
 		$text = 'define( "hDBPREFIX", "'.$dbprefix.'" );';
 		fwrite( $dbfile, $text );
+		$txt = "\n\n";
+		fwrite( $dbfile, $txt );
+		$salts = sha1(date('YmdHs')).sha1(date('YmdHm' ) );
+		$text = 'define( "hSALTS", "'.$salts.'" );';
+		fwrite( $dbfile, $text );
 		$txt = " ?>";
 		fwrite( $dbfile, $txt );
 		fclose( $dbfile );
@@ -167,6 +172,11 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 
 	if ( conFigure( $dbhost, $dbname, $dbuser, $dbpass, $home, $dbprefix ) ) {
 		header( "Location: ./install.php" );
+	} else {
+		echo 'Could Not create configuration file<code>config.php</php><br>
+		<h4>Suggestions</h4><br>
+		1. Allow jabali <a href="https://stackoverflow.com/questions/2900690/how-do-i-give-php-write-access-to-a-directory">write permissions</a>.<br>
+		2. Edit the sample appropriately and save as, then point your browser to http://yoursite.com/install.php';
 	}
 } else {
 

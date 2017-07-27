@@ -376,10 +376,10 @@ if ( isset( $_GET['settings'] ) ) {
                     }
 
                 .ccolor {
-                    height: 50px;
-                    width: 50px;
+                    height: 40px;
+                    width: 40px;
                     border-radius: 50%;
-                    border: white 1px solid;
+                    border: #eee 1px solid;
                 }
 
                 .clabel {
@@ -392,7 +392,7 @@ if ( isset( $_GET['settings'] ) ) {
                         Select Theme
                     </div>
                     <div class="mdl-layout-spacer"></div>
-                    <div class="mdl-card__subtitle-text mdl-button">
+                    <div class="mdl-card__subtitle-text mdl-button mdl-button--icon">
                         <i class="material-icons">color_lens</i>
                     </div>
                 </div>
@@ -402,119 +402,119 @@ if ( isset( $_GET['settings'] ) ) {
                     <div class="input-field inline">
                         <input type="radio" id="zahra" name="theme" value="zahra" <?php isTheme ('zahra' ); ?>>
                         <label for="zahra"><p class="cholder" for="zahra">
-                            <span class="ccolor mdl-color--teal"></span><span class="ccolor csec mdl-color--red"></span>
+                            <span class="ccolor mdl-color--teal"></span><span class="ccolor csec mdl-color--red"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="zahra">Zahra's Fade</div>
 
                     <div class="input-field inline">
                         <input type="radio" id="love" name="theme" value="love" <?php isTheme ('love' ); ?>>
                         <label for="love"><p class="cholder" for="love">
-                            <span class="ccolor mdl-color--cyan"></span><span class="ccolor csec mdl-color--magenta"></span>
+                            <span class="ccolor mdl-color--cyan"></span><span class="ccolor csec mdl-color--magenta"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="love">Love, Olive</div>
 
                     <div class="input-field inline">
                         <input type="radio" id="wizz" name="theme" value="wizz" <?php isTheme ('wizz' ); ?>>
                         <label for="wizz"><p class="cholder" for="wizz">
-                            <span class="ccolor mdl-color--yellow"></span><span class="ccolor csec mdl-color--black"></span>
+                            <span class="ccolor mdl-color--yellow"></span><span class="ccolor csec mdl-color--black"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="wizz">The Wizz</div>
 
                     <div class="input-field inline">
                         <input type="radio" id="pint" name="theme" value="pint" <?php isTheme ('pint' ); ?>>
                         <label for="pint"><p class="cholder" for="pint">
-                            <span class="ccolor mdl-color--blue"></span><span class="ccolor csec mdl-color--pink"></span>
+                            <span class="ccolor mdl-color--blue"></span><span class="ccolor csec mdl-color--pink"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="pint">The Bluepint</div>
 
                     <div class="input-field inline">
                         <input type="radio" id="stack" name="theme" value="stack" <?php isTheme ('stack' ); ?>>
                         <label for="stack"><p class="cholder" for="stack">
-                            <span class="ccolor mdl-color--grey"></span><span class="ccolor csec mdl-color--brown"></span>
+                            <span class="ccolor mdl-color--grey"></span><span class="ccolor csec mdl-color--brown"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="stack">Needle in a Haystack</div>
 
                     <div class="input-field inline">
                         <input type="radio" id="indie" name="theme" value="indie" <?php isTheme ('indie' ); ?>>
                         <label for="indie"><p class="cholder" for="indie">
-                            <span class="ccolor mdl-color--indigo"></span><span class="ccolor csec mdl-color--brown"></span>
+                            <span class="ccolor mdl-color--indigo"></span><span class="ccolor csec mdl-color--brown"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="indie">Indie Go</div>
 
                     <div class="input-field inline">
                         <input type="radio" id="haze" name="theme" value="haze" <?php isTheme ('haze' ); ?>>
                         <label for="haze"><p class="cholder" for="haze">
-                            <span class="ccolor mdl-color--purple"></span><span class="ccolor csec mdl-color--green"></span>
+                            <span class="ccolor mdl-color--purple"></span><span class="ccolor csec mdl-color--green"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="haze">Purple Haze</div>
 
                     <div class="input-field inline">
                         <input type="radio" id="hot" name="theme" value="hot" <?php isTheme ('hot' ); ?>>
                         <label for="hot"><p class="cholder" for="hot">
-                            <span class="ccolor mdl-color--red"></span><span class="ccolor csec mdl-color--blue"></span>
+                            <span class="ccolor mdl-color--red"></span><span class="ccolor csec mdl-color--blue"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="hot">Red Hot</div>
 
                     <div class="input-field inline">
                         <input type="radio" id="princess" name="theme" value="princess" <?php isTheme ('princess' ); ?>>
                         <label for="princess"><p class="cholder" for="princess">
-                            <span class="ccolor mdl-color--pink"></span><span class="ccolor csec mdl-color--cyan"></span>
+                            <span class="ccolor mdl-color--pink"></span><span class="ccolor csec mdl-color--cyan"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="princess">Princess Zahra</div>
 
                     <div class="input-field inline">
                         <input type="radio" id="sky" name="theme" value="sky" <?php isTheme ('sky' ); ?>>
                         <label for="sky"><p class="cholder" for="sky">
-                            <span class="ccolor mdl-color--light-blue"></span><span class="ccolor csec mdl-color--brown"></span>
+                            <span class="ccolor mdl-color--light-blue"></span><span class="ccolor csec mdl-color--brown"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="sky">Blue Sky</div>
 
                     <div class="input-field inline">
                         <input type="radio" id="greene" name="theme" value="greene" <?php isTheme ('greene' ); ?>>
                         <label for="greene"><p class="cholder" for="greene">
-                            <span class="ccolor mdl-color--green"></span><span class="ccolor csec mdl-color--red"></span>
+                            <span class="ccolor mdl-color--green"></span><span class="ccolor csec mdl-color--red"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="greene">Green E</div>
 
                     <div class="input-field inline">
                         <input type="radio" id="vegan" name="theme" value="vegan" <?php isTheme ('vegan' ); ?>>
                         <label for="vegan"><p class="cholder" for="vegan">
-                            <span class="ccolor mdl-color--light-green"></span><span class="ccolor csec mdl-color--green"></span>
+                            <span class="ccolor mdl-color--light-green"></span><span class="ccolor csec mdl-color--green"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="vegan">Vegan</div>
 
                     <div class="input-field inline">
                         <input type="radio" id="lemon" name="theme" value="lemon" <?php isTheme ('lemon' ); ?>>
                         <label for="lemon"><p class="cholder" for="lemon">
-                            <span class="ccolor mdl-color--lime"></span><span class="ccolor csec mdl-color--brown"></span>
+                            <span class="ccolor mdl-color--lime"></span><span class="ccolor csec mdl-color--brown"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="lemon">Life's Lemons</div>
 
                     <div class="input-field inline">
                         <input type="radio" id="wait" name="theme" value="wait" <?php isTheme ('wait' ); ?>>
                         <label for="wait"><p class="cholder" for="wait">
-                            <span class="ccolor mdl-color--amber"></span><span class="ccolor csec mdl-color--brown"></span>
+                            <span class="ccolor mdl-color--amber"></span><span class="ccolor csec mdl-color--brown"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="wait">Wait A Minute</div>
 
                     <div class="input-field inline">
                         <input type="radio" id="orange" name="theme" value="orange" <?php isTheme ('orange' ); ?>>
                         <label for="orange"><p class="cholder" for="orange">
-                            <span class="ccolor mdl-color--orange"></span><span class="ccolor csec mdl-color--yellow"></span>
+                            <span class="ccolor mdl-color--orange"></span><span class="ccolor csec mdl-color--yellow"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="orange">Orange Tan</div>
 
                     <div class="input-field inline">
                         <input type="radio" id="sun" name="theme" value="sun" <?php isTheme ('sun' ); ?>>
                         <label for="sun"><p class="cholder" for="sun">
-                            <span class="ccolor mdl-color--deep-orange"></span><span class="ccolor csec mdl-color--cyan"></span>
+                            <span class="ccolor mdl-color--deep-orange"></span><span class="ccolor csec mdl-color--cyan"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="sun">Orange Sun</div>
 
                     <div class="input-field inline">
                         <input type="radio" id="earth" name="theme" value="earth" <?php isTheme ('earth' ); ?>>
                         <label for="earth"><p class="cholder" for="earth">
-                            <span class="ccolor mdl-color--brown"></span><span class="ccolor csec mdl-color--orange"></span>
+                            <span class="ccolor mdl-color--brown"></span><span class="ccolor csec mdl-color--orange"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="earth">Down To Earth</div>
                     
@@ -522,7 +522,7 @@ if ( isset( $_GET['settings'] ) ) {
                     <div class="input-field inline">
                         <input type="radio" id="ghost" name="theme" value="ghost" <?php isTheme ('ghost' ); ?>>
                         <label for="ghost"><p class="cholder" for="ghost">
-                            <span class="ccolor mdl-color--blue-grey"></span><span class="ccolor csec mdl-color--red"></span>
+                            <span class="ccolor mdl-color--blue-grey"></span><span class="ccolor csec mdl-color--red"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="ghost">Ghosting Blues</div>
                     
@@ -530,7 +530,7 @@ if ( isset( $_GET['settings'] ) ) {
                     <div class="input-field inline">
                         <input type="radio" id="bred" name="theme" value="bred" <?php isTheme ('bred' ); ?>>
                         <label for="bred"><p class="cholder" for="bred">
-                            <span class="ccolor mdl-color--black"></span><span class="ccolor csec mdl-color--red"></span>
+                            <span class="ccolor mdl-color--black"></span><span class="ccolor csec mdl-color--red"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="bred">Born & Bred</div>
                     
@@ -538,35 +538,35 @@ if ( isset( $_GET['settings'] ) ) {
                     <div class="input-field inline">
                         <input type="radio" id="prince" name="theme" value="prince" <?php isTheme ('prince' ); ?>>
                         <label for="prince"><p class="cholder" for="prince">
-                            <span class="ccolor mdl-color--deep-purple"></span><span class="ccolor csec mdl-color--lime"></span>
+                            <span class="ccolor mdl-color--deep-purple"></span><span class="ccolor csec mdl-color--lime"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="prince">Dark Prince</div>
 
                     <div class="input-field inline">
                         <input type="radio" id="peachy" name="theme" value="peachy" <?php isTheme ('prince' ); ?>>
                         <label for="peachy"><p class="cholder" for="prince">
-                            <span class="ccolor mdl-color--peachpuff"></span><span class="ccolor csec mdl-color--maroon"></span>
+                            <span class="ccolor mdl-color--peachpuff"></span><span class="ccolor csec mdl-color--maroon"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="peachy">Peachy</div>
 
                     <div class="input-field inline">
                         <input type="radio" id="queen" name="theme" value="queen" <?php isTheme ('queen' ); ?>>
                         <label for="queen"><p class="cholder" for="queen">
-                            <span class="ccolor mdl-color--deep-purple"></span><span class="ccolor csec mdl-color--light-green"></span>
+                            <span class="ccolor mdl-color--deep-purple"></span><span class="ccolor csec mdl-color--light-green"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="queen">The Queen</div>
 
                     <div class="input-field inline">
                         <input type="radio" id="madge" name="theme" value="madge" <?php isTheme ('madge' ); ?>>
                         <label for="madge"><p class="cholder" for="madge">
-                            <span class="ccolor mdl-color--madge"></span><span class="ccolor csec mdl-color--sony"></span>
+                            <span class="ccolor mdl-color--madge"></span><span class="ccolor csec mdl-color--sony"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="madge">Madge Sony</div>
 
                     <div class="input-field inline">
                         <input type="radio" id="madge" name="theme" value="madge" <?php isTheme ('madge' ); ?>>
                         <label for="madge"><p class="cholder" for="madge">
-                            <span class="ccolor mdl-color--black"></span><span class="ccolor csec mdl-color--cyan"></span>
+                            <span class="ccolor mdl-color--black"></span><span class="ccolor csec mdl-color--cyan"></span><span class="ccolor csec mdl-color--white"></span>
                         </p></label>
                     </div><div class="mdl-tooltip" for="madge">Madge Sony</div>
                     
@@ -584,7 +584,7 @@ if ( isset( $_GET['settings'] ) ) {
                     </div>
 
                     <div class="mdl-layout-spacer"></div>
-                    <div class="mdl-card__subtitle-text mdl-button">
+                    <div class="mdl-card__subtitle-text mdl-button mdl-button--icon">
                         <i class="material-icons">brush</i>
                     </div>
                 </div>
@@ -630,7 +630,7 @@ if ( isset( $_GET['settings'] ) ) {
                     </div>
 
                     <div class="mdl-layout-spacer"></div>
-                    <div class="mdl-card__subtitle-text mdl-button">
+                    <div class="mdl-card__subtitle-text mdl-button mdl-button--icon">
                         <i class="material-icons">palette</i>
                     </div>
                 </div>

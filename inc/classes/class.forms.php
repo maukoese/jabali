@@ -845,7 +845,7 @@ class _hForms {
                                 echo '<li class="mdl-menu__item" data-val="'.$center['h_code'].'">'.$center['h_alias'].'</li>';
                             }
                           }
-                          echo '<center>Your Organization Not Listed? <br><a href="./user?create=center">Register it Now</a></center>'; ?>
+                          echo '<center>Your Organization Not Listed? <br><a href="./user?create=organization">Register it Now</a></center>'; ?>
                       </ul>
                       </div><?php } ?>
 
@@ -1109,7 +1109,7 @@ class _hForms {
   function resourceForm() { ?>
         <title><?php _show_( $resourceDetails['h_alias'] ); ?> Create <?php _show_( ucfirst( $_GET['create'] ) ); ?> [ <?php showOption( 'name' ); ?> ]</title>
         <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-color--<?php primaryColor(); ?>">
-        <form enctype="multipart/form-data" name="registerResource" method="POST" action="<?php _show_( hADMIN."resource?create=center" ); ?>" class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-grid">
+        <form enctype="multipart/form-data" name="registerResource" method="POST" action="<?php _show_( hADMIN."resource?create=organization" ); ?>" class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-grid">
             <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
 
               <div class="input-field">
