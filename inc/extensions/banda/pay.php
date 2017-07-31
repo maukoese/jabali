@@ -158,7 +158,7 @@ include 'payments/MPESA.php';
 	switch( $_GET["buy"] ) {
 		case "add":
 			if ( !empty( $_POST["quantity"] ) ) {
-				$product = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts LEFT JOIN hproducts ON hproducts.h_code = . hDBPREFIX ."posts.h_code WHERE . hDBPREFIX ."posts.h_code='" . $_GET["code"] . "'" );
+				$product = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts LEFT JOIN hproducts ON hproducts.h_code = ". hDBPREFIX ."posts.h_code WHERE ". hDBPREFIX ."posts.h_code='" . $_GET["code"] . "'" );
 				if ( $product -> num_rows > 0) {
 					while( $row = mysqli_fetch_assoc( $product) ) {
 						$product_array[] = $row;

@@ -8,7 +8,7 @@ class _hProducts extends _hPosts {
 
   function getProducts() { ?>
     <title>All Products [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $products = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts LEFT JOIN hproducts ON hproducts.h_code = . hDBPREFIX ."posts.h_code WHERE . hDBPREFIX ."posts.h_type = 'product'" );
+    $products = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts LEFT JOIN hproducts ON hproducts.h_code = ". hDBPREFIX ."posts.h_code WHERE ". hDBPREFIX ."posts.h_type = 'product'" );
     if ( $products -> num_rows > 0) {
       while( $product = mysqli_fetch_assoc( $products) ) { ?>
       <div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
@@ -64,7 +64,7 @@ class _hProducts extends _hPosts {
 
   function getProduct( $code) { ?>
     <title>Shop [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $product = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts LEFT JOIN hproducts ON hproducts.h_code = . hDBPREFIX ."posts.h_code WHERE . hDBPREFIX ."posts.h_code='". $_GET["product"] ."'" );
+    $product = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts LEFT JOIN hproducts ON hproducts.h_code = ". hDBPREFIX ."posts.h_code WHERE ". hDBPREFIX ."posts.h_code='". $_GET["product"] ."'" );
     if ( $product -> num_rows > 0) { 
       while( $product_array = mysqli_fetch_assoc( $product) ) {
         $product_deets[] = $product_array;
@@ -122,9 +122,10 @@ class _hProducts extends _hPosts {
     </div<?php 
   }
 
-  function productFields () { 
-    if ( $_GET['edit'] ) {
-      $getPostCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts LEFT JOIN hproducts ON hproducts.h_code = . hDBPREFIX ."posts.h_code WHERE . hDBPREFIX ."posts.h_code='".$_GET['edit']."'" );
+  function productFields () {
+    $product[] = ""; 
+    if ( isset( $_GET['edit'] ) ) {
+      $getPostCode = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts LEFT JOIN hproducts ON hproducts.h_code = ". hDBPREFIX ."posts.h_code WHERE ". hDBPREFIX ."posts.h_code='".$_GET['edit']."'" );
       if ( $getPostCode -> num_rows > 0 ) {
         while ( $postDetails = mysqli_fetch_assoc( $getPostCode ) ){
           $product[] = $postDetails;
@@ -149,7 +150,7 @@ class _hProducts extends _hPosts {
       <div class="mdl-card__supporting-text">
 
           <?php 
-          if ( $postDetails['h_type'] !== "page"  ) { ?>
+          if ( isset( $_GET['edit'] ) && $product[0]['h_type'] !== "page"  ) { ?>
 
           <div class="input-field">
           <i class="material-icons prefix">label</i>
@@ -217,18 +218,18 @@ class _hProducts extends _hPosts {
               });
             </script>
           </div>
-          <input type="hidden" name="h_author" value="<?php if( $_GET['create']) { echo $_SESSION['myCode']; } else { _show_( $product[0]['h_author'] ); } ?>">
-          <input type="hidden" name="h_by" value="<?php if( $_GET['create']) { echo $_SESSION['myAlias']; } else { _show_( $product[0]['h_by'] ); } ?>">
-          <input type="hidden" name="h_email" value="<?php if( $_GET['create']) { echo $_SESSION['myEmail']; } else { _show_( $product[0]['h_email'] ); } ?>">
-          <input type="hidden" name="h_key" value="<?php if( $_GET['edit']) { _show_( $product[0]['h_key'] ); } ?>">
-          <input type="hidden" name="h_code" value="<?php if( $_GET['edit']) { _show_( $product[0]['h_code'] ); } ?>">
+          <input type="hidden" name="h_author" value="<?php if( isset( $_GET['create'] ) ) { echo $_SESSION['myCode']; } else { _show_( $product[0]['h_author'] ); } ?>">
+          <input type="hidden" name="h_by" value="<?php if( isset( $_GET['create'] ) ) { echo $_SESSION['myAlias']; } else { _show_( $product[0]['h_by'] ); } ?>">
+          <input type="hidden" name="h_email" value="<?php if( isset( $_GET['create'] ) ) { echo $_SESSION['myEmail']; } else { _show_( $product[0]['h_email'] ); } ?>">
+          <input type="hidden" name="h_key" value="<?php if( isset( $_GET['edit'] ) ) { _show_( $product[0]['h_key'] ); } ?>">
+          <input type="hidden" name="h_code" value="<?php if( isset( $_GET['edit'] ) ) { _show_( $product[0]['h_code'] ); } ?>">
           <input type="hidden" name="h_level" value="public">
-          <input type="hidden" name="h_phone" value="<?php if( $_GET['create']) { echo $_SESSION['myPhone']; } else { _show_( $product[0]['h_phone'] ); } ?>">
+          <input type="hidden" name="h_phone" value="<?php if( isset( $_GET['create'] ) ) { echo $_SESSION['myPhone']; } else { _show_( $product[0]['h_phone'] ); } ?>">
           <input type="hidden" name="h_type" value="product">
           <input type="hidden" name="h_updated" value="<?php echo date('Y-m-d'); ?>">
 
           <div class="input-field mdl-cell mdl-cell--6-col">
-          <button class="mdl-button mdl-button--fab alignright" type="submit" name="product<?php if( $_GET['edit']) { _show_( 'upd' ); } ?>"><i class="material-icons">save</i></button>
+          <button class="mdl-button mdl-button--fab alignright" type="submit" name="product<?php if( isset( $_GET['edit'] ) ) { _show_( 'upd' ); } ?>"><i class="material-icons">save</i></button>
           </div>
         </div>
       </div>

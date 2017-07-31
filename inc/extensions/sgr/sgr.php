@@ -54,7 +54,7 @@ function setupSGR() {
   }
 }
 
-function show_cart() { ?>
+function show_tcart() { ?>
 
   <span class="cartfab mdl-button mdl-button--fab mdl-color--<?php primaryColor(); ?>" id="cartbtn"  >
   <i class="material-icons mdl-badge mdl-badge--overlap" data-badge="<?php echo count( $_SESSION["cart_item"] ); ?>">shopping_cart</i>

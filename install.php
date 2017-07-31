@@ -113,7 +113,7 @@ if (isset($_POST['register']) ) {
 	$hOpt -> create ( 'Description', 'description', 'A Jabali System', $h_created );
 	$hOpt -> create ( 'Admin Email', 'email', $h_email, $h_created );
 	$hOpt -> create ( 'Admin Phone', 'phone', '+254705459494', $h_created );
-	$hOpt -> create ( 'Copyright', 'copyright', '© ". $site_name ." 2017', $h_created );
+	$hOpt -> create ( 'Copyright', 'copyright', '© '. $site_name .' 2017', $h_created );
 	$hOpt -> create ( 'Attribution', 'attribution', 'Mauko by Design', $h_created );
 	$hOpt -> create ( 'Attribution Link', 'attribution_link', 'http://mauko.co.ke', $h_created );
 	$hOpt -> create ( 'Header Logo', 'header_logo', hIMAGES."logo.png", $h_created );

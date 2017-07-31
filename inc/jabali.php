@@ -832,6 +832,26 @@ function snuffle() {
 	exit();
 }
 
+function isActiveX ( $ext ) {
+  $exts = getOption( 'extensions' );
+  $exts = json_decode ( $exts, true );
+  if ( in_array( $ext, $exts ) ) {
+    return true;
+  }
+}
+
+function activeX() {
+  $exts = getOption( 'extensions' );
+  $exts = json_decode ( $exts, true );
+  foreach ( $exts as $ext ) {
+    require_once hABSX.$ext.'/'.$ext.'.php';
+  }
+}
+
+function LoadActiveX( $ext ) {
+    require_once hABSX.$ext.'/'.$ext.'.php';
+}
+
 /**
 * Autoload Classes
 **/

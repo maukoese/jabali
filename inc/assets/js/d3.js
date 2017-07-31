@@ -1903,7 +1903,7 @@
     springgreen: 65407,
     steelblue: 4620980,
     tan: 13808780,
-    cyan: 32896,
+    teal: 32896,
     thistle: 14204888,
     tomato: 16737095,
     turquoise: 4251856,

@@ -54,9 +54,9 @@ $elements = explode('/', $url );
 $match = $elements[0];
 
 include 'header.php' ;
-// if( $match = "login" ) {
-// 	call_user_func_array( array( $action, 'login' ), array( $elements[1] ) );
-// }
+if( $match = "login" ) {
+	call_user_func_array( array( $action, 'login' ), array( $elements[1] ) );
+}
 
 if( empty( $match ) ) {
 	call_user_func_array( array( $action, 'home' ), array() );

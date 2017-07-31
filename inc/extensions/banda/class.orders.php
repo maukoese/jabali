@@ -107,7 +107,7 @@ class _hOrders {
 
   function getOrders() { ?>
     <title>All Orders [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $products = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts LEFT JOIN hproducts ON hproducts.h_code = . hDBPREFIX ."posts.h_code WHERE h_type = 'product'" );
+    $products = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts LEFT JOIN hproducts ON hproducts.h_code = ". hDBPREFIX ."posts.h_code WHERE h_type = 'product'" );
     if ( $products -> num_rows > 0) {
       while( $row = mysqli_fetch_assoc( $products) ) {
         $products_array[] = $row;
@@ -168,7 +168,7 @@ class _hOrders {
 
   function getOrder( $code) { ?>
     <title>Shop [ <?php showOption( 'name' ); ?> ]</title><?php 
-    $product = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts LEFT JOIN hproducts ON hproducts.h_code = . hDBPREFIX ."posts.h_code WHERE . hDBPREFIX ."posts.h_code='". $_GET["view"] ."'" );
+    $product = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts LEFT JOIN hproducts ON hproducts.h_code = ". hDBPREFIX ."posts.h_code WHERE ". hDBPREFIX ."posts.h_code='". $_GET["view"] ."'" );
     if ( $product -> num_rows > 0) { 
       while( $product_array = mysqli_fetch_assoc( $product) ) {
         $product_deets[] = $product_array;

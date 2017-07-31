@@ -12,7 +12,7 @@ $nJD = json_decode( $nJson, true );
 $new_version = $nJD['version']; ?>
 <title>Update Jabali [ <?php showOption( 'name' ); ?> ]</title>
 
-<?php if ( $_GET['new'] ) {
+<?php if( isset( $_GET['new'] ) ) {
 	$xZip = fopen( hABS."uploads/temp/jabali.zip", "w" );
     if ( $xZip) {
       file_put_contents( $xZip, fopen( "http://code.mauko.co.ke/dl/jabali.zip", "r" ) );

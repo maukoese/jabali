@@ -5,7 +5,7 @@ if ( !isset( $_SESSION['myCode'] ) ) {
 }
 
 connectDb();
-$dB = new MysqliDb ($GLOBALS['conn']); ?>
+$hDB = new MysqliDb ($GLOBALS['conn']); ?>
 <!doctype html>
 <!--
   Jabali Framework
@@ -99,17 +99,17 @@ $dB = new MysqliDb ($GLOBALS['conn']); ?>
             } else {
               echo ucwords( $_GET['key'] );
             }
-          } elseif ( isset( $_GET['x'] ) && $_GET['key'] !== "" ) {
+          } elseif ( isset( $_GET['x'] ) && isset( $_GET['key'] ) ) {
             if ( isset( $_GET['create'] ) ) {
               echo "Add New " . ucwords( $_GET['create'] );
             } elseif ( isset( $_GET['edit'] ) ) {
               echo "Editing " . ucwords( $_GET['key'] );
-            } else {
-              echo ucwords( $_GET['key'] );
+            } elseif ( isset( $_GET['settings'] ) ) {
+              echo ucwords( $_GET['settings'] );
             }
-          } elseif ( isset( $_GET['x'] ) && $_GET['create'] !== "" ) {
+          } elseif ( isset( $_GET['x'] ) && isset( $_GET['create'] ) ) {
             echo ucwords( "Create ".$_GET['create'] );
-          } elseif ( isset( $_GET['x'] ) && $_GET['settings'] !== "" && !isset( $_GET['key'] ) ) {
+          } elseif ( isset( $_GET['x'] ) && isset( $_GET['settings'] ) && !isset( $_GET['key'] ) ) {
             echo ucwords( $_GET['settings'].' Options' );
           } elseif ( isset( $_GET['create'] ) ) {
             echo "Add New ".ucwords( $_GET['create'].' ' );
@@ -255,7 +255,7 @@ $dB = new MysqliDb ($GLOBALS['conn']); ?>
           $hMenu -> drawer(); ?>
           <div class="mdl-layout-spacer"></div><?php 
           if ( isCap( 'admin' ) ) { ?>
-          <a id="extensions" class="mdl-navigation__link" href="./extensions"><i class="mdl-color-text--white material-icons" role="presentation">power</i>Extensions</a><?php } ?>
+          <a id="extensions" class="mdl-navigation__link" href="./extensions?settings=extensions"><i class="mdl-color-text--white material-icons" role="presentation">power</i>Extensions</a><?php } ?>
           <a id="hpref" class="mdl-navigation__link" href="#"><i class="mdl-color-text--white material-icons" role="presentation">settings</i>Preferences</a>
             <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor(); ?>" for="hpref">
             <a class="mdl-navigation__link" href="./options?settings=color"><i class="mdl-color-text--white material-icons" role="presentation">color_lens</i><span>Color Options</span></a><?php 

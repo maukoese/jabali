@@ -1,5 +1,5 @@
 {
-	"name": "Wapi",
+	"name": "Wapi Events",
 	"slug": "wapi",
 	"version": "0.17.06",
 	"author": "Mauko Maunde",
@@ -12,9 +12,9 @@
 		"github": "http://github.com/maukoese",
 		"email": "maukoese@gmail.com"
 	},
-	"website": "http://jabali.mauko.co.ke/extensions/banda",
+	"website": "http://jabali.mauko.co.ke/extensions/wapi",
 	"support": "http://jabali.mauko.co.ke/support",
-	"download": "http://code.mauko.co.ke/dl/extensions/banda.zip",
+	"download": "http://code.mauko.co.ke/dl/extensions/wapi.zip",
 	"licences": {
 		"MIT": "https://opensource.org/licenses/MIT",
 		"GNU": "https://opensource.org/licenses/gpl-license",

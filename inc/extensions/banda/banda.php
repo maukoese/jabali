@@ -7,12 +7,13 @@ if ( !isShop() ) {
 include hABSX.'banda/cart.php';
 include hABSX.'banda/options.php';
 if ( isset( $_POST['mpesa'] ) ) {
-    $date = date(Ymd );
-    mysqli_query( $GLOBALS['conn'], "UPDATE ". hDBPREFIX ."options SET h_description = '".$_POST['merchant']."', h_updated = '".$date."' WHERE h_code='merchant'" );
-    mysqli_query( $GLOBALS['conn'], "UPDATE ". hDBPREFIX ."options SET h_description = '".$_POST['callback']."', h_updated = '".$date."'  WHERE h_code='callback'" );
-    mysqli_query( $GLOBALS['conn'], "UPDATE ". hDBPREFIX ."options SET h_description = '".$_POST['paybill']."', h_updated = '".$date."'  WHERE h_code='paybill'" );
-    mysqli_query( $GLOBALS['conn'], "UPDATE ". hDBPREFIX ."options SET h_description = '".$_POST['timestamp']."', h_updated = '".$date."'  WHERE h_code='timestamp'" );
-    mysqli_query( $GLOBALS['conn'], "UPDATE ". hDBPREFIX ."options SET h_description = '".$_POST['sag']."', h_updated = '".$date."'  WHERE h_code='sag'" );
+
+    $options = array( 'merchant', 'callback', 'paybill', 'timestamp', 'sag');
+    foreach ( $options as $option ) {
+      $date = date( 'Y-m-d H:i:s' );
+      $hOption = new _hOptions();
+      $hOption -> update( $option, $_POST[ $option ], $date );
+    }
 }
 
 include hABSX.'banda/class.products.php';
@@ -36,6 +37,8 @@ if ( isset( $_POST['pay'] ) && $_POST['amount'] !== "" && $_POST['h_phone'] !== 
     $mpesa->setNumber( $NUMBER ); // replaces 0 with 254
     $mpesa->init();
 }
+
+if ( isset( $_POST['h_alias'] ) || isset( $_POST['h_author'] ) || isset( $_POST['h_avatar'] ) || isset( $_POST['h_by'] ) || isset( $_POST['h_category'] ) || isset( $_POST['h_organization'] ) || isset( $_POST['h_code'] ) || isset( $_POST['h_created'] ) || isset( $_POST['h_desc'] ) || isset( $_POST['h_email'] ) || isset( $_POST['h_fav'] ) || isset( $_POST['h_key'] ) || isset( $_POST['h_level'] ) || isset( $_POST['h_link'] ) || isset( $_POST['h_location'] ) || isset( $_POST['h_notes'] ) || isset( $_POST['h_phone'] ) || isset( $_POST['h_reading'] ) || isset( $_POST['h_status'] ) || isset( $_POST['h_subtitle'] ) || isset( $_POST['h_tags'] ) || isset( $_POST['h_type'] ) || isset( $_POST['h_updated'] ) ) {
 
 $h_alias = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_alias'] ); 
 $h_author = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_author'] );
@@ -99,6 +102,8 @@ if ( isset( $_POST['productupd'] ) ) {
   $hProduct -> update( $h_alias, $h_author, $h_avatar, $h_by, $h_category, $h_organization, $h_code, $h_created, $h_desc, $h_email, $h_fav, $h_key, $h_level, $h_link, $h_location, $h_notes, $h_phone, $h_reading, $h_status, $h_subtitle, $h_tags, $h_type, $h_updated );
 }
 
+}
+
 if ( isset( $_GET['product'] ) ) { 
   if ( $_GET['product'] == "all" ) {
     $hProduct -> getProducts();
@@ -118,6 +123,8 @@ if ( isset( $_GET['product'] ) ) {
     }
   }
 }
+
+$hForm = new _hForms();
 
 if ( isset( $_GET['create'] ) ) { 
   if ( $_GET['create'] == "product" ) {
@@ -167,6 +174,6 @@ if ( isset( $_GET['payment'] ) ) {
   }
 }
 
-if ( $_GET["order"] ) {
+if ( isset( $_GET["order"] ) ) {
    
 } ?>

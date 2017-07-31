@@ -4,6 +4,8 @@ include '../inc/jabali.php';
 include './header.php';
 
 if ( isset( $_POST['create'] ) ) {
+  if ( isset( $h_alias ) || isset( $h_author ) || isset( $h_avatar ) || isset( $h_code ) || isset( $h_for ) || isset( $h_link ) || isset( $h_location ) || isset( $h_status ) || isset( $h_type ) ) {
+
      $h_alias = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_alias'] );
      $h_author = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_author'] );
      $h_avatar = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_avatar'] );
@@ -21,6 +23,7 @@ if ( isset( $_POST['create'] ) ) {
      $h_status = $_POST['h_status'];
 
      $hMenu -> create ( $h_alias, $h_author, $h_avatar, $h_code, $h_for, $h_link, $h_location, $h_status, $h_type );
+  }
 }
 
 if ( isset( $_POST['update'] ) ) {
@@ -59,7 +62,7 @@ if (isset( $_GET['add'] )) { ?>
 
             <div class="input-field">
               <i class="material-icons prefix">link</i>
-            <input id="h_link" name="h_link" type="text" value="<?php _show_( $menu[0]['h_link'] ); ?>">
+            <input id="h_link" name="h_link" type="text" value="">
             <label for="h_link">Link</label>
             </div>
 
