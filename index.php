@@ -25,6 +25,12 @@ include 'inc/config.php';
 include 'inc/jabali.php';
 connectDb();
 
+include 'inc/classes/class.rewrite.php';
+$GLOBALS['hRewrite'] = new Jabali_Rewrite();
+
+global $hRewrite;
+$hRewrite -> init();
+
 include 'inc/classes/class.actions.php';
 global $action;
 $action = new _hActions;
@@ -45,7 +51,7 @@ if ( isset( $_POST['reset'] ) && $_POST['h_password'] !== "" ) {
 $url = $_SERVER['REQUEST_URI'];
 
 if ( is_localhost() ) { 
-	$url = ltrim( $url, 'localhost/jabali' );
+	$url = ltrim( $url, '/'.basename ( __DIR__ ) );
 } else { 
 	$url = $_SERVER['REQUEST_URI'] . '/'; 
 }
@@ -53,11 +59,7 @@ if ( is_localhost() ) {
 $elements = explode('/', $url );
 $match = $elements[0];
 
-include 'header.php' ;
-if( $match = "login" ) {
-	call_user_func_array( array( $action, 'login' ), array( $elements[1] ) );
-}
-
+include 'header.php';
 if( empty( $match ) ) {
 	call_user_func_array( array( $action, 'home' ), array() );
 } else switch ( $match ) {
@@ -73,14 +75,14 @@ if( empty( $match ) ) {
 	case "forgot":
 		call_user_func_array( array( $action, 'forgot' ), array( $elements[1] ) );
 		break;
-	case "blog":
-		call_user_func_array( array( $action, 'blog' ), array( $elements[1] ) );
+	case "posts":
+		call_user_func_array( array( $action, 'blog' ), array( ) );
 		break;
 	case "categories":
 		call_user_func_array( array( $action, 'categories' ), array( $elements[1] ) );
 		break;
 	case "tags":
-		call_user_func_array( array( $action, 'tags' ), array( $elements[1] ) );
+		call_user_func_array( array( $action, 'topic' ), array( $elements[1] ) );
 		break;
 	case "users":
 		call_user_func_array( array( $action, 'users' ), array( $elements[1] ) );

@@ -207,7 +207,7 @@ class _hForms {
 
   function postForm() { ?>
     <title>New <?php echo ucfirst( $_GET['create'] ); ?> [ <?php showOption( 'name' ); ?> ]</title>
-      <form enctype="multipart/form-data" name="postForm" method="POST" action="" style="width:100%;" class="mdl-grid">
+      <form enctype="multipart/form-data" name="postForm" method="POST" action="./post" style="width:100%;" class="mdl-grid">
         <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp mdl-card--expand mdl-color--<?php primaryColor(); ?>"><br><br>
           <div class="mdl-cell mdl-cell--12-col">
             <div class="input-field">
@@ -269,7 +269,21 @@ class _hForms {
 
               <div class="input-field mdl-cell mdl-cell--5-col">
                 <i class="material-icons prefix">schedule</i>
-                <input  id="h_created_t" name="h_created_t" type="text" value="<?php echo date( 'H:i:s' ); ?>" >
+                <input  id="h_created_t" name="h_created_t" type="text" value="<?php echo date( 'H:i:s' ); ?>" class="timepicker" >
+
+    <script type="text/javascript">
+      $('.timepicker').pickatime({
+        default: 'now', // Set default time: 'now', '1:30AM', '16:30'
+        fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
+        twelvehour: false, // Use AM/PM or 24-hour format
+        donetext: 'OK', // text for done-button
+        cleartext: 'Clear', // text for clear-button
+        canceltext: 'Cancel', // Text for cancel-button
+        autoclose: false, // automatic close timepicker
+        ampmclickable: true, // make AM PM clickable
+        aftershow: function(){} //Function for after opening timepicker
+      });
+    </script>
                 <label for="h_created_t" class="center-align">Time</label>
               </div>
               </div>

@@ -1,9 +1,9 @@
 {
-	"name": "Jabali Framework",
+	"name": "Mshindi",
 	"slug": "jabali",
 	"version": "0.17.06",
 	"author": "Mauko Maunde",
-	"screenshot": "http://localhost/jabali/assets/images/avatar.svg",
+	"screenshot": "http://localhost:8080/jabali/inc/assets/images/avatar.svg",
 	"description": "Opensource web application framework with material design components for quick deployment.",
 	"social": {
 		"facebook": "http://facebook.com/maukoese",
@@ -15,7 +15,7 @@
 	"support": "http://jabali.mauko.co.ke/support",
 	"documentation": "http://jabali.mauko.co.ke/documentation",
 	"download": "http://code.mauko.co.ke/dl/jabali.zip",
-	"licences": {
+	"licenses": {
 		"MIT": "https://opensource.org/licenses/MIT",
 		"GNU": "https://opensource.org/licenses/gpl-license",
 		"Apache": "https://opensource.org/licenses/Apache-2.0"

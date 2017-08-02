@@ -103,7 +103,7 @@ if ( isset( $_GET['logout'] ) ) {
       <a href="<?php echo hROOT.'about'; ?>" class="mdi mdi-email mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_contact"></a>
       <div class="mdl-tooltip" for="h_contact">Contact</div>
 
-      <a href="<?php echo hROOT.'register?type=user'; ?>" class="mdi mdi-account-plus mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_submit"></a>
+      <a href="<?php echo hROOT.'register/user'; ?>" class="mdi mdi-account-plus mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_submit"></a>
       <div class="mdl-tooltip" for="h_submit">Register</div>
 
       <?php if ( isset( $_SESSION['myCode'] ) ) { ?>
@@ -115,7 +115,7 @@ if ( isset( $_GET['logout'] ) ) {
         <a class="mdl-cell" href="<?php _show_(  hADMIN .'options?settings=color' ); ?>"><i class="material-icons mdl-list__item-icon">palette</i></a>
         </ul><?php
       } else { ?>
-      <a id="admin" href="<?php _show_(  hROOT.'login' ); ?>" class="mdi mdi-exit-to-app mdl-badge mdl-badge--overlap mdl-button--icon"></a><?php 
+      <a id="admin" href="<?php _show_(  hROOT.'login/jabali' ); ?>" class="mdi mdi-exit-to-app mdl-badge mdl-badge--overlap mdl-button--icon"></a><?php 
       } ?>
 
     </div>

@@ -430,7 +430,7 @@ class _hGlobal {
       <i class="material-icons prefix">schedule</i>
       <input class="mdl-textfield__input" type="text" id="timezones" name="currency" readonly tabIndex="-1" placeholder="Timezone (Code)">
        <ul for="timezones" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;"><?php foreach ($zone as $key => $value) { ?>
-        <li class="mdl-menu__item" data-val="<?php _show_( $key ); ?>"><?php _show_( $value ); ?></li>
+        <li class="mdl-menu__item" data-val="<?php _show_( $key ); ?>"><?php _show_( $key ); ?></li>
       <?php } ?>
       </ul>
     </div><?php

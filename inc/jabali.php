@@ -633,6 +633,7 @@ function textColor() {
 * 
 **/
 function getOption( $code ) {
+	$option = "";
     $getOptions = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."options WHERE h_code='".$code."'" );
     if ( $getOptions -> num_rows > 0 ) {
         while ( $siteOption = mysqli_fetch_assoc( $getOptions) ) { 
@@ -833,10 +834,14 @@ function snuffle() {
 }
 
 function isActiveX ( $ext ) {
-  $exts = getOption( 'extensions' );
-  $exts = json_decode ( $exts, true );
-  if ( in_array( $ext, $exts ) ) {
-    return true;
+	if ( getOption( 'extensions' ) !== "" ) {
+		$exts = getOption( 'extensions' );
+	} else {
+		$exts = "{'zahra':'zahra'}";
+	}
+	$exts = json_decode ( $exts, true );
+	if ( in_array( $ext, $exts ) ) {
+	return true;
   }
 }
 

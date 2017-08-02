@@ -161,7 +161,12 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 		$txt = "\n\n";
 		fwrite( $dbfile, $txt );
 		$salts = sha1(date('YmdHs')).sha1(date('YmdHm' ) );
-		$text = 'define( "hSALTS", "'.$salts.'" );';
+		$text = 'define( "hSALTS", "'.str_shuffle( $salts ).'" );';
+		fwrite( $dbfile, $text );
+		$txt = "\n";
+		fwrite( $dbfile, $txt );
+		$salts = sha1(date('YmdHs')).sha1(date('YmdHm' ) );
+		$text = 'define( "hAUTH", "'.base64_encode( $salts ).'" );';
 		fwrite( $dbfile, $text );
 		$txt = " ?>";
 		fwrite( $dbfile, $txt );

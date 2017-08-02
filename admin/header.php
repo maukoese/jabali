@@ -264,6 +264,8 @@ $hDB = new MysqliDb ($GLOBALS['conn']); ?>
           <a class="mdl-navigation__link" href="./options?settings=user"><i class="mdl-color-text--white material-icons" role="presentation">build</i><span>User Options</span></a>
           <a class="mdl-navigation__link" href="./options?settings=social"><i class="mdl-color-text--white material-icons" role="presentation">public</i><span>Social Settings</span></a>
           <a class="mdl-navigation__link" href="./options?settings=general"><i class="mdl-color-text--white material-icons" role="presentation">tune</i><span>General Settings</span></a>
+          <a class="mdl-navigation__link" href="./about?page=about jabali"><i class="mdl-color-text--white material-icons" role="presentation">info</i><span>About Jabali</span></a>
+          <a class="mdl-navigation__link" href="http://jabali.mauko.co.ke/docs/"><i class="mdl-color-text--white material-icons" role="presentation">help</i><span>Documentation</span></a>
           <a class="mdl-navigation__link" href="./update?settings=update"><i class="mdl-color-text--white material-icons" role="presentation">update</i><span>Jabali Updates</span></a>
           <?php } ?>
             </ul>

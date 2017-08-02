@@ -50,7 +50,7 @@ class _hActions {
 					</div>
 					<div class="mdl-card__title mdl-card--expand">
 						<div class="mdl-card__title-text">
-						<center>Error 404! <?php _show_( ucwords( $code ) ); ?> Not Found!</center>
+						<center>Error 404! <?php _show_( 'No '.ucwords( $code ) ); ?> Found!</center>
 					</div>
 				  	<div class="mdl-layout-spacer"></div>
 				  	<div class="mdl-card__subtitle-text">
@@ -162,7 +162,7 @@ class _hActions {
 				    }
 				}
 			} else { ?>
-			  	<title>Login <?php _show_( ucfirst( $_GET['alert'] ) ); ?> [ <?php showOption( 'name' ); ?> ]</title>
+			  	<title>Login <?php if( isset( $_GET['alert'] )){ _show_( ucfirst( $_GET['alert'] ) ); } ?> [ <?php showOption( 'name' ); ?> ]</title>
 			  	<div class="mdl-grid" >
 			  	<div class="mdl-cell mdl-cell--2-col"></div>
 				<div id="login_div" class="mdl-cell mdl-cell--8-col mdl-color--madge">
@@ -268,162 +268,159 @@ class _hActions {
 		}
 	}
 
-	function register(){
+	function register( $type ){ ?>
+			<title>Register <?php _show_( ucwords( $type ) ); ?> [ <?php showOption( 'name' ); ?> ]</title><?php
 		if ( isset( $_GET['register'] ) && $_GET['email'] !== "") {
 			if ( _hActions::emailExists( $_GET['email'] ) ) {
 				header("Location: ./register?create=exists");
-			} else {
-				include 'header.php'; ?>
-				<title>New <?php _show_( ucwords( $_GET['type'] ) ); ?> [ <?php showOption( 'name' ); ?> ]</title>
+			} else { ?>
 				<div style="padding-top:40px;" class="mdl-grid">
-				  <div class="mdl-cell mdl-cell--2-col"></div>
-				  <div id="login_div" class="mdl-cell mdl-cell--8-col mdl-color--madge">
-				      <center><?php echo '<a href="'.hROOT.'"><img src="'.hIMAGES.'logo-w.png" width="150px;"></a>'; ?>
-				      </center>
+					<div class="mdl-cell mdl-cell--2-col"></div>
+					<div id="login_div" class="mdl-cell mdl-cell--8-col mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ) { primaryColor(); } else { echo "madge"; } ?>">
+						<center>
+							<?php echo '<a href="'.hROOT.'"><img src="'.hIMAGES.'logo-w.png" width="150px;"></a>'; ?>
+						</center>
 
-				          <form enctype="multipart/form-data" name="registerUser" method="POST" action="" class="mdl-grid">
+						<form enctype="multipart/form-data" name="registerUser" method="POST" action="" class="mdl-grid">
 
-					          <div class="input-field mdl-cell mdl-cell--5-col">
-					          <i class="material-icons prefix">label</i>
-					          <input id="fname" name="fname" type="text">
-					          <label for="fname">First Name</label>
-					          </div>
-					                 
-					          <div class="input-field mdl-cell mdl-cell--6-col">
-					          <i class="material-icons prefix">label_outline</i>
-					          <input id="lname" name="lname" type="text">
-					          <label for="lname">Last Name</label>
-					          </div>
+						  <div class="input-field mdl-cell mdl-cell--5-col">
+						  <i class="material-icons prefix">label</i>
+						  <input id="fname" name="fname" type="text">
+						  <label for="fname">First Name</label>
+						  </div>
+						         
+						  <div class="input-field mdl-cell mdl-cell--6-col">
+						  <i class="material-icons prefix">label_outline</i>
+						  <input id="lname" name="lname" type="text">
+						  <label for="lname">Last Name</label>
+						  </div>
 
-					          <div class="input-field mdl-cell mdl-cell--6-col">
-					          <i class="material-icons prefix">mail</i>
-					          <input class="validate" id="email" name="h_email" type="email" value="<?php _show_( $_GET['email'] ); ?>">
-					          <label for="email" data-error="Please enter a valid email" data-success="OK!" class="center-align">Email Address</label>
-					          </div>
+						  <div class="input-field mdl-cell mdl-cell--6-col">
+						  <i class="material-icons prefix">mail</i>
+						  <input class="validate" id="email" name="h_email" type="email" value="<?php _show_( $_GET['email'] ); ?>">
+						  <label for="email" data-error="Please enter a valid email" data-success="OK!" class="center-align">Email Address</label>
+						  </div>
 
-					          <div class="input-field mdl-cell mdl-cell--5-col">
-					          <i class="material-icons prefix">phone</i>
-					          <input  id="h_phone" name="h_phone" type="text" value="254">
-					          <label for="h_phone" data-error="wrong" data-success="right" class="center-align">Phone Number</label>
-					          </div>
+						  <div class="input-field mdl-cell mdl-cell--5-col">
+						  <i class="material-icons prefix">phone</i>
+						  <input  id="h_phone" name="h_phone" type="text" value="254">
+						  <label for="h_phone" data-error="wrong" data-success="right" class="center-align">Phone Number</label>
+						  </div>
 
-					          <?php if ( $_GET['type'] !== "organization" ) { ?>
-					          <div class="input-field mdl-cell mdl-cell--4-col">
-					          <i class="material-icons prefix">lock</i>
-					          <input id="password" name="h_password" type="text">
-					          <label for="password">Password</label>
-					          </div><?php } ?>
+						  <?php if ( $_GET['h_type'] !== "organization" ) { ?>
+						  <div class="input-field mdl-cell mdl-cell--4-col">
+						  <i class="material-icons prefix">lock</i>
+						  <input id="password" name="h_password" type="text">
+						  <label for="password">Password</label>
+						  </div><?php } ?>
 
-					          <input type="hidden" name="h_type" value="<?php _show_( $_GET['type'] ); ?>">
+						  <input type="hidden" name="h_type" value="<?php _show_( $_GET['h_type'] ); ?>">
 
-					          <div class="input-field  mdl-cell mdl-cell--4-col mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
-					            <i class="material-icons prefix">room</i>
-					          <input class="mdl-textfield__input" type="text" id="counties" name="h_location" readonly tabIndex="-1" placeholder="Location"><label for="counties">
-					              <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
-					          </label>
-					          <ul for="counties" class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ) { primaryColor(); } else { echo "grey"; } ?>" style="max-height: 250px !important; overflow-y: auto;">
-					              <?php 
-					              $county_list = "baringo, bomet, bungoma, busia, elgeyo-marakwet, embu, garissa, homa bay, isiolo, kajiado, kakamega, kericho, kiambu, kilifi, kirinyanga, kisii, kisumu, kitui, kwale, laikipia, lamu, machakos, makueni, mandera, marsabit, meru, migori, mombasa, muranga, nairobi, nakuru, nandi, narok, nyamira, nyandarua, nyeri, samburu, siaya, taita-taveta, tana river, tharaka-nithi, trans-nzoia, turkana, uasin-gishu, vihiga, wajir, west pokot";
+						  <div class="input-field mdl-cell mdl-cell--4-col mdl-js-textfield getmdl-select getmdl-select__fix-height">
+						    <i class="material-icons prefix">room</i>
+						  <input class="mdl-textfield__input" type="text" id="counties" name="h_location" readonly tabIndex="-1" placeholder="Location"><label for="counties">
+						      <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+						  </label>
+						  <ul for="counties" class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ) { primaryColor(); } else { echo "madge"; } ?>" style="max-height: 250px !important; overflow-y: auto;">
+						      <?php 
+						      $county_list = "baringo, bomet, bungoma, busia, elgeyo-marakwet, embu, garissa, homa bay, isiolo, kajiado, kakamega, kericho, kiambu, kilifi, kirinyanga, kisii, kisumu, kitui, kwale, laikipia, lamu, machakos, makueni, mandera, marsabit, meru, migori, mombasa, muranga, nairobi, nakuru, nandi, narok, nyamira, nyandarua, nyeri, samburu, siaya, taita-taveta, tana river, tharaka-nithi, trans-nzoia, turkana, uasin-gishu, vihiga, wajir, west pokot";
 
-					              $cities = "baringo, bomet, Bungoma, Busia, Elgeyo/Marakwet, Embu, Garissa, Homa Bay, Isiolo, Kajiado, Kakamega, Kericho, Kiambu, Kilifi, Kirinyaga, Kisii, Kisumu, Kitui, Kwale, Laikipia, Lamu, Machakos, Makueni, Mandera, Marsabit, Meru, Migori, Mombasa, Murang'a, nairobi city, Nakuru, Nandi, Narok, Nyamira, Nyandarua, Nyeri, Samburu, Siaya, Taita/Taveta, Tana River, Tharaka-Nithi, Trans Nzoia, Turkana, Uasin Gishu, Vihiga, Wajir, West Pokot";
-					              $counties = explode( ", ", $county_list );
-					              for ( $c=0; $c < count( $counties ); $c++) {
-					                  $label = ucwords( $counties[$c] );
-					                  echo '<li class="mdl-menu__item" data-val="'.$counties[$c].'">'.$label.'</li>';
-					              }
-					               ?>
-					          </ul>
-					          </div>
+						      $cities = "baringo, bomet, Bungoma, Busia, Elgeyo/Marakwet, Embu, Garissa, Homa Bay, Isiolo, Kajiado, Kakamega, Kericho, Kiambu, Kilifi, Kirinyaga, Kisii, Kisumu, Kitui, Kwale, Laikipia, Lamu, Machakos, Makueni, Mandera, Marsabit, Meru, Migori, Mombasa, Murang'a, nairobi city, Nakuru, Nandi, Narok, Nyamira, Nyandarua, Nyeri, Samburu, Siaya, Taita/Taveta, Tana River, Tharaka-Nithi, Trans Nzoia, Turkana, Uasin Gishu, Vihiga, Wajir, West Pokot";
+						      $counties = explode( ", ", $county_list );
+						      for ( $c=0; $c < count( $counties ); $c++) {
+						          $label = ucwords( $counties[$c] );
+						          echo '<li class="mdl-menu__item" data-val="'.$counties[$c].'">'.$label.'</li>';
+						      }
+						       ?>
+						  </ul>
+						  </div>
 
-					          <?php if ( $_GET['type'] !== "organization" ) { ?>
-					          <div class="input-field  mdl-cell mdl-cell--3-col mdl-js-textfield mdl-textfield--floating-label getmdl-select">
-					            <i class="mdi mdi-gender-transgender prefix"></i>
-					           <input class="mdl-textfield__input" id="h_gender" name="h_gender" type="text" readonly tabIndex="-1" placeholder="Gender" >
-					             <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ) { primaryColor(); } else { echo "grey"; } ?>" for="h_gender">
-					               <li class="mdl-menu__item" data-val="male">Male</li>
-					               <li class="mdl-menu__item" data-val="female">Female</li>
-					               <li class="mdl-menu__item" data-val="other">Other</li>
-					             </ul>
-					          </div>
-					          
-					          <div class="input-field mdl-cell mdl-cell--6-col mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
-					            <i class="material-icons prefix">business</i>
-					            <input class="mdl-textfield__input" type="text" id="centers" name="h_organization" readonly tabIndex="-1" placeholder="Organization ( Optional )">
-					            <ul for="centers" class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ) { primaryColor(); } else { echo "grey"; } ?>" style="max-height: 300px !important; overflow-y: auto;">
-					                <?php $hUser -> getCenters(); ?>
-					            </ul>
-					          </div><?php } ?>
-					          <div class="input-field mdl-cell mdl-cell--5-col">
-					          <button class="mdl-button mdl-button--fab mdl-button--colored alignright" type="submit" name="create"><i class="material-icons">send</i></button>
-					          </div>
+						  <?php if ( $type !== "organization" ) { ?>
+						  <div class="input-field  mdl-cell mdl-cell--3-col mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+						    <i class="mdi mdi-gender-transgender prefix"></i>
+						   <input class="mdl-textfield__input" id="h_gender" name="h_gender" type="text" readonly tabIndex="-1" placeholder="Gender" >
+						     <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ) { primaryColor(); } else { echo "madge"; } ?>" for="h_gender">
+						       <li class="mdl-menu__item" data-val="male">Male</li>
+						       <li class="mdl-menu__item" data-val="female">Female</li>
+						       <li class="mdl-menu__item" data-val="other">Other</li>
+						     </ul>
+						  </div>
+						  
+						  <div class="input-field mdl-cell mdl-cell--6-col mdl-js-textfield getmdl-select getmdl-select__fix-height">
+						    <i class="material-icons prefix">business</i>
+						    <input class="mdl-textfield__input" type="text" id="centers" name="h_organization" readonly tabIndex="-1" placeholder="Organization ( Optional )">
+						    <ul for="centers" class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ) { primaryColor(); } else { echo "grey"; } ?>" style="max-height: 300px !important; overflow-y: auto;">
+						        <?php $hUser -> getCenters(); ?>
+						    </ul>
+						  </div><?php } ?>
+						  <div class="input-field mdl-cell mdl-cell--5-col">
+						  <button class="mdl-button mdl-button--fab mdl-button--colored alignright" type="submit" name="create"><i class="material-icons">send</i></button>
+						  </div>
 
-					          <br>
-				          </form>  
-				  </div>
-				  	<div class="mdl-cell mdl-cell--2-col"></div>
-				</div><?php 
-		    	include 'footer.php';
+						  <br>
+						</form>  
+					</div>
+					<div class="mdl-cell mdl-cell--2-col"></div>
+				</div><?php
 			}
 		} elseif (isset( $_GET['confirm'] ) && $_GET['key'] !== "" ) {
 			_hActions::confirmUser( $_GET['confirm'], $_GET['key'] );
-		} else {
-				include 'header.php'; ?>
-				<title>Register <?php _show_( ucwords( $_GET['type'] ) ); ?> [ <?php showOption( 'name' ); ?> ]</title>
-				<div style="padding-top:40px;" class="mdl-grid">
-				  <div class="mdl-cell mdl-cell--2-col"></div>
-				  <div id="login_div" class="mdl-cell mdl-cell--8-col mdl-color--madge">
-				      <center><?php echo '<a href="'.hROOT.'"><img src="'.hIMAGES.'logo-w.png" width="150px;"></a>'; 
-				      if ( isset( $_GET['create'] ) ) {
-				          if ( $_GET['create'] == "success" ) { ?>
-				              <div id="success" class="alert mdl-color--green">
-				                  <span>Success!<br>Check your email for a confirmation link</span>
-				              </div><?php 
-				          } elseif ( $_GET['create'] == "fail" ) { ?>
-				          <div id="fail" class="alert mdl-color--red">
-				              <span>Oops!<br>We Ran Into A Problem. Please Try Again</span>
-				          </div><?php 
-				          } elseif ( $_GET['create'] == "exists" ) { ?>
-				          <div id="exists" class="alert mdl-color--red">
-				              <span>Oops!<br>A User Already Exists With That Email. Please Try Again With A Different Email.</span>
-				          </div><?php 
-				          }
-				      } ?>
-				      </center>
-
-				          <form enctype="multipart/form-data" name="registerUser" method="GET" action="" class="mdl-grid">
-
-					          <div class="input-field mdl-cell mdl-cell--12-col">
-					          <i class="material-icons prefix">mail</i>
-					          <input id="email" name="email" type="text">
-					          <label for="email">Email Address</label>
-					          </div>
-
-					          <div class="input-field mdl-cell mdl-cell--3-col mdl-js-textfield getmdl-select">
-				                <i class="material-icons prefix">perm_identity</i>
-				                 <input class="mdl-textfield__input" id="h_type" name="h_type" type="text" readonly tabIndex="-1" placeholder="Type"><label for="h_type">
-				               <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
-				              </label>
-				                   <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--madge" for="h_type" ><?php 
-				                     if ( $_SESSION['myCap'] == "admin"  ) {
-				                      _show_( '<li class="mdl-menu__item" data-val="admin">Admin<i class="mdl-color-text--white mdi mdi-lock alignright" role="presentation"></i></li>' );
-				                     } ?>
-				                     <li class="mdl-menu__item" data-val="organization">Organization<i class="mdl-color-text--white mdi mdi-city alignright" role="presentation"></i></li>
-				                     <li class="mdl-menu__item" data-val="editor">Buyer<i class="mdl-color-text--white mdi mdi-note alignright" role="presentation"></i></li>
-				                     <li class="mdl-menu__item" data-val="author">Seller<i class="mdl-color-text--white mdi mdi-note-plus alignright" role="presentation"></i></li>
-				                     <li class="mdl-menu__item" data-val="subscriber">Subscriber<i class="mdl-color-text--white mdi mdi-email alignright" role="presentation"></i></li>
-				                   </ul>
-				                </div>
-				                <div class="input-field mdl-cell mdl-cell--6-col"></div>
-
-					          <input type="hidden" name="h_type" value="<?php _show_( $_GET['type'] ); ?>">
-					          <div class="input-field mdl-cell mdl-cell--3-col">
-					          <button class="mdl-button mdl-button--fab mdl-button--colored alignright" type="submit" name="register" value="true"><i class="material-icons">arrow_forward</i></button>
-					          </div>
-				          </form>  
-				  </div>
-				  	<div class="mdl-cell mdl-cell--2-col"></div>
+		} else { ?>
+			<div style="padding-top:40px;" class="mdl-grid">
+				<div class="mdl-cell mdl-cell--2-col"></div>
+				<div id="login_div" class="mdl-cell mdl-cell--8-col mdl-color--madge">
+				<center><?php echo '<a href="'.hROOT.'"><img src="'.hIMAGES.'logo-w.png" width="150px;"></a>'; 
+				if ( isset( $_GET['create'] ) ) {
+				if ( $_GET['create'] == "success" ) { ?>
+				<div id="success" class="alert mdl-color--green">
+				  <span>Success!<br>Check your email for a confirmation link</span>
 				</div><?php 
-		    	include 'footer.php';}
+				} elseif ( $_GET['create'] == "fail" ) { ?>
+				<div id="fail" class="alert mdl-color--red">
+				<span>Oops!<br>We Ran Into A Problem. Please Try Again</span>
+				</div><?php 
+				} elseif ( $_GET['create'] == "exists" ) { ?>
+				<div id="exists" class="alert mdl-color--red">
+				<span>Oops!<br>A User Already Exists With That Email. Please Try Again With A Different Email.</span>
+				</div><?php 
+				}
+				} ?>
+				</center>
+
+				<form enctype="multipart/form-data" name="registerUser" method="GET" action="" class="mdl-grid">
+
+				<div class="input-field mdl-cell mdl-cell--12-col">
+				<i class="material-icons prefix">mail</i>
+				<input id="email" name="email" type="text">
+				<label for="email">Email Address</label>
+				</div>
+
+				<div class="input-field mdl-cell mdl-cell--3-col mdl-js-textfield getmdl-select">
+				<i class="material-icons prefix">perm_identity</i>
+				 <input class="mdl-textfield__input" id="h_type" name="h_type" type="text" readonly tabIndex="-1" placeholder="Type"><label for="h_type">
+				<i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+				</label>
+				   <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--madge" for="h_type" ><?php 
+				     if ( $_SESSION['myCap'] == "admin"  ) {
+				      _show_( '<li class="mdl-menu__item" data-val="admin">Admin<i class="mdl-color-text--white mdi mdi-lock alignright" role="presentation"></i></li>' );
+				     } ?>
+				     <li class="mdl-menu__item" data-val="organization">Organization<i class="mdl-color-text--white mdi mdi-city alignright" role="presentation"></i></li>
+				     <li class="mdl-menu__item" data-val="editor">Buyer<i class="mdl-color-text--white mdi mdi-note alignright" role="presentation"></i></li>
+				     <li class="mdl-menu__item" data-val="author">Seller<i class="mdl-color-text--white mdi mdi-note-plus alignright" role="presentation"></i></li>
+				     <li class="mdl-menu__item" data-val="subscriber">Subscriber<i class="mdl-color-text--white mdi mdi-email alignright" role="presentation"></i></li>
+				   </ul>
+				</div>
+				<div class="input-field mdl-cell mdl-cell--6-col"></div>
+
+				<input type="hidden" name="h_type" value="<?php _show_( $type ); ?>">
+				<div class="input-field mdl-cell mdl-cell--3-col">
+				<button class="mdl-button mdl-button--fab mdl-button--colored alignright" type="submit" name="register" value="true"><i class="material-icons">arrow_forward</i></button>
+				</div>
+				</form>  
+				</div>
+				<div class="mdl-cell mdl-cell--2-col"></div>
+			</div><?php 
+			}
 	}
 
 	function registerUser() {
@@ -486,33 +483,31 @@ class _hActions {
 	}
 
 	function fetchPosts( $code ) {
-		if ( $code === 'blog' ) {
-			_hActions::blog();
+		$getPosts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts WHERE h_link = '".$code."'" );
+		if ( $getPosts -> num_rows > 0) { ?>
+			<div class="mdl-grid"><?php 
+				while ( $postsDetails = mysqli_fetch_assoc( $getPosts)){  ?>
+					<title><?php _show_( $postsDetails['h_alias']); ?> [ <?php showOption( 'name' ); ?> ]</title>
+				      <div class="mmm-ribbon mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ){ primaryColor(); } else { echo "madge"; } ?>" style="background: url( <?php _show_( $postsDetails['h_avatar']); ?> ); background-repeat:no-repeat; background-size: cover; background-position: center;">
+				      <center><h1><b><?php _show_( $postsDetails['h_alias']); ?></b></h1>
+				      <span><h6>Published by <b><?php _show_( $postsDetails['h_by']); ?></b> on <b><?php $date = $postsDetails['h_created'];
+          $date = explode(" ", $date); _show_( $date[0].' at '.$date[1] ); ?></b></h6></span></center>
+				      </div>
+				      
+				        <div class="demo-container">
+				          	<div class="demo-content mdl-color--white content mdl-color-text--black mdl-grid">
+					            <article class="mdl-color-text--black">
+					            	<?php _show_( $postsDetails['h_description']); ?>
+					            </article>
+					            <?php $hForms = new _hForms(); 
+					            $hForms -> commentForm(); ?>
+					        </div>
+				      </div>
+				<?php } ?>
+			</div><?php $hSocial = new _hSocial(); 
+			$hSocial -> bottomShare( $postsDetails['h_code'] );
 		} else {
-			$getPosts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts WHERE h_link = '".$code."'" );
-			if ( $getPosts -> num_rows > 0) { ?>
-				<div class="mdl-grid"><?php 
-					while ( $postsDetails = mysqli_fetch_assoc( $getPosts)){  ?>
-						<title><?php _show_( $postsDetails['h_alias']); ?> [ <?php showOption( 'name' ); ?> ]</title>
-					      <div class="mmm-ribbon mdl-color--<?php if ( isset( $_SESSION['myCode'] ) ){ primaryColor(); } else { echo "madge"; } ?>" style="background: url( <?php _show_( $postsDetails['h_avatar']); ?> ); background-repeat:no-repeat; background-size: cover; background-position: center;">
-					      <center><h1><b><?php _show_( $postsDetails['h_alias']); ?></b></h1>
-					      <span><h6>Published by <b><?php _show_( $postsDetails['h_by']); ?></b> on <b><?php $date = $postsDetails['h_created'];
-	          $date = explode(" ", $date); _show_( $date[0].' at '.$date[1] ); ?></b></h6></span></center>
-					      </div>
-					      
-					        <div class="demo-container">
-					          	<div class="demo-content mdl-color--white content mdl-color-text--black mdl-grid">
-						            <article class="mdl-color-text--black">
-						            	<?php _show_( $postsDetails['h_description']); ?>
-						            </article>
-						            <?php _hForms::commentForm(); ?>
-						        </div>
-					      </div>
-					<?php } ?>
-				</div><?php _hSocial::bottomShare( $postsDetails['h_code'] );
-			} else {
-				_hActions::error404( 'post' );
-			}
+			$this -> error404( 'post' );
 		}
 	}
 
@@ -564,11 +559,10 @@ class _hActions {
 		}
 	}
 
-	function category( $cat ) { 
-		include 'header.php' ; ?>
+	function categories( $cat ) { ?>
 		<title>Category : <?php _show_( ucwords( $cat ) ); ?> [ <?php showOption( 'name' ); ?> ]</title><?php
 		$this -> connectDB();
-		$getPosts = mysqli_query( $conn, "SELECT * FROM ". hDBPREFIX ."posts WHERE ( h_status = 'published' AND h_category = '".$cat."' ) ORDER BY h_created DESC" );
+		$getPosts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts WHERE ( h_status = 'published' AND h_category = '".$cat."' ) ORDER BY h_created DESC" );
 		if ( $getPosts -> num_rows > 0) { ?>
 			<div class="mdl-grid">
 				<div class="mdl-cell mdl-cell--9-col mdl-grid"><?php 
@@ -611,15 +605,14 @@ class _hActions {
 			</div><?php 
 			include 'footer.php';
 		} else {
-			_hActions::error404( 'posts' );
+			_hActions::error404( 'posts in category' );
 		}
 	}
 
-	function tags( $tag ) { 
-		include 'header.php' ; ?>
+	function topic( $tag ) { ?>
 		<title>Tag : <?php _show_( ucwords( $tag ) ); ?> [ <?php showOption( 'name' ); ?> ]</title><?php
 		$this -> connectDB();
-		$getPosts = mysqli_query( $conn, "SELECT * FROM ". hDBPREFIX ."posts WHERE ( h_status = 'published' AND h_tags = '".$tag."' ) ORDER BY h_created DESC" );
+		$getPosts = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts WHERE ( h_status = 'published' AND h_tags = '".$tag."' ) ORDER BY h_created DESC" );
 		if ( $getPosts -> num_rows > 0) { ?>
 			<div class="mdl-grid">
 				<div class="mdl-cell mdl-cell--9-col mdl-grid"><?php 
@@ -662,7 +655,7 @@ class _hActions {
 			</div><?php 
 			include 'footer.php';
 		} else {
-			_hActions::error404( 'posts' );
+			_hActions::error404( 'posts tagged '.ucwords( $tag ) );
 		}
 	}
 

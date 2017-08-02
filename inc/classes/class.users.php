@@ -250,26 +250,28 @@ class _hUsers {
       </div>
       </div>
       <?php   } else { ?>
-
-        <div style="margin:1%;" ><table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><thead>
-        <tr>
-        <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
-        <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
-        <th class="mdl-data-table__cell--non-numeric">PHONE</th>
-        <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
-        <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>
-            <p>No <?php _show_( ucfirst( $type) ); ?>s Found</p>
-          </td>
-        </tr>
-        </tbody>
-        </table>
+      <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--12-col" >
+          <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+            <thead>
+              <tr>
+                <th class="mdl-data-table__cell--non-numeric">USERNAME</th>
+                <th class="mdl-data-table__cell--non-numeric">EMAIL</th>
+                <th class="mdl-data-table__cell--non-numeric">PHONE</th>
+                <th class="mdl-data-table__cell--non-numeric">LOCATION</th>
+                <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <p>No <?php _show_( ucfirst( $type) ); ?>s Found</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        </div><?php 
+      </div><?php 
     }
   }
 

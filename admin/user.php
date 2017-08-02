@@ -72,12 +72,17 @@ if ( isset( $_GET['view'] )){
 
 }
 
-if ( isset( $_POST['update'] ) ) {
-	$hUser -> updateUser( $_POST['code'] );
-}
+if ( isset( $_POST['h_alias'] ) || isset( $_POST['h_author'] ) || isset( $_POST['h_avatar'] ) || isset( $_POST['h_by'] ) || isset( $_POST['h_category'] ) || isset( $_POST['h_organization'] ) || isset( $_POST['h_code'] ) || isset( $_POST['h_created'] ) || isset( $_POST['h_desc'] ) || isset( $_POST['h_email'] ) || isset( $_POST['h_fav'] ) || isset( $_POST['h_key'] ) || isset( $_POST['h_level'] ) || isset( $_POST['h_link'] ) || isset( $_POST['h_location'] ) || isset( $_POST['h_notes'] ) || isset( $_POST['h_phone'] ) || isset( $_POST['h_reading'] ) || isset( $_POST['h_status'] ) || isset( $_POST['h_subtitle'] ) || isset( $_POST['h_tags'] ) || isset( $_POST['h_type'] ) || isset( $_POST['h_updated'] ) ) {
+	
 
-if ( isset( $_POST['register'] ) ) {
-	$hUser -> createUser();
+	if ( isset( $_POST['register'] ) ) {
+		$hUser -> createUser();
+	}
+
+	if ( isset( $_POST['update'] ) ) {
+		$hUser -> updateUser( $_POST['code'] );
+	}
+
 }
 
 include './footer.php';

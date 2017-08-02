@@ -168,14 +168,14 @@ if (isset( $_GET['add'] )) { ?>
         </div><br>
         <div class="mdl-grid">
 
-        <div class="input-field mdl-cell">
+        <div class="mdl-cell">
           <input type="checkbox" id="h_type" name="h_type" value="drop" <?php if ( $menu[0]['h_type'] == "drop" ) {
                _show_( 'checked' );
           } ?>>
           <label for="h_type">Has Dropdown</label>
         </div>
 
-        <div class="input-field mdl-cell">
+        <div class="mdl-cell">
         <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="h_status">
           <input type="checkbox" id="h_status" class="mdl-switch__input" <?php if ( $menu[0]['h_status'] == "visible" ) {
                _show_( 'checked' );
