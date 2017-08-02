@@ -4,9 +4,13 @@ include '../inc/jabali.php';
 include './header.php';
 
 if ( isset( $_GET['ddelete'] ) ) {
+  global $hPost;
   $hPost -> delete( $_GET['ddelete'] );
 }
+
 if ( isset( $_POST['draft'] ) ) {
+  global $hPost;
+
   $h_alias = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_alias'] ); 
   $h_author = $_SESSION['myCode'];
   $h_avatar = hASSETS . 'placeholder.svg';
@@ -45,7 +49,8 @@ $hPost -> create( $h_alias, $h_author, $h_avatar, $h_by, $h_category, $h_organiz
 <div class="mdl-grid"><?php
   if ( isset( $_GET['x'] ) ) {
     loadActiveX( $_GET['x'] ); 
-  } else { ?>
+  } else {
+    global $hWidget; ?>
     <title><?php _show_( ucwords( $_SESSION['myCap'] ) ); ?> Dashboard [ <?php showOption( 'name' ); ?> ]</title>
     <div class="mdl-cell--12-col mdl-grid">
     	<div class="mdl-cell mdl-cell--3-col mdl-card mdl-color--<?php primaryColor(); ?>" >

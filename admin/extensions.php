@@ -4,15 +4,9 @@ include '../inc/jabali.php';
 include './header.php';
 
 if ( isset( $_POST['save']) && !empty( $_POST['ext'] ) ) {
-  foreach ($_POST['ext'] as $ext) {
-
-    $activex = array();
-    $activex[] = $ext;
-    $activex = json_encode( $activex );
-    $hOption = new _hOptions();
+    $activex = json_encode( $_POST['ext'] );
+    $hOption = new Jabali\_hOptions();
     $hOption -> update( 'extensions', $activex, date('Y-m-d H:i:s') );
-    
-  }
 }
 
 if ( isset( $_GET['install'] ) ) {
@@ -49,60 +43,54 @@ if ( isset( $_GET['install'] ) ) {
 } else { ?>
 <title>Extensions [ JABALI ]</title>
 	<div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--8-col mdl-card mdl-shadow--2dp  mdl-color--<?php primaryColor(); ?>">
-
-  <div class="mdl-card__supporting-text">
-  <form method="POST" action="">
-    <table class="mdl-data-table mdl-js-data-table">
-    <thead>
-      <th class="mdl-data-table__cell--non-numeric">Extension</th>
-      <th class="mdl-data-table__cell--non-numeric">Status</th>
-      <th class="mdl-data-table__cell">Links</th>
-    </thead>
-    <tbody><?php
-    $path = hABSX;
-    $dir = new DirectoryIterator($path);
-    foreach ($dir as $fileinfo) {
-        if ($fileinfo->isDir() && !$fileinfo->isDot()) {
-            $extension = $fileinfo->getFilename();
-            $xJson = file_get_contents( hABSX.$extension."/".$extension.".json" );
-            $xD = json_decode( $xJson, true ); ?>
-      <tr>
-      <td class="mdl-data-table__cell--non-numeric"><?php echo $xD[ 'name' ] ; ?></td>
-      <td class="mdl-data-table__cell--non-numeric">
-        <div class="switch">
-          <label>
-            Inactive
-            <input id="<?php echo $xD[ 'slug' ] ; ?>" name="ext[]" value="<?php echo $xD[ 'slug' ] ; ?>" type="checkbox" <?php if ( isActiveX( $xD[ 'slug' ] ) ) {
-              echo "checked";
-            } ?> >
-            <span class="lever"></span>
-            Active
-          </label>
-        </div>
-      </td>
-      <td class="mdl-data-table__cell">
-        <a id = "<?php echo $xD[ 'slug' ] ; ?>author" href="#" class="material-icons">perm_identity</a>
-        <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right mdl-color--<?php primaryColor(); ?>" for="<?php echo $xD[ 'slug' ] ; ?>author" style="overflow-y: auto;">
-        <a href="<?php echo $xD[ 'social' ]['facebook'] ; ?>" class="mdl-list__item"><i class="mdi mdi-facebook mdl-list__item-icon"></i><span style="padding-left: 20px">Facebook</span></a>
-        <a href="<?php echo $xD[ 'social' ]['twitter'] ; ?>" class="mdl-list__item"><i class="mdi mdi-twitter mdl-list__item-icon"></i><span style="padding-left: 20px">Twitter</span></a>
-        <a href="<?php echo $xD[ 'social' ]['github'] ; ?>" class="mdl-list__item"><i class="mdi mdi-github-circle mdl-list__item-icon"></i><span style="padding-left: 20px">Github</span></a>
-        <a href="mailto:<?php echo $xD[ 'social' ][ 'email' ] ; ?>" class="mdl-list__item"><i class="mdi mdi-email mdl-list__item-icon"></i><span style="padding-left: 20px"><?php echo $xD[ 'social' ][ 'email' ] ; ?></span></a>
-        </ul>
-        <div class="mdl-tooltip" for="<?php echo $xD[ 'slug' ] ; ?>author">Author: <?php echo $xD[ 'author' ] ; ?></div>
-        <a id="<?php echo $xD[ 'slug' ] ; ?>help" href="<?php echo $xD[ 'support' ] ; ?>" class="material-icons">help</a>
-        <div class="mdl-tooltip" for="<?php echo $xD[ 'slug' ] ; ?>help"><?php echo $xD[ 'name' ] ; ?> Help</div>
-        <a href="<?php echo $xD[ 'website' ] ; ?>" class="material-icons">public</a>
-      </td>
-      </tr><?php
-        }
-    } ?>
-    </tbody>
-    </table>
-    <button type="submit" name="save" class="mdl-button mdl-button--fab addfab mdl-button--colored right"><i class="material-icons">save</i></button>
+  <form method="POST" action="" class="mdl-cell mdl-cell--8-col mdl-grid mdl-shadow--2dp  mdl-color--<?php primaryColor(); ?>"><?php
+      $path = hABSX;
+      $dir = new DirectoryIterator($path);
+      foreach ($dir as $fileinfo) {
+          if ($fileinfo->isDir() && !$fileinfo->isDot()) {
+              $extension = $fileinfo->getFilename();
+              $xJson = file_get_contents( hABSX.$extension."/".$extension.".json" );
+              $xD = json_decode( $xJson, true ); ?>
+            <div class="mdl-cell mdl-card mdl-shadow--2dp">
+              <div class="mdl-card__title mdl-card--expand">
+                <h2 class="mdl-card__title-text"><?php echo $xD[ 'name' ] ; ?></h2>
+              <div class="mdl-layout-spacer"></div>
+              <div class="mdl-card__subtitle-text">
+                    <a id="<?php echo $xD[ 'slug' ] ; ?>help" href="<?php echo $xD[ 'support' ] ; ?>" class="material-icons">help</a>
+                    <div class="mdl-tooltip" for="<?php echo $xD[ 'slug' ] ; ?>help"><?php echo $xD[ 'name' ] ; ?> Help</div>
+                    <a href="<?php echo $xD[ 'website' ] ; ?>" class="material-icons">public</a>
+              </div>
+              </div>
+              <div class="mdl-card__supporting-text">
+                <?php echo $xD[ 'description' ] ; ?>
+              </div>
+              <div class="mdl-card__actions mdl-card--border">
+                <div class="switch">
+                      <label>
+                        Inactive
+                        <input id="<?php echo $xD[ 'slug' ] ; ?>" name="ext[]" value="<?php echo $xD[ 'slug' ] ; ?>" type="checkbox" <?php if ( isActiveX( $xD[ 'slug' ] ) ) {
+                          echo "checked";
+                        } ?> >
+                        <span class="lever"></span>
+                        Active
+                      </label>
+                    </div>
+              <div class="mdl-layout-spacer"></div>
+                    <a id = "<?php echo $xD[ 'slug' ] ; ?>author" href="#" class="material-icons alignright">perm_identity</a>
+                    <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right mdl-color--<?php primaryColor(); ?>" for="<?php echo $xD[ 'slug' ] ; ?>author" style="overflow-y: auto;">
+                    <a href="<?php echo $xD[ 'social' ]['facebook'] ; ?>" class="mdl-list__item"><i class="mdi mdi-facebook mdl-list__item-icon"></i><span style="padding-left: 20px">Facebook</span></a>
+                    <a href="<?php echo $xD[ 'social' ]['twitter'] ; ?>" class="mdl-list__item"><i class="mdi mdi-twitter mdl-list__item-icon"></i><span style="padding-left: 20px">Twitter</span></a>
+                    <a href="<?php echo $xD[ 'social' ]['github'] ; ?>" class="mdl-list__item"><i class="mdi mdi-github-circle mdl-list__item-icon"></i><span style="padding-left: 20px">Github</span></a>
+                    <a href="mailto:<?php echo $xD[ 'social' ][ 'email' ] ; ?>" class="mdl-list__item"><i class="mdi mdi-email mdl-list__item-icon"></i><span style="padding-left: 20px"><?php echo $xD[ 'social' ][ 'email' ] ; ?></span></a>
+                    </ul>
+                    <div class="mdl-tooltip" for="<?php echo $xD[ 'slug' ] ; ?>author">Author: <?php echo $xD[ 'author' ] ; ?></div>
+              </div>
+            </div><?php
+          }
+      } ?>
+      <button type="submit" name="save" class="mdl-button mdl-button--fab addfab mdl-button--colored right"><i class="material-icons">save</i></button>
     </form>
-  </div>
-  </div>
+
   <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--2dp  mdl-color--<?php primaryColor(); ?>">
     <div class="mdl-card__title">
     <i class="material-icons">help</i>

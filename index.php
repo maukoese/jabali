@@ -24,16 +24,11 @@ if ( !is_dir( $directory) ) {
 include 'inc/config.php';
 include 'inc/jabali.php';
 connectDb();
+session_start();
 
-include 'inc/classes/class.rewrite.php';
-$GLOBALS['hRewrite'] = new Jabali_Rewrite();
-
-global $hRewrite;
-$hRewrite -> init();
-
-include 'inc/classes/class.actions.php';
-global $action;
-$action = new _hActions;
+include 'inc/classes/Actions.php';
+use Jabali\classes\Actions;
+$action = new Jabali\_hActions;
 $action -> connectDB();
 
 if ( isset( $_POST['login'] ) && $_POST['user'] != "" && $_POST['password'] != "" ) {
@@ -63,10 +58,10 @@ include 'header.php';
 if( empty( $match ) ) {
 	call_user_func_array( array( $action, 'home' ), array() );
 } else switch ( $match ) {
-	case "login":
+	case "signin":
 		call_user_func_array( array( $action, 'login' ), array( $elements[1] ) );
 		break;
-	case "register":
+	case "signup":
 		call_user_func_array( array( $action, 'register' ), array( $elements[1] ) );
 		break;
 	case "reset":

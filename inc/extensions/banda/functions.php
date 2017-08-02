@@ -53,8 +53,8 @@ PRIMARY KEY(h_code)
 )" );
 
 if ( $hproducts && $horders && $hpayments) {
-  $hOpt = new _hOptions();
-  $hMenu = new _hMenus();
+  $hOpt = new Jabali\_hOptions();
+  $hMenu = new Jabali\_hMenus();
 
   /*
   *

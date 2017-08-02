@@ -39,7 +39,7 @@ if ( isset( $_POST['preferences'] ) ) {
 }
 
 if ( isset( $_POST['utype'] ) ) {
-    $hUserType = new _hOptions();
+    $hUserType = new Jabali\_hOptions();
 
     $type = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['type'] );
     $level = $_POST['level'];
@@ -64,7 +64,7 @@ if ( isset( $_POST['social'] ) ) {
     $social = array('facebook' => $facebook, 'twitter' => $twitter, 'instagram' => $instagram, 'github' => $github );
     $social = json_encode( $social );
 
-    $hSocial = new _hOptions();
+    $hSocial = new Jabali\_hOptions();
     $hSocial -> update ( 'social', $social, date('Y-m-d') );
 }
 
@@ -176,11 +176,11 @@ if ( isset( $_GET['settings'] ) ) {
                     </div>
                 </div>
                 <div class="mdl-grid">
-                    <div class="input-field mdl-cell">
+                    <div class="mdl-cell mdl-cell--6-col">
                       <input type="checkbox" id="registration" name="registration" <?php showOption( 'registration' ); ?> value="checked" />
                       <label for="registration">Allow User Registrations?</label>
                     </div>
-                    <div class="mdl-cell mdl-cell--6-col"></div>
+                    <div class="mdl-cell mdl-cell--4-col"></div>
                     <div class="input-field mdl-cell mdl-cell--8-col">
                             <i class="material-icons prefix">room</i>
                         <input id="map" type="text" name="map" value="<?php showOption( 'map' ); ?>">
@@ -259,14 +259,12 @@ if ( isset( $_GET['settings'] ) ) {
                 <a href="./user?view=list&type=subscriber" class="mdl-list__item"><i class="material-icons mdl-list__item-icon">mail</i><span style="padding-left: 20px">Subscriber</span></a>
             </div>
             <div class="mdl-cell mdl-cell--6-col" >
-            <h6>User Defined Types</h6>
-                <?php $usertypes = json_decode( getOption( 'usertypes' ), true );
-                echo $usertypes[0]['name'];
-                echo $usertypes[0]['level'];
-                echo "<br>";
-                $types = count( $usertypes );
-                $types = ++$types;
-                echo $types; ?>
+            <h6>User Defined Types</h6><?php
+                $users = getOption( 'usertypes' );
+                $usertypes = json_decode( $users, true );
+                foreach ($usertypes as $type => $level ) {
+                    echo '<a href="./user?view=list&type='.$type.'" class="mdl-list__item"><i class="material-icons mdl-list__item-icon">people</i><span style="padding-left: 20px">'.$type.' -</span> '.$level.'</a>';
+                 } ?>
             </div>
         </div>
                 <h6>Add New User Type</h6>
@@ -290,7 +288,13 @@ if ( isset( $_GET['settings'] ) ) {
                      <li class="mdl-menu__item" data-val="author">Author</li>
                      <li class="mdl-menu__item" data-val="subscriber">Subscriber</li>
                    </ul>
-                </div>
+                </div><?php
+                $users = getOption( 'usertypes' );
+                $usertypes = json_decode( $users, true );
+                foreach ($usertypes as $type => $level ) {
+                    echo '<input type="hidden" name="utype '.$type.'" value=" '.$type.'" />';
+                    echo '<input type="hidden" name="ulevel '.$type.'" value=" '.$level.'" />';
+                 } ?>
                 <div class="input-field mdl-cell">
                     <button class="mdl-button mdl-button--fab alignright" type="submit" name="utype"><i class="material-icons">save</i></button>
                 </div>

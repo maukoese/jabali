@@ -15,4 +15,7 @@ define( "hROOT", "http://localhost/jabali/" );
 
 define( "hDBPREFIX", "db_" );
 
-define( "hSALTS", "e936fa2a86d4e43c416bd8d858934325717943e51decd53751255f0cd2e4c973c1a582bda2c02e76" ); ?>
+define( "hSALTS", "b8f7a5c2244e6cc6fc6d8201c0b8cc9750fab50d569aaa5260acd3b95c6541fc48bc3c336ca5757c" );
+define( "hAUTH", "NTJjYWQ1Y2MzOTcwNjdiZDQyNDVjMGJjYWM2MDU5NjIyNjVjMTE1YTc0ZjljZGM1MzczYTNmZjU2YmE4NmNjYjhmYzBjNThhYWIwNGU4NmM=" ); 
+
+?>

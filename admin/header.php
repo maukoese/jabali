@@ -5,7 +5,7 @@ if ( !isset( $_SESSION['myCode'] ) ) {
 }
 
 connectDb();
-$hDB = new MysqliDb ($GLOBALS['conn']); ?>
+$GLOBALS['hDB'] = new Jabali\MysqliDb ($GLOBALS['conn']); ?>
 <!doctype html>
 <!--
   Jabali Framework
@@ -37,6 +37,8 @@ $hDB = new MysqliDb ($GLOBALS['conn']); ?>
     <meta name="msapplication-TileColor" content="#008080">
 
     <link rel="shortcut icon" href="<?php showOption( 'favicon' ); ?>">
+
+    <link rel="manifest" href="<?php echo hROOT.'manifest;' ?>">
 
     <link rel="stylesheet" href='<?php echo hSTYLES; ?>lib/getmdl-select.min.css'>
     <link rel="stylesheet" href="<?php echo hSTYLES; ?>lib/nv.d3.css">
@@ -243,7 +245,8 @@ $hDB = new MysqliDb ($GLOBALS['conn']); ?>
               <i class="mdi mdi-account-edit" role="presentation"></i></button></a>
           </div>
         </header>
-        <nav class="demo-navigation mdl-navigation mdl-color--<?php primaryColor(); ?>"><?php 
+        <nav class="demo-navigation mdl-navigation mdl-color--<?php primaryColor(); ?>"><?php
+          global $hMenu; 
           $hMenu -> drawerdef( 'dashboard' );
           $hMenu -> drawerdef( 'articles' );
           $hMenu -> drawerdef( 'pages' );
@@ -255,7 +258,7 @@ $hDB = new MysqliDb ($GLOBALS['conn']); ?>
           $hMenu -> drawer(); ?>
           <div class="mdl-layout-spacer"></div><?php 
           if ( isCap( 'admin' ) ) { ?>
-          <a id="extensions" class="mdl-navigation__link" href="./extensions?settings=extensions"><i class="mdl-color-text--white material-icons" role="presentation">power</i>Extensions</a><?php } ?>
+          <a id="extensions" class="mdl-navigation__link" href="./extensions?page=extensions"><i class="mdl-color-text--white material-icons" role="presentation">power</i>Extensions</a><?php } ?>
           <a id="hpref" class="mdl-navigation__link" href="#"><i class="mdl-color-text--white material-icons" role="presentation">settings</i>Preferences</a>
             <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor(); ?>" for="hpref">
             <a class="mdl-navigation__link" href="./options?settings=color"><i class="mdl-color-text--white material-icons" role="presentation">color_lens</i><span>Color Options</span></a><?php 

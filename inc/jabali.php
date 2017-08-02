@@ -861,49 +861,62 @@ function LoadActiveX( $ext ) {
 * Autoload Classes
 **/
 
-include 'classes/class.dbobject.php';
-include 'classes/class.mysqlidb.php';
+include 'classes\Dbobject.php';
+include 'classes\Mysqlidb.php';
+include 'classes\Uniform.php';
+include 'classes\Options.php';
+include 'classes\Menus.php';
+include 'classes\Forms.php';
+include 'classes\Users.php';
+include 'classes\Posts.php';
+include 'classes\Resources.php';
+include 'classes\Services.php';
+include 'classes\Messages.php';
+include 'classes\Comments.php';
+include 'classes\Widgets.php';
+include 'classes\Social.php';
+require ( 'classes/Shortcodes.php' );
 
-include 'classes/class.global.php';
-$hGlobal = new _hGlobal();
+use Jabali\classes\Social;
+use Jabali\classes\Widgets;
+use Jabali\classes\Comments;
+use Jabali\classes\Messages;
+use Jabali\classes\Services;
+use Jabali\classes\Resources;
+use Jabali\classes\Posts;
+use Jabali\classes\Users;
+use Jabali\classes\Forms;
+use Jabali\classes\Menus;
+use Jabali\classes\Options;
+use Jabali\classes\Dbobject;
+use Jabali\classes\Mysqlidb;
+use Jabali\classes\Uniform;
 
-include 'classes/class.options.php';
-$hOpt = new _hOptions();
+$GLOBALS['hGlobal'] = new Jabali\classes\_hUniform();
+$hGlobal = new Jabali\classes\_hUniform();
+$GLOBALS['hOpt'] = new Jabali\_hOptions();
+$hOpt = new Jabali\_hOptions();
+$GLOBAL['hMenu'] = new Jabali\_hMenus();
+$hMenu = new Jabali\_hMenus();
+$GLOBALS['hForm'] = new Jabali\_hForms();
+$hForm = new Jabali\_hForms();
+$GLOBALS['hUser'] = new Jabali\_hUsers();
+$hUser = new Jabali\_hUsers();
+$GLOBALS['hPost'] = new Jabali\_hPosts();
+$hPost = new Jabali\_hPosts();
+$GLOBALS['hResource'] = new Jabali\_hResources();
+$hResource = new Jabali\_hResources();
+$GLOBALS['hService'] = new Jabali\_hServices();
+$hService = new Jabali\_hServices();
+$GLOBALS['hMessage'] = new Jabali\_hMessages();
+$hMessage = new Jabali\_hMessages();
+$GLOBALS['hComment'] = new Jabali\_hComments();
+$hComment = new Jabali\_hComments();
+$GLOBALS['hWidget'] = new Jabali\_hWidgets();
+$hWidget = new Jabali\_hWidgets();
+$GLOBALS['hSocial'] = new Jabali\_hSocial();
+$hSocial = new Jabali\_hSocial();
 
-include 'classes/class.menus.php';
-$hMenu = new _hMenus();
-
-include 'classes/class.forms.php';
-$hForm = new _hForms();
-
-include 'classes/class.users.php';
-$hUser = new _hUsers();
-
-include 'classes/class.posts.php';
-$hPost = new _hPosts();
-
-include 'classes/class.resources.php';
-$hResource = new _hResources();
-
-include 'classes/class.services.php';
-$hService = new _hServices();
-
-include 'classes/class.messages.php';
-$hMessage = new _hMessages();
-
-include 'classes/class.comments.php';
-$hComment = new _hComments();
-
-include 'classes/class.widgets.php';
-$hWidget = new _hWidgets();
-
-include 'classes/class.social.php';
-$hSocial = new _hSocial();
-
-// loading the class
-if ( !class_exists('\App\Shortcodes') ) {
-    require ( 'classes/class.shortcodes.php' );
-}
 function add_shortcode($tag, $callback) {
 
     return \App\Shortcodes::instance()->register($tag, $callback);

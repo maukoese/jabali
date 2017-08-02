@@ -1,10 +1,5 @@
 <?php 
-session_start();
-
-if ( isset( $_GET['logout'] ) ) {
-  session_unset();
-  session_destroy();
-} ?>
+?>
 <!doctype html>
 <!--
   Jabali Framework
@@ -40,6 +35,8 @@ if ( isset( $_GET['logout'] ) ) {
     <!-- Tile icon for Win8 (144x144 + tile color) -->
     <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
     <meta name="msapplication-TileColor" content="#3372DF">
+
+    <link rel="manifest" href="<?php echo hROOT.'manifest;' ?>">
 
     <link rel="stylesheet" href='<?php echo hSTYLES; ?>lib/getmdl-select.min.css'>
     <link rel="stylesheet" href="<?php echo hSTYLES; ?>lib/nv.d3.css">
@@ -103,7 +100,7 @@ if ( isset( $_GET['logout'] ) ) {
       <a href="<?php echo hROOT.'about'; ?>" class="mdi mdi-email mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_contact"></a>
       <div class="mdl-tooltip" for="h_contact">Contact</div>
 
-      <a href="<?php echo hROOT.'register/user'; ?>" class="mdi mdi-account-plus mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_submit"></a>
+      <a href="<?php echo hROOT.'signup/user'; ?>" class="mdi mdi-account-plus mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_submit"></a>
       <div class="mdl-tooltip" for="h_submit">Register</div>
 
       <?php if ( isset( $_SESSION['myCode'] ) ) { ?>
@@ -115,14 +112,14 @@ if ( isset( $_GET['logout'] ) ) {
         <a class="mdl-cell" href="<?php _show_(  hADMIN .'options?settings=color' ); ?>"><i class="material-icons mdl-list__item-icon">palette</i></a>
         </ul><?php
       } else { ?>
-      <a id="admin" href="<?php _show_(  hROOT.'login/jabali' ); ?>" class="mdi mdi-exit-to-app mdl-badge mdl-badge--overlap mdl-button--icon"></a><?php 
+      <a id="admin" href="<?php _show_(  hROOT.'signin/jabali' ); ?>" class="mdi mdi-exit-to-app mdl-badge mdl-badge--overlap mdl-button--icon"></a><?php 
       } ?>
 
     </div>
     <!-- Bottom row, not visible on scroll -->
     <div class="mdl-layout__header-row" style="overflow-x: auto;">
       <div class="mdl-layout-spacer"></div>
-        <?php $header = new _hMenus();
+        <?php $header = new Jabali\_hMenus();
         $header -> header(); ?>
     </div>
   </header>

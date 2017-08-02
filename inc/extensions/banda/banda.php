@@ -11,7 +11,7 @@ if ( isset( $_POST['mpesa'] ) ) {
     $options = array( 'merchant', 'callback', 'paybill', 'timestamp', 'sag');
     foreach ( $options as $option ) {
       $date = date( 'Y-m-d H:i:s' );
-      $hOption = new _hOptions();
+      $hOption = new Jabali\_hOptions();
       $hOption -> update( $option, $_POST[ $option ], $date );
     }
 }
