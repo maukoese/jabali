@@ -178,9 +178,10 @@ class _hActions {
 	}
 
 	function loginUser() {
-		if ( !isset( $_SESSION['myCode'] ) ) {
-			session_start();
-		}
+		session_start();
+		// if (session_status() == PHP_SESSION_ACTIVE) {
+		// 	session_start();
+		// }
 		$user=$_POST['user'];
 		$password=$_POST['password'];
 

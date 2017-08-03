@@ -198,7 +198,7 @@ $GLOBALS['hDB'] = new Jabali\MysqliDb ($GLOBALS['conn']); ?>
                     </div>
                   </div>
                   <div class="mdl-card__supporting-text">
-                  <a href="<?php _show_( hROOT . '?logout=true' ); ?>">
+                  <a href="<?php _show_( hROOT . '?logout' ); ?>">
                     <span class="alignleft">Yes, log me out.<br><center>
                    <i class="material-icons">done</i>
                     </center>

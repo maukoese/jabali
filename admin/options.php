@@ -39,21 +39,16 @@ if ( isset( $_POST['preferences'] ) ) {
 }
 
 if ( isset( $_POST['utype'] ) ) {
+    $date = date('Y-m-d' );
     $hUserType = new Jabali\_hOptions();
 
-    $type = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['type'] );
-    $level = $_POST['level'];
+    $type = $_POST['utype'];
+    $level = $_POST['ulevel'];
 
-    $usertypes = json_decode( getOption( 'usertypes' ), true );
-    $types = count( $usertypes );
-    $types2 = ++$types;
+    $utype = array_combine( $type, $level );
+    $utype = json_encode( $utype );
 
-    for ($countyp=0; $countyp < count( $usertypes ); $countyp++) { 
-        array( $usertypes[$countyp]['name'] => $usertypes[$countyp]['level'] );
-    }
-    $t = array_push( $usertypes, array( 'name' => $type, 'level' => $level ) );
-    $usertypes = json_encode( $t );
-    $hUserType -> update ( 'User Type', 'usertypes', $usertypes, date('Y-m-d') );
+    $hUserType -> update ( 'usertypes', $utype, $date );
 }
 
 if ( isset( $_POST['social'] ) ) {
@@ -263,7 +258,7 @@ if ( isset( $_GET['settings'] ) ) {
                 $users = getOption( 'usertypes' );
                 $usertypes = json_decode( $users, true );
                 foreach ($usertypes as $type => $level ) {
-                    echo '<a href="./user?view=list&type='.$type.'" class="mdl-list__item"><i class="material-icons mdl-list__item-icon">people</i><span style="padding-left: 20px">'.$type.' -</span> '.$level.'</a>';
+                    echo '<a href="./user?view=list&type='.strtolower( $type ).'" class="mdl-list__item"><i class="material-icons mdl-list__item-icon">people</i><span style="padding-left: 20px">'.$type.' -</span> '.$level.'</a>';
                  } ?>
             </div>
         </div>
@@ -272,13 +267,13 @@ if ( isset( $_GET['settings'] ) ) {
 
                 <div class="input-field mdl-cell">
                         <i class="material-icons prefix">label</i>
-                    <input id="merchant" type="text" name="type" placeholder="e.g Accountant">
+                    <input id="merchant" type="text" name="utype[]" placeholder="e.g Accountant">
                     <label for="merchant" data-error="wrong" data-success="right" class="center-align">Label</label>
                 </div>
 
                 <div class="input-field mdl-cell mdl-js-textfield getmdl-select">
                 <i class="material-icons prefix">lock</i>
-                 <input class="mdl-textfield__input" id="h_type" name="level" type="text" readonly tabIndex="-1" placeholder="Select Level" >
+                 <input class="mdl-textfield__input" id="h_type" name="ulevel[]" type="text" readonly tabIndex="-1" placeholder="Select Level" >
                   <label for="h_type">
                       <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
                   </label>
@@ -292,11 +287,11 @@ if ( isset( $_GET['settings'] ) ) {
                 $users = getOption( 'usertypes' );
                 $usertypes = json_decode( $users, true );
                 foreach ($usertypes as $type => $level ) {
-                    echo '<input type="hidden" name="utype '.$type.'" value=" '.$type.'" />';
-                    echo '<input type="hidden" name="ulevel '.$type.'" value=" '.$level.'" />';
+                    echo '<input type="hidden" name="utype[]'.$type.'" value=" '.$type.'" />';
+                    echo '<input type="hidden" name="ulevel[]'.$type.'" value=" '.$level.'" />';
                  } ?>
                 <div class="input-field mdl-cell">
-                    <button class="mdl-button mdl-button--fab alignright" type="submit" name="utype"><i class="material-icons">save</i></button>
+                    <button class="mdl-button mdl-button--fab alignright" type="submit"><i class="material-icons">save</i></button>
                 </div>
         </form>
         </div>
