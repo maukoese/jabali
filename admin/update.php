@@ -31,7 +31,7 @@ $new_version = $nJD['version']; ?>
 <div class="mdl-grid">
 	<div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
 		<?php if ( $curr_version == $new_version) {
-			echo "You have the latest Version of Jabali";
+			echo '<center><h3>You have the latest Version of Jabali</h3><img src="'.hIMAGES.'404.jpg" width="500px"><h5>You don\'t have to do anything else</h5></center>';
 		} elseif ( $curr_version > $new_version) {
 			echo $curr_version."<br>";
 			echo $new_version;

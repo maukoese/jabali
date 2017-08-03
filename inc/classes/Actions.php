@@ -68,108 +68,17 @@ class _hActions {
 		</div><?php 
 	}
 
-	function login() {
+	function login( $provider ) {
 		if ( isset( $_SESSION['myCode'] ) ) {
 			header( 'Location: '.hROOT.'admin/index?page=my dashboard' );
 			exit();
 		} else {
-			if ( isset( $_GET['provider'] ) ) { 
-				if ( $_GET['provider'] == "jabali" ) { ?>
-				  	<title>Sign In <?php _show_( ucfirst( $_GET['alert'] ) ); ?> [ <?php showOption( 'name' ); ?> ]</title>
-				  	<div style="padding-top:40px;" class="mdl-grid" >
-					  	<div class="mdl-cell mdl-cell--2-col"></div>
-						<div id="login_div" class="mdl-cell mdl-cell--8-col>
-							<center><?php echo '<a href="'.hROOT.'"><img src="'.hIMAGES.'logo-w.png" width="150px;"></a>'; 
-							  if ( isset( $_GET['alert'] ) ) {
-							      if ( $_GET['alert'] == "password" ) { ?>
-							      <div id="fail" class="alert mdl-color--red">
-							          <span>Wrong Password!<br>Please Try Again</span>
-							      </div><?php 
-							      } elseif ( $_GET['alert'] == "user" ) { ?>
-							      <div id="fail" class="alert mdl-color--red">
-							          <span>Wrong Email/Username!<br>Please Try Again</span>
-							      </div><?php 
-							      }
-							  } ?>
-							</center>
-						  <form enctype="multipart/form-data" method="POST" action="" class="mdl-grid mdl-color--madge"">
-						      <div class="input-field mdl-cell mdl-cell--11-col">
-						      <i class="material-icons prefix">perm_identity</i>
-						      <input name="user" id="email" type="text">
-						      <label for="email" class="center-align">Username or Email</label>
-						      </div>
-
-						      <div class="input-field mdl-cell mdl-cell--11-col">
-						      <i class="material-icons prefix">lock</i>
-						      <input name="password" id="password" type="password">
-						      <label for="password">Password</label>
-						      </div>
-						              
-						      <div class="input-field inline">
-						      <span class="prefix"></span>
-						      <input type="checkbox" id="remember-me" name="stay" />
-						      <label for="remember-me">Remember me</label>
-						      </div>
-						      <div class="input-field inline">
-						      <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color--red" href="./forgot">Forgot password?</a>
-						      </div>
-						      <div class="input-field inline">
-						      	<button class="mdl mdl-button mdl-button--fab mdl-js-button mdl-button--raised mdl-color--green alignright" type="submit" name="login"><i class="material-icons">send</i></button><br>
-						      </div>
-						  </form>
-						</div>
-					  	<div class="mdl-cell mdl-cell--2-col"></div>
-				  	</div><?php 
-				} else { ?>
-				  	<title>Sign In <?php _show_( ucfirst( $_GET['alert'] ) ); ?> [ <?php showOption( 'name' ); ?> ]</title><?php
-				  	include 'inc/lib/hybridauth/config.php';
-				  	require_once( 'inc/lib/hybridauth/Hybrid/Auth.php' );
-					$provider = $_GET['provider'];
-					try{
-				    $hybridauth = new Hybrid_Auth( $config );
-				    $authProvider = $hybridauth->authenticate($provider);
-				    $user_profile = $authProvider->getUserProfile();
-					    if($user_profile && isset($user_profile->identifier))
-					    {
-					        echo "<b>Name</b> :".$user_profile->displayName."<br>";
-					        echo "<b>Profile URL</b> :".$user_profile->profileURL."<br>";
-					        echo "<b>Image</b> :".$user_profile->photoURL."<br> ";
-					        echo "<img src='".$user_profile->photoURL."'/><br>";
-					        echo "<b>Email</b> :".$user_profile->email."<br>";
-					        echo "<br> <a href='logout.php'>Logout</a>";
-					    }           
-				    }
-
-				    catch( Exception $e ) { 
-				        switch( $e->getCode() )
-				        {
-				                case 0 : echo "Unspecified error."; break;
-				                case 1 : echo "Hybridauth configuration error."; break;
-				                case 2 : echo "Provider not properly configured."; break;
-				                case 3 : echo "Unknown or disabled provider."; break;
-				                case 4 : echo "Missing provider application credentials."; break;
-				                case 5 : echo "Authentication failed The user has canceled the authentication or the provider refused the connection.";
-				                         break;
-				                case 6 : echo "User profile request failed. Most likely the user is not connected to the provider and he should to authenticate again.";
-				                         $authProvider->logout();
-				                         break;
-				                case 7 : echo "User not connected to the provider.";
-				                         $authProvider->logout();
-				                         break;
-				                case 8 : echo "Provider does not support this feature."; break;
-				        }
-				 
-				        echo "<br /><br /><b>Original error message:</b> " . $e->getMessage();
-				 
-				        echo "<hr /><h3>Trace</h3> <pre>" . $e->getTraceAsString() . "</pre>";
-				    }
-				}
-			} else { ?>
+			if ( $provider == "jabali" ) { ?>
 			  	<title>Sign In <?php if( isset( $_GET['alert'] )){ _show_( ucfirst( $_GET['alert'] ) ); } ?> [ <?php showOption( 'name' ); ?> ]</title>
 			  	<div class="mdl-grid" >
 			  	<div class="mdl-cell mdl-cell--2-col"></div>
 				<div id="login_div" class="mdl-cell mdl-cell--8-col mdl-color--madge">
-					<center><?php echo '<a href="'.hROOT.'"><img src="'.hIMAGES.'logo-w.png" width="150px;"></a>'; 
+					<center><?php echo '<br><a href="'.hROOT.'"><img src="'.hIMAGES.'logo-w.png" width="150px;"></a>'; 
 						if ( isset( $_GET['alert'] ) ) {
 						  if ( $_GET['alert'] == "password" ) { ?>
 						  <div id="fail" class="alert mdl-color--red">
@@ -184,11 +93,11 @@ class _hActions {
 						<div class="mdl-grid">
 							<div class="mdl-cell mdl-cell--12-col mdl-grid">
 							<div class="mdl-cell">
-							<a class="mdl-button mdl-color--indigo" href="./login?provider=facebook"><i class="mdi mdi-24px mdi-facebook	 mdl-color-text--white"></i> Login With Facebook</a></div>
+							<a class="mdl-button mdl-color--indigo" href="<?php echo hROOT; ?>signin/facebook"><i class="mdi mdi-24px mdi-facebook	 mdl-color-text--white"></i> Login With Facebook</a></div>
 							<div class="mdl-cell">
-							<a class="mdl-button mdl-color--light-blue" href="./login?provider=twitter"><i class="mdi mdi-24px mdi-twitter fa-2x mdl-color-text--white"></i> Login With Twitter</a></div>
+							<a class="mdl-button mdl-color--light-blue" href="<?php echo hROOT; ?>signin/twitter"><i class="mdi mdi-24px mdi-twitter fa-2x mdl-color-text--white"></i> Login With Twitter</a></div>
 							<div class="mdl-cell">
-							<a class="mdl-button mdl-color--red" href="./login?provider=google"><i class="mdi mdi-24px mdi-google fa-2x mdl-color-text--white"></i> Login With Google</a></div>
+							<a class="mdl-button mdl-color--red" href="<?php echo hROOT; ?>signin/google"><i class="mdi mdi-24px mdi-google fa-2x mdl-color-text--white"></i> Login With Google</a></div>
 							</div>
 							<div class="mdl-cell mdl-cell--12-col">
 						  <form enctype="multipart/form-data" method="POST" action="" class="mdl-grid">
@@ -204,7 +113,7 @@ class _hActions {
 						      <label for="password">Password</label>
 						      </div>
 						              
-						      <div class="input-field mdl-cell">
+						      <div class="mdl-cell">
 						      <span class="prefix"></span>
 						      <input type="checkbox" id="remember-me" name="stay" />
 						      <label for="remember-me">Remember me</label>
@@ -222,13 +131,56 @@ class _hActions {
 				</div>
 			  	<div class="mdl-cell mdl-cell--2-col"></div>
 			  	</div><?php
+			} else { ?>
+			  	<title>Sign In <?php if( isset( $_GET['alert'] ) ) { _show_( ucfirst( $_GET['alert'] ) ); } ?> [ <?php showOption( 'name' ); ?> ]</title><?php
+			  	include 'inc/lib/hybridauth/config.php';
+			  	require_once( 'inc/lib/hybridauth/Hybrid/Auth.php' );
+				try{
+			    $hybridauth = new \Hybrid_Auth( $config );
+			    $authProvider = $hybridauth->authenticate( $provider );
+			    $user_profile = $authProvider->getUserProfile();
+				    if($user_profile && isset($user_profile->identifier))
+				    {
+				        echo "<b>Name</b> :".$user_profile->displayName."<br>";
+				        echo "<b>Profile URL</b> :".$user_profile->profileURL."<br>";
+				        echo "<b>Image</b> :".$user_profile->photoURL."<br> ";
+				        echo "<img src='".$user_profile->photoURL."'/><br>";
+				        echo "<b>Email</b> :".$user_profile->email."<br>";
+				        echo "<br> <a href='logout.php'>Logout</a>";
+				    }           
+			    }
+
+			    catch( Exception $e ) { 
+			        switch( $e->getCode() )
+			        {
+			                case 0 : echo "Unspecified error."; break;
+			                case 1 : echo "Hybridauth configuration error."; break;
+			                case 2 : echo "Provider not properly configured."; break;
+			                case 3 : echo "Unknown or disabled provider."; break;
+			                case 4 : echo "Missing provider application credentials."; break;
+			                case 5 : echo "Authentication failed The user has canceled the authentication or the provider refused the connection.";
+			                         break;
+			                case 6 : echo "User profile request failed. Most likely the user is not connected to the provider and he should to authenticate again.";
+			                         $authProvider->logout();
+			                         break;
+			                case 7 : echo "User not connected to the provider.";
+			                         $authProvider->logout();
+			                         break;
+			                case 8 : echo "Provider does not support this feature."; break;
+			        }
+			 
+			        echo "<br /><br /><b>Original error message:</b> " . $e->getMessage();
+			 
+			        echo "<hr /><h3>Trace</h3> <pre>" . $e->getTraceAsString() . "</pre>";
+			    }
 			}
 		}
 	}
 
 	function loginUser() {
-		session_start();
-
+		if ( !isset( $_SESSION['myCode'] ) ) {
+			session_start();
+		}
 		$user=$_POST['user'];
 		$password=$_POST['password'];
 

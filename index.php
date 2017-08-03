@@ -24,7 +24,6 @@ if ( !is_dir( $directory) ) {
 include 'inc/config.php';
 include 'inc/jabali.php';
 connectDb();
-session_start();
 
 include 'inc/classes/Actions.php';
 use Jabali\classes\Actions;
@@ -55,7 +54,7 @@ $elements = explode('/', $url );
 $match = $elements[0];
 
 include 'header.php';
-if( empty( $match ) ) {
+if( empty( $match ) || $match == "?logout" ) {
 	call_user_func_array( array( $action, 'home' ), array() );
 } else switch ( $match ) {
 	case "signin":

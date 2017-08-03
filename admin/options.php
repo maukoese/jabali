@@ -415,30 +415,6 @@ if ( isset( $_GET['settings'] ) ) {
     <div class="mdl-tooltip" for="zahra">Zahra's Fade</div>
 </div>
 
-<div class="mdl-cell mdl-cell--3-col">
-    <input type="radio" id="love" name="theme" value="love" <?php isTheme ('love' ); ?> />
-    <label for="love">
-        <span class="cholder" for="love">
-            <span class="ccolor mdl-color--teal"></span>
-            <span class="ccolor csec mdl-color--red"></span>
-            <span class="ccolor csec mdl-color--white"></span>
-        </span>
-    </label>
-    <div class="mdl-tooltip" for="love">Love, Olive</div>
-</div>
-
-<div class="mdl-cell mdl-cell--3-col">
-    <input type="radio" id="zahra" name="theme" value="zahra" <?php isTheme ('love' ); ?> />
-    <label for="zahra">
-        <span class="cholder" for="zahra">
-            <span class="ccolor mdl-color--teal"></span>
-            <span class="ccolor csec mdl-color--red"></span>
-            <span class="ccolor csec mdl-color--white"></span>
-        </span>
-    </label>
-    <div class="mdl-tooltip" for="zahra">Zahra's Fade</div>
-</div>
-
 
                     <div class="mdl-cell mdl-cell--3-col">
                         <input type="radio" id="love" name="theme" value="love" <?php isTheme ('love' ); ?>>
@@ -605,9 +581,7 @@ if ( isset( $_GET['settings'] ) ) {
                     </div><div class="mdl-tooltip" for="madge">Madge Sony</div>
                     
 
-                    <div class="mdl-cell mdl-cell--3-col">
                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored alignright" type="submit" name="mystyle"><i class="material-icons">save</i></button>
-                    </div>
                 </form>
                 </div>
         	</div>

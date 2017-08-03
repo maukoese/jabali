@@ -8,16 +8,8 @@ namespace Jabali;
 class _hWidgets {
 
   	function dashRecents() { ?>
-		<div class="mdl-card__title mdl-card--expand">
-		  <div class="mdl-card__title-text">
-		    Recently Published
-		  </div>
-		      <div class="mdl-layout-spacer"></div>
-		      <div class="mdl-card__subtitle-text">
-		        <a href="./post?view=list&type=articles" class="mdl-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons">open_in_new</i></a>
-		      </div>
-		</div>
-		  <div class="mdl-card__supporting-text"><?php 
+		  <div class="mdl-card__supporting-text">
+		    <h4>Recently Published</h4><?php 
 		  $getRecents = mysqli_query( $GLOBALS['conn'], "SELECT * FROM ". hDBPREFIX ."posts ORDER BY h_created ASC LIMIT 6" );
 		  if ( $getRecents -> num_rows > 0 ) {
 		     while ( $recent = mysqli_fetch_assoc( $getRecents ) ) {
@@ -29,20 +21,15 @@ class _hWidgets {
 		      <a href="<?php _show_( hROOT.$post['h_link'] ); ?>" class="mdl-list__item"><i class="material-icons mdl-list__item-icon">keyboard_arrow_right</i><span style="padding-left: 20px"><?php _show_( $post['h_alias'] ); ?></span></a><?php 
 		    } 
 		  } ?>
+		  </div>
+		  <div class="mdl-card__menu">
+		        <a href="./post?view=list&type=articles" class="mdl-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons">open_in_new</i></a>
 		  </div><?php
 	}
 
   	function dashDrafts() { ?>
-	  	<div class="mdl-card__title mdl-card--expand">
-	          <div class="mdl-card__title-text">
-	            Add New Draft
-	          </div>
-	              <div class="mdl-layout-spacer"></div>
-	              <div class="mdl-card__subtitle-text">
-	                <i class="material-icons">create</i>
-	              </div>
-	    </div>
 	    <div class="mdl-card__supporting-text">
+		    <h3>Add New Draft</h3>
 	    <form enctype="multipart/form-data" name="registerUser" method="POST" action="./index?page=dash">
 
 	    <div class="input-field">
@@ -70,19 +57,15 @@ class _hWidgets {
 	    </div>
 
 	    </form>
-	    </div><?php
+	    </div>
+		  <div class="mdl-card__menu">
+	                <i class="material-icons">create</i>
+		  </div><?php
 	}
 
   	function quickLinks() { ?>
-		<div class="mdl-card__title mdl-card--expand">
-			<div class="mdl-card__title-text">
-			  Quick Links
-			</div>
-			<div class="mdl-layout-spacer"></div>
-			<div class="mdl-card__subtitle-text">
-			</div>
-		</div>
 		<div class="mdl-card__supporting-text">
+		    <h3>Quick Links</h3>
 			<a href="<?php _show_(  './user?edit='. $_SESSION['myCode'] .'&key='.$_SESSION['myAlias'] ); ?>" class="mdl-list__item"><i class="mdi mdi-account-edit mdl-list__item-icon"></i><span style="padding-left: 20px">Edit Your Account</span></a>  
 			<a href="?sort=images" class="mdl-list__item"><i class="mdi mdi-palette mdl-list__item-icon"></i><span style="padding-left: 20px">Change Theme</span></a>  
 			<a href="?sort=images" class="mdl-list__item"><i class="mdi mdi-settings mdl-list__item-icon"></i><span style="padding-left: 20px">General Settings</span></a>  
