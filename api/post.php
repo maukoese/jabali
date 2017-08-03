@@ -1,6 +1,8 @@
 <?php 
+include '../inc/config.php';
 include '../inc/jabali.php';
 connectDb();
+
 
 if ( isset( $_GET['view'] ) ) {
 	if ( $_GET['view'] == "all" ) {
