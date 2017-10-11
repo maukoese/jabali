@@ -1,11 +1,32 @@
-<?php 
-session_start();
-if ( !isset( $_SESSION['myCode'] ) ) {
-	header( "Location: ../login" );
+<?php
+if ( !isset( $_SESSION[JBLSALT.'Code'] ) ) {
+  header( "Location: ". _ROOT ."/login/jabali" );
 }
 
-connectDb();
-$GLOBALS['hDB'] = new Jabali\MysqliDb ($GLOBALS['conn']); ?>
+if ( isset( $_SESSION[JBLSALT.'Code' ] ) ) {
+  $GStyles = $GLOBALS['JBLDB'] -> query( "SELECT style FROM ". _DBPREFIX ."users  WHERE id='".$_SESSION[JBLSALT.'Code']."'" );
+  if ( $GStyles -> num_rows > 0 ) {
+    $f = array();
+    while ( $s = mysqli_fetch_assoc( $GStyles )) {
+      $f[] = $s;
+    }
+    if ( $f[0]['style'] !== "" ) {
+      $key = $f[0]['style'];
+    } else {
+      $key = "zahra";
+    }
+  } else {
+    $key = "zahra";
+  }
+} else {
+  $key = "zahra";
+}
+
+$GUSkin = $GLOBALS['SKINS'][$key];
+$GLOBALS['GPrimary'] = $GUSkin['primary'];
+$GLOBALS['GAccent'] = $GUSkin['accent'];
+$GLOBALS['GTextP'] = $GUSkin['textp'];
+$GLOBALS['GTextS'] = $GUSkin['texts']; ?>
 <!doctype html>
 <!--
   Jabali Framework
@@ -24,13 +45,13 @@ $GLOBALS['hDB'] = new Jabali\MysqliDb ($GLOBALS['conn']); ?>
 
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" sizes="192x192" href="images/android-desktop.png">
+    <link rel="icon" sizes="192x192" href="app/icons/192.png">
 
     <!-- Add to homescreen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="<?php showOption( 'name' ); ?>">
-    <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
+    <link rel="apple-touch-icon-precomposed" href="app/icons/192.png">
 
     <!-- Tile icon for Win8 (144x144 + tile color) -->
     <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
@@ -38,23 +59,30 @@ $GLOBALS['hDB'] = new Jabali\MysqliDb ($GLOBALS['conn']); ?>
 
     <link rel="shortcut icon" href="<?php showOption( 'favicon' ); ?>">
 
-    <link rel="manifest" href="<?php echo hROOT.'manifest;' ?>">
+    <link rel="manifest" href="<?php echo _ROOT.'manifest;' ?>">
 
-    <link rel="stylesheet" href='<?php echo hSTYLES; ?>lib/getmdl-select.min.css'>
-    <link rel="stylesheet" href="<?php echo hSTYLES; ?>lib/nv.d3.css">
-    <link rel="stylesheet" href="<?php echo hSTYLES; ?>jquery-ui.css">
-    <link rel="stylesheet" href="<?php echo hSTYLES; ?>materialize.css">
-    <link rel="stylesheet" href="<?php echo hSTYLES; ?>material-icons.css">
-    <link rel="stylesheet" href="<?php echo hSTYLES; ?>materialdesignicons.css">
-    <link rel="stylesheet" href="<?php echo hSTYLES; ?>font-awesome.css">
-    <link rel="stylesheet" href="<?php echo hSTYLES; ?>datetimepicker.min.css">
-    <link rel="stylesheet" href="<?php echo hSTYLES; ?>jabali.css">
+    <link rel="stylesheet" href='<?php echo _STYLES; ?>lib/getmdl-select.min.css'>
+    <link rel="stylesheet" href="<?php echo _STYLES; ?>lib/nv.d3.css">
+    <link rel="stylesheet" href="<?php echo _STYLES; ?>jquery-ui.css">
+    <link rel="stylesheet" href="<?php echo _STYLES; ?>materialize.css">
+    <?php if ( isLocalhost() ){ ?>
+    <link rel="stylesheet" href="<?php echo _STYLES; ?>material-icons.css">
+    <link rel="stylesheet" href="<?php echo _STYLES; ?>font-awesome.css">
+    <?php } else { ?>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <?php } ?>
+    <link rel="stylesheet" href="<?php echo _STYLES; ?>materialdesignicons.css">
+    <link rel="stylesheet" href="<?php echo _STYLES; ?>datetimepicker.min.css">
+    <link rel="stylesheet" href="<?php echo _STYLES; ?>jabali.css">
+    <link rel="stylesheet" href="<?php echo _STYLES; ?>colors.css">
+    <link rel="stylesheet" href="<?php echo _STYLES; ?>propeller.css">
     <style type="text/css">
     .mdl-menu__outline {
         background-color: <?php primaryColor(); ?>;
         overflow-y: auto;
     }
-    
+
     .cke_bottom {
     background: <?php secondaryColor(); ?>;
     }
@@ -82,17 +110,21 @@ $GLOBALS['hDB'] = new Jabali\MysqliDb ($GLOBALS['conn']); ?>
     }
     </style>
 
-    <script src="<?php echo hSCRIPTS ?>jquery-3.2.1.min.js"></script>
-    <script src="<?php echo hSCRIPTS ?>jquery-ui.min.js"></script>
-    <script src="<?php echo hSCRIPTS ?>datetimepicker.min.js"></script>
-    <script src="<?php echo hSCRIPTS ?>ckeditor/ckeditor.js"></script>
-    
+    <script src="<?php echo _SCRIPTS ?>jquery-3.2.1.min.js"></script>
+    <script src="<?php echo _SCRIPTS ?>jquery.canvasjs.min.js"></script>
+    <?php if ( isLocalhost() ) { ?>
+      <script src="<?php echo _SCRIPTS ?>ace/ace.js"></script><?php
+    } else { ?>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js"></script>
+    <?php } ?>
+    <script src="<?php echo _SCRIPTS ?>jquery-ui.min.js"></script>
+    <script src="<?php echo _SCRIPTS ?>ckeditor/ckeditor.js"></script>
   </head>
   <body>
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
       <header class="demo-header mdl-layout__header mdl-color-text--grey-600 mdl-color--<?php primaryColor(); ?>">
         <div class="mdl-layout__header-row">
-          <span class="mdl-layout-title"><?php 
+          <span class="mdl-layout-title"><?php
           if ( isset( $_GET['type'] ) ) {
             echo ucwords( $_GET['type'].'s ' );
           } elseif ( isset( $_GET['view'] ) ) {
@@ -134,58 +166,30 @@ $GLOBALS['hDB'] = new Jabali\MysqliDb ($GLOBALS['conn']); ?>
           }
           ?></span>
           <div class="mdl-layout-spacer"></div>
-          <a href="<?php _show_( hROOT ); ?>" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification" id="home"
+          <a href="<?php _show_( _ROOT ); ?>" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon" id="home"
                >
               visibility
-          </a><div class="mdl-tooltip" for="home">View Site</div><?php 
+          </a><div class="mdl-tooltip" for="home">View Site</div><?php
           if ( isCap( 'admin' ) ) { ?>
 
           <span class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon" id="happs">apps</span>
             <div class="mdl-tooltip" for="happs">Options</div><?php } ?>
             <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-card mdl-grid mdl-color--<?php primaryColor(); ?>" for="happs">
-            <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
-              <a class="" href="<?php _show_( hADMIN . 'options?page=general' ); ?>"><i class="material-icons mdl-list__item-icon">settings</i></a>
-            </div>
-            <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
-              <a class="" href="<?php _show_( hADMIN . 'options?page=color' ); ?>"><i class="material-icons mdl-list__item-icon">palette</i></a>
-            </div>
-            <div class="mdl-cell">
-            <a class="" href="<?php _show_( hADMIN . 'shop?view=list&key=products' ); ?>"><i class="material-icons mdl-list__item-icon">store</i></a>
-            </div>
-            <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
-            <a class="" href="<?php _show_( hADMIN . 'shop?orders='.$_SESSION['myCode'] ); ?>"><i class="material-icons mdl-list__item-icon">shopping_basket</i></a>
-            </div>
-            <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
-            <a class="" href="<?php _show_( hADMIN . 'shop?payments='.$_SESSION['myCode'] ); ?>"><i class="material-icons mdl-list__item-icon">monetization_on</i></a>
-            </div>
-            <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
-            <a class="" href="<?php _show_( hADMIN . 'shop?author='.$_SESSION['myCode'] ); ?>"><i class="fa fa-cart-arrow-down mdl-list__item-icon" aria-hidden="true"></i></a>
-            </div>
-            <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
-            <a class="" href="<?php _show_( hADMIN . 'options?page=shop' ); ?>"><i class="material-icons mdl-list__item-icon">shopping_cart</i></a>
-            </div>
-            <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
-              <a class="" href="<?php _show_( hADMIN . 'post?view=list' ); ?>"><i class="material-icons mdl-list__item-icon">description</i></a>
-            </div>
-            <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
-            <a class="" href="<?php _show_( hADMIN . 'wapi?events=list' ); ?>"><i class="material-icons mdl-list__item-icon">date_range</i></a>
-            </div>
+            <a class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone" href="<?php _show_( _ADMIN . 'options?page=general' ); ?>"><i class="material-icons mdl-list__item-icon">settings</i></a>
+              <a class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone" href="<?php _show_( _ADMIN . 'options?page=color' ); ?>"><i class="material-icons mdl-list__item-icon">palette</i></a>
+              <a class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone" href="<?php _show_( _ADMIN . 'posts?create=article' ); ?>"><i class="material-icons mdl-list__item-icon">create</i></a>
           </ul>
 
-          <a href="./notification?view=list" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_notifications"
-               >
-              notifications_none
-          </a><div class="mdl-tooltip" for="h_notifications">Notifications</div>
+          <a href="messages?view=list&type=notification" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_notifications" data-badge="<?php getNoteCount() ?>">notifications_none
+          </a><div class="mdl-tooltip" for="h_notifications"><?php getNoteCount() ?> Notifications</div>
 
-          <a href="./message?view=inbox&key=my inbox" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_messages"
-                 data-badge="<?php getMsgCount() ?>">
-                mail_outline
+          <a href="messages?view=unread&key=unread%20messages#" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_messages" data-badge="<?php getMsgCount() ?>">mail_outline
             </a><div class="mdl-tooltip" for="h_messages"><?php getMsgCount(); ?> Messages</div>
-          
-          <a href="#" class="material-icons mdl-js-button mdl-badge mdl-badge--overlap mdl-button--icon" id="hvdrbtn">perm_identity</a>
+
+          <a href="#" class="material-icons mdl-js-button mdl-badge mdl-badge--overlap mdl-button--icon" id="hvdrbtn">account_circle</a>
           <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-color--<?php primaryColor(); ?>" for="hvdrbtn">
-          <a id="profile" href="./user?view=<?php _show_( $_SESSION['myCode'] ); ?>&key=<?php _show_( $_SESSION['myAlias'] ); ?>" class="mdl-list__item"><i class="mdi mdi-account mdl-list__item-icon alignright"></i><span style="padding-left: 20px"><?php _show_( $_SESSION['myAlias'] ); ?></span></a>
-          <a id="profedit" href="./user?edit=<?php _show_( $_SESSION['myCode'] ); ?>&key=<?php _show_( $_SESSION['myAlias'] ); ?>" class="mdl-list__item"><i class="mdi mdi-account-edit mdl-list__item-icon"></i><span style="padding-left: 20px">Edit Account</span></a>
+          <a id="profile" href="users?view=<?php _show_( $_SESSION[JBLSALT.'Code'] ); ?>&key=<?php _show_( $_SESSION[JBLSALT.'Alias'] ); ?>" class="mdl-list__item"><i class="mdi mdi-account mdl-list__item-icon alignright"></i><span style="padding-left: 20px"><?php _show_( $_SESSION[JBLSALT.'Alias'] ); ?></span></a>
+          <a id="profedit" href="./users?edit=<?php _show_( $_SESSION[JBLSALT.'Code'] ); ?>&key=<?php _show_( $_SESSION[JBLSALT.'Alias'] ); ?>" class="mdl-list__item"><i class="mdi mdi-account-edit mdl-list__item-icon"></i><span style="padding-left: 20px">Edit Account</span></a>
           <a id="hdrbtn" href="#" class="mdl-list__item"><i class="mdi mdi-exit-to-app mdl-list__item-icon"></i><span style="padding-left: 20px">Logout</span></a>
           </ul>
           <div id="exitModal" class="modal">
@@ -194,18 +198,18 @@ $GLOBALS['hDB'] = new Jabali\MysqliDb ($GLOBALS['conn']); ?>
                   <div class="mdl-card__title-text">Are You Sure?</div>
                     <div class="mdl-layout-spacer"></div>
                     <div class="mdl-card__subtitle-text">
-                        
+
                     </div>
                   </div>
                   <div class="mdl-card__supporting-text">
-                  <a href="<?php _show_( hROOT . '?logout' ); ?>">
-                    <span class="alignleft">Yes, log me out.<br><center>
+                  <a href="<?php _show_( _ROOT . '?logout' ); ?>">
+                    <span class="alignleft green-text">Yes, log me out.<br><center>
                    <i class="material-icons">done</i>
                     </center>
                     </span></a>
 
                     <div class="mdl-layout-spacer"></div>
-                    <span class="alignright eclose">
+                    <span class="alignright eclose red-text">
                         Keep me logged in.<br>
                         <center>
                               <i class="material-icons mdl-button--icon">clear</i>
@@ -235,43 +239,58 @@ $GLOBALS['hDB'] = new Jabali\MysqliDb ($GLOBALS['conn']); ?>
       </header>
       <div class="mdl-layout__drawer mdl-color--<?php primaryColor(); ?> mdl-color-text--blue-grey-50">
         <header class="demo-drawer-header">
-          <a href="./user?view=<?php _show_( $_SESSION['myCode'] ); ?>&key=<?php _show_( $_SESSION['myAlias'] ); ?>">
-            <img src="<?php _show_( $_SESSION['myAvatar'] ); ?>" class="demo-avatar">
+          <a href="./users?view=<?php _show_( $_SESSION[JBLSALT.'Code'] ); ?>&key=<?php _show_( $_SESSION[JBLSALT.'Alias'] ); ?>">
+          <?php $avatar = file_exists( $_SESSION[JBLSALT.'Avatar'] ) ?: _IMAGES.'avatar.svg' ?>
+            <img src="<?php _show_( $avatar ); ?>" class="demo-avatar">
           </a>
           <div class="demo-avatar-dropdown">
-            <span><?php _show_( $_SESSION['myAlias'] ); ?></span>
+            <span><?php _show_( $_SESSION[JBLSALT.'Alias'] ); ?></span>
             <div class="mdl-layout-spacer"></div>
-            <a href="./user?edit=<?php _show_( $_SESSION['myCode'] ); ?>&key=<?php _show_( $_SESSION['myAlias'] ); ?>"><button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+            <a href="./users?edit=<?php _show_( $_SESSION[JBLSALT.'Code'] ); ?>&key=<?php _show_( $_SESSION[JBLSALT.'Alias'] ); ?>"><button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
               <i class="mdi mdi-account-edit" role="presentation"></i></button></a>
           </div>
         </header>
         <nav class="demo-navigation mdl-navigation mdl-color--<?php primaryColor(); ?>"><?php
-          global $hMenu; 
+          global $hMenu;
           $hMenu -> drawerdef( 'dashboard' );
-          $hMenu -> drawerdef( 'articles' );
-          $hMenu -> drawerdef( 'pages' );
+          $hMenu -> drawerdef( 'posts' );
           $hMenu -> drawerdef( 'users' );
           $hMenu -> drawerdef( 'comments' );
           /*
           * User Defined Menus
           */
-          $hMenu -> drawer(); ?>
-          <div class="mdl-layout-spacer"></div><?php 
+          $hMenu -> drawer(); ?><?php
           if ( isCap( 'admin' ) ) { ?>
-          <a id="extensions" class="mdl-navigation__link" href="./extensions?page=extensions"><i class="mdl-color-text--white material-icons" role="presentation">power</i>Extensions</a><?php } ?>
+          <a id="themes" class="mdl-navigation__link" href="#"><i class="mdl-color-text--white material-icons" role="presentation">palette</i>Themes</a>
+          <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor(); ?>" for="themes">
+          <a class="mdl-navigation__link" href="themes?page=themes"><i class="mdl-color-text--white material-icons" role="presentation">arrow_downward</i><span>Installed</span></a>
+          <a class="mdl-navigation__link" href="themes?showcase=all&page=themes%20showcase"><i class="mdl-color-text--white material-icons" role="presentation">arrow_upward</i><span>Add New</span></a>
+          <a class="mdl-navigation__link" href="themes?page=widgets"><i class="mdl-color-text--white material-icons" role="presentation">widgets</i><span>Widgets</span></a>
+            </ul>
+          <a id="extensions" class="mdl-navigation__link" href="modules?page=extension modules"><i class="mdl-color-text--white material-icons" role="presentation">power</i>Modules</a><?php } ?>
+          <a id="htools" class="mdl-navigation__link" href="#"><i class="mdl-color-text--white material-icons" role="presentation">import_export</i>Import/Export</a>
+          <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor(); ?>" for="htools"><?php
+          if ( isCap( 'admin' ) ) { ?>
+          <a class="mdl-navigation__link" href="tools?page=import"><i class="mdl-color-text--white material-icons" role="presentation">arrow_downward</i><span>Import Data</span></a>
+          <a class="mdl-navigation__link" href="tools?page=export"><i class="mdl-color-text--white material-icons" role="presentation">arrow_upward</i><span>Export Data</span></a>
+          <?php } ?>
+            </ul>
+
+          <div class="mdl-layout-spacer"></div>
           <a id="hpref" class="mdl-navigation__link" href="#"><i class="mdl-color-text--white material-icons" role="presentation">settings</i>Preferences</a>
             <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor(); ?>" for="hpref">
-            <a class="mdl-navigation__link" href="./options?settings=color"><i class="mdl-color-text--white material-icons" role="presentation">color_lens</i><span>Color Options</span></a><?php 
+            <a class="mdl-navigation__link" href="options?settings=color"><i class="mdl-color-text--white material-icons" role="presentation">color_lens</i><span>Color Options</span></a><?php
           if ( isCap( 'admin' ) ) { ?>
-          <a class="mdl-navigation__link" href="./menus?settings=menu"><i class="mdl-color-text--white material-icons" role="presentation">menu</i><span>Menu Options</span></a>
-          <a class="mdl-navigation__link" href="./options?settings=user"><i class="mdl-color-text--white material-icons" role="presentation">build</i><span>User Options</span></a>
-          <a class="mdl-navigation__link" href="./options?settings=social"><i class="mdl-color-text--white material-icons" role="presentation">public</i><span>Social Settings</span></a>
-          <a class="mdl-navigation__link" href="./options?settings=general"><i class="mdl-color-text--white material-icons" role="presentation">tune</i><span>General Settings</span></a>
-          <a class="mdl-navigation__link" href="./about?page=about jabali"><i class="mdl-color-text--white material-icons" role="presentation">info</i><span>About Jabali</span></a>
-          <a class="mdl-navigation__link" href="http://jabali.mauko.co.ke/docs/"><i class="mdl-color-text--white material-icons" role="presentation">help</i><span>Documentation</span></a>
-          <a class="mdl-navigation__link" href="./update?settings=update"><i class="mdl-color-text--white material-icons" role="presentation">update</i><span>Jabali Updates</span></a>
+          <a class="mdl-navigation__link" href="pwa?settings=progressive app"><i class="mdl-color-text--white material-icons" role="presentation">touch_app</i><span>Progressive App</span></a>
+          <a class="mdl-navigation__link" href="update?settings=update"><i class="mdl-color-text--white material-icons" role="presentation">update</i><span>Jabali Updates</span></a>
+          <a class="mdl-navigation__link" href="menus?settings=menu"><i class="mdl-color-text--white material-icons" role="presentation">menu</i><span>Menu Options</span></a>
+          <a class="mdl-navigation__link" href="options?settings=misc"><i class="mdl-color-text--white material-icons" role="presentation">public</i><span>Miscelleaneous</span></a>
+          <a class="mdl-navigation__link" href="options?settings=editor"><i class="mdl-color-text--white material-icons" role="presentation">edit</i><span>Editor Options</span></a>
+          <a class="mdl-navigation__link" href="options?settings=restful"><i class="mdl-color-text--white material-icons" role="presentation">public</i><span>REST Options</span></a>
+          <a class="mdl-navigation__link" href="options?settings=types"><i class="mdl-color-text--white material-icons" role="presentation">build</i><span>Types Options</span></a>
+          <a class="mdl-navigation__link" href="options?settings=general"><i class="mdl-color-text--white material-icons" role="presentation">tune</i><span>General Settings</span></a>
           <?php } ?>
             </ul>
         </nav>
       </div>
-      <main class="mdl-layout__content mdl-color--">
+      <main class="mdl-layout__content">

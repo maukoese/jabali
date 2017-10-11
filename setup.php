@@ -2,9 +2,9 @@
 /**
 * @package Jabali Framework
 * @subpackage Setup
-* @link https://docs.mauko.co.ke/jabali/classes/setup
+* @link https://docs.mauko.co.ke/jabali/setup/
 * @author Mauko Maunde
-* @version 0.17.06
+* @since 0.17.05
 **/
 
 
@@ -15,8 +15,8 @@ function isLocalhost() {
     }
 }
 
-if ( file_exists('./inc/config.php' ) ) {
-	header( "Location: ./install.php" );
+if ( file_exists('app/config.php' ) ) {
+	header( "Location: install.php" );
 }
 
 if ( !file_exists( '.htaccess' ) ) {
@@ -40,12 +40,27 @@ if ( !file_exists( '.htaccess' ) ) {
 	$txt = "\n";
 	fwrite( $rewrite,  $txt );
 
-	if ( isLocalhost() ) {
-		$base = 'RewriteBase /'.basename ( __DIR__ ).'/';
-	} else {
-		$base = 'RewriteBase /';
+	if ( !isLocalhost() ) {
+		
+		$text = 'RewriteCond %{HTTPS} off';
+		fwrite( $rewrite,  $text );
+
+		$txt = "\n";
+		fwrite( $rewrite,  $txt );
+
+		$text = 'RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]';
+		fwrite( $rewrite,  $text );
+
+		$txt = "\n";
+		fwrite( $rewrite,  $txt );
 	}
-	fwrite( $rewrite, $base );
+
+	if ( isLocalhost() && $_SERVER['DOCUMENT_ROOT'] !== __DIR__ ) {
+		$base = '/'.basename( __DIR__ ).'/';
+	} else {
+		$base = '/';
+	}
+	fwrite( $rewrite, 'RewriteBase ' . $base );
 
 	$txt = "\n";
 	fwrite( $rewrite,  $txt );
@@ -56,13 +71,7 @@ if ( !file_exists( '.htaccess' ) ) {
 	$txt = "\n";
 	fwrite( $rewrite,  $txt );
 
-	$text = 'RewriteRule ^([^\.]+)$ $1.php [NC]';
-	fwrite( $rewrite,  $text );
-
-	$txt = "\n";
-	fwrite( $rewrite,  $txt );
-
-	$text = 'RewriteCond %{REQUEST_FILENAME} !-d';
+	$text = 'RewriteRule ^([^\.]+)$ $1.php [NC]'; //RewriteRule ^(.+)$ $1.php [L,QSA]
 	fwrite( $rewrite,  $text );
 
 	$txt = "\n";
@@ -74,13 +83,18 @@ if ( !file_exists( '.htaccess' ) ) {
 	$txt = "\n";
 	fwrite( $rewrite,  $txt );
 
-	if ( isLocalhost() ) {
-		$baser = 'RewriteRule . /'.basename ( __DIR__ ).'/';
-	} else {
-		$baser = 'RewriteRule . /index.php [L]';
-	}
+	$text = 'RewriteCond %{REQUEST_FILENAME} !-d';
+	fwrite( $rewrite,  $text );
 
-	fwrite( $rewrite,  $baser );
+	$txt = "\n";
+	fwrite( $rewrite,  $txt );
+
+	if ( isLocalhost() ) {
+		$baser = '/'.basename( __DIR__ );
+	} else {
+		$baser = '';
+	}
+	fwrite( $rewrite,  'RewriteRule . '. $baser.'/index.php [L]'  );
 
 	$txt = "\n";
 	fwrite( $rewrite,  $txt );
@@ -95,7 +109,7 @@ if ( !file_exists( '.htaccess' ) ) {
 	fwrite( $rewrite,  $text );
 }
 
-if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" && $_POST['prefix'] != "" && $_POST['name'] != "" ) {
+if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" && $_POST['prefix'] != "" && $_POST['name'] != "" && $_POST['dbtype'] != "" ) {
 
 	$dbhost = $_POST["host"];
 	$dbname = $_POST["name"];
@@ -104,9 +118,12 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 	$home = $_POST["home"];
 
 	$dbprefix = $_POST['prefix'];
+	$dbtype = $_POST['dbtype'];
+	$dbport = $_POST['dbport'];
+	$dbip = $_POST['dbip'];
 
-	function conFigure( $dbhost, $dbname, $dbuser, $dbpass, $home, $dbprefix ) {
-		$dbfile = fopen( "./inc/config.php", "w" ) or die( "Unable to create configuration file!" );
+	function conFigure( $dbhost, $dbname, $dbuser, $dbpass, $home, $dbprefix, $dbtype, $dbport, $dbip ) {
+		$dbfile = fopen( "app/config.php", "w" ) or die( "Unable to create configuration file!" );
 		$txt = "<?php ";
 		fwrite( $dbfile, $txt );
 		$txt = "\n";
@@ -119,7 +136,7 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 		fwrite( $dbfile, $txt );
 		$txt = "\n";
 		fwrite( $dbfile, $txt );
-		$txt = '* @subpackage Configuration File';
+		$txt = '* @subpackage Server Configuration File';
 		fwrite( $dbfile, $txt );
 		$txt = "\n";
 		fwrite( $dbfile, $txt );
@@ -131,68 +148,75 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 		fwrite( $dbfile, $txt );
 		$txt = "\n";
 		fwrite( $dbfile, $txt );
-		$txt = '* @version 0.17.06';
+		$txt = '* @since 0.17.04';
 		fwrite( $dbfile, $txt );
 		$txt = "\n";
 		fwrite( $dbfile, $txt );
 		$txt = '**/';
 		fwrite( $dbfile, $txt );
-		$txt = "\n";
+		$txt = "\n\n";
 		fwrite( $dbfile, $txt );
-		$txt = "\n";
-		fwrite( $dbfile, $txt );
-		$text = 'define( "hDBNAME", "'.$dbname.'" );';
+
+		$text = '$server["dbhost"] = "'.$dbhost.'";';
 		fwrite( $dbfile, $text );
 		$txt = "\n";
 		fwrite( $dbfile, $txt );
-		$text = 'define( "hDBUSER", "'.$dbuser.'" );';
+		$text = '$server["dbuser"] = "'.$dbuser.'";';
 		fwrite( $dbfile, $text );
 		$txt = "\n";
 		fwrite( $dbfile, $txt );
-		$text = 'define( "hDBPASS", "'.$dbpass.'" );';
+		$text = '$server["dbpass"] = "'.$dbpass.'";';
 		fwrite( $dbfile, $text );
 		$txt = "\n";
 		fwrite( $dbfile, $txt );
-		$text = 'define( "hDBHOST", "'.$dbhost.'" );';
+		$text = '$server["dbname"] = "'.$dbname.'";';
 		fwrite( $dbfile, $text );
 		$txt = "\n";
 		fwrite( $dbfile, $txt );
-		$text = 'define( "hROOT", "'.$home.'" );';
+		$text = '$server["dbtype"] = "'.$dbtype.'";';
+		fwrite( $dbfile, $text );
+		$txt = "\n";
+		fwrite( $dbfile, $txt );
+		$text = '$server["dbport"] = "'.$dbport.'";';
+		fwrite( $dbfile, $text );
+		$txt = "\n";
+		fwrite( $dbfile, $txt );
+		$text = '$server["dbip"] = "'.$dbip.'";';
 		fwrite( $dbfile, $text );
 		$txt = "\n\n";
 		fwrite( $dbfile, $txt );
-		$text = 'define( "hDBPREFIX", "'.$dbprefix.'" );';
+		$text = 'define( "_ROOT", "'.$home.'" );';
 		fwrite( $dbfile, $text );
-		$txt = "\n\n";
+		$txt = "\n";
+		fwrite( $dbfile, $txt );
+		$text = 'define( "_DBPREFIX", "'.$dbprefix.'" );';
+		fwrite( $dbfile, $text );
+		$txt = "\n";
 		fwrite( $dbfile, $txt );
 		$salts = sha1(date('YmdHis')).sha1(date('YmdHm' ) );
-		$text = 'define( "hSALTS", "'.str_shuffle( $salts ).'" );';
+		$text = 'define( "JBLSALT", "'.str_shuffle( $salts ).'" );';
 		fwrite( $dbfile, $text );
 		$txt = "\n";
 		fwrite( $dbfile, $txt );
 		$salts = sha1(date('YmdHs')).sha1(date('YmdHmi' ) );
-		$text = 'define( "hAUTH", "'.base64_encode( $salts ).'" );';
+		$text = 'define( "JBLAUTH", "'.base64_encode( $salts ).'" );';
 		fwrite( $dbfile, $text );
-		$txt = "\n\n";
-		fwrite( $dbfile, $txt );
-		$txt = " ?>";
-		fwrite( $dbfile, $txt );
 		fclose( $dbfile );
 
 		return true;
 	}
 
-	if ( conFigure( $dbhost, $dbname, $dbuser, $dbpass, $home, $dbprefix ) ) {
+	if ( conFigure( $dbhost, $dbname, $dbuser, $dbpass, $home, $dbprefix, $dbtype, $dbport, $dbip ) ) {
 		header( "Location: ./install.php" );
 	} else {
-		echo 'Could Not create configuration file <code>config.php</code><br>
+		_shout_( 'Could Not create configuration file <code>config.php</code><br>
 		<h4>Suggestions</h4><br>
 		1. Allow jabali <a href="https://stackoverflow.com/questions/2900690/how-do-i-give-php-write-access-to-a-directory">write permissions</a>.<br>
-		2. Manually edit the <code>config-sample.php</code>file appropriately and save as <code>config.php</code>, then point your browser to http://yoursite.com/install.php';
+		2. Manually edit the <code>config-sample.php</code>file appropriately and save as <code>config.php</code>, then point your browser to http://yoursite.com/install.php', 'error' );
 	}
 } else {
 
-    $protocol = ((!empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] != 'off' ) || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://"; ?>
+    $protocol = ( ( !empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] != 'off' ) || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://"; ?>
     <!doctype html>
 	<!--
 	  Jabali Framework
@@ -204,12 +228,13 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 	-->
 	<html lang="en" xmlns="http://www.w3.org/1999/html">
 		<head>
-		    <link rel="stylesheet" href="./inc/assets/css/materialize.css">
-		    <link rel="stylesheet" href="./inc/assets/css/material-icons.css">
-		    <link rel="stylesheet" href="./inc/assets/css/jabali.css">
-		    <script src="./inc/assets/js/jquery-3.2.1.min.js"></script>
-		    <script src="./inc/assets/js/materialize.min.js"></script>
-		    <script src="./inc/assets/js/material.js"></script>
+        	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		    <link rel="stylesheet" href="app/assets/css/materialize.css">
+		    <link rel="stylesheet" href="app/assets/css/material-icons.css">
+		    <link rel="stylesheet" href="app/assets/css/jabali.css">
+		    <script src="app/assets/js/jquery-3.2.1.min.js"></script>
+		    <script src="app/assets/js/materialize.min.js"></script>
+		    <script src="app/assets/js/material.js"></script>
 			<title>Setup [ JABALI ]</title>
 		</head>
 
@@ -218,10 +243,10 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 				<main class="mdl-layout__content">
 					<div class="mdl-grid">
 						<div class="mdl-cell mdl-cell--2-col"></div>
-				        <form method="POST" action="" class="mdl-grid mdl-cell mdl-cell--8-col mdl-color--blue">
+				        <form method="POST" action="" class="mdl-grid mdl-cell mdl-cell--8-col mdl-color--madge">
 					        <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
 						        <center>
-						        	<img src="./inc/assets/images/logo-w.png" width="200px;">
+						        	<img src="app/assets/images/logo-w.png" width="200px;">
 						        </center>
 					        </div>
 
@@ -254,37 +279,50 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 					        </div>
 
 					        <div class="mdl-cell mdl-cell--2-col"></div>
-					        <div class="input-field mdl-cell mdl-cell--7-col">
+					        <div class="input-field mdl-cell mdl-cell--4-col">
 						        <i class="material-icons prefix">label_outline</i>
 						        <input name="prefix" id="prefix" type="text" value="db_">
 						        <label for="prefix" class="center-align">Database Prefix</label>
 					        </div>
 
-					        <input name="home" id="home" type="hidden" value="<?php 
+							<div class="input-field mdl-cell--5-col mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+							<i class="material-icons prefix">data_usage</i>
+							<input class="mdl-textfield__input" id="ilk" name="dbtype" type="text" readonly tabIndex="-1" value="MySQL" >
+						        <label for="ilk" class="center-align">Database Type</label>
+							<label for="ilk"><i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i></label>
+							<ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--madge" for="ilk">
+							<li class="mdl-menu__item" data-val="MySQL">MySQL<i class="mdl-color-text--white mdi mdi-city alignright" role="presentation"></i></li>
+							<!-- <li class="mdl-menu__item" data-val="SQLite">SQLite<i class="mdl-color-text--white mdi mdi-note alignright" role="presentation"></i></li>
+							<li class="mdl-menu__item" data-val="PostgreSQL">PostgreSQL<i class="mdl-color-text--white mdi mdi-note-plus alignright" role="presentation"></i></li>
+							<li class="mdl-menu__item" data-val="SethDB">SethDB<i class="mdl-color-text--white mdi mdi-emailalignright" role="presentation"></i></li> -->
+							</ul>
+							</div>
+					        <input name="home" type="hidden" value="<?php 
 							if ( isLocalhost() ) { 
-					        	echo $protocol . $_SERVER['HTTP_HOST'] . '/' . basename( __DIR__ ) . '/'; 
+					        	echo $protocol . $_SERVER['HTTP_HOST'] . '/' . basename( __DIR__ ); 
 					        } else { 
-					        	echo $protocol . $_SERVER['HTTP_HOST'] . '/'; } ?>">
+					        	echo $protocol . $_SERVER['HTTP_HOST']; } ?>">
 
-					        <div class="input-field mdl-cell mdl-cell--2-col">
-					        	<button class="mdl-button mdl-button--fab mdl-js-button mdl-button--raised mdl-button--colored alignright" type="submit" name="setup"><i class="material-icons">arrow_forward</i></button>
-					        </div>
+					        <input name="dbport" type="hidden" value="<?php echo $_SERVER['SERVER_PORT']; ?>" />
+					        <input name="dbip" type="hidden" value="<?php echo $_SERVER['SERVER_ADDR']; ?>" />
+
+					        <button class="addfab mdl-button mdl-button--fab mdl-js-button mdl-button--raised mdl-button--colored alignright" type="submit" name="setup"><i class="material-icons">arrow_forward</i></button>
 				        </form>
 						<div class="mdl-cell mdl-cell--2-col"></div>
 					</div>
 				</main>
 			</body>
 		</div>
-		<script src="./inc/assets/js/d3.js"></script>
-		<script src="./inc/assets/js/getmdl-select.min.js"></script>
-		<script src="./inc/assets/js/material.js"></script>
-		<script src="./inc/assets/js/materialize.min.js"></script>
-		<script src="./inc/assets/js/nv.d3.js"></script>
-		<script src="./inc/assets/js/widgets/employer-form/employer-form.js"></script>
-		<script src="./inc/assets/js/widgets/line-chart/line-chart-nvd3.js"></script>
-		<script src="./inc/assets/js/list.js"></script>
-		<script src="./inc/assets/js/widgets/pie-chart/pie-chart-nvd3.js"></script>
-		<script src="./inc/assets/js/widgets/table/table.js"></script>
-		<script src="./inc/assets/js/widgets/todo/todo.js"></script>
+		<script src="app/assets/js/d3.js"></script>
+		<script src="app/assets/js/getmdl-select.min.js"></script>
+		<script src="app/assets/js/material.js"></script>
+		<script src="app/assets/js/materialize.js"></script>
+		<script src="app/assets/js/nv.d3.js"></script>
+		<script src="app/assets/js/widgets/employer-form/employer-form.js"></script>
+		<script src="app/assets/js/widgets/line-chart/line-chart-nvd3.js"></script>
+		<script src="app/assets/js/list.js"></script>
+		<script src="app/assets/js/widgets/pie-chart/pie-chart-nvd3.js"></script>
+		<script src="app/assets/js/widgets/table/table.js"></script>
+		<script src="app/assets/js/widgets/todo/todo.js"></script>
 	</html>
-<?php } ?>
+<?php }

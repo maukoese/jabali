@@ -1,9 +1,9 @@
 {
 	"name": "Mshindi",
 	"slug": "jabali",
-	"version": "0.17.06",
+	"version": "0.17.10",
 	"author": "Mauko Maunde",
-	"screenshot": "http://localhost:8080/jabali/inc/assets/images/avatar.svg",
+	"screenshot": "http://localhost:8080/jabali/app/assets/images/avatar.svg",
 	"description": "Opensource web application framework with material design components for quick deployment.",
 	"social": {
 		"facebook": "http://facebook.com/maukoese",
@@ -14,12 +14,14 @@
 	"website": "http://jabali.mauko.co.ke/",
 	"support": "http://jabali.mauko.co.ke/support",
 	"documentation": "http://jabali.mauko.co.ke/documentation",
-	"download": "http://code.mauko.co.ke/dl/jabali.zip",
+	"download": "http://code.mauko.co.ke/dl/jabali/jabali_0.17.10.zip",
 	"licenses": {
 		"MIT": "https://opensource.org/licenses/MIT",
 		"GNU": "https://opensource.org/licenses/gpl-license",
 		"Apache": "https://opensource.org/licenses/Apache-2.0"
 	},
-	"php": "5.2+",
-	"mysql": "5.0+"
+	"php": "7.0+",
+	"mysql": "5.0+",
+	"sqlite": "5.0+",
+	"postgresql": "5.0+"
 }

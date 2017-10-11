@@ -1,16 +1,36 @@
 <?php
-/**
-* @package Jabali Framework
-* @subpackage Home
-* @link https://docs.mauko.co.ke/jabali/home
-* @author Mauko Maunde
-* @version 0.17.06
-**/
-date_default_timezone_set( "Africa/Nairobi" );
-$dbfile = 'inc/config.php';
-if ( !file_exists( $dbfile) ) {
+
+session_start();
+if ( isset( $_GET['logout'] ) ) {
+  session_destroy();
+}
+
+if ( !file_exists( 'app/config.php' ) ) {
   header( "Location: ./setup.php" );
 }
+
+if ( file_exists( '.jbl' ) ) {
+	header("HTTP/1.1 503 Service Temporarily Unavailable");
+	header("Status: 503 Service Temporarily Unavailable");
+	header("Retry-After: 3600");
+	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+		<html xml:lang=&quot;en&quot; lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;>
+			<head>
+				<meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; />
+				<title>Site upgrade in progress</title>
+				<meta name=&quot;robots&quot; content=&quot;none&quot; />
+			</head>
+			<body>
+				<h1>Site upgrade in progress</h1>
+				<p>This site is being upgraded, and can\'t currently be accessed.</p>
+				<p>It should be back up and running very soon. Please check back in a bit!</p>
+				<hr />
+			</body>
+		</html>';
+	exit();
+}
+
+require 'init.php';
 
 $year = date( "Y" );
 $month = date( "m" );
@@ -18,72 +38,138 @@ $day = date( "d" );
 $directory = "uploads/$year/$month/$day/";
 
 if ( !is_dir( $directory) ) {
-  mkdir( $directory, 755, true );
+  mkdir( $directory, 0775, true );
 }
 
-include 'inc/config.php';
-include 'inc/jabali.php';
-connectDb();
-
-include 'inc/classes/Actions.php';
-use Jabali\classes\Actions;
-$action = new Jabali\_hActions;
-$action -> connectDB();
-
 if ( isset( $_POST['login'] ) && $_POST['user'] != "" && $_POST['password'] != "" ) {
-  call_user_func_array(array($action, 'loginUser'), array());
+  $USERS -> login();
 }
 
 if ( isset( $_POST['create'] ) ) {
-  call_user_func_array(array($action, 'registerUser'), array());
+  $USERS -> register();
 }
 
-if ( isset( $_POST['reset'] ) && $_POST['h_password'] !== "" ) {
-  call_user_func_array(array($action, 'resetPass'), array());
+if ( isset( $_POST['reset'] ) && $_POST['password'] !== "" ) {
+  $USERS -> forgot();
 }
 
-$url = $_SERVER['REQUEST_URI'];
-
-if ( is_localhost() ) { 
-	$url = ltrim( $url, '/'.basename ( __DIR__ ) );
-} else { 
-	$url = $_SERVER['REQUEST_URI'] . '/'; 
+if ( isset( $_POST['forgot'] ) && $_POST['email'] !== "" ) {
+  $USERS ->reset();
 }
 
+if ( isset( $_SESSION[JBLSALT.'Code' ] ) ) {
+	$GStyles = $GLOBALS['JBLDB'] -> query( "SELECT style FROM ". _DBPREFIX ."users  WHERE id='".$_SESSION[JBLSALT.'Code']."'" );
+	if ( $GStyles -> num_rows > 0 ) {
+		$f = array();
+		while ( $s = mysqli_fetch_assoc( $GStyles )) {
+			$f[] = $s;
+		}
+		if ( $f[0]['style'] !== "" ) {
+			$key = $f[0]['style'];
+		} else {
+			$key = "zahra";
+		}
+	} else {
+		$key = "zahra";
+	}
+} else {
+	$key = "zahra";
+}
+
+$GUSkin = $GLOBALS['SKINS'][$key];
+$GLOBALS['GPrimary'] = $GUSkin['primary'];
+$GLOBALS['GAccent'] = $GUSkin['accent'];
+$GLOBALS['GTextP'] = $GUSkin['textp'];
+$GLOBALS['GTextS'] = $GUSkin['texts'];
+
+if ( is_localhost() && ( $_SERVER['DOCUMENT_ROOT'] !== __DIR__ ) ) {
+	$dir = '/'.basename( __DIR__ ).'/';
+	$l = strlen( $dir );
+	$url = substr($_SERVER['REQUEST_URI'], $l );
+} else {
+  $url = ltrim( '/', $_SERVER['REQUEST_URI'] );
+}
+
+$action = new Jabali\Classes\Actions;
 $elements = explode('/', $url );
 $match = $elements[0];
+array_shift( $elements );
 
-include 'header.php';
 if( empty( $match ) || $match == "?logout" ) {
-	call_user_func_array( array( $action, 'home' ), array() );
+	getHeader();
+	if ( getOption( 'homepage' ) == "posts" ) {
+		echo( '<title> Home [ '. getOption( 'name' ) .' ]</title>' );
+		$action -> blog();
+	} else {
+		$action -> fetchPosts( getOption( 'homepage' ) );
+	}
+	getFooter();
+} elseif ( in_array( $match, $GLOBALS['GRules'])) {
+	rewriteRules( $match, $elements );
 } else switch ( $match ) {
-	case "signin":
-		call_user_func_array( array( $action, 'login' ), array( $elements[1] ) );
+	case "login":
+		if ( isset( $_SESSION[JBLSALT.'Code'] ) ) {
+			header( 'Location: '. _ROOT .'/admin/index?page=my dashboard' );
+			exit();
+		} else {
+			$action -> login( $elements[0] );
+		}
 		break;
-	case "signup":
-		call_user_func_array( array( $action, 'register' ), array( $elements[1] ) );
+	case "register":
+		$action -> register( $elements[0] );
+		break;
+	case "admin":
+		header( "Location: /admin/index?page=my dashboard");
+		break;
+	case "dashboard":
+		header( "Location: /admin/index?page=my dashboard");
 		break;
 	case "reset":
-		call_user_func_array( array( $action, 'reset' ), array( $elements[1] ) );
+		theHeader();
+		$action -> reset( $elements[0], $elements[1] );
+		theFooter();
 		break;
 	case "forgot":
-		call_user_func_array( array( $action, 'forgot' ), array( $elements[1] ) );
+		$action -> forgot();
 		break;
-	case "posts":
-		call_user_func_array( array( $action, 'blog' ), array( ) );
+	case 'portfolio':
+		getHeader();
+		$action -> portfolio( $elements );
+		getFooter();
+		break;
+	case "authors":
+		getHeader();
+		$action -> authors( $elements[0] );
+		getFooter();
 		break;
 	case "categories":
-		call_user_func_array( array( $action, 'categories' ), array( $elements[1] ) );
+		getHeader();
+		$action -> category( $elements[0] );
+		getFooter();
+		break;
+	case "comments":
+		getHeader();
+		$action -> comments( $elements );
+		getFooter();
 		break;
 	case "tags":
-		call_user_func_array( array( $action, 'topic' ), array( $elements[1] ) );
+		getHeader();
+		$action -> tag( $elements[0] );
+		getFooter();
 		break;
 	case "users":
-		call_user_func_array( array( $action, 'users' ), array( $elements[1] ) );
+		getHeader();
+		$action -> users( $elements[0] );
+		getFooter();
+		break;
+	case "api":
+		restApi( $elements );
+		break;
+	case "feed":
+		rssFeed( $elements[0] );
 		break;
 	default:
-		call_user_func_array( array( $action, 'fetchPosts' ), array( $match ) );
+		getHeader();
+		$action -> fetchPosts( $match );
+		getFooter();
 }
-
-connectDb();
-include 'footer.php';

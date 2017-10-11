@@ -1,43 +1,37 @@
 <?php 
 
-if ( !file_exists( './inc/config.php' ) ) {
-	header( "Location: ./setup.php" );
+if ( !file_exists( 'app/config.php' ) ) {
+	header( "Location: setup.php" );
 }
 
-if ( file_exists( './inc/.zahra' ) ) {
-	header( "Location: ./login" );
-}
-
-require './inc/config.php';
-require './inc/jabali.php';
-connectDb();
+require 'init.php';
 
 if (isset($_POST['register']) ) {
 	$date = date( "YmdHms" );
-    $h_email = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_email'] );
-    $site_name = mysqli_real_escape_string($GLOBALS['conn'], $_POST['h_name'] );
+    $email = $GLOBALS['JBLDB'] -> clean( $_POST['email'] );
+    $site_name = $GLOBALS['JBLDB'] -> clean( $_POST['h_name'] );
     $social = '{"facebook":"https://www.facebook.com/","twitter":"https://twitter.com/","instagram":"https://instagram.com/","github":"https://github.com/"}';
 
-    $hash = str_shuffle(md5($h_email.$date ) );
+    $hash = str_shuffle(md5($email .$date ) );
 
-    $h_alias = "Admin User";
-    $h_author = substr( $hash, 20 );
-    $h_avatar = hIMAGES.'avatar.svg';
-    $h_organization = "Hq";
-    $h_code = $h_author;
-    $h_created = date( 'Y-m-d' ). ' ' .date( 'H:i:s' );
-    $h_gender = "other";
-    $h_key = $hash;
-    $h_level = "admin";
-    $h_link = "";
-    $h_location = "nairobi";
-    $h_notes = "Account created on ".$h_created;
-    $h_password = md5( $_POST['h_password'] );
-    $h_social = '{"facebook":"https://www.facebook.com/","twitter":"https://twitter.com/","instagram":"https://instagram.com/","github":"https://github.com/"}';
-    $h_status = "active";
-    $h_style = "zahra";
-    $h_type = "admin";
-    $h_username = strtolower($_POST['h_username'] );
+    $name = "Admin User";
+    $author = 1;
+    $avatar = _IMAGES.'avatar.svg';
+    $company = "Hq";
+    $id = $author;
+    $created = date( 'Y-m-d H:i:s' );
+    $gender = "other";
+    $authkey = $hash;
+    $level = "admin";
+    $link = "";
+    $location = "nairobi";
+    $excerpt = "Account created on ".$created;
+    $password = md5( $_POST['password'] );
+    $social = '{"facebook":"https://www.facebook.com/u","twitter":"https://twitter.com/u","instagram":"https://instagram.com/u","github":"https://github.com/u"}';
+    $state = "active";
+    $style = "zahra";
+    $ilk = "admin";
+    $username = strtolower($_POST['username'] );
 
     $menu_code = substr( md5(date( 'YmdHms' ).rand(10,1000) ), 0, 12);
 
@@ -103,92 +97,121 @@ if (isset($_POST['register']) ) {
 
 	<p>SECTION 20 - CONTACT INFORMATION</p>
 
-	<p>Questions about the Terms of Service should be sent to us at portal@maukoese.co.ke</p>
+	<p>Questions about the Terms of Service should be sent to us at  ". $email  ." </p>
 	";
 
 	/*
 	*Set Initial Settings So They Are Editable
 	*/
-	$hOpt -> create ( 'Site Name', 'name', $site_name, $h_created );
-	$hOpt -> create ( 'Description', 'description', 'A Jabali System', $h_created );
-	$hOpt -> create ( 'Admin Email', 'email', $h_email, $h_created );
-	$hOpt -> create ( 'Admin Phone', 'phone', '+254705459494', $h_created );
-	$hOpt -> create ( 'Copyright', 'copyright', '© '. $site_name .' 2017', $h_created );
-    $hOpt -> create ( 'Admin Footer', 'adfooter', 'The Jabali Framework', $h_created );
-    $hOpt -> create ( 'Attribution', 'attribution', 'Mauko by Design', $h_created );
-	$hOpt -> create ( 'Attribution Link', 'attribution_link', 'http://mauko.co.ke', $h_created );
-	$hOpt -> create ( 'Header Logo', 'header_logo', hIMAGES."logo.png", $h_created );
-	$hOpt -> create ( 'Home Logo', 'home_logo', hIMAGES."logo2.png", $h_created );
-	$hOpt -> create ( 'Favicon', 'favicon', hIMAGES."marker.png", $h_created );
-	$hOpt -> create ( 'Terms Of Service', 'tos', $tos, $h_created );
-	$hOpt -> create ( 'Site Social', 'social', $social, $h_created );
-	$hOpt -> create ( 'Allow Registration', 'registration', '', $h_created );
-    $hOpt -> create ( 'User Types', 'usertypes', '{"admin":"admin","organization":"organization","editor":"editor","author":"author","subscriber":"subscriber"}', $h_created );
-    $hOpt -> create ( 'Active Extensions', 'extensions', '{"null":"null"}', $h_created );
+	$hOpt -> install ( 'Site Name', 'name', $site_name, $created );
+    $hOpt -> install ( 'About', 'about', 'This is a Jabali System', $created );
+    $hOpt -> install ( 'Description', 'description', 'A Jabali System', $created );
+	$hOpt -> install ( 'Admin Email', 'email', $email , $created );
+	$hOpt -> install ( 'Admin Phone', 'phone', '+2547204404993', $created );
+	$hOpt -> install ( 'Copyright', 'copyright', '© '. $site_name .' 2017', $created );
+    $hOpt -> install ( 'Admin Footer', 'adfooter', 'The Jabali Framework', $created );
+    $hOpt -> install ( 'Attribution', 'attribution', 'Mauko by Design', $created );
+	$hOpt -> install ( 'Attribution Link', 'attribution_link', 'http://mauko.co.ke', $created );
+	$hOpt -> install ( 'Header Logo', 'headerlogo', _IMAGES."logo.png", $created );
+	$hOpt -> install ( 'Home Logo', 'homelogo', _IMAGES."logo2.png", $created );
+	$hOpt -> install ( 'Favicon', 'favicon', _IMAGES."marker.png", $created );
+	$hOpt -> install ( 'Terms Of Service', 'tos', $tos, $created );
+	$hOpt -> install ( 'Site Social', 'social', $social, $created );
+	$hOpt -> install ( 'Allow Registration', 'registration', '', $created );
+    $hOpt -> install ( 'User Types', 'usertypes', '{}', $created );
+    $hOpt -> install ( 'Post Types', 'posttypes', '{}', $created );
+    $hOpt -> install ( 'Resource Types', 'resourcetypes', '{}', $created );
+    $hOpt -> install ( 'Comment Types', 'commenttypes', '{}', $created );
+    $hOpt -> install ( 'Message Types', 'messagetypes', '{}', $created );
+    $hOpt -> install ( 'Active Modules', 'modules', '[]', $created );
+    $hOpt -> install ( 'Active Theme', 'activetheme', 'zahra', $created );
+    $hOpt -> install ( 'Timezone', 'timezone', 'Africa/Nairobi', $created );
+    $hOpt -> install ( 'Country', 'country', 'Kenya', $created );
+    $hOpt -> install ( 'Region', 'region', 'Nairobi', $created );
+    $hOpt -> install ( 'City/Town', 'city', 'Nairobi', $created );
+    $hOpt -> install ( 'Language', 'language', 'en', $created );
+    $hOpt -> install ( 'Charset', 'charset', 'utf-8', $created );
+    $hOpt -> install ( 'Home Page', 'homepage', 'home', $created );
+    $hOpt -> install ( 'Posts Page', 'postspage', 'blog', $created );
+    $hOpt -> install ( 'Ace Editor Theme', 'acetheme', 'chrome', $created );
+    $hOpt -> install ( 'Show Ace Editor Gutter', 'acegutter', 'true', $created );
+    $hOpt -> install ( 'Show Ace Editor Lines', 'acelines', 'true', $created );
 
 
 	/*
 	*Set Initial Menus So They Are Editable
 	*/
 	//Dashboard Link
-	$hMenu -> create ( 'Dashboard', 'jabali', 'dashboard', 'dashboard', '', './index?page= my dashboard', 'drawer', 'visible', 'drop' );
+	$hMenu -> install ( 'Dashboard', 'jabali', 'dashboard', 'dashboard', '', _ADMIN.'index?page= my dashboard', 'drawer', 'visible', 'drop' );
 
 	//Posts Menu
-	$hMenu -> create ( 'Articles', 'jabali', 'description', 'articles', '', '#', 'drawer', 'visible', 'drop' );
+	$hMenu -> install ( 'Posts', 'jabali', 'description', 'posts', '', '#', 'drawer', 'visible', 'drop' );
 		//Posts SubMenus
-		$hMenu -> create ( 'All Articles', 'jabali', 'description', 'allarticles', 'articles', './post?view=list&type=article', 'drawer', 'visible', 'null' );
-		$hMenu -> create ( 'Draft Articles', 'jabali', 'insert_drive_file', 'draftarticles', 'articles', './post?view=list&status=draft', 'drawer', 'visible', 'null' );
-
-	//Pages Menu
-	$hMenu -> create ( 'Pages', 'jabali', 'insert_drive_file', 'pages', '', '#', 'drawer', 'visible', 'drop' );
-		//Pages SubMenus
-		$hMenu -> create ( 'All Pages', 'jabali', 'description', 'allpages', 'pages', './post?view=list&type=page', 'drawer', 'visible', 'null' );
-		$hMenu -> create ( 'Draft Pages', 'jabali', 'insert_drive_file', 'draftpages', 'pages', './post?view=list&status=draft', 'drawer', 'visible', 'null' );
+        $hMenu -> install ( 'Drafts', 'jabali', 'insert_drive_file', 'draftarticles', 'posts', _ADMIN.'posts?view=list&status=draft', 'drawer', 'visible', 'null' );
+        $hMenu -> install ( 'Scheduled', 'jabali', 'schedule', 'scheduled', 'posts', _ADMIN.'posts?view=list&status=scheduled', 'drawer', 'visible', 'null' );
+		$hMenu -> install ( 'Articles', 'jabali', 'description', 'allarticles', 'posts', _ADMIN.'posts?view=list&type=article', 'drawer', 'visible', 'null' );
+        $hMenu -> install ( 'Pages', 'jabali', 'description', 'allpages', 'posts', _ADMIN.'posts?view=list&type=page', 'drawer', 'visible', 'null' );
+        $hMenu -> install ( 'Projects', 'jabali', 'description', 'allprojects', 'posts', _ADMIN.'posts?view=list&type=project', 'drawer', 'invisible', 'null' );
 
 	//Users Menu
-	$hMenu -> create ( 'Users', 'jabali', 'group', 'users', '', '#', 'drawer', 'visible', 'drop' );
+	$hMenu -> install ( 'Users', 'jabali', 'group', 'users', '', '#', 'drawer', 'visible', 'drop' );
 		//Users SubMenus
-		$hMenu -> create ( 'All Users', 'jabali', 'supervisor_account', 'allusers', 'users', './user?view=list&key=users', 'drawer', 'visible', 'null' );
-		$hMenu -> create ( 'Pending Users', 'jabali', 'done', 'draftusers', 'users', './user?view=pending&key=users', 'drawer', 'visible', 'null' );
+        $hMenu -> install ( 'Pending Users', 'jabali', 'done', 'draftusers', 'users', _ADMIN.'users?view=pending&key=users', 'drawer', 'visible', 'null' );
+        $hMenu -> install ( 'Adminstrators', 'jabali', 'description', 'alladmins', 'users', _ADMIN.'users?view=list&type=admin', 'drawer', 'visible', 'null' );
+        $hMenu -> install ( 'Editors', 'jabali', 'group', 'alleditors', 'users', _ADMIN.'users?view=list&type=editor', 'drawer', 'visible', 'null' );
+        $hMenu -> install ( 'Authors', 'jabali', 'group', 'allauthors', 'users', _ADMIN.'users?view=list&type=author', 'drawer', 'visible', 'null' );
+        $hMenu -> install ( 'Clients', 'jabali', 'group', 'allclients', 'users', _ADMIN.'users?view=list&type=client', 'drawer', 'invisible', 'null' );
+        $hMenu -> install ( 'Subscribers', 'jabali', 'group', 'allsubscribers', 'users', _ADMIN.'users?view=list&type=subscriber', 'drawer', 'visible', 'null' );
 
-	$hMenu -> create ( 'Comments', 'jabali', 'comment', 'comments', '', '#', 'drawer', 'visible', 'drop' );
-        //Messages SubMenus
-        $hMenu -> create ( 'All Comments', 'jabali', 'comment', 'allcomments', 'comments', './comments?view=list&key=all comments', 'drawer', 'visible', 'null' );
-        $hMenu -> create ( 'Pending Comments', 'jabali', 'comment', 'pendingcomments', 'comments', './comments?view=pending&key=pending comments', 'drawer', 'visible', 'null' );
+    //Resources Menu
+    $hMenu -> install ( 'Resources', 'jabali', 'business', 'resources', '', '#', 'drawer', 'invisible', 'drop' );
+        //Resources SubMenus
+        $hMenu -> install ( 'Drafts', 'jabali', 'insert_drive_file', 'draftresources', 'resources', _ADMIN.'resources?view=list&status=draft', 'drawer', 'visible', 'null' );
+
+	$hMenu -> install ( 'Comments', 'jabali', 'comment', 'comments', '', '#', 'drawer', 'visible', 'drop' );
+        //Comments SubMenus
+        $hMenu -> install ( 'Pending', 'jabali', 'comment', 'pendingcomments', 'comments', _ADMIN.'comments?status=pending&key=pending comments', 'drawer', 'visible', 'null' );
+        $hMenu -> install ( 'Comments', 'jabali', 'comment', 'allcomments', 'comments', _ADMIN.'comments?type=comment', 'drawer', 'visible', 'null' );
 
 
 	/*
 	*Create Admin Account
 	*/
-    if ( mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."users (h_alias, h_author, h_avatar, h_organization, h_code, h_created, h_email, h_gender, h_key, h_level, h_link, h_location, h_notes, h_password, h_social, h_status, h_style, h_type, h_username) 
-    VALUES ('".$h_alias."', '".$h_author."', '".$h_avatar."', '".$h_organization."', '".$h_code."', '".$h_created."', '".$h_email."', '".$h_gender."', '".$h_key."', '".$h_level."', '".$h_link."', '".$h_location."', '".$h_notes."', '".$h_password."', '".$h_social."', '".$h_status."', '".$h_style."', '".$h_type."', '".$h_username."')" ) ) {
+    if ( $GLOBALS['JBLDB'] -> query( "INSERT INTO ". _DBPREFIX ."users (name, author, avatar, company, id, created, email, gender, authkey, level, link, location, excerpt, password, social, state, style, ilk, username) 
+    VALUES ('".$name."', '".$author."', '".$avatar."', '".$company."', '".$id."', '".$created."', '".$email."', '".$gender."', '".$authkey."', '".$level."', '".$link."', '".$location."', '".$excerpt."', '".$password."', '".$social."', '".$state."', '".$style."', '".$ilk."', '".$username."')" ) ) {
 
-        mysqli_query( $GLOBALS['conn'], "INSERT INTO ". hDBPREFIX ."posts (h_alias, h_avatar, h_link, h_status, h_type) 
-    VALUES ('Home', '".hIMAGES."404.jpg"."', 'home', 'published', 'page')" );
+        $GLOBALS['JBLDB'] -> query( "INSERT INTO ". _DBPREFIX ."posts (name, author, author_name, avatar, categories, created, details, gallery, authkey, level, link, excerpt, readings, state, subtitle, slug, tags, template, ilk, updated) 
+    VALUES ('Home', '1', '', '"._IMAGES."404.jpg"."', 'Uncategorized', '".$created."', 'This is a sample page. Edit it or delete it alltogether.', '', '".md5( $created )."', 'public', '', '', '', 'published', 'Home', 'home', '', 'page', 'page', '".$created."')" );
 
-		header("Location: ./login" );
+        $GLOBALS['JBLDB'] -> query( "INSERT INTO ". _DBPREFIX ."posts (name, author, author_name, avatar, categories, created, details, gallery, authkey, level, link, excerpt, readings, state, subtitle, slug, tags, template, ilk, updated) 
+    VALUES ('Hello World!', '1', '', '"._IMAGES."404.jpg"."', 'Uncategorized', '".$created."', 'This is a sample article. Edit it or delete it alltogether.', '', '".md5( $created )."', 'public', 'hello-world', '', '', 'published', 'Hello', 'hello-world', '', 'post', 'article', '".$created."')" );
+
+		header("Location: "._ROOT."/login/jabali/" );
 
     } else {
-        echo '<span class="mdl-color--red">Error: <br>' . $GLOBALS['conn']->error . '</span>';
+        echo '<span class="mdl-color--red">Error: <br>' . $GLOBALS['JBLDB']->error . '</span>';
+            _shout_( "Error: " . $GLOBALS['JBLDB'] -> error(), "error");
     }
+    
 } else {   
-    installJabali(); ?>
+    installSQLDB(); ?>
     <!DOCTYPE html>
     <html>
     <head>
-    	<link rel="stylesheet" href="./inc/assets/css/materialize.css">
-    	<link rel="stylesheet" href="./inc/assets/css/material-icons.css">
-    	<link rel="stylesheet" href="./inc/assets/css/jabali.css">
-    	<script src="./inc/assets/js/jquery-3.2.1.min.js"></script>
-    	<script src="./inc/assets/js/materialize.min.js"></script>
-    	<script src="./inc/assets/js/material.js"></script>
-    	<title>Admin Setup [ ". $site_name ." ]</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<link rel="stylesheet" href="app/assets/css/materialize.css">
+    	<link rel="stylesheet" href="app/assets/css/material-icons.css">
+    	<link rel="stylesheet" href="app/assets/css/jabali.css">
+    	<script src="app/assets/js/jquery-3.2.1.min.js"></script>
+    	<script src="app/assets/js/materialize.min.js"></script>
+    	<script src="app/assets/js/material.js"></script>
+    	<title>Admin Setup [ Jabali ]</title>
     </head>
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
     	<body>
     		<main class="mdl-layout__content mdl-grid">
     			<div class="mdl-cell mdl-cell--2-col"></div>
-    			<div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-color--blue">
+    			<div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-color--madge">
     			    <div id="login_div" class="mdl-grid">
     			    <div class="mdl-cell mdl-cell--12-col">
     			    <center><?php frontlogo(); ?>
@@ -207,21 +230,24 @@ if (isset($_POST['register']) ) {
 
     		          <div class="input-field mdl-cell mdl-cell--12-col">
     		          <i class="material-icons prefix">mail</i>
-    		          <input name="h_email" id="h_email" type="text">
-    		          <label for="h_email" class="center-align">Email Address</label>
+    		          <input name="email" id="email " type="text">
+    		          <label for="email " class="center-align">Email Address</label>
     		          </div>
 
     		          <div class="input-field mdl-cell mdl-cell--12-col">
     		          <i class="material-icons prefix">perm_identity</i>
-    		          <input name="h_username" id="h_username" type="text">
-    		          <label for="h_username" class="center-align">Username</label>
+    		          <input name="username" id="username" type="text">
+    		          <label for="username" class="center-align">Username</label>
     		          </div>
 
     		          <div class="input-field mdl-cell mdl-cell--11-col">
     		          <i class="material-icons prefix">lock</i>
-    		          <input name="h_password" id="password" type="password">
+    		          <input name="password" id="password" type="password">
     		          <label for="password">Password</label>
     		          </div>
+
+                      <?php csrf(); ?>
+
     		          <div class="input-field mdl-cell mdl-cell--1-col">
     		          <button class="mdl mdl-button mdl-button--fab mdl-js-button mdl-button--raised mdl-button--colored alignright" type="submit" name="register"><i class="material-icons">send</i></button>
     		          </div>
@@ -235,16 +261,16 @@ if (isset($_POST['register']) ) {
     	    </main>
     	</body>
     </div>
-    	<script src="./inc/assets/js/d3.js"></script>
-    	<script src="./inc/assets/js/getmdl-select.min.js"></script>
-    	<script src="./inc/assets/js/material.js"></script>
-    	<script src="./inc/assets/js/materialize.min.js"></script>
-    	<script src="./inc/assets/js/nv.d3.js"></script>
-    	<script src="./inc/assets/js/widgets/employer-form/employer-form.js"></script>
-    	<script src="./inc/assets/js/widgets/line-chart/line-chart-nvd3.js"></script>
-    	<script src="./inc/assets/js/list.js"></script>
-    	<script src="./inc/assets/js/widgets/pie-chart/pie-chart-nvd3.js"></script>
-    	<script src="./inc/assets/js/widgets/table/table.js"></script>
-    	<script src="./inc/assets/js/widgets/todo/todo.js"></script>
+        <script src="app/assets/js/d3.js"></script>
+        <script src="app/assets/js/getmdl-select.min.js"></script>
+        <script src="app/assets/js/material.js"></script>
+        <script src="app/assets/js/materialize.js"></script>
+        <script src="app/assets/js/nv.d3.js"></script>
+        <script src="app/assets/js/widgets/employer-form/employer-form.js"></script>
+        <script src="app/assets/js/widgets/line-chart/line-chart-nvd3.js"></script>
+        <script src="app/assets/js/list.js"></script>
+        <script src="app/assets/js/widgets/pie-chart/pie-chart-nvd3.js"></script>
+        <script src="app/assets/js/widgets/table/table.js"></script>
+        <script src="app/assets/js/widgets/todo/todo.js"></script>
     </html><?php
-} ?>
+}

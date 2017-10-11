@@ -1,30 +1,18 @@
 <?php
-include 'inc/config.php';
-include 'inc/jabali.php';
-connectDb();
-
-$manifest = array(
-  'short_name' => getOption( 'name' ),
-  'name' => getOption('description'),
-  'icons' => array(
-    'src' => getOption('favicon'),
-      'type' => "image/png",
-      'sizes' => "48x48"
-    ),
-    array(
-      'src' => getOption('favicon'),
-      'type' => "image/png",
-      'sizes' => "96x96"
-    ),
-    array(
-      'src' => getOption('favicon'),
-      'type' => "image/png",
-      'sizes' => "192x192"
-   ),
-  'start_url' => hROOT
-);
-
-echo json_encode( $manifest );
+require 'init.php';
 header('Content-Type:Application/json' );
 
-?>
+$manifest["name"] = getOption('name');
+$manifest["short_name"] = getOption('name');
+$manifest["start_url"] = ".";
+$manifest["display"] = "standalone";
+$manifest["background_color"] = "#ffff";
+$manifest["description"] = getOption('description');
+$manifest["icons"][] = array( 'src' => getOption('favicon'), 'type' => "image/png", 'sizes' => "96x96");
+$manifest["icons"][] = array( 'src' => getOption('favicon'), 'type' => "image/png", 'sizes' => "192x96");
+$manifest["icons"][] = array( 'src' => getOption('favicon'), 'type' => "image/png", 'sizes' => "300x96");
+$manifest["icons"][] = array( 'src' => getOption('favicon'), 'type' => "image/png", 'sizes' => "300x96");
+$manifest["related_applications"][] = array( 'platform' => "web", 'url' => "");
+$manifest["related_applications"][] = array( 'platform' => "play", 'url' => "");
+
+echo json_encode( $manifest );

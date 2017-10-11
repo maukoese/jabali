@@ -1,7 +1,7 @@
-<?php  
-include '../inc/config.php';
-include '../inc/jabali.php';
-include './header.php';
+<?php 
+session_start();
+require_once( '../init.php' );
+require_once( 'header.php' );
 
 if ( isset( $_GET['create'] ) ) {
 	$hForm -> commentForm();
@@ -12,8 +12,8 @@ if ( isset( $_GET['edit'] ) ) {
 }
 
 if ( isset( $_GET['fav'] ) ) {
-	$getRate = mysqli_query( $GLOBALS['conn'], "INSERT INTO hratings (h_author, h_for, h_type ) 
-		VALUES ('".$_SESSION['myCode']."', '".$_GET['fav']."', 'comment' )" );
+	$getRate = $GLOBALS['JBLDB'] -> query( "INSERT INTO hratings (author, for, ilk ) 
+		VALUES ('".$_SESSION[JBLSALT.'Code']."', '".$_GET['fav']."', 'comment' )" );
 }
 
 if ( isset( $_GET['view'] )){

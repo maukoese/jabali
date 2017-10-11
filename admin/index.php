@@ -1,7 +1,7 @@
 <?php
-include '../inc/config.php';
-include '../inc/jabali.php';
-include './header.php';
+session_start();
+require_once( '../init.php' );
+require_once( 'header.php' );
 
 if ( isset( $_GET['ddelete'] ) ) {
   global $hPost;
@@ -11,48 +11,49 @@ if ( isset( $_GET['ddelete'] ) ) {
 if ( isset( $_POST['draft'] ) ) {
   global $hPost;
 
-  $h_alias = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_alias'] ); 
-  $h_author = $_SESSION['myCode'];
-  $h_avatar = hASSETS . 'placeholder.svg';
+  $name = $GLOBALS['JBLDB'] -> clean( $_POST['name'] ); 
+  $author = $_SESSION[JBLSALT.'Code'];
+  $avatar = _ASSETS . 'placeholder.svg';
 
-  $h_by = $_SESSION['myAlias'];
-  $h_key = str_shuffle( generateCode() );
-  $h_code = substr( $h_key, rand(0, 15), 12 ); 
-  $h_created = date('Y-m-d');
-  $h_desc = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_description'] ); 
-  $h_email = $_SESSION['myEmail']; 
-  $h_link = preg_replace('/\s+/', '_', $h_alias);
-  if ( recordExists( $h_link ) ) {
+  $by = $_SESSION[JBLSALT.'Alias'];
+  $authkey = str_shuffle( generateCode() );
+  $id = substr( $authkey, rand(0, 15), 12 ); 
+  $created = date('Y-m-d');
+  $h_desc = $GLOBALS['JBLDB'] -> clean( $_POST['details'] ); 
+  $email  = $_SESSION[JBLSALT.'Email']; 
+  $link = preg_replace('/\s+/', '_', $name);
+  if ( recordExists( $link ) ) {
     $i = 1;
-    $h_link = strtolower( $h_link.'_'.$i++ );
+    $link = strtolower( $link.'_'.$i++ );
   } else {
-    $h_link = strtolower( $h_link );
+    $link = strtolower( $link );
   }
-  $h_location = $_SESSION['myLocation'];
-  $h_notes = substr( $h_desc, 250 ); 
-  $h_phone = $_SESSION['myPhonew']; 
-  $h_status = "draft";
-  $h_subtitle = mysqli_real_escape_string( $GLOBALS['conn'], $_POST['h_subtitle'] );
-  $h_type = "article";
+  $location = $_SESSION[JBLSALT.'Location'];
+  $excerpt = substr( $h_desc, 250 ); 
+  $phone = $_SESSION[JBLSALT.'Phone']; 
+  $state = "draft";
+  $subtitle = $GLOBALS['JBLDB'] -> clean( $_POST['subtitle'] );
+  $ilk = "article";
 
-  $h_category = "n/a"; 
-  $h_organization = "n/a";
+  $category = "n/a"; 
+  $company = "n/a";
   $h_fav = "n/a";
-  $h_level = "n/a"; 
-  $h_location = "n/a";
-  $h_reading = "n/a";
-  $h_tags = "n/a";
-  $h_updated = "n/a";
+  $level = "n/a"; 
+  $location = "n/a";
+  $readings = "n/a";
+  $tags = "n/a";
+  $updated = "n/a";
 
-$hPost -> create( $h_alias, $h_author, $h_avatar, $h_by, $h_category, $h_organization, $h_code, $h_created, $h_desc, $h_email, $h_fav, $h_key, $h_level, $h_link, $h_location, $h_notes, $h_phone, $h_reading, $h_status, $h_subtitle, $h_tags, $h_type, $h_updated );
+$hPost -> create( $name, $author, $avatar, $by, $category, $company, $id, $created, $h_desc, $email , $h_fav, $authkey, $level, $link, $location, $excerpt, $phone, $readings, $state, $subtitle, $tags, $ilk, $updated );
 } ?>
 <div class="mdl-grid"><?php
   if ( isset( $_GET['x'] ) ) {
-    loadActiveX( $_GET['x'] ); 
+    doSetting( $_GET['x'] );
+    doActions( $_GET['x'] );
+    renderSettingsForm( $_GET['x'] );
   } else {
     global $hWidget; ?>
-    <title><?php _show_( ucwords( $_SESSION['myCap'] ) ); ?> Dashboard [ <?php showOption( 'name' ); ?> ]</title>
-    <div class="mdl-cell--12-col mdl-grid">
+    <title><?php _show_( ucwords( $_SESSION[JBLSALT.'Cap'] ) ); ?> Dashboard [ <?php showOption( 'name' ); ?> ]</title>
     	<div class="mdl-cell mdl-cell--3-col mdl-card mdl-color--<?php primaryColor(); ?>" >
           <?php $hWidget -> quickLinks(); ?>
       </div>
@@ -67,8 +68,7 @@ $hPost -> create( $h_alias, $h_author, $h_avatar, $h_by, $h_category, $h_organiz
       </div>
       <div class="mdl-cell mdl-cell--5-col mdl-card mdl-color--<?php primaryColor(); ?>" >
         <?php $hWidget -> jabaliCentral(); ?>
-      </div>
-    </div><?php 
+      </div><?php 
   } ?>
 </div><?php 
 include './footer.php'; ?>

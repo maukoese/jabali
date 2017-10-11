@@ -5,31 +5,97 @@ if ( !isset($_SESSION) ) { session_start(); } ?>
 	<div style="float:left;padding-left:20px;"><?php showOption( 'adfooter' ); ?></div>
 	<span style="float:right;padding-right:20px;"><a href="<?php showOption( 'attribution_link' ); ?>"><?php showOption( 'attribution' ); ?></a></span>
 </footer>
-<?php mysqli_close( $GLOBALS['conn'] ); ?>
-    <script type="text/javascript">
-      $('.timepicker').pickatime({
-    default: 'now', // Set default time: 'now', '1:30AM', '16:30'
-    fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
-    twelvehour: false, // Use AM/PM or 24-hour format
-    donetext: 'OK', // text for done-button
-    cleartext: 'Clear', // text for clear-button
-    canceltext: 'Cancel', // Text for cancel-button
-    autoclose: false, // automatic close timepicker
-    ampmclickable: true, // make AM PM clickable
-    aftershow: function(){} //Function for after opening timepicker
+<script type="text/javascript">
+	$('#alert_close').click(function(){
+    $( "#alert_box" ).fadeOut( "slow", function() {
+    });
   });
-    </script>
-<script src="<?php echo hSCRIPTS ?>d3.js"></script>
-<script src="<?php echo hSCRIPTS ?>getmdl-select.min.js"></script>
-<script src="<?php echo hSCRIPTS ?>material.js"></script>
-<script src="<?php echo hSCRIPTS ?>materialize.min.js"></script>
-<script src="<?php echo hSCRIPTS ?>nv.d3.js"></script>
-<script src="<?php echo hSCRIPTS ?>widgets/employer-form/employer-form.js"></script>
-<script src="<?php echo hSCRIPTS ?>widgets/line-chart/line-chart-nvd3.js"></script>
-<script src="<?php echo hSCRIPTS ?>list.js"></script>
-<script src="<?php echo hSCRIPTS ?>widgets/pie-chart/pie-chart-nvd3.js"></script>
-<script src="<?php echo hSCRIPTS ?>widgets/table/table.js"></script>
-<script src="<?php echo hSCRIPTS ?>widgets/todo/todo.js"></script>
+
+$(document).ready(function(){
+  $('.carousel').carousel();
+});
+        
+</script>
+<script type="text/javascript">
+  function dragStartH(ev) {
+    console.log( "dragStart");
+
+    ev.dataTransfer.setData("text/plain", ev.target.id );
+  }
+
+  function dragOverH(ev) {
+    ev.preventDefault();
+    ev.dataTransfer.dropEffect = "move";
+  }
+
+  function dropH(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+  }
+
+  // $(function() {
+  //   $('.sortable').sortable({
+  //       axis: 'y',
+  //       opacity: 0.7,
+  //       handle: 'span',
+  //       update: function(event, ui) {
+  //           var list_sortable = $(this).sortable('toArray').toString();
+  //       // change order in the database using Ajax
+  //           $.ajax({
+  //               url: 'index.php',
+  //               type: 'POST',
+  //               data: {list_order:list_sortable},
+  //               success: function(data) {
+  //                   //finished
+  //               }
+  //           });
+  //       }
+  //   }); // fin sortable
+  // });
+</script>
+<script>
+  // Hook up ACE editor to all textareas with data-editor attribute
+  // Mode and theme are loaded fron text area attributes
+$(function() {
+  $('textarea[data-editor]').each(function() {
+    var textarea = $(this);
+    var mode = textarea.data('editor');
+    var theme = textarea.data('theme');
+    var editDiv = $('<div>', {
+      position: 'absolute',
+      width: textarea.width(),
+      height: textarea.height(),
+      'class': textarea.attr('class')
+    }).insertBefore(textarea);
+    textarea.css('display', 'none');
+    var editor = ace.edit(editDiv[0]);
+    editor.renderer.setShowGutter(textarea.data('gutter'));
+    editor.getSession().setValue(textarea.val());
+    editor.getSession().setMode("ace/mode/" + mode);
+    editor.setTheme("ace/theme/" + theme );
+
+    // copy back to textarea on form submit...
+    textarea.closest('form').submit(function() {
+      textarea.val(editor.getSession().getValue());
+    })
+  });
+});
+</script>
+<script src="<?php echo _SCRIPTS ?>d3.js"></script>
+<script src="<?php echo _SCRIPTS ?>getmdl-select.min.js"></script>
+<script src="<?php echo _SCRIPTS ?>propeller.js"></script>
+<script src="<?php echo _SCRIPTS ?>propeller-admin.js"></script>
+<script src="<?php echo _SCRIPTS ?>propeller-theme.js"></script>
+<script src="<?php echo _SCRIPTS ?>material.js"></script>
+<script src="<?php echo _SCRIPTS ?>materialize.js"></script>
+<script src="<?php echo _SCRIPTS ?>nv.d3.js"></script>
+<script src="<?php echo _SCRIPTS ?>widgets/employer-form/employer-form.js"></script>
+<script src="<?php echo _SCRIPTS ?>widgets/line-chart/line-chart-nvd3.js"></script>
+<script src="<?php echo _SCRIPTS ?>list.js"></script>
+<script src="<?php echo _SCRIPTS ?>widgets/pie-chart/pie-chart-nvd3.js"></script>
+<script src="<?php echo _SCRIPTS ?>widgets/table/table.js"></script>
+<script src="<?php echo _SCRIPTS ?>widgets/todo/todo.js"></script>
 </div>
 </body>
 </html>
