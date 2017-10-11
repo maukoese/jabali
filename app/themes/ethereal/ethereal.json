@@ -1,0 +1,24 @@
+{
+	"name": "Ethereal",
+	"slug": "ethereal",
+	"version": "0.17.10",
+	"author": "Mauko Maunde",
+	"category": "portfolio",
+	"screenshot": "http://localhost/jabali/assets/images/avatar.svg",
+	"description": "Dimension theme is a port of a similarly-named html template from http://html5uo.com/ - an amazingly simple portfolio theme.",
+	"social": {
+		"facebook": "http://facebook.com/maukoese",
+		"twitter": "http://twitter.com/maukoese",
+		"github": "http://github.com/maukoese",
+		"email": "maukoese@gmail.com"
+	},
+	"website": "http://jabali.mauko.co.ke/themes/ethereal",
+	"support": "http://jabali.mauko.co.ke/support",
+	"download": "http://code.mauko.co.ke/dl/jabali/themes/ethereal.zip",
+	"licences": {
+		"MIT": "https://opensource.org/licenses/MIT",
+		"GNU": "https://opensource.org/licenses/gpl-license",
+		"Apache": "https://opensource.org/licenses/Apache-2.0",
+		"Creative Commons": "https://creativecommons.org/licenses/by/4.0/legalcode"
+	}
+}
