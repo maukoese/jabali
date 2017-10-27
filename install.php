@@ -17,7 +17,7 @@ if (isset($_POST['register']) ) {
     $name = "Admin User";
     $author = 1;
     $avatar = _IMAGES.'avatar.svg';
-    $company = "Hq";
+    $company = "Jabali CMS";
     $id = $author;
     $created = date( 'Y-m-d H:i:s' );
     $gender = "other";
@@ -104,8 +104,8 @@ if (isset($_POST['register']) ) {
 	*Set Initial Settings So They Are Editable
 	*/
 	$hOpt -> install ( 'Site Name', 'name', $site_name, $created );
-    $hOpt -> install ( 'About', 'about', 'This is a Jabali System', $created );
-    $hOpt -> install ( 'Description', 'description', 'A Jabali System', $created );
+    $hOpt -> install ( 'About', 'about', 'Coming Soon', $created );
+    $hOpt -> install ( 'Description', 'description', 'Built With Jabali', $created );
 	$hOpt -> install ( 'Admin Email', 'email', $email , $created );
 	$hOpt -> install ( 'Admin Phone', 'phone', '+2547204404993', $created );
 	$hOpt -> install ( 'Copyright', 'copyright', '© '. $site_name .' 2017', $created );
@@ -124,7 +124,7 @@ if (isset($_POST['register']) ) {
     $hOpt -> install ( 'Comment Types', 'commenttypes', '{}', $created );
     $hOpt -> install ( 'Message Types', 'messagetypes', '{}', $created );
     $hOpt -> install ( 'Active Modules', 'modules', '[]', $created );
-    $hOpt -> install ( 'Active Theme', 'activetheme', 'zahra', $created );
+    $hOpt -> install ( 'Active Theme', 'activetheme', 'eventually', $created );
     $hOpt -> install ( 'Timezone', 'timezone', 'Africa/Nairobi', $created );
     $hOpt -> install ( 'Country', 'country', 'Kenya', $created );
     $hOpt -> install ( 'Region', 'region', 'Nairobi', $created );
@@ -142,7 +142,8 @@ if (isset($_POST['register']) ) {
 	*Set Initial Menus So They Are Editable
 	*/
 	//Dashboard Link
-	$hMenu -> install ( 'Dashboard', 'jabali', 'dashboard', 'dashboard', '', _ADMIN.'index?page= my dashboard', 'drawer', 'visible', 'drop' );
+	$hMenu -> install ( 'Dashboard', 'jabali', 'dashboard', 'dashboard'
+        , '', _ADMIN.'index?page= my dashboard', 'drawer', 'visible', 'drop' );
 
 	//Posts Menu
 	$hMenu -> install ( 'Posts', 'jabali', 'description', 'posts', '', '#', 'drawer', 'visible', 'drop' );
@@ -151,7 +152,7 @@ if (isset($_POST['register']) ) {
         $hMenu -> install ( 'Scheduled', 'jabali', 'schedule', 'scheduled', 'posts', _ADMIN.'posts?view=list&status=scheduled', 'drawer', 'visible', 'null' );
 		$hMenu -> install ( 'Articles', 'jabali', 'description', 'allarticles', 'posts', _ADMIN.'posts?view=list&type=article', 'drawer', 'visible', 'null' );
         $hMenu -> install ( 'Pages', 'jabali', 'description', 'allpages', 'posts', _ADMIN.'posts?view=list&type=page', 'drawer', 'visible', 'null' );
-        $hMenu -> install ( 'Projects', 'jabali', 'description', 'allprojects', 'posts', _ADMIN.'posts?view=list&type=project', 'drawer', 'invisible', 'null' );
+        $hMenu -> install ( 'Projects', 'jabali', 'description', 'allprojects', 'posts', _ADMIN.'posts?view=list&type=project', 'drawer', 'visible', 'null' );
 
 	//Users Menu
 	$hMenu -> install ( 'Users', 'jabali', 'group', 'users', '', '#', 'drawer', 'visible', 'drop' );
@@ -160,7 +161,7 @@ if (isset($_POST['register']) ) {
         $hMenu -> install ( 'Adminstrators', 'jabali', 'description', 'alladmins', 'users', _ADMIN.'users?view=list&type=admin', 'drawer', 'visible', 'null' );
         $hMenu -> install ( 'Editors', 'jabali', 'group', 'alleditors', 'users', _ADMIN.'users?view=list&type=editor', 'drawer', 'visible', 'null' );
         $hMenu -> install ( 'Authors', 'jabali', 'group', 'allauthors', 'users', _ADMIN.'users?view=list&type=author', 'drawer', 'visible', 'null' );
-        $hMenu -> install ( 'Clients', 'jabali', 'group', 'allclients', 'users', _ADMIN.'users?view=list&type=client', 'drawer', 'invisible', 'null' );
+        $hMenu -> install ( 'Clients', 'jabali', 'group', 'allclients', 'users', _ADMIN.'users?view=list&type=client', 'drawer', 'visible', 'null' );
         $hMenu -> install ( 'Subscribers', 'jabali', 'group', 'allsubscribers', 'users', _ADMIN.'users?view=list&type=subscriber', 'drawer', 'visible', 'null' );
 
     //Resources Menu

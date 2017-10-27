@@ -2,13 +2,13 @@
 session_start();
 require_once( '../init.php' );
 
-addSetting( "general", array( $hOpt, "general" ), array() );
-addSetting( "types", array( $hOpt, "types"), array() );
-addSetting( "social", array( $hOpt, "social" ), array() );
-addSetting( "color", array( $hOpt, "colors" ), array() );
-addSetting( "editor", array( $hOpt, "editor" ), array() );
-addSetting( "restful", array( $hOpt, "rest" ), array() );
-addSetting( "misc", array( $hOpt, "misc" ), array() );
+addSetting( "general", array(), array( $hOpt, "general" ) );
+addSetting( "types", array(), array( $hOpt, "types") );
+addSetting( "social", array(), array( $hOpt, "social" ) );
+addSetting( "color", array(), array( $hOpt, "colors" ) );
+addSetting( "editor", array(), array( $hOpt, "editor" ) );
+addSetting( "restful", array(), array( $hOpt, "rest" ) );
+addSetting( "misc", array(), array( $hOpt, "misc" ) );
 
 if ( isset( $_POST['settings'] ) ) {
     foreach ($GLOBALS['GSettingsField'][$_POST['settings']] as $name => $value) {
@@ -123,6 +123,7 @@ require_once( 'header.php' ); ?>
             doSetting( $_GET['settings'] );
         } elseif ( isset( $_GET['options'] )) {
             renderSettingsForm( $_GET['options'] );
+            require_once( 'footer.php' );
         } ?>
     </div><?php
 require_once( 'footer.php' );

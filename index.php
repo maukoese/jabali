@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 if ( isset( $_GET['logout'] ) ) {
   session_destroy();
@@ -9,28 +8,8 @@ if ( !file_exists( 'app/config.php' ) ) {
   header( "Location: ./setup.php" );
 }
 
-if ( file_exists( '.jbl' ) ) {
-	header("HTTP/1.1 503 Service Temporarily Unavailable");
-	header("Status: 503 Service Temporarily Unavailable");
-	header("Retry-After: 3600");
-	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-		<html xml:lang=&quot;en&quot; lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;>
-			<head>
-				<meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; />
-				<title>Site upgrade in progress</title>
-				<meta name=&quot;robots&quot; content=&quot;none&quot; />
-			</head>
-			<body>
-				<h1>Site upgrade in progress</h1>
-				<p>This site is being upgraded, and can\'t currently be accessed.</p>
-				<p>It should be back up and running very soon. Please check back in a bit!</p>
-				<hr />
-			</body>
-		</html>';
-	exit();
-}
-
 require 'init.php';
+updatingJabali();
 
 $year = date( "Y" );
 $month = date( "m" );
@@ -55,6 +34,10 @@ if ( isset( $_POST['reset'] ) && $_POST['password'] !== "" ) {
 
 if ( isset( $_POST['forgot'] ) && $_POST['email'] !== "" ) {
   $USERS ->reset();
+}
+
+if ( isset( $_POST['contact'] ) && $_POST['email'] !== "" ) {
+  $MAILER ->send();
 }
 
 if ( isset( $_SESSION[JBLSALT.'Code' ] ) ) {
@@ -167,6 +150,11 @@ if( empty( $match ) || $match == "?logout" ) {
 		break;
 	case "feed":
 		rssFeed( $elements[0] );
+		break;
+	case 'manifest':
+		header('Content-Type:Application/json' );
+		$manifest = manifest();
+		echo json_encode( $manifest );
 		break;
 	default:
 		getHeader();

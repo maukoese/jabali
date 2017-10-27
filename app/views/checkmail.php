@@ -34,7 +34,7 @@
 	</label>
 	   <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php if ( isset( $_SESSION[JBLSALT.'Code'] ) ) { primaryColor(); } else { echo "madge"; } ?>" for="ilk" ><?php 
 	     if ( $_SESSION[JBLSALT.'Cap'] == "admin"  ) {
-	      _show_( '<li class="mdl-menu__item" data-val="admin">Admin<i class="mdl-color-text--white mdi mdi-lock alignright" role="presentation"></i></li>' );
+	      echo( '<li class="mdl-menu__item" data-val="admin">Admin<i class="mdl-color-text--white mdi mdi-lock alignright" role="presentation"></i></li>' );
 	     } ?>
 	     <li class="mdl-menu__item" data-val="organization">Organization<i class="mdl-color-text--white mdi mdi-city alignright" role="presentation"></i></li>
 	     <li class="mdl-menu__item" data-val="editor">Buyer<i class="mdl-color-text--white mdi mdi-note alignright" role="presentation"></i></li>
@@ -44,7 +44,7 @@
 	</div>
 	<div class="input-field mdl-cell mdl-cell--6-col"></div>
 
-	<input type="hidden" name="ilk" value="<?php _show_( $ilk ); ?>">
+	<input type="hidden" name="ilk" value="<?php echo( $ilk ); ?>">
 	<div class="input-field mdl-cell mdl-cell--3-col">
 	<button class="mdl-button mdl-button--fab mdl-button--colored alignright" type="submit" name="register" value="true"><i class="material-icons">arrow_forward</i></button>
 	</div>

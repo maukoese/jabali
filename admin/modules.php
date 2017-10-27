@@ -38,7 +38,7 @@ if ( isset( $_GET['install'] ) ) {
 
 } elseif ( isset( $_GET['view'] ) ) {
 	?>
-<title>Extension: <?php echo $_GET['key']; ?> [ <?php showOption( 'name' ); ?> ]</title>
+<title>Extension: <?php echo $_GET['key']; ?> - <?php showOption( 'name' ); ?></title>
   <div class="mdl-grid">
   <form method="POST" action="" class="mdl-grid mdl-cell mdl-cell--8-col mdl-shadow--2dp mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><?php
         $extension = $_GET['view'];

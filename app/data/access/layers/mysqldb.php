@@ -50,7 +50,7 @@ class MySQLDB {
 	* @return Returns an associative array of database records from a query result, 
 	* or null if there are no rows in the result
 	**/
-	function fetchArray( $result ){
+	function 	fetchArray( $result ){
 		return $result -> fetch_assoc();
 	}
 
@@ -112,7 +112,7 @@ class MySQLDB {
 	}
 
 	function setVal( $cols, $vals ){
-		$sql = "SET ( ";
+		$sql = "SET ";
 		if ( is_array( $cols ) && is_array( $vals ) ) {
 			array_walk( $cols, array( $this, 'clean' ) );
 			array_walk( $vals, array( $this, 'clean' ) );
@@ -128,8 +128,6 @@ class MySQLDB {
 		} else {
 			$sql .= $this -> clean( $cols ) . " = '" . $this -> clean( $vals ) . "'";
 		}
-		
-		$sql .= " ) ";
 
 		return $sql;
 	}

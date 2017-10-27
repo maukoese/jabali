@@ -52,7 +52,7 @@ class Posts {
     $conds = array( "id" => $this -> id );
 
     if ( $GLOBALS['JBLDB'] -> update( $this -> table, $cols, $vals, $conds ) ) {
-      return array( "status" => "Post ". $this -> id . "updated successfully!" );
+      return array( "status" => "Post ". $this -> id . " updated successfully!" );
     } else {
       return array( "status" => "Failed", "error" => $GLOBALS['JBLDB'] -> error() );
     }
@@ -76,7 +76,7 @@ class Posts {
 
       return $posts[0];
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "Request Failed", "error" => "Post Not Found" );
     }
     
   }
@@ -96,7 +96,7 @@ class Posts {
 
       return $posts[0];
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "Request Failed", "error" => "Post Not Found" );
     }
 
   }
@@ -104,7 +104,23 @@ class Posts {
   public function getAuthor( $author ){
 
     $conds = array( "author" => $author );
-    $posts = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
+    $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
+    if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
+      $posts = array();
+      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $posts[] = $post;
+      }
+
+      return $posts;
+    } else{
+      return array( "status" => "Request Failed", "error" => "Posts Not Found" );
+    }
+  }
+
+  public function getCategories( $category, $type = "article" ){
+
+    $conds = array( "template" => $skin, "ilk" => $type );
+    $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
       while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
@@ -117,10 +133,10 @@ class Posts {
     }
   }
 
-  public function getCategories( $category ){
+  public function getCompany( $company, $type = "article" ){
 
     $conds = array( "template" => $skin );
-    $posts = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
+    $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
       while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
@@ -133,10 +149,10 @@ class Posts {
     }
   }
 
-  public function getCompany( $company ){
+  public function getCreated( $date, $type = "article" ){
 
     $conds = array( "template" => $skin );
-    $posts = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
+    $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
       while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
@@ -149,10 +165,10 @@ class Posts {
     }
   }
 
-  public function getCreated( $date ){
+  public function getLevel( $level, $type = "article" ){
 
     $conds = array( "template" => $skin );
-    $posts = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
+    $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
       while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
@@ -165,10 +181,10 @@ class Posts {
     }
   }
 
-  public function getGender( $gender ){
+  public function getLocation( $location, $type = "article" ){
 
     $conds = array( "template" => $skin );
-    $posts = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
+    $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
       while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
@@ -181,10 +197,10 @@ class Posts {
     }
   }
 
-  public function getLevel( $level ){
+  public function getState( $status, $type = "article" ){
 
     $conds = array( "template" => $skin );
-    $posts = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
+    $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
       while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
@@ -197,42 +213,10 @@ class Posts {
     }
   }
 
-  public function getLocation( $location ){
-
-    $conds = array( "template" => $skin );
-    $posts = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
-    if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
-      $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
-        $posts[] = $post;
-      }
-
-      return $posts;
-    } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
-    }
-  }
-
-  public function getState( $status ){
-
-    $conds = array( "template" => $skin );
-    $posts = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
-    if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
-      $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
-        $posts[] = $post;
-      }
-
-      return $posts;
-    } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
-    }
-  }
-
-  public function getTypes( $type ){
+  public function getTypes( $type = "article" ){
 
     $conds = array( "ilk" => $type );
-    $posts = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
+    $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
       while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
@@ -245,10 +229,10 @@ class Posts {
     }
   }
 
-  public function getUpdated( $date ){
+  public function getUpdated( $date, $type = "article" ){
 
     $conds = array( "updated" => $date );
-    $posts = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
+    $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
       while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
@@ -277,7 +261,7 @@ class Posts {
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchObject( $results ) ) {
+      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results ) ) {
         $posts[] = $post;
       }
 
@@ -287,10 +271,10 @@ class Posts {
     }
   }
 
-  public function sweepy(){
+  public function sweepy( $type = "article"){
 
-    $conds = array( "state" => "published", "ilk" => "article" );
-    $posts = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
+    $conds = array( "state" => "published", "ilk" => $type );
+    $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     return new ResultSet( $posts );
   }
 }

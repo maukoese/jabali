@@ -35,12 +35,12 @@ if ( isset( $_GET['add'] ) ) { ?>
             </div>
             <div class="input-field">
             <i class="material-icons prefix">label_outline</i>
-              <input type="text" id="themesname" name="short_name" value="<?php showOption( 'name' ); ?>">
+              <input type="text" id="themesname" name="short_name" value="<?php showOption( 'description' ); ?>">
               <label for="themesname" >App Short Name</label>
             </div>
             <div class="input-field">
             <i class="material-icons prefix">description</i>
-              <textarea id="themedesc" name="" class="materialize-textarea"><?php showOption( 'description' ); ?></textarea>
+              <textarea id="themedesc" name="" class="materialize-textarea"><?php showOption( 'about' ); ?></textarea>
               <label for="themedesc" >App Description</label>
             </div>
             <div class="input-field">
@@ -67,7 +67,7 @@ if ( isset( $_GET['add'] ) ) { ?>
             </div>
             <div class="input-field">
             <i class="material-icons prefix">palette</i>
-              <input type="text" id="themesname" name="short_name" value="<?php _show_( $GLOBALS['GPrimary'] ); ?>">
+              <input type="text" id="themesname" name="short_name" value="<?php echo( $GLOBALS['GPrimary'] ); ?>">
               <label for="themesname" >Background Color</label>
             </div>
             <a href="?add=icons">Add Icons</a>

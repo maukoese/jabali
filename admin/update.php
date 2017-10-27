@@ -2,7 +2,7 @@
 require_once( '../init.php' );
 require_once( 'header.php' );
 ini_set('max_execution_time',60); ?>
-<title>Update Jabali [ <?php showOption( 'name' ); ?> ]</title>
+<title>Update Jabali - <?php showOption( 'name' ); ?></title>
 <div class="mdl-grid">
 	<div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><?php
 
@@ -98,7 +98,7 @@ ini_set('max_execution_time',60); ?>
 					$updated = TRUE;
 				} else { ?>
 					<div class="mdl-card__supporting-text">
-					<h3>Jabali <?php _show_( $new_version ); ?> is Ready!</h3>
+					<h3>Jabali <?php echo( $new_version ); ?> is Ready!</h3>
 					</div>
 					<div class="mdl-card__menu alignright">
 						<a class="mdl-button mdl-button--fab mdl-button--colored" id="updatenow" href="?settings=update&do=true">
@@ -116,7 +116,7 @@ ini_set('max_execution_time',60); ?>
 		        <a id="updatenow" href="?settings=update&do=now">
 		        	<i class="material-icons">system_update_alt</i>
 		        </a><div class="mdl-tooltip" for="updatenow">Update Now</div>
-		        <a id="dlnow" href="<?php _show_( $nJD['download'] ); ?>">
+		        <a id="dlnow" href="<?php echo( $nJD['download'] ); ?>">
 		        	<i class="material-icons">file_download</i>
 		        </a><div class="mdl-tooltip" for="dlnow">Download Jabali</div>
 			</div>

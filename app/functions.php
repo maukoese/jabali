@@ -1,8 +1,8 @@
 <?php 
 /**
 * @package Jabali Framework
-* @subpackage Database
-* @link https://docs.mauko.co.ke/jabali/jabali
+* @subpackage Common functions
+* @link https://docs.jabalicms.org/functions
 * @author Mauko Maunde
 * @since 0.17.09
 **/
@@ -10,7 +10,6 @@
 /**
 * Default Date/Timezone
 **/
-date_default_timezone_set( "Africa/Nairobi" );
 
 /**
 * Install main instance of Jabali
@@ -174,41 +173,85 @@ function getFile( $path, $file ) {
 /**
 * Load stylesheets
 **/
-function getStyle( $link ) { ?>
+function loadStyle( $link, $theme = false ) {
+	if ( $theme !== false ) {
+	 	$themes = _THEMES.$theme.'/assets/';
+	 } else {
+	 	$themes = '';
+	 } ?>
 
-	<link rel="stylesheet" type="text/css" href="<?php echo $link; ?>"><?php 
+	<link rel="stylesheet" type="text/css" href="<?php echo $themes.$link; ?>"><?php 
 }
 
 /**
 * Load Javascript
 **/
-function getScript( $link ) { ?>
+function loadScript( $link, $theme = false ) {
+	if ( $theme !== false ) {
+	 	$themes = _THEMES.$theme.'/assets/';
+	 } else {
+	 	$themes = '';
+	 } ?>
 
-	<script src="<?php echo $link; ?>"></script><?php 
+	<script src="<?php echo $themes.$link; ?>"></script><?php 
+}
+
+/**
+* Load Javascript
+**/
+function loadImage( $link, $theme = false, $width = 250, $alt = '' ) {
+	if ( $theme !== false ) {
+	 	$themes = _THEMES.$theme.'/assets/';
+	 } else {
+	 	$themes = '';
+	 } ?>
+
+	<img src="<?php echo $themes.$link; ?>" width="<?php echo( $width ); ?>" alt="<?php echo( $alt )?>" /><?php 
+}
+/**
+* Load stylesheets
+**/
+function loadStyles( $links, $theme = false ) {
+	if ( $theme !== false ) {
+	 	$themes = $theme;
+	 } else {
+	 	$themes = false;
+	 }
+
+	 foreach ($links as $link ) {
+	 	loadStyle( $link, $themes );
+	 }
+}
+
+/**
+* Load Javascript
+**/
+function loadScripts( $links, $theme = false ) {
+	if ( $theme !== false ) {
+	 	$themes = $theme;
+	 } else {
+	 	$themes = false;
+	 }
+
+	 foreach ($links as $link ) {
+	 	loadScript( $link, $themes );
+	 }
 }
 
 /**
 * Display home logo
 **/
-function frontlogo( $width = "250px;" ) {
+function frontlogo( $width = "250px;", $class = "" ) {
 	
-	echo '<a href="' ._ROOT. '"><img src="' . getOption( 'homelogo' ) . '" width="' . $width . '"></a>';
+	echo '<a class = "'.$class.'" href="' ._ROOT. '"><img src="' . getOption( 'homelogo' ) . '" width="' . $width . '"></a>';
 }
 
 /**
 * Display main logo
 **/
-function headerLogo( $width = "150px;" ) {
+function headerLogo( $width = "150px;", $class = ""  ) {
 	
-	echo '<a href="' ._ROOT. '"><img src="' . getOption( 'headerlogo' ) . '" width="' . $width . '"></a>';
-}
-
-/**
-* Print out something
-**/
-function _show_( $what ) {
-
-	echo $what;
+	echo '<a class = "'.$class.'" href="' ._ROOT. '"><img src="' . getOption( 'headerlogo' ) . '" width="' . $width . '"></a>';
 }
 
 function _shout_( $what, $type = "alert" ) {
@@ -350,10 +393,10 @@ function getMsgCount() {
 	      $messagecount = $getMessages -> num_rows;
 	      echo $messagecount;
 	    } else {
-	      _show_( '0' );
+	      echo( '0' );
 	    }
 	} else {
-		_show_( '0' );
+		echo( '0' );
 	}
 }
 
@@ -367,10 +410,10 @@ function getNoteCount() {
 		  	$messagecount = $getMessages -> num_rows;
 		  	echo $messagecount;
 		} else {
-		  	_show_( '0' );
+		  	echo( '0' );
 		}
 	} else {
-		_show_( '0' );
+		echo( '0' );
 	}
 }
 
@@ -454,7 +497,11 @@ function getOption( $code ) {
     $getOptions = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."options WHERE code='".$code."'" );
     if ( $getOptions -> num_rows > 0 ) {
         while ( $siteOption = mysqli_fetch_assoc( $getOptions) ) { 
-           $option = $siteOption['details'];
+			if ( substr( $siteOption['details'], 0,1 ) == "[" || substr( $siteOption['details'], 0,1 ) == "{" ) {
+				$option = json_decode( $siteOption['details'], true );
+			} else {
+				$option = $siteOption['details'];
+			}
         }
     }
     
@@ -468,7 +515,7 @@ function showOption( $code ) {
     $getOptions = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."options WHERE code='".$code."'" );
     if ( $getOptions -> num_rows > 0 ) {
         while ( $siteOption = mysqli_fetch_assoc( $getOptions) ) { 
-            _show_( $siteOption['details'] );
+            echo( $siteOption['details'] );
         }
     }
 }
@@ -566,7 +613,7 @@ function tableHeader( $collums ) { ?>
 			<thead>
 				<tr><?php
 				foreach ($collums as $collum ) { ?>
-					<th class="mdl-data-table__cell--non-numeric"><?php _show_( strtoupper( $collum ) ); ?></th><?php
+					<th class="mdl-data-table__cell--non-numeric"><?php echo( strtoupper( $collum ) ); ?></th><?php
 				} ?>
 				</tr>
 			</thead>
@@ -602,11 +649,11 @@ function tableFooter() { ?>
 //form( $name, , , ,, array( $fields ) );
 //
 function form( $name, $enctype = 'multipart/form-data', $method = 'POST', $action = '', $class = null, $fields = null ){ ?>
-	<form enctype="<?php _show_( $enctype ); ?>" name="<?php _show_( $name ); ?>" method="<?php _show_( $method ); ?>" action="<?php _show_( $action ); ?>" class="<?php _show_( $class ); ?>">
+	<form enctype="<?php echo( $enctype ); ?>" name="<?php echo( $name ); ?>" method="<?php echo( $method ); ?>" action="<?php echo( $action ); ?>" class="<?php echo( $class ); ?>">
 	<?php foreach ($fields as $field ) { ?>
-		<div class="input field <?php _show_( $field['length'] ); ?>">
-		<i class="<?php _show_( $field['icon-class'] ); ?>"><?php _show_( $field['icon'] ); ?></i>
-			<<?php _show_( $field['genre'] ); ?> class="<?php _show_( $field['class'] ); ?>" type="<?php _show_( $field['type'] ); ?>" name="<?php _show_( $field['name'] ); ?>" placeholder="<?php _show_( $field['placeholder'] ); ?>" value=""><?php _show_( $field['value'] ); ?></<?php _show_( $field['genre'] ); ?>>
+		<div class="input field <?php echo( $field['length'] ); ?>">
+		<i class="<?php echo( $field['icon-class'] ); ?>"><?php echo( $field['icon'] ); ?></i>
+			<<?php echo( $field['genre'] ); ?> class="<?php echo( $field['class'] ); ?>" type="<?php echo( $field['type'] ); ?>" name="<?php echo( $field['name'] ); ?>" placeholder="<?php echo( $field['placeholder'] ); ?>" value=""><?php echo( $field['value'] ); ?></<?php echo( $field['genre'] ); ?>>
 		</div>
 	<?php } ?>
 	</form><?php
@@ -651,11 +698,11 @@ function error404( $code ) { ?>
 		<center>
 			<div class="mdl-cell mdl-cell--7-col mdl-card mdl-color--red" >
 				<div class="mdl-card-media">
-					<img src="<?php _show_( _IMAGES.'404.jpg'); ?>" width="100%" style="overflow: hidden;" >
+					<img src="<?php echo( _IMAGES.'404.jpg'); ?>" width="100%" style="overflow: hidden;" >
 				</div>
 				<div class="mdl-card__title mdl-card--expand">
 					<div class="mdl-card__title-text">
-					<center>Error 404! <?php _show_( ucwords( $code ) ); ?> Not Found!</center>
+					<center>Error 404! <?php echo( ucwords( $code ) ); ?> Not Found!</center>
 				</div>
 			  	<div class="mdl-layout-spacer"></div>
 			  	<div class="mdl-card__subtitle-text">
@@ -718,22 +765,6 @@ function add_shortcode($tag, $callback) {
 function do_shortcode($str) {
 
     return Classes\Shortcodes::instance()->doShortcode($str);
-}
-
-function loadScript( $link ){
-	echo '<script src="' . $link . '" ></script';
-}
-
-function localScript( $link ){
-	echo '<script src="' . $link . '" ></script';
-}
-
-function loadStyle( $link ){
-	echo '<link rel="stylesheet" href="' . $link . '" >';
-}
-
-function localStyle( $link ){
-	echo '<link rel="stylesheet" href="' . $link . '" >';
 }
 
 function addMeta( $name, $content ){
@@ -810,7 +841,7 @@ function rewriteRules( $rule, $args ){
 	}
 }
 
-function addSetting( $page, $callable, $args, $label = "Options" ){
+function addSetting( $page = "", $label = "Options", $callable = "echo", $args = "" ){
 	if ( !isset( $GLOBALS['GSettings'][$page] ) ) {
 		$GLOBALS['GSettings'][$page] = array();
 	}
@@ -922,7 +953,7 @@ function doSettingFields( $name, $field ){
 			        <input type="file">
 			      </div>
 			      <div class="file-path-wrapper">
-			        <input name="'. $name .'" class="file-path validate" type="text" value="Select '. ucwords( $name ) .'">
+			        <input name="'. $name .'" class="file-path validate" type="text" value="'. ucwords( $label ) .'">
 			      </div>
 			    </div>';
 			  	break;
@@ -1024,7 +1055,7 @@ function restApi( $elements ){
 	header('Content-Type:Application/json' );
 
 	if ( empty( $elements[0] ) ) {
-		$d = array( "notice" => "This is The Jabali RESTFUL API" );
+		$d = array( "name" => getOption( 'name' ). ' API', "description" => getOption( 'description' ), "details" => getOption( 'about' ), "version" => "1.0" , "date" => date( 'Y-m-d H:i:s'), "generator" => "Jabali v.17.10" );
 		echo json_encode( $d ) ;
 	} elseif ( $elements[0] == "themes") {
 			$themes = array();
@@ -1073,14 +1104,15 @@ function restApi( $elements ){
 				echo json_encode( (array) $table -> delete( /*$details['id']*/ $elements[2] ) );
 				break;
 
-			case 'view':
+			case 'get':
 				if ( empty( $elements[2] ) ) {
 					 echo json_encode( $table -> sweep() );
 				} elseif ( is_numeric( $elements[2] ) ) {
 					echo json_encode( $table -> getId( $elements[2] ) );
 				} else {
 					if ( empty( $elements[3] ) ) {
-						echo json_encode( $table -> getTypes( $elements[2] ) );
+						$type = substr( $elements[2], 0,-1);
+						echo json_encode( $table -> getTypes( $type ) );
 					} else {
 						if ( empty( $elements[4] ) ) {
 							if ( is_numeric( $elements[3] ) ) {
@@ -1149,39 +1181,43 @@ function isTheme ( $theme) {
 }
 
 function rssFeed( $type ){
-		header("Content-Type: application/xml; charset=UTF-8");
+	header("Content-Type: application/xml; charset=UTF-8");
 
 	if ( empty( $type)  || $type == "rss" ) {
-		$content = '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
-		$content .= '<rss version="2.0">' . "\n";
-		$content .= '<channel>' . "\n";
-		$content .= '<title>' . getOption( 'name' ) . '</title>' . "\n";
-		$content .= '<link>' . _ROOT . '</link>' . "\n";
-		$content .= '<description>' . getOption( 'description' ) . '</description>' . "\n";
-		$content .= '<language>' . getOption( 'language' ) . '</language>' . "\n";
-		$content .= '<copyright>' . getOption( 'copyright' ) . '</copyright>' . "\n";
-		$content .= '<pubDate>' . date( 'Y-m-d' ). '</pubDate>' . "\n";
-		$content .= '<generator>Jabali RSS Feed</generator>' . "\n";
-		$content .= '<docs>https://jabali.mauko.co.ke/docs/api/feed</docs>' . "\n";
-		$content .= '<image>' . getOption( 'name' ) . '</image>' . "\n";
-		$content .= '<title>' . getOption( 'name' ) . '</title>' . "\n";
-		$content .= '<url>' . _ROOT . '</url>' . "\n";
-		$content .= '<width>88</width>' . "\n";
-		$content .= '<height>88</height>' . "\n";
-		$content .= '</image>' . "\n";
+		$content = "
+		<?xml version=\"1.0\" encoding=\"utf-8\" ?>
+			<rss version=\"2.0\">
+			<channel>
+				<title>" . getOption( 'name' ) . "</title>
+				<link>" . _ROOT . "</link>" . "
+				<description>" . getOption( 'description' ) . "</description>
+				<language>" . getOption( 'language' ) . "</language>
+				<copyright>" . getOption( 'copyright' ) . "</copyright>
+				<pubDate>" . date( 'Y-m-d' ). "</pubDate>
+				<generator>Jabali RSS Feed</generator>
+				<image>" . getOption( 'name' ) . "</image>
+					<title>" . getOption( 'name' ) . "</title>
+					<url>" . _ROOT . "</url>
+					<width>88</width>
+					<height>88</height>
+				</image>\n";
 
-		$posts = $GLOBALS['POSTS'] -> sweepy();
-		for ( $i=0; $i < $posts -> rowCount(); $i++ ) {
-        $post = $posts -> getNext( $GLOBALS['POSTS'] );
-			$content .= '<item>' . "\n";
-			$content .= '<title>' . htmlspecialchars( $post -> name ) . '</title>' . "\n";
-			$content .= '<link>' . htmlspecialchars( $post -> link ) . '<link>' . "\n";
-			$content .= '<description>' . htmlspecialchars( $post -> details ) . '</description>' . "\n";
-			$content .= '<category>' . htmlspecialchars( $post -> categories ) . '</category>' . "\n";
-			$content .= '<comments>' . htmlspecialchars( _ROOT . '/comments/posts/' . $post -> id ) . '</comments>' . "\n";
-			$content .= '<guid>' . htmlspecialchars( $post -> id ) . '</guid>' . "\n";
-			$content .= '<pubDate' . date( "D, d M Y H:i:s O", strtotime( htmlspecialchars( $post -> created ) ) ) . '</pubDate' . "\n";
-			$content .= '</item>' . "\n";
+		$posts = $GLOBALS['POSTS'] -> getTypes();
+
+		foreach ( $posts as $post ) {
+			$post = (object)$post;
+			$data = "
+			<item>
+				<title>" . htmlspecialchars( $post -> name ) . "</title>
+				<link>" . htmlspecialchars( $post -> link ) . "<link>
+				<description>" . htmlspecialchars( $post -> details ) . "</description>
+				<category>" . htmlspecialchars( $post -> categories ) . "</category>
+				<comments>" . htmlspecialchars( _ROOT . "/comments/posts/" . $post -> id ) . "</comments>
+				<guid>" . htmlspecialchars( $post -> id ) . "</guid>
+				<pubDate" . date( "D, d M Y H:i:s O", strtotime( htmlspecialchars( $post -> created ) ) ) . "</pubDate
+			</item>";
+
+			echo $data;
 		}
 
 		$content .= '</channel>' . "\n";
@@ -1214,11 +1250,24 @@ function intallTheme( $source ) {
 	  $install -> extractTo( _ABSTHEMES_ );
 	  $install -> close();
 	} else {
-	  echo "Could not install theme!";
+	  _shout_( "Could not install theme!", "error" );
 	}
 }
 
-function fileContents($type, $class, $package ){
+/**
+* @type - File type
+* @class - Class of file
+* @package - Package name
+**/
+
+function fileContents( $type, $package = null, $class = null ){
+	if ( is_null( $package ) ) {
+		$package = array();
+		$package['name'] = "Jabali";
+		$package['author'] = "Mauko Maunde";
+		$package['website'] = "https://jabalicms.org";
+		$package['version'] = "17.11";
+	}
 	switch ( $type ) {
 		case 'php':
 			$comments = "<?php ";
@@ -1269,8 +1318,8 @@ function fileContents($type, $class, $package ){
 }
 
 function hasPosts(){
-	if ( $GLOBALS['gpost_index'] < $GLOBALS['gpost_count'] ) {
-		$GLOBALS['gpost_count'] = count( $GLOBALS['gposts'] );
+	if ( $GLOBALS['gpost_index'] <= $GLOBALS['gpost_count'] ) {
+		$GLOBALS['gpost_count'] = count( $GLOBALS['gposts'] )-1;
 		return true;
 	} else {
 		$GLOBALS['gpost_count'] = 0;
@@ -1283,7 +1332,7 @@ function thePost(){
 		return false;
 	}
 
-	$GLOBALS['gpost'] = $GLOBALS['gposts'][$GLOBALS['gpost_index']+1];
+	$GLOBALS['gpost'] = $GLOBALS['gposts'][ $GLOBALS['gpost_index'] ];
 	$GLOBALS['gpost_index']++;
 	
 	return $GLOBALS['gpost'];
@@ -1291,6 +1340,38 @@ function thePost(){
 
 function theTitle(){
 	echo $GLOBALS['gpost']['name'];
+}
+
+function theContent(){
+	echo $GLOBALS['gpost']['details'];
+}
+ 
+function theCategories( $class = '' ){
+	$tags = $GLOBALS['gpost']['categories'];
+	$tags = explode(", ", $tags );
+	$tagged = array(); 
+	foreach ($tags as $tag ) {
+		$tagged[] = '<a class="'.$class.'" href="'._ROOT.'/categories/'.$tag.'">'.ucwords( $tag ).'</a>';
+	}
+
+	$tags = implode(', ', $tagged );
+	echo $tags;
+}
+
+function theTags( $class = '' ){
+	$tags = $GLOBALS['gpost']['tags'];
+	$tags = explode(", ", $tags );
+	$tagged = array(); 
+	foreach ($tags as $tag ) {
+		$tagged[] = '<a class="'.$class.'" href="'._ROOT.'/tags/'.$tag.'">'.ucwords( $tag ).'</a>';
+	}
+
+	$tags = implode(', ', $tagged );
+	echo $tags;
+}
+
+function theImage(){
+	echo $GLOBALS['gpost']['avatar'];
 }
 
 function headerTitle( $table ){
@@ -1340,5 +1421,125 @@ function headerTitle( $table ){
 
 // $rs = $GLOBALS['POSTS'] -> sweepy();
 // for ( $i=0; $i < $rs -> rowCount(); $i++ ) {
-//   $userRow = $rs -> getNext( $GLOBALS['POSTS'] );
+//   $user = $rs -> getNext( $GLOBALS['POSTS'] );
 // }
+
+function head(){
+	echo( '<!-- Basic App Metadata -->
+<meta charset="'. getOption( 'charset' ) .'">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="description" content="'. getOption( 'description' ) .'">
+<meta name="keywords" content="Keywords">
+<meta name="theme-color" content="white"/>
+<meta name="background-color" content="#008aff"/>
+
+<!-- Make our app progressive -->
+<!-- Android  -->
+<meta name="theme-color" content="teal">
+<meta name="mobile-web-app-capable" content="yes">
+
+<!-- Add to homescreen for Safari on iOS -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="'. getOption( 'name' ) .'">
+<link rel="apple-touch-icon-precomposed" href="' . getOption( 'favicon' ) .'">
+
+<!-- Pinned Sites  -->
+<meta name="application-name" content="'. getOption( 'name' ) .'">
+<meta name="msapplication-tooltip" content="'. getOption( 'name' ) .'">
+<meta name="msapplication-starturl" content="/">
+<link rel="icon" sizes="192x192" href="' . getOption( 'favicon' ) .'">
+
+<!-- Tile icon for Win8 (144x144 + tile color) -->
+<meta name="msapplication-TileImage" content="' . getOption( 'favicon' ) .'">
+<meta name="msapplication-TileColor" content="#008080">
+
+<link rel="shortcut icon" href="' . getOption( 'favicon' ) .'">
+
+<link rel="manifest" href="'. _ROOT.'/manifest" >' );
+}
+
+function manifest(){
+	$manifest["name"] = getOption('name');
+	$manifest["short_name"] = getOption('name');
+	$manifest["start_url"] = ".";
+	$manifest["orientation"] = "portrait";
+	$manifest["display"] = "standalone";
+	$manifest["theme_color"] = "teal";
+	$manifest["background_color"] = "white";
+	$manifest["description"] = getOption('description');
+	$manifest["icons"][] = array( 'src' => getOption('favicon'), 'type' => "image/png", 'sizes' => "96x96");
+	$manifest["icons"][] = array( 'src' => getOption('favicon'), 'type' => "image/png", 'sizes' => "144x144");
+	$manifest["icons"][] = array( 'src' => getOption('favicon'), 'type' => "image/png", 'sizes' => "192x192");
+	$manifest["icons"][] = array( 'src' => getOption('favicon'), 'type' => "image/png", 'sizes' => "300x300");
+	$manifest["related_applications"][] = array( 'platform' => "web", 'url' => "");
+	$manifest["related_applications"][] = array( 'platform' => "play", 'url' => "");
+
+	return $manifest;
+}
+
+function submitButton( $name = "create", $position = "alignright", $icon = "save", $form = false )
+{	csrf();
+	if ( $form == true ) $form = '</form>'; else $form = '';
+	echo( '<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored '.$position.'" type="submit" name="'.$name.'"><i class="material-icons">'.$icon.'</i></button>'.$form );
+}
+
+
+function hiddenFields( $fields )
+{
+	foreach ($fields as $name => $value) {
+		echo( '<input type="hidden" name="'.$name.'" value="'.$value.'">' );
+	}
+}
+
+function updatingJabali()
+{
+	if ( file_exists( '.jbl' ) ) {
+		header("HTTP/1.1 503 Service Temporarily Unavailable");
+		header("Status: 503 Service Temporarily Unavailable");
+		header("Retry-After: 3600");
+		echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+			<html xml:lang=&quot;en&quot; lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;>
+				<head>
+					<meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; />
+					<title>Site upgrade in progress</title>
+					<meta name=&quot;robots&quot; content=&quot;none&quot; />
+				</head>
+				<body>
+					<h1>Site upgrade in progress</h1>
+					<p>This site is being upgraded, and can\'t currently be accessed.</p>
+					<p>It should be back up and running very soon. Please check back in a bit!</p>
+					<hr />
+				</body>
+			</html>';
+		exit();
+	}
+}
+
+function userIP()
+{
+	$client = $_SERVER['HTTP_CLIENT_IP'];
+	$forward = $_SERVER['HTTP_X_FORWARDED_FOR'];
+	$remote = $_SERVER['REMOTE_ADDR'];
+
+	if ( filter_var( $client, FILTER_VALIDATE_IP ) ) {
+		return $client;
+	} elseif ( filter_var( $forward, FILTER_VALIDATE_IP ) ) {
+		return $forward;
+	} else {
+		return $remote;
+	}
+}
+
+function noAccess( $access = null )
+{
+	if ( !is_null( $access ) ) {
+		define('ACCESS', true );
+	}
+
+	if ( !defined( 'ACCESS' ) ) {
+		die( 'Direct access of file not allowed' );
+		exit();
+	}
+}

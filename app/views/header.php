@@ -98,12 +98,12 @@
       <a id="admin" href="#" class="mdi mdi-lock mdl-badge mdl-badge--overlap mdl-button--icon"></a>
       <div class="mdl-tooltip" for="admin">Admin</div>
         <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-color--<?php primaryColor(); ?>" for="admin">
-        <a class="mdl-cell" href="<?php _show_(  _ADMIN .'index?page=my dashboard' ); ?>"><i class="material-icons mdl-list__item-icon">dashboard</i></a>
-        <a class="mdl-cell" href="<?php _show_(  _ADMIN .'users?view='. $_SESSION[JBLSALT.'Code'] .'&key='.$_SESSION[JBLSALT.'Alias'] ); ?>"><i class="material-icons mdl-list__item-icon">perm_identity</i></a>
-        <a class="mdl-cell" href="<?php _show_(  _ADMIN .'options?settings=color' ); ?>"><i class="material-icons mdl-list__item-icon">palette</i></a>
+        <a class="mdl-cell" href="<?php echo(  _ADMIN .'index?page=my dashboard' ); ?>"><i class="material-icons mdl-list__item-icon">dashboard</i></a>
+        <a class="mdl-cell" href="<?php echo(  _ADMIN .'users?view='. $_SESSION[JBLSALT.'Code'] .'&key='.$_SESSION[JBLSALT.'Alias'] ); ?>"><i class="material-icons mdl-list__item-icon">perm_identity</i></a>
+        <a class="mdl-cell" href="<?php echo(  _ADMIN .'options?settings=color' ); ?>"><i class="material-icons mdl-list__item-icon">palette</i></a>
         </ul><?php
       } else { ?>
-      <a id="admin" href="<?php _show_(  _ROOT.'signin/jabali' ); ?>" class="mdi mdi-exit-to-app mdl-badge mdl-badge--overlap mdl-button--icon"></a><?php 
+      <a id="admin" href="<?php echo(  _ROOT.'signin/jabali' ); ?>" class="mdi mdi-exit-to-app mdl-badge mdl-badge--overlap mdl-button--icon"></a><?php 
       } ?>
 
     </div>

@@ -8,19 +8,22 @@ require_once( '../init.php' );
 require_once( 'header.php' );
 ?>
 <title>Jabali SQL Sandbox</title>
-<?php
+<div class="mdl-grid">
+<div class="mdl-cell mdl-cell--12-col mdl-color--blue"><?php
  if ( hasPosts() ) {
- 	while ( hasPosts() ) {
- 		thePost();
+  while ( hasPosts() ) {
+    thePost();
 
- 		theTitle();
- 	}
+    theTitle();
+    echo( '<br>');
+    theContent();
+    echo( '<br>');
+    echo( '<br>');
+  }
  } ?>
-
-<!-- <div class="search input-field">
-	<input type="text" name="searchterm" autocomplete="off" placeholder="Search">
-	<div class="result"></div>
-</div> -->
+   
+ </div>
+</div>
 
 <script type="text/javascript">
 	$(document).ready(function(){

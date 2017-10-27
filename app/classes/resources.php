@@ -119,18 +119,18 @@ class Resources {
   }
 
   function getResourcesType( $type) { ?>
-      <title><?php _show_( ucfirst( $type) ); ?>s List [ <?php showOption( 'name' ); ?> ]</title><?php 
+      <title><?php echo( ucfirst( $type) ); ?>s List - <?php showOption( 'name' ); ?></title><?php 
     $getResourcesBy = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."resources WHERE state = 'active' AND ilk='".$type."'" );
     if ( $getResourcesBy -> num_rows > 0) {
       ?>
-      <a href="./resource?create=<?php _show_( $type ); ?>" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+      <a href="./resource?create=<?php echo( $type ); ?>" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
   <i class="material-icons">edit</i></a>
       <div class="mdl-grid">
         <div class="mdl-cell--12-col" >
             <center>
             <div class="input-field search-box">
             <i class="material-icons prefix">search</i>
-            <input type="text" placeholder="Search <?php _show_( ucfirst( $type) ); ?>">
+            <input type="text" placeholder="Search <?php echo( ucfirst( $type) ); ?>">
             </div></center>
             <div class="result"></div>
         </div>
@@ -150,23 +150,23 @@ class Resources {
         <tbody>
         <tr>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $resourcesDetails['name'] ); ?>
+          <?php echo( $resourcesDetails['name'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $resourcesDetails['email'] ); ?>
+          <?php echo( $resourcesDetails['email'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $resourcesDetails['phone'] ); ?>
+          <?php echo( $resourcesDetails['phone'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( ucwords( $resourcesDetails['location'] ) ); ?>
+          <?php echo( ucwords( $resourcesDetails['location'] ) ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-        <a href="./resource?view=<?php _show_( $resourcesDetails['id'] ); ?>&key=<?php _show_( $resourcesDetails['name'] ); ?>" ><i class="material-icons">perm_identity</i></a> 
-        <a href="tel:<?php _show_( $resourcesDetails['phone'] ); ?>" ><i class="material-icons">phone</i></a> 
-        <a href="?resource?message?create=message&code=<?php _show_( $_SESSION[JBLSALT.'Code'] ); ?>" ><i class="material-icons">message</i></a>  
-        <a href="./resource?edit=<?php _show_( $resourcesDetails['id'] ); ?>&key=<?php _show_( $resourcesDetails['name'] ); ?>" ><i class="material-icons">edit</i></a> 
-        <a href="./resource?delete=<?php _show_( $resourcesDetails['id'] ); ?>" ><i class="material-icons">delete</i></a>
+        <a href="./resource?view=<?php echo( $resourcesDetails['id'] ); ?>&key=<?php echo( $resourcesDetails['name'] ); ?>" ><i class="material-icons">perm_identity</i></a> 
+        <a href="tel:<?php echo( $resourcesDetails['phone'] ); ?>" ><i class="material-icons">phone</i></a> 
+        <a href="?resource?message?create=message&code=<?php echo( $_SESSION[JBLSALT.'Code'] ); ?>" ><i class="material-icons">message</i></a>  
+        <a href="./resource?edit=<?php echo( $resourcesDetails['id'] ); ?>&key=<?php echo( $resourcesDetails['name'] ); ?>" ><i class="material-icons">edit</i></a> 
+        <a href="./resource?delete=<?php echo( $resourcesDetails['id'] ); ?>" ><i class="material-icons">delete</i></a>
         </td>
         </tr>
         </tbody><?php 
@@ -187,7 +187,7 @@ class Resources {
         </thead>
         <tbody>
         <tr>
-        <td><p>No <?php _show_( ucwords( $type. 's' ) ); ?> Found</p></td>
+        <td><p>No <?php echo( ucwords( $type. 's' ) ); ?> Found</p></td>
         </tr>
         </tbody>
       </table>
@@ -196,18 +196,18 @@ class Resources {
   }
 
   function getResourcesLoc( $location) { ?>
-      <title>Resources In <?php _show_( ucwords( $location) ); ?> [ <?php showOption( 'name' ); ?> ]</title><?php 
+      <title>Resources In <?php echo( ucwords( $location) ); ?> - <?php showOption( 'name' ); ?></title><?php 
     $getResourcesBy = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."resources WHERE ilk = 'center' AND state = 'active' AND location='".$location."'" );
     if ( $getResourcesBy -> num_rows > 0) {
       ?>
-      <a href="./resource?create=<?php _show_( $type ); ?>" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+      <a href="./resource?create=<?php echo( $type ); ?>" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
   <i class="material-icons">edit</i></a>
       <div class="mdl-grid">
         <div class="mdl-cell--12-col" >
             <center>
             <div class="input-field search-box">
             <i class="material-icons prefix">search</i>
-            <input type="text" placeholder="Search <?php _show_( ucfirst( $type) ); ?>">
+            <input type="text" placeholder="Search <?php echo( ucfirst( $type) ); ?>">
             </div></center>
             <div class="result"></div>
         </div>
@@ -227,23 +227,23 @@ class Resources {
         <tbody>
         <tr>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $resourcesDetails['name'] ); ?>
+          <?php echo( $resourcesDetails['name'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $resourcesDetails['email'] ); ?>
+          <?php echo( $resourcesDetails['email'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $resourcesDetails['phone'] ); ?>
+          <?php echo( $resourcesDetails['phone'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( ucwords( $resourcesDetails['location'] ) ); ?>
+          <?php echo( ucwords( $resourcesDetails['location'] ) ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-        <a href="./resource?view=<?php _show_( $resourcesDetails['id'] ); ?>&key=<?php _show_( $resourcesDetails['name'] ); ?>" ><i class="material-icons">open_in_new</i></a> 
-        <a href="tel:<?php _show_( $resourcesDetails['phone'] ); ?>" ><i class="material-icons">phone</i></a> 
-        <a href="?resource?message?create=message&code=<?php _show_( $_SESSION[JBLSALT.'Code'] ); ?>" ><i class="material-icons">message</i></a>  
-        <a href="./resource?edit=<?php _show_( $resourcesDetails['id'] ); ?>&key=<?php _show_( $resourcesDetails['name'] ); ?>" ><i class="material-icons">edit</i></a> 
-        <a href="./resource?delete=<?php _show_( $resourcesDetails['id'] ); ?>" ><i class="material-icons">delete</i></a>
+        <a href="./resource?view=<?php echo( $resourcesDetails['id'] ); ?>&key=<?php echo( $resourcesDetails['name'] ); ?>" ><i class="material-icons">open_in_new</i></a> 
+        <a href="tel:<?php echo( $resourcesDetails['phone'] ); ?>" ><i class="material-icons">phone</i></a> 
+        <a href="?resource?message?create=message&code=<?php echo( $_SESSION[JBLSALT.'Code'] ); ?>" ><i class="material-icons">message</i></a>  
+        <a href="./resource?edit=<?php echo( $resourcesDetails['id'] ); ?>&key=<?php echo( $resourcesDetails['name'] ); ?>" ><i class="material-icons">edit</i></a> 
+        <a href="./resource?delete=<?php echo( $resourcesDetails['id'] ); ?>" ><i class="material-icons">delete</i></a>
         </td>
         </tr>
         </tbody><?php 
@@ -264,7 +264,7 @@ class Resources {
         </thead>
         <tbody>
         <tr>
-        <td><p>No Resources Found in <?php _show_( ucwords( $location) )?></p></td>
+        <td><p>No Resources Found in <?php echo( ucwords( $location) )?></p></td>
         </tr>
         </tbody>
       </table>
@@ -280,7 +280,7 @@ class Resources {
        }
      }
     ?>
-    <title><?php _show_( $userDeet[0]['name'] ); ?>'s Resources [ <?php showOption( 'name' ); ?> ]</title><?php 
+    <title><?php echo( $userDeet[0]['name'] ); ?>'s Resources - <?php showOption( 'name' ); ?></title><?php 
     $getResourcesBy = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."resources WHERE author='".$author."'" );
     if ( $getResourcesBy -> num_rows > 0) {
       ?>
@@ -289,13 +289,13 @@ class Resources {
             <center>
             <div class="input-field search-box">
             <i class="material-icons prefix">search</i>
-            <input type="text" placeholder="Search <?php _show_( "Resource" ); ?>">
+            <input type="text" placeholder="Search <?php echo( "Resource" ); ?>">
             </div></center>
             <div class="result"></div>
         </div>
 
         <div class="mdl-cell--1-col mdl-card" ><br>
-              <a href="users?view=<?php _show_( $author ); ?>" class="alignright">
+              <a href="users?view=<?php echo( $author ); ?>" class="alignright">
               <i class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification">perm_identity</i></a>
             
         </div>
@@ -315,24 +315,24 @@ class Resources {
         <tbody>
         <tr>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $usersDetails['name'] ); ?>
+          <?php echo( $usersDetails['name'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $usersDetails['ilk'] ); ?>
+          <?php echo( $usersDetails['ilk'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $usersDetails['by'] ); ?>
+          <?php echo( $usersDetails['by'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $usersDetails['state'] ); ?>
+          <?php echo( $usersDetails['state'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-        <a href="./resource?view=<?php _show_( $usersDetails['id'] ); ?>&key=<?php _show_( $usersDetails['name'] ); ?>" ><i class="material-icons">perm_identity</i></a> 
-        <a href="tel:<?php _show_( $usersDetails['phone'] ); ?>" ><i class="material-icons">phone</i></a> 
-        <a href="./message?create=message&code=<?php _show_( $_SESSION[JBLSALT.'Code'] ); ?>" ><i class="material-icons">message</i></a><?php 
+        <a href="./resource?view=<?php echo( $usersDetails['id'] ); ?>&key=<?php echo( $usersDetails['name'] ); ?>" ><i class="material-icons">perm_identity</i></a> 
+        <a href="tel:<?php echo( $usersDetails['phone'] ); ?>" ><i class="material-icons">phone</i></a> 
+        <a href="./message?create=message&code=<?php echo( $_SESSION[JBLSALT.'Code'] ); ?>" ><i class="material-icons">message</i></a><?php 
         if ( isCap( 'admin' ) ) { ?>  
-        <a href="./users?edit=<?php _show_( $usersDetails['id'] ); ?>&key=<?php _show_( $usersDetails['name'] ); ?>" ><i class="material-icons">edit</i></a> 
-        <a href="./users?delete=<?php _show_( $usersDetails['id'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
+        <a href="./users?edit=<?php echo( $usersDetails['id'] ); ?>&key=<?php echo( $usersDetails['name'] ); ?>" ><i class="material-icons">edit</i></a> 
+        <a href="./users?delete=<?php echo( $usersDetails['id'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
         </td>
         </tr>
         </tbody><?php 
@@ -353,7 +353,7 @@ class Resources {
         <tbody>
         <tr>
           <td>
-            <p><?php _show_( $userDeet[0]['name'] ); ?> has not created any resources yet!</p>
+            <p><?php echo( $userDeet[0]['name'] ); ?> has not created any resources yet!</p>
           </td>
         </tr>
         </tbody>
@@ -364,7 +364,7 @@ class Resources {
   }
 
   function getResources() {
-      ?><title>All Resources [ <?php showOption( 'name' ); ?> ]</title><?php 
+      ?><title>All Resources - <?php showOption( 'name' ); ?></title><?php 
     $getResources = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."resources WHERE state = 'active' ORDER BY created DESC" );
 
     if ( $getResources -> num_rows > 0) {
@@ -377,7 +377,7 @@ class Resources {
             <center>
             <div class="input-field">
             <i class="material-icons prefix">search</i>
-            <input type="text" placeholder="Search <?php _show_( "Resource" ); ?>" class="search" >
+            <input type="text" placeholder="Search <?php echo( "Resource" ); ?>" class="search" >
             </div></center>
             
           <script>
@@ -415,23 +415,23 @@ class Resources {
         <tbody>
         <tr>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $resourcesDetails['name'] ); ?>
+          <?php echo( $resourcesDetails['name'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $resourcesDetails['email'] ); ?>
+          <?php echo( $resourcesDetails['email'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $resourcesDetails['phone'] ); ?>
+          <?php echo( $resourcesDetails['phone'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( ucwords( $resourcesDetails['location'] ) ); ?>
+          <?php echo( ucwords( $resourcesDetails['location'] ) ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-        <a href="./resource?view=<?php _show_( $resourcesDetails['id'] ); ?>&key=<?php _show_( $resourcesDetails['name'] ); ?>" ><i class="material-icons">open_in_new</i></a> 
-        <a href="tel:<?php _show_( $resourcesDetails['phone'] ); ?>" ><i class="material-icons">phone</i></a> 
-        <a href="?resource?message?create=message&code=<?php _show_( $_SESSION[JBLSALT.'Code'] ); ?>" ><i class="material-icons">message</i></a>  
-        <a href="./resource?edit=<?php _show_( $resourcesDetails['id'] ); ?>&key=<?php _show_( $resourcesDetails['name'] ); ?>" ><i class="material-icons">edit</i></a> 
-        <a href="./resource?delete=<?php _show_( $resourcesDetails['id'] ); ?>" ><i class="material-icons">delete</i></a>
+        <a href="./resource?view=<?php echo( $resourcesDetails['id'] ); ?>&key=<?php echo( $resourcesDetails['name'] ); ?>" ><i class="material-icons">open_in_new</i></a> 
+        <a href="tel:<?php echo( $resourcesDetails['phone'] ); ?>" ><i class="material-icons">phone</i></a> 
+        <a href="?resource?message?create=message&code=<?php echo( $_SESSION[JBLSALT.'Code'] ); ?>" ><i class="material-icons">message</i></a>  
+        <a href="./resource?edit=<?php echo( $resourcesDetails['id'] ); ?>&key=<?php echo( $resourcesDetails['name'] ); ?>" ><i class="material-icons">edit</i></a> 
+        <a href="./resource?delete=<?php echo( $resourcesDetails['id'] ); ?>" ><i class="material-icons">delete</i></a>
         </td>
         </tr>
         </tbody><?php 
@@ -471,42 +471,42 @@ class Resources {
           $name = explode( " ", $resourceDetails['name'] );
           $greettype = '<b>Hello,</b> '.ucfirst( $name[0] );
         }
-        ?><title><?php _show_( $resourceDetails['name'] ); ?> [ <?php showOption( 'name' ); ?> ]</title>
+        ?><title><?php echo( $resourceDetails['name'] ); ?> - <?php showOption( 'name' ); ?></title>
         <div class="mdl-grid" >
               <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
                     <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
                         <div class="mdl-card__title">
-                            <h2 class="mdl-card__title-text"><?php _show_( ucfirst( $resourceDetails['name'] ) ); ?></h2>
+                            <h2 class="mdl-card__title-text"><?php echo( ucfirst( $resourceDetails['name'] ) ); ?></h2>
 
                             <div class="mdl-layout-spacer"></div>
                             <div class="mdl-card__subtitle-text">
-                                <a href="./resource?view=<?php _show_( $resourceDetails['id'] ); ?>&fav=<?php _show_( $resourceDetails['id'] ); ?>" class="material-icons mdl-badge mdl-badge--overlap">favorite</a>
-                                <a href="./resource?edit=<?php _show_( $resourceDetails['id'] ); ?>&key=<?php _show_( $resourceDetails['name'] ); ?>" ><i class="material-icons">edit</i></a>
+                                <a href="./resource?view=<?php echo( $resourceDetails['id'] ); ?>&fav=<?php echo( $resourceDetails['id'] ); ?>" class="material-icons mdl-badge mdl-badge--overlap">favorite</a>
+                                <a href="./resource?edit=<?php echo( $resourceDetails['id'] ); ?>&key=<?php echo( $resourceDetails['name'] ); ?>" ><i class="material-icons">edit</i></a>
                             </div>
                         </div>
                         <div class="mdl-card__supporting-text mdl-card--expand mdl-grid">
                           <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
                             <h5>
-                              <?php _show_( $greettype ); ?>
+                              <?php echo( $greettype ); ?>
                             <h5>
-                            <h6><b>Admin Email:</b> <a href="mailto:<?php _show_( $resourceDetails['email'] ); ?>"><?php _show_( $resourceDetails['email'] ); ?></a><br><?php if ( $resourceDetails['ilk'] !== "organization" ) { ?>
-                            <b>Center:</b> <a href="./resource?center=<?php _show_( $resourceDetails['company'] ); ?>"><?php _show_( $resourceDetails['company'] ); ?></a><br><?php } 
-                            ?><b>Contact Phone:</b> <a href="tel:<?php _show_( $resourceDetails['phone'] ); ?>"><?php _show_( $resourceDetails['phone'] ); ?></a><br>
-                            <b>Type: </b><?php _show_( $resourceDetails['ilk'] ); ?><br>
-                            <b>County:</b> <a href="./resource?location=<?php _show_( $resourceDetails['location'] ); ?>"><?php _show_( ucwords( $resourceDetails['location'] ) ); ?></a>
+                            <h6><b>Admin Email:</b> <a href="mailto:<?php echo( $resourceDetails['email'] ); ?>"><?php echo( $resourceDetails['email'] ); ?></a><br><?php if ( $resourceDetails['ilk'] !== "organization" ) { ?>
+                            <b>Center:</b> <a href="./resource?center=<?php echo( $resourceDetails['company'] ); ?>"><?php echo( $resourceDetails['company'] ); ?></a><br><?php } 
+                            ?><b>Contact Phone:</b> <a href="tel:<?php echo( $resourceDetails['phone'] ); ?>"><?php echo( $resourceDetails['phone'] ); ?></a><br>
+                            <b>Type: </b><?php echo( $resourceDetails['ilk'] ); ?><br>
+                            <b>County:</b> <a href="./resource?location=<?php echo( $resourceDetails['location'] ); ?>"><?php echo( ucwords( $resourceDetails['location'] ) ); ?></a>
                             </h6>
-                            <a href="tel:<?php _show_( $resourceDetails['phone'] ); ?>"><i class="material-icons">phone</i></a>
-                            <a href="mailto:<?php _show_( $resourceDetails['email'] ); ?>"><i class="material-icons">mail_outline</i></a>
+                            <a href="tel:<?php echo( $resourceDetails['phone'] ); ?>"><i class="material-icons">phone</i></a>
+                            <a href="mailto:<?php echo( $resourceDetails['email'] ); ?>"><i class="material-icons">mail_outline</i></a>
                             <a href="./message?create=message"><i class="material-icons">message</i></a>
                             <a href="./notification?create=note"><i class="material-icons">notifications</i></a>
                             
                           </div>
                           <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
-                            <img src="<?php _show_( $resourceDetails['avatar'] ); ?>" width="100%">
+                            <img src="<?php echo( $resourceDetails['avatar'] ); ?>" width="100%">
                           </div>
                           <div class="mdl-cell mdl-cell--12-col">
-                          <div><?php _show_( $resourceDetails['details'] ); ?></div></div>
-                          <div><h6><b>Added:</b> <?php _show_( $resourceDetails['created'] ); ?></h6></div>
+                          <div><?php echo( $resourceDetails['details'] ); ?></div></div>
+                          <div><h6><b>Added:</b> <?php echo( $resourceDetails['created'] ); ?></h6></div>
                         </div>
                     </div>
                 </div>
@@ -515,29 +515,29 @@ class Resources {
                     <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
                         <div class="mdl-card__title">
                         <i class="material-icons">local_hospital</i>
-                          <span class="mdl-button"><?php _show_( $resourceDetails['company'] ); ?></span>
+                          <span class="mdl-button"><?php echo( $resourceDetails['company'] ); ?></span>
                             <div class="mdl-layout-spacer"></div>
                             <div class="mdl-card__subtitle-text mdl-button">
                                 <i class="material-icons">person_pin_circle</i>
-                                <?php _show_( $resourceDetails['location'] ); ?>
+                                <?php echo( $resourceDetails['location'] ); ?>
                             </div>
                         </div>
                         <div class="mdl-card__supporting-text mdl-card--expand">
                         <ul class="collapsible popout" data-collapsible="accordion">
                         <li>
-                          <div class="collapsible-header active"><i class="material-icons">message</i>Messages from <?php _show_( $name[0] ); ?></div>
+                          <div class="collapsible-header active"><i class="material-icons">message</i>Messages from <?php echo( $name[0] ); ?></div>
                           <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
                         </li>
                         <li>
-                          <div class="collapsible-header"><i class="material-icons">comment</i>Messages to <?php _show_( ucfirst( $name[0] ) ); ?></div>
+                          <div class="collapsible-header"><i class="material-icons">comment</i>Messages to <?php echo( ucfirst( $name[0] ) ); ?></div>
                           <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
                         </li>
                         <li>
-                          <div class="collapsible-header"><i class="material-icons">chat_bubble</i>Chat with <?php _show_( ucfirst( $name[0] ) ); ?></div>
+                          <div class="collapsible-header"><i class="material-icons">chat_bubble</i>Chat with <?php echo( ucfirst( $name[0] ) ); ?></div>
                           <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
                         </li>
                         <li>
-                          <div class="collapsible-header"><i class="material-icons">description</i>Posts from <?php _show_( ucfirst( $name[0] ) ); ?></div>
+                          <div class="collapsible-header"><i class="material-icons">description</i>Posts from <?php echo( ucfirst( $name[0] ) ); ?></div>
                           <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
                         </li>
                       </ul>

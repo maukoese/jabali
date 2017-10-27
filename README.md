@@ -7,7 +7,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+A running PHP server.
+A database system - MySQL/MariaDB/SQLite/PostgreSQL/Mongo
 
 ```
 Give examples
@@ -55,9 +56,8 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [Material Design](http://material.io/) - The web framework used
+* [JQuery](https://code.google.com/jquery/) - Dependency Management
 
 ## Contributing
 
@@ -65,7 +65,7 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+We use [CalVer]( http://calver.org ) for versioning. For the versions available, see the [tags on this repository](https://github.com/maukoese/jabali/tags). 
 
 ## Authors
 
@@ -75,11 +75,11 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 * **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
 * **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/maukoese/jabali/contributors) who participated in this project.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
 
 ## Acknowledgments
 

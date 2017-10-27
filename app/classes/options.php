@@ -27,14 +27,14 @@ class Options {
 
 	function update ( $code, $details, $updated ) {
 		if( $GLOBALS['JBLDB'] -> query( "UPDATE ". _DBPREFIX ."options SET details = '".$details."', updated = '".$updated."' WHERE code='".$code."'" ) ){
-			_shout_( "Setting Updated Sucessfully!", "success");
+			_shout_( "Setting Updated Sucessfully! <a href=\"\"> OK</a> ", "success");
           } else {
           	_shout_( "Error: " . $GLOBALS['JBLDB'] -> error(), "error");
           }
 	}
 
     function general(){ ?>
-        <title>General Site Options [ <?php showOption( 'name' ); ?> ]</title>
+        <title>General Site Options - <?php showOption( 'name' ); ?></title>
         <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
             <div class=" mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
             <form enctype="multipart/form-data" name="optionForm" method="POST" action="">
@@ -182,7 +182,8 @@ class Options {
                     <div style="height:0px;overflow:hidden">
                     <input id="home_logo" type="file" name="newhomelogo">
                     </div>
-                    <img src="<?php if ( file_exists( getOption( 'homelogo' ) ) ){ echo _IMAGES.'marker.png'; } else {  showOption( 'homelogo' ); } ?>" width="100%" onclick="chooseHome();">
+                    <?php $hl = getOption( 'homelogo' );  if ( file_exists( $hl ) ) { $homelogo = _IMAGES.'marker.png'; } else { $homelogo = getOption( 'homelogo' ); } ?>
+                    <img src="<?php echo $homelogo ?>" width="100%" onclick="chooseHome();">
                 </div>
             </div>
             <?php csrf(); ?>
@@ -192,7 +193,7 @@ class Options {
     }
 
     function misc(){ ?>
-        <title>Misc. Site Options [ <?php showOption( 'name' ); ?> ]</title>
+        <title>Misc. Site Options - <?php showOption( 'name' ); ?></title>
         <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
             <div class=" mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
             <form enctype="multipart/form-data" name="optionForm" method="POST" action="">
@@ -237,7 +238,7 @@ class Options {
 
 	function types(){
 		if ( isset( $_GET['table'] ) ) { ?>
-            <title><?php echo ucwords( $_GET['table'] ); ?> Options [ <?php showOption( 'name' ); ?> ]</title>
+            <title><?php echo ucwords( $_GET['table'] ); ?> Options - <?php showOption( 'name' ); ?></title>
             <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
                 <div class="mdl-card mdl-color--<?php primaryColor(); ?>">
                 <div class="mdl-card__supporting-text mdl-card--expand">
@@ -428,7 +429,7 @@ class Options {
 	}
 
 	function social(){ ?>
-        <title>Site Social Settings [ <?php showOption( 'name' ); ?> ]</title>
+        <title>Site Social Settings - <?php showOption( 'name' ); ?></title>
             <div class="mdl-cell mdl-cell--9-col-desktop mdl-cell--9-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
                 <div class="mdl-card__title">
                     <div class="mdl-card__title-text">
@@ -444,10 +445,10 @@ class Options {
                           foreach ($social as $key => $value) { ?>
 
                         <div class="input-field">
-                          <i class="fa fa-<?php _show_( $key ); ?> prefix"></i>
-                          <input id="<?php _show_( $key ); ?>" name="network[]<?php _show_( $key ); ?>" type="text" value="<?php _show_( $value ); ?>">
-                          <input name="link[]<?php _show_( $value ); ?>" type="hidden" value="<?php _show_( $value ); ?>">
-                          <label for="<?php _show_( $key ); ?>"><?php _show_( ucwords( $key ) ); ?></label>
+                          <i class="fa fa-<?php echo( $key ); ?> prefix"></i>
+                          <input id="<?php echo( $key ); ?>" name="network[]<?php echo( $key ); ?>" type="text" value="<?php echo( $value ); ?>">
+                          <input name="link[]<?php echo( $value ); ?>" type="hidden" value="<?php echo( $value ); ?>">
+                          <label for="<?php echo( $key ); ?>"><?php echo( ucwords( $key ) ); ?></label>
                         </div><?php } ?>
                         <h5>Add New Network</h5>
                         <div class="input-field">
@@ -489,7 +490,7 @@ class Options {
 	}
 
     function editor(){ ?>
-        <title>Ace Editor Settings [ <?php showOption( 'name' ); ?> ]</title>
+        <title>Ace Editor Settings - <?php showOption( 'name' ); ?></title>
             <div class="mdl-cell mdl-cell--7-col-desktop mdl-cell--7-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
                 <div class="mdl-card_supporting-text" style="padding: 20px;">
                      <form enctype="multipart/form-data" name="optionForm" method="POST" action="" >
@@ -547,7 +548,7 @@ class Options {
     }
 
 	function colors(){ ?>
-		<title>Skin Color Options [ <?php showOption( 'name' ); ?> ]</title>
+		<title>Skin Color Options - <?php showOption( 'name' ); ?></title>
 	        <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--9-col-tablet mdl-cell--12-col-phone">
 	        	<div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
 	        		<style type="text/css">
@@ -722,6 +723,7 @@ class Options {
 	}
 
     function rest(){ ?>
+        <title>REST API Options - <?php showOption( 'name' ); ?></title>
         <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
             <div class="mdl-card__title">
             <span class="mdl-card__title-text">API Clients</span>
@@ -742,7 +744,7 @@ class Options {
                         <td data-title="Client"><input type="text" name="cname" value="<?php showOption( 'name' ); ?> Android"></ins></td>
                         <td data-title="Client"><input type="text" name="cid" value="<?php echo JBLSALT; ?>"></td>
                         <td data-title="Client"><input type="text" name="ckey" value="<?php echo JBLAUTH; ?>" ></td>
-                        <td data-title="Client"><button type="submit" name="deleteclient" class="mdl-button mdl-button--icon"><i class="material-icons">delete</i></button><button type="submit" name="updateclient" class="mdl-button mdl-button--icon"><i class="material-icons">save</i></button></td>
+                        <td data-title="Client"><button type="submit" name="deleteclient" value="" class="mdl-button mdl-button--icon"><i class="material-icons">delete</i></button><button type="submit" name="updateclient" class="mdl-button mdl-button--icon"><i class="material-icons">save</i></button></td>
                     <?php csrf(); ?>
                     </form>
                     </tbody>

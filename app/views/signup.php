@@ -21,7 +21,7 @@
 
 		  <div class="input-field mdl-cell mdl-cell--6-col">
 		  <i class="material-icons prefix">mail</i>
-		  <input class="validate" id="email" name="email" type="email" value="<?php _show_( $_GET['email'] ); ?>">
+		  <input class="validate" id="email" name="email" type="email" value="<?php echo( $_GET['email'] ); ?>">
 		  <label for="email" data-error="Please enter a valid email" data-success="OK!" class="center-align">Email Address</label>
 		  </div>
 
@@ -38,7 +38,7 @@
 		  <label for="password">Password</label>
 		  </div><?php } ?>
 
-		  <input type="hidden" name="ilk" value="<?php _show_( $_GET['ilk'] ); ?>">
+		  <input type="hidden" name="ilk" value="<?php echo( $_GET['ilk'] ); ?>">
 
 		  <div class="input-field mdl-cell mdl-cell--4-col mdl-js-textfield getmdl-select getmdl-select__fix-height">
 		    <i class="material-icons prefix">room</i>

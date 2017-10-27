@@ -25,10 +25,10 @@ class Actions {
 		} else {
 			theHeader();
 			if ( $provider == "jabali" || empty( $provider ) ) { ?>
-				  	<title>Sign In <?php if( isset( $_GET['alert'] )){ _show_( ucfirst( $_GET['alert'] ) ); } ?> [ <?php showOption( 'name' ); ?> ]</title><?php
+				  	<title>Sign In <?php if( isset( $_GET['alert'] )){ echo( ucfirst( $_GET['alert'] ) ); } ?> - <?php showOption( 'name' ); ?></title><?php
 				  	renderView( 'login' );
 			} else { ?>
-			  	<title>Sign In [ <?php showOption( 'name' ); ?> ]</title><?php
+			  	<title>Sign In - <?php showOption( 'name' ); ?></title><?php
 			  	include 'app/lib/hybridauth/config.php';
 			  	require_once( 'app/lib/hybridauth/Hybrid/Auth.php' );
 				try {
@@ -74,7 +74,7 @@ class Actions {
 	}
 
 	function register( $type ){ ?>
-		<title><?php _show_( ucwords( $type ) ); ?> Sign Up [ <?php showOption( 'name' ); ?> ]</title><?php
+		<title><?php echo( ucwords( $type ) ); ?> Sign Up - <?php showOption( 'name' ); ?></title><?php
 
 		$theme = getOption( 'activetheme' );
 		if ( file_exists( _ABSTHEMES_ . $theme . '/templates/signup.php') ) {
@@ -107,7 +107,7 @@ class Actions {
 	}
 
 	function forgot() { ?>
-	  	<title>Forgot Password [ <?php showOption( 'name' ); ?> ]</title>
+	  	<title>Forgot Password - <?php showOption( 'name' ); ?></title>
 		<?php
 		$theme = getOption( 'activetheme' );
 		if ( file_exists( _ABSTHEMES_ . $theme . '/templates/forgot.php') ) {
@@ -129,7 +129,7 @@ class Actions {
 	      }
 
 	    if ( !empty( $user) && $user[0]['authkey'] = $_GET['key'] ) { ?>
-	      	<title>Reset Password [ <?php showOption( 'name' ); ?> ]</title><?php
+	      	<title>Reset Password - <?php showOption( 'name' ); ?></title><?php
 	    	$theme = getOption( 'activetheme' );
 			if ( file_exists( _ABSTHEMES_ . $theme . '/templates/reset.php') ) {
 				getHeader();
@@ -158,14 +158,16 @@ class Actions {
 		} else {
 
 			if ( is_numeric( $slug ) ) {
-				$post = $GLOBALS['POSTS'] -> getId( $slug );
+				$posty = $GLOBALS['POSTS'] -> getId( $slug );
 			} else {
-				$post = $GLOBALS['POSTS'] -> getPost( $slug );
+				$posty = $GLOBALS['POSTS'] -> getPost( $slug );
 			}
 
-			if ( !isset( $post['error'] ) ) {
-				if ( file_exists( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/'.$post['template'].'.php' ) ) {
-					require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/'.$post['template'].'.php' );
+			$post = (object)$posty;
+
+			if ( !isset( $posty['error'] ) ) {
+				if ( file_exists( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/'.$post -> template .'.php' ) ) {
+					require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/'.$post -> template .'.php' );
 				} else {
 					require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/post.php' );
 				}
@@ -176,7 +178,11 @@ class Actions {
 	}
 
 	function blog() {
-		$posts = $GLOBALS['POSTS'] -> sweep();
+		$postsy = $GLOBALS['POSTS'] -> sweep();
+		$posts = array();
+		foreach ($postsy as $post) {
+			array_push( $posts, (object)$post );
+		}
 		if ( !isset( $posts['error'] ) ) {
 			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
 		} else {
@@ -185,55 +191,64 @@ class Actions {
 	}
 
 	function authors( $author ) { ?>
-		<title>Author : @<?php _show_( $author ); ?> [ <?php showOption( 'name' ); ?> ]</title><?php
-		$getPosts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE ( state = 'published' AND ilk = 'article' AND author = '".$author."' ) ORDER BY created DESC" );
-		if ( $getPosts -> num_rows > 0) {
-			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/category.php' );
+		<title>Author : @<?php echo( $author ); ?> - <?php showOption( 'name' ); ?></title><?php
+		$posts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE ( state = 'published' AND ilk = 'article' AND author = '".$author."' ) ORDER BY created DESC" );
+		if ( count( $posts ) > 0) {
+			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
 		} else {
 			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' );
 		}
 	}
 
 	function category( $category ) { ?>
-		<title>Category : <?php _show_( ucwords( $cat ) ); ?> [ <?php showOption( 'name' ); ?> ]</title><?php
-		$getPosts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE state = 'published' AND ilk = 'article' AND categories LIKE '%".$category."%' ORDER BY created DESC" );
-		if ( $getPosts && $getPosts -> num_rows > 0) {
-			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/category.php' );
+		<title>Category : <?php echo( ucwords( $category ) ); ?> - <?php showOption( 'name' ); ?></title><?php
+		$posts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE state = 'published' AND ilk = 'article' AND categories LIKE '%".$category."%' ORDER BY created DESC" );
+		if ( $posts && count( $posts ) > 0) {
+			//$GLOBALS['gposts'] = (array)$posts;
+			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
 		} else {
 			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' );
 		}
 	}
 
 	function portfolio( $elements ) {
-		if ( $elements[0] == "categories" ) { ?>
-			<title>Category : <?php _show_( ucwords( $elements[1] ) ); ?> [ <?php showOption( 'name' ); ?> ]</title><?php
-			$getPosts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE ( state = 'published' AND ilk = 'project' AND category LIKE '%".$elements[1]."%' ) ORDER BY created DESC" );
-			if ( $getPosts -> num_rows > 0) {
-				require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/taxonomy.php' );
+
+		if ( empty( $elements[0] )) { ?>
+			<title>Portfolio - <?php showOption( 'name' ); ?></title><?php
+			$posts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE ( state = 'published' AND ilk = 'project' ) ORDER BY created DESC" );
+			if ( count( $posts ) > 0) {
+				require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
+			} else {
+				require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' );
+			}
+		} elseif ( $elements[0] == "categories" ) { ?>
+			<title>Category : <?php echo( ucwords( $elements[1] ) ); ?> - <?php showOption( 'name' ); ?></title><?php
+			$posts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE ( state = 'published' AND ilk = 'project' AND category LIKE '%".$elements[1]."%' ) ORDER BY created DESC" );
+			if ( count( $posts ) > 0) {
+				require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
 			} else {
 				require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' );
 			}
 		} elseif ( $elements[0] == "clients" ) { ?>
-			<title>Category : <?php _show_( ucwords( $elements[1] ) ); ?> [ <?php showOption( 'name' ); ?> ]</title><?php
-			$getPosts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."users WHERE ( state = 'published' AND ilk = 'client' AND username LIKE '".$elements[1]."' ) ORDER BY created DESC" );
-			if ( $getPosts -> num_rows > 0) {
-				require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/taxonomy.php' );
+			<title>Category : <?php echo( ucwords( $elements[1] ) ); ?> - <?php showOption( 'name' ); ?></title><?php
+			$posts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."users WHERE ( state = 'published' AND ilk = 'client' AND username LIKE '".$elements[1]."' ) ORDER BY created DESC" );
+			if ( count( $posts ) > 0) {
+				require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
 			} else {
 				require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' );
 			}
-		} elseif ( $elements[0] == "projects" ) { ?>
-			<title>Project : <?php _show_( ucwords( $elements[1] ) ); ?> [ <?php showOption( 'name' ); ?> ]</title><?php
-			$getPosts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE ( state = 'published' AND ilk = 'project' AND slug LIKE '".$elements[1]."' ) ORDER BY created DESC" );
-			if ( $getPosts -> num_rows > 0) {
+		} elseif ( $elements[0] == "projects" ) {
+			$posts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE ( state = 'published' AND ilk = 'project' AND slug LIKE '".$elements[1]."' ) ORDER BY created DESC" );
+			if ( count( $posts ) > 0) {
 				require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/post.php' );
 			} else {
 				require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' );
 			}
 		} else { ?>
-			<title>Portfolio [ <?php showOption( 'name' ); ?> ]</title><?php
-			$getPosts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE ( state = 'published' AND ilk = 'project' ) ORDER BY created DESC" );
-			if ( $getPosts -> num_rows > 0) {
-				require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/taxonomy.php' );
+			<title>Portfolio Project - <?php showOption( 'name' ); ?></title><?php
+			$posts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE ( state = 'published' AND ilk = 'project' ) ORDER BY created DESC" );
+			if ( count( $posts ) > 0 ) {
+				require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
 			} else {
 				require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' );
 			}
@@ -241,10 +256,10 @@ class Actions {
 	}
 
 	function tag( $tag ) { ?>
-		<title>Tag : <?php _show_( ucwords( $tag ) ); ?> [ <?php showOption( 'name' ); ?> ]</title><?php
-		$getPosts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE ( state = 'published' AND ilk = 'article' AND tags LIKE '%".$tag."%' ) ORDER BY created DESC" );
-		if ( $getPosts -> num_rows > 0) {
-			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/taxonomy.php' );
+		<title>Tag : <?php echo( ucwords( $tag ) ); ?> - <?php showOption( 'name' ); ?></title><?php
+		$posts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE ( state = 'published' AND ilk = 'article' AND tags LIKE '%".$tag."%' ) ORDER BY created DESC" );
+		if ( count( $posts ) > 0) {
+			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
 		} else {
 			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' );
 		}
@@ -252,7 +267,7 @@ class Actions {
 
 	function users( $profile ) {
 		if ( $profile == 'all' || $profile == "" ) { ?>
-			<title>All Users [ <?php showOption( 'name' ); ?> ]</title><?php
+			<title>All Users - <?php showOption( 'name' ); ?></title><?php
 			$getProfiles = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."users WHERE state = 'active'" );
 			if ( $getProfiles -> num_rows > 0) {
 				require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/users.php' );

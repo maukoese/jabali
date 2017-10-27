@@ -38,33 +38,11 @@ $GLOBALS['GTextS'] = $GUSkin['texts']; ?>
 -->
 <html lang="en" xmlns="http://www.w3.org/1999/html">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="<?php showOption( 'description' ); ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" sizes="192x192" href="app/icons/192.png">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="<?php showOption( 'name' ); ?>">
-    <link rel="apple-touch-icon-precomposed" href="app/icons/192.png">
-
-    <!-- Tile icon for Win8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
-    <meta name="msapplication-TileColor" content="#008080">
-
-    <link rel="shortcut icon" href="<?php showOption( 'favicon' ); ?>">
-
-    <link rel="manifest" href="<?php echo _ROOT.'manifest;' ?>">
+    <?php head(); ?>  
 
     <link rel="stylesheet" href='<?php echo _STYLES; ?>lib/getmdl-select.min.css'>
     <link rel="stylesheet" href="<?php echo _STYLES; ?>lib/nv.d3.css">
     <link rel="stylesheet" href="<?php echo _STYLES; ?>jquery-ui.css">
-    <link rel="stylesheet" href="<?php echo _STYLES; ?>materialize.css">
     <?php if ( isLocalhost() ){ ?>
     <link rel="stylesheet" href="<?php echo _STYLES; ?>material-icons.css">
     <link rel="stylesheet" href="<?php echo _STYLES; ?>font-awesome.css">
@@ -73,49 +51,49 @@ $GLOBALS['GTextS'] = $GUSkin['texts']; ?>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <?php } ?>
     <link rel="stylesheet" href="<?php echo _STYLES; ?>materialdesignicons.css">
-    <link rel="stylesheet" href="<?php echo _STYLES; ?>datetimepicker.min.css">
     <link rel="stylesheet" href="<?php echo _STYLES; ?>jabali.css">
     <link rel="stylesheet" href="<?php echo _STYLES; ?>colors.css">
-    <link rel="stylesheet" href="<?php echo _STYLES; ?>propeller.css">
+    <link rel="stylesheet" href="<?php echo _STYLES; ?>pmd/table/table.css">
+    <link rel="stylesheet" href="<?php echo _STYLES; ?>pmd/table/card.css">
+
     <style type="text/css">
-    .mdl-menu__outline {
-        background-color: <?php primaryColor(); ?>;
-        overflow-y: auto;
-    }
+      .mdl-menu__outline {
+          background-color: <?php primaryColor(); ?>;
+          overflow-y: auto;
+      }
 
-    .cke_bottom {
-    background: <?php secondaryColor(); ?>;
-    }
+      .cke_bottom {
+      background: <?php secondaryColor(); ?>;
+      }
 
-    .primary {
-        color: <?php primaryColor(); ?>;
-    }
-    .accent, a, .mdl-data-table.a, .mdl-badge.mdl-badge--no-background[data-badge]:after, .mdl-layout__drawer.mdl-navigation.mdl-navigation__link--current.material-icons, .mdl-layout__drawer.mdl-navigation.mdl-navigation__link:hover, .mdl-layout__drawer.mdl-navigation.mdl-navigation__link:hover.material-icons {
-        color: <?php secondaryColor(); ?>;
-    }
+      .primary {
+          color: <?php primaryColor(); ?>;
+      }
+      .accent, a, .mdl-data-table.a, .mdl-badge.mdl-badge--no-background[data-badge]:after, .mdl-layout__drawer.mdl-navigation.mdl-navigation__link--current.material-icons, .mdl-layout__drawer.mdl-navigation.mdl-navigation__link:hover, .mdl-layout__drawer.mdl-navigation.mdl-navigation__link:hover.material-icons {
+          color: <?php secondaryColor(); ?>;
+      }
 
 
-    .mdl-color--accent, .accent, .mdl-button--fab.mdl-button--colored, .mdl-badge[data-badge]:after {
-        background-color: <?php secondaryColor(); ?>;
-    }
+      .mdl-color--accent, .accent, .mdl-button--fab.mdl-button--colored, .mdl-badge[data-badge]:after {
+          background-color: <?php secondaryColor(); ?>;
+      }
 
-    .mdl-data-table {
-    color: white;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -o-text-overflow: ellipsis;
-    width: 100%;
-    height: auto;
-    }
+      .mdl-data-table {
+      color: white;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -o-text-overflow: ellipsis;
+      width: 100%;
+      height: auto;
+      }
     </style>
-
     <script src="<?php echo _SCRIPTS ?>jquery-3.2.1.min.js"></script>
     <script src="<?php echo _SCRIPTS ?>jquery.canvasjs.min.js"></script>
     <?php if ( isLocalhost() ) { ?>
       <script src="<?php echo _SCRIPTS ?>ace/ace.js"></script><?php
     } else { ?>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js"></script>
     <?php } ?>
     <script src="<?php echo _SCRIPTS ?>jquery-ui.min.js"></script>
     <script src="<?php echo _SCRIPTS ?>ckeditor/ckeditor.js"></script>
@@ -166,87 +144,46 @@ $GLOBALS['GTextS'] = $GUSkin['texts']; ?>
           }
           ?></span>
           <div class="mdl-layout-spacer"></div>
-          <a href="<?php _show_( _ROOT ); ?>" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon" id="home"
+          <a href="<?php echo( _ROOT ); ?>" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification" id="home"
                >
               visibility
-          </a><div class="mdl-tooltip" for="home">View Site</div><?php
-          if ( isCap( 'admin' ) ) { ?>
-
-          <span class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon" id="happs">apps</span>
-            <div class="mdl-tooltip" for="happs">Options</div><?php } ?>
-            <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-card mdl-grid mdl-color--<?php primaryColor(); ?>" for="happs">
-            <a class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone" href="<?php _show_( _ADMIN . 'options?page=general' ); ?>"><i class="material-icons mdl-list__item-icon">settings</i></a>
-              <a class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone" href="<?php _show_( _ADMIN . 'options?page=color' ); ?>"><i class="material-icons mdl-list__item-icon">palette</i></a>
-              <a class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone" href="<?php _show_( _ADMIN . 'posts?create=article' ); ?>"><i class="material-icons mdl-list__item-icon">create</i></a>
-          </ul>
+          </a><div class="mdl-tooltip" for="home">View Site</div>
 
           <a href="messages?view=list&type=notification" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_notifications" data-badge="<?php getNoteCount() ?>">notifications_none
           </a><div class="mdl-tooltip" for="h_notifications"><?php getNoteCount() ?> Notifications</div>
 
-          <a href="messages?view=unread&key=unread%20messages#" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_messages" data-badge="<?php getMsgCount() ?>">mail_outline
+          <a href="messages?view=unread&key=unread%20messages#" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon" id="h_messages" data-badge="<?php getMsgCount() ?>">mail_outline
             </a><div class="mdl-tooltip" for="h_messages"><?php getMsgCount(); ?> Messages</div>
 
-          <a href="#" class="material-icons mdl-js-button mdl-badge mdl-badge--overlap mdl-button--icon" id="hvdrbtn">account_circle</a>
+         <!--  <a href="#" class="material-icons mdl-js-button mdl-badge mdl-badge--overlap mdl-button--icon notification" id="hvdrbtn">apps</a>
           <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-color--<?php primaryColor(); ?>" for="hvdrbtn">
-          <a id="profile" href="users?view=<?php _show_( $_SESSION[JBLSALT.'Code'] ); ?>&key=<?php _show_( $_SESSION[JBLSALT.'Alias'] ); ?>" class="mdl-list__item"><i class="mdi mdi-account mdl-list__item-icon alignright"></i><span style="padding-left: 20px"><?php _show_( $_SESSION[JBLSALT.'Alias'] ); ?></span></a>
-          <a id="profedit" href="./users?edit=<?php _show_( $_SESSION[JBLSALT.'Code'] ); ?>&key=<?php _show_( $_SESSION[JBLSALT.'Alias'] ); ?>" class="mdl-list__item"><i class="mdi mdi-account-edit mdl-list__item-icon"></i><span style="padding-left: 20px">Edit Account</span></a>
-          <a id="hdrbtn" href="#" class="mdl-list__item"><i class="mdi mdi-exit-to-app mdl-list__item-icon"></i><span style="padding-left: 20px">Logout</span></a>
+          <a id="profile" href="users?view=<?php echo( $_SESSION[JBLSALT.'Code'] ); ?>&key=<?php echo( $_SESSION[JBLSALT.'Alias'] ); ?>" class="mdl-list__item"><i class="mdi mdi-account mdl-list__item-icon alignright"></i><span style="padding-left: 20px"><?php echo( $_SESSION[JBLSALT.'Alias'] ); ?></span></a>
+          <a id="profedit" href="./users?edit=<?php echo( $_SESSION[JBLSALT.'Code'] ); ?>&key=<?php echo( $_SESSION[JBLSALT.'Alias'] ); ?>" class="mdl-list__item"><i class="mdi mdi-account-edit mdl-list__item-icon"></i><span style="padding-left: 20px">Edit Account</span></a>
+          <a id="hdrbtn" href="<?php echo( _ROOT . '?logout' ); ?>" class="mdl-list__item"><i class="mdi mdi-exit-to-app mdl-list__item-icon"></i><span style="padding-left: 20px">Logout</span></a>
+          </ul> -->
+
+          <a href="#" class="material-icons mdl-js-button mdl-badge mdl-badge--overlap mdl-button--icon" id="dvdrbtn">more_vert</a>
+          <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right mdl-color--<?php primaryColor(); ?>" for="dvdrbtn">
+            <?php
+            $default = array( 'general', 'color', 'misc', 'types', 'restful', 'social', 'editor' ); foreach( $GLOBALS['GSettings'] as $setting => $vals ): ?>
+              <?php if ( !in_array( $setting, $default ) ): ?>
+                <a id="profile" href="options?options=<?php echo( $setting ); ?>&page=<?php echo( ucwords( $vals[0][2] ) ); ?> Options" class="mdl-list__item"><i class="mdi mdi-settings mdl-list__item-icon"></i><span style="padding-left: 20px"><?php echo( ucwords( $vals[0][2] ) ); ?></span></a>
+              <?php endif ?>
+            <?php endforeach; ?>
+          <a id="hdrbtn" href="<?php echo( _ROOT . '?logout' ); ?>" class="mdl-list__item"><i class="mdi mdi-exit-to-app mdl-list__item-icon"></i><span style="padding-left: 20px">Logout</span></a>
           </ul>
-          <div id="exitModal" class="modal">
-              <div class="modal-content mdl-card mdl-shadow--2dp mdl-color--orange">
-                <div class="mdl-card__title">
-                  <div class="mdl-card__title-text">Are You Sure?</div>
-                    <div class="mdl-layout-spacer"></div>
-                    <div class="mdl-card__subtitle-text">
-
-                    </div>
-                  </div>
-                  <div class="mdl-card__supporting-text">
-                  <a href="<?php _show_( _ROOT . '?logout' ); ?>">
-                    <span class="alignleft green-text">Yes, log me out.<br><center>
-                   <i class="material-icons">done</i>
-                    </center>
-                    </span></a>
-
-                    <div class="mdl-layout-spacer"></div>
-                    <span class="alignright eclose red-text">
-                        Keep me logged in.<br>
-                        <center>
-                              <i class="material-icons mdl-button--icon">clear</i>
-                        </center>
-                    </span>
-                  </div>
-                </div>
-          </div>
-
-        <script>
-        var emodal = document.getElementById('exitModal' );
-        var h = document.getElementById( "hdrbtn" );
-        var span = document.getElementsByClassName( "eclose" )[0];
-        h.onclick = function() {
-            emodal.style.display = "block";
-        }
-        span.onclick = function() {
-            emodal.style.display = "none";
-        }
-        window.onclick = function(event) {
-            if ( event.target == emodal ) {
-               emodal.style.display = "none";
-            }
-        }
-        </script>
         </div>
       </header>
       <div class="mdl-layout__drawer mdl-color--<?php primaryColor(); ?> mdl-color-text--blue-grey-50">
         <header class="demo-drawer-header">
-          <a href="./users?view=<?php _show_( $_SESSION[JBLSALT.'Code'] ); ?>&key=<?php _show_( $_SESSION[JBLSALT.'Alias'] ); ?>">
+          <a href="./users?view=<?php echo( $_SESSION[JBLSALT.'Code'] ); ?>&key=<?php echo( $_SESSION[JBLSALT.'Alias'] ); ?>">
           <?php $avatar = file_exists( $_SESSION[JBLSALT.'Avatar'] ) ?: _IMAGES.'avatar.svg' ?>
-            <img src="<?php _show_( $avatar ); ?>" class="demo-avatar">
+            <img src="<?php echo( $avatar ); ?>" class="demo-avatar">
           </a>
           <div class="demo-avatar-dropdown">
-            <span><?php _show_( $_SESSION[JBLSALT.'Alias'] ); ?></span>
+            <span><?php echo( $_SESSION[JBLSALT.'Alias'] ); ?></span>
             <div class="mdl-layout-spacer"></div>
-            <a href="./users?edit=<?php _show_( $_SESSION[JBLSALT.'Code'] ); ?>&key=<?php _show_( $_SESSION[JBLSALT.'Alias'] ); ?>"><button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+            <a href="./users?edit=<?php echo( $_SESSION[JBLSALT.'Code'] ); ?>&key=<?php echo( $_SESSION[JBLSALT.'Alias'] ); ?>"><button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
               <i class="mdi mdi-account-edit" role="presentation"></i></button></a>
           </div>
         </header>
@@ -268,7 +205,7 @@ $GLOBALS['GTextS'] = $GUSkin['texts']; ?>
           <a class="mdl-navigation__link" href="themes?page=widgets"><i class="mdl-color-text--white material-icons" role="presentation">widgets</i><span>Widgets</span></a>
             </ul>
           <a id="extensions" class="mdl-navigation__link" href="modules?page=extension modules"><i class="mdl-color-text--white material-icons" role="presentation">power</i>Modules</a><?php } ?>
-          <a id="htools" class="mdl-navigation__link" href="#"><i class="mdl-color-text--white material-icons" role="presentation">import_export</i>Import/Export</a>
+          <a id="htools" class="mdl-navigation__link" href="#"><i class="mdl-color-text--white material-icons" role="presentation">import_export</i>Transfer</a>
           <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor(); ?>" for="htools"><?php
           if ( isCap( 'admin' ) ) { ?>
           <a class="mdl-navigation__link" href="tools?page=import"><i class="mdl-color-text--white material-icons" role="presentation">arrow_downward</i><span>Import Data</span></a>

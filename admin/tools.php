@@ -9,7 +9,7 @@ require_once( '../init.php' );
 require_once( 'header.php' );
 if ( isset( $_GET['page'] ) ) {
 	if ( $_GET["page"] =="import" ) { ?>
-		<title>Import Data [ <?php showOption( 'name' ); ?> ]</title>
+		<title>Import Data - <?php showOption( 'name' ); ?></title>
 		<form action="" style="padding: 15%;">
 		    <div class="file-field input-field">
 		      <div class="btn">
@@ -26,7 +26,7 @@ if ( isset( $_GET['page'] ) ) {
 		echo "Select export format";
 	}
 } else { ?>
-	<title>Site Tools [ <?php showOption( 'name' ); ?> ]</title>
+	<title>Site Tools - <?php showOption( 'name' ); ?></title>
     	<div class="mdl-grid">
     		<div class="mdl-cell mdl-cell--12-col mdl-color--<?php primaryColor(); ?> mdl-grid">
     			<form action="" style="padding: 15%;">

@@ -15,7 +15,7 @@ class Forms {
     <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-card--expand mdl-color--<?php primaryColor(); ?>">
         <div class="mdl-card__supporting-text mdl-card--expand">
             <form enctype="multipart/form-data" name="messageForm" method="POST" action="">
-              <title>Compose <?php echo ucfirst( $_GET['create'] ); ?> [ <?php showOption( 'name' ); ?> ]</title>
+              <title>Compose <?php echo ucfirst( $_GET['create'] ); ?> - <?php showOption( 'name' ); ?></title>
 
                 <div class="input-field">
                   <i class="material-icons prefix">label</i>
@@ -24,7 +24,7 @@ class Forms {
                 </div><?php
 
                 if ( isset( $_GET['code'] )  ) { ?>
-                  <input type="hidden" name="for" value="<?php _show_( $_GET['code'] ); ?>"><?php
+                  <input type="hidden" name="for" value="<?php echo( $_GET['code'] ); ?>"><?php
                 } else { ?>
                   <div class="input-field inline getmdl-select getmdl-select__fix-height">
                     <i class="material-icons prefix">perm_identity</i>
@@ -33,7 +33,7 @@ class Forms {
                         $centers = $GLOBALS['JBLDB'] -> query( "SELECT name, avatar, id FROM ". _DBPREFIX ."users ORDER BY name" );
                         if ( $centers -> num_rows > 0 );
                         while ( $center = mysqli_fetch_assoc( $centers ) ) {
-                          _show_( '<li class="mdl-menu__item" data-val="'.$center['id'].'">'.$center['name'].'<span style=""><img class="alignright" style="padding-right:20px;margin:auto;" src="'.$center['avatar'].'" height="18px;"></span></li>' );
+                          echo( '<li class="mdl-menu__item" data-val="'.$center['id'].'">'.$center['name'].'<span style=""><img class="alignright" style="padding-right:20px;margin:auto;" src="'.$center['avatar'].'" height="18px;"></span></li>' );
                         } ?>
                     </ul>
                   </div><?php
@@ -46,7 +46,7 @@ class Forms {
                       $centers = $GLOBALS['JBLDB'] -> query( "SELECT name, avatar, id FROM ". _DBPREFIX ."users ORDER BY name" );
                       if ( $centers -> num_rows > 0 );
                       while ( $center = mysqli_fetch_assoc( $centers ) ) {
-                        _show_( '<li class="mdl-menu__item" data-val="'.$center['id'].'">'.$center['name'].'<span style=""><img class="alignright" style="padding-right:20px;margin:auto;" src="'.$center['avatar'].'" height="18px;"></span></li>' );
+                        echo( '<li class="mdl-menu__item" data-val="'.$center['id'].'">'.$center['name'].'<span style=""><img class="alignright" style="padding-right:20px;margin:auto;" src="'.$center['avatar'].'" height="18px;"></span></li>' );
                       } ?>
                   </ul>
                 </div>
@@ -135,13 +135,13 @@ class Forms {
             <form class=" mdl-grid" method="POST" action="" style="width: 100%">
               <div class="input-field mdl-cell mdl-cell--6-col">
                 <i class="material-icons prefix">perm_identity</i>
-              <input id="by" name="by" type="text" value="<?php if ( isset( $_SESSION[JBLSALT.'Alias'] ) ){ _show_( $_SESSION[JBLSALT.'Alias'] ); } ?>">
+              <input id="by" name="by" type="text" value="<?php if ( isset( $_SESSION[JBLSALT.'Alias'] ) ){ echo( $_SESSION[JBLSALT.'Alias'] ); } ?>">
               <label for="by">Your Name</label>
               </div>
 
               <div class="input-field mdl-cell mdl-cell--5-col">
                 <i class="material-icons prefix">mail_outline</i>
-              <input id="email " name="email " type="text" value="<?php if ( isset( $_SESSION[JBLSALT.'Email'] ) ){ _show_( $_SESSION[JBLSALT.'Email'] ); } ?>">
+              <input id="email " name="email " type="text" value="<?php if ( isset( $_SESSION[JBLSALT.'Email'] ) ){ echo( $_SESSION[JBLSALT.'Email'] ); } ?>">
               <label for="email ">Your Email</label>
               </div>
 
@@ -155,7 +155,7 @@ class Forms {
   }
 
   function postForm() { ?>
-    <title>New <?php echo ucfirst( $_GET['create'] ); ?> [ <?php showOption( 'name' ); ?> ]</title>
+    <title>New <?php echo ucfirst( $_GET['create'] ); ?> - <?php showOption( 'name' ); ?></title>
       <form enctype="multipart/form-data" name="postForm" method="POST" action="" style="width:100%;" class="mdl-grid">
         <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp mdl-card--expand mdl-color--<?php primaryColor(); ?>"><br><br>
           <div class="mdl-card__supporting-text mdl-cell mdl-cell--12-col mdl-grid">
@@ -202,9 +202,9 @@ class Forms {
           <div class="mdl-card__image">
               <div style="height:0px;overflow:hidden">
                  <input type="file" id="avatar" name="new_avatar" />
-                 <input type="hidden" id="avatar" name="the_avatar" value="<?php _show_( _IMAGES.'placeholder.svg' ); ?>" />
+                 <input type="hidden" id="avatar" name="the_avatar" value="<?php echo( _IMAGES.'placeholder.svg' ); ?>" />
               </div>
-              <img id="havatar" onclick="chooseFile();" src="<?php _show_( _IMAGES.'placeholder.svg' ); ?>" width="100%">
+              <img id="havatar" onclick="chooseFile();" src="<?php echo( _IMAGES.'placeholder.svg' ); ?>" width="100%">
                <script>
                   $(function () {
                     $( ":file" ).change(function () {
@@ -301,46 +301,46 @@ class Forms {
     if ( $getPostCode -> num_rows > 0 ) {
       while ( $post = mysqli_fetch_object( $getPostCode ) ){
         $names = explode( " ", $post -> name ); ?>
-        <title>Edit <?php _show_( $post -> name ); ?> [ <?php showOption( 'name' ); ?> ]</title>
+        <title>Edit <?php echo( $post -> name ); ?> - <?php showOption( 'name' ); ?></title>
       <form enctype="multipart/form-data" name="postForm" method="POST" action="" style="width:100%;" class="mdl-grid">
           <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp mdl-card--expand mdl-color--<?php primaryColor(); ?>">
           <div class="mdl-card__supporting-text mdl-cell mdl-cell--12-col mdl-grid">
               <div class="input-field mdl-cell mdl-cell--12-col">
               <i class="material-icons prefix">label</i>
-              <input id="name" type="text" name="name" value="<?php _show_( $post -> name ); ?>">
+              <input id="name" type="text" name="name" value="<?php echo( $post -> name ); ?>">
               <label for="name" data-error="wrong" data-success="right" class="center-align">Title</label>
               </div>
 
               <div class="input-field mdl-cell mdl-cell--7-col">
               <i class="material-icons prefix">label_outline</i>
-              <input id="subtitle" type="text" name="subtitle" value="<?php _show_( $post -> subtitle ); ?>">
+              <input id="subtitle" type="text" name="subtitle" value="<?php echo( $post -> subtitle ); ?>">
               <label for="subtitle"  class="center-align">Subtitle</label>
               </div>
 
 
               <div class="input-field mdl-cell mdl-cell--5-col mdl-grid">
                 <i class="material-icons prefix">link</i>
-                <input id="link" type="text" name="link" value="<?php _show_( _ROOT . '/'. $post -> slug ); ?>">
+                <input id="link" type="text" name="link" value="<?php echo( _ROOT . '/'. $post -> slug ); ?>">
                 <label for="link"  class="center-align">Link</label>
               </div>
 
               <div class="input-field mdl-cell mdl-cell--12-col">
-                <h6><?php _show_( ucfirst( $post -> ilk ) ); ?> Content</h6>
+                <h6><?php echo( ucfirst( $post -> ilk ) ); ?> Content</h6>
                 <textarea class="materialize-textarea col s12" type="text" id="message" rows="5" name="details">
-                  <?php _show_( $post -> details ); ?>
+                  <?php echo( $post -> details ); ?>
                 </textarea><script>CKEDITOR.replace( 'message' );</script>
               </div>
 
               <div class="input-field mdl-cell mdl-cell--12-col">
-                <h6><?php _show_( ucfirst( $post -> ilk ) ); ?> Notes</h6>
+                <h6><?php echo( ucfirst( $post -> ilk ) ); ?> Notes</h6>
                 <textarea class="materialize-textarea col s12" type="text" id="message" rows="5" name="excerpt">
-                <?php _show_( $post -> excerpt ); ?>
+                <?php echo( $post -> excerpt ); ?>
                 </textarea>
               </div>
             </div>
 
             <div class="mdl-card__menu mdl-button mdl-button--icon">
-            <a href="<?php _show_( $post -> link ); ?>" target="_blank" >
+            <a href="<?php echo( $post -> link ); ?>" target="_blank" >
               <i class="material-icons">open_in_new</i>
             </a>
             </div>
@@ -350,9 +350,9 @@ class Forms {
           <div class="mdl-card__image">
               <div style="height:0px;overflow:hidden">
                  <input type="file" id="avatar" name="new_avatar" />
-                 <input type="hidden" id="avatar" name="the_avatar" value="<?php _show_( $post -> avatar ); ?>" />
+                 <input type="hidden" id="avatar" name="the_avatar" value="<?php echo( $post -> avatar ); ?>" />
               </div><?php if (!file_exists( $post -> avatar )): $savatar = _IMAGES.'placeholder.svg'; endif; ?>
-              <img id="havatar" onclick="chooseFile();" src="<?php _show_( $savatar ); ?>" width="100%">
+              <img id="havatar" onclick="chooseFile();" src="<?php echo( $savatar ); ?>" width="100%">
                <script>
                   $(function () {
                     $( ":file" ).change(function () {
@@ -376,20 +376,40 @@ class Forms {
              </div>
           <div class="mdl-card__supporting-text">
 
+
+            <div class="input-field mdl-js-textfield getmdl-select">
+              <i class="material-icons prefix">keyboard_arrow_down</i>
+              <input class="mdl-textfield__input" id="ilk" name="template" type="text" readonly tabIndex="-1" value="<?php echo( $post -> template ); ?>" >
+              <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="ilk"><?php
+                  $theme = getOption( 'activetheme' );
+                  $path = _ABSTHEMES_ . $theme . '/templates/';
+                  if ( $dh = opendir( $path ) ) {
+                    while ( ($template = readdir( $dh ) ) !== false ) {
+                      if ( ($template !== ".") && ($template !== "..")) {
+                        echo '<li class="mdl-menu__item" data-val="'.  str_replace(".php", "", $template ) .'" >'. ucwords(str_replace(".php", "", $template ) ) .'</li>';
+                      }
+                    }
+                    closedir( $dh );
+                  } ?>
+              </ul>
+            </div>
+
               <?php
               if ( $post -> ilk !== "page"  ) { ?>
 
               <div class="input-field">
               <i class="mdi mdi-tag-multiple prefix"></i>
-              <textarea id="tags" name="tags" class="materialize-textarea col s12"><?php _show_( $post -> tags ); ?></textarea>
+              <textarea id="tags" name="tags" class="materialize-textarea col s12"><?php echo( $post -> tags ); ?></textarea>
               <label for="tags" class="center-align">Tags</label>
               </div>
 
               <div class="input-field">
               <i class="mdi mdi-format-list-bulleted-type prefix"></i>
-              <textarea id="category" name="categories" class="materialize-textarea col s12"><?php _show_( $post -> categories ); ?></textarea>
+              <textarea id="category" name="categories" class="materialize-textarea col s12"><?php echo( $post -> categories ); ?></textarea>
               <label for="category" class="center-align">Categories</label>
               </div><?php
+              } else {
+                hiddenFields( array( 'tags' => '', 'categories' => '') );
               }
               $date = $post -> created;
               $date = explode(" ", $date); ?>
@@ -397,7 +417,7 @@ class Forms {
               <div class="mdl-grid">
               <div class="input-field mdl-cell mdl-cell--6-col">
               <i class="material-icons prefix">today</i>
-                <input type="text" id="created" name="created_d" value="<?php _show_( $date[0] ); ?>" >
+                <input type="text" id="created" name="created_d" value="<?php echo( $date[0] ); ?>" >
                 <script>
                   $(function() {
                   $("#created").datepicker({ dateFormat: "yy-mm-dd" }).val()
@@ -408,31 +428,18 @@ class Forms {
 
               <div class="input-field mdl-cell mdl-cell--6-col">
               <i class="material-icons prefix">schedule</i>
-                <input type="text" id="created_t" name="created_t" value="<?php _show_( $date[1] ); ?>" >
+                <input type="text" id="created_t" name="created_t" value="<?php echo( $date[1] ); ?>" >
               <label for="created_t" class="center-align">at</label>
               </div>
               </div>
-              <p>Author: <a href="./users?view=<?php _show_( $post -> author ); ?>&key=<?php _show_( $post -> author_name ); ?>"><?php _show_( $post -> author_name ); ?></a></p>
+              <p>Author: <a href="./users?view=<?php echo( $post -> author ); ?>&key=<?php echo( $post -> author_name ); ?>"><?php echo( $post -> author_name ); ?></a></p>
 
-
-              <input type="hidden" name="author" value="<?php _show_( $post -> author ); ?>">
-              <input type="hidden" name="author_name" value="<?php _show_( $post -> author_name ); ?>">
-              <input type="hidden" name="level" value="<?php _show_( $post -> level ); ?>">
-              <input type="hidden" name="authkey" value="<?php _show_( $post -> authkey ); ?>">
-              <input type="hidden" name="id" value="<?php _show_( $post -> id ); ?>">
-              <input type="hidden" name="state" value="<?php _show_( $post -> state ); ?>">
-              <input type="hidden" name="ilk" value="<?php _show_( $post -> ilk ); ?>">
-              <input type="hidden" name="updated" value="<?php _show_( date('Y-m-d') ); ?>">
-
-              <?php csrf(); ?>
-
-            <div class="input-field">
-              <button class="mdl-button mdl-button--fab addfab alignright mdl-button--colored" type="submit" name="update"><i class="material-icons">save</i></button>
-            </div>
+              <?php hiddenFields( array( 'author' => $post -> author, 'author_name' => $post -> author_name, 'level' => $post -> level, 'authkey' => $post -> authkey, 'id' => $post -> id, 'state' => $post -> state, 'ilk' => $post -> ilk, 'updated' => date( 'Y-m-d H:i:s') ) ); 
+              submitButton( 'update', 'addfab' ); ?>
         </div>
 
           <div class="mdl-card__menu">
-            <a href="?delete=<?php _show_( $post -> id ); ?>">
+            <a href="?delete=<?php echo( $post -> id ); ?>">
               <i class="material-icons">delete</i>
             </a>
           </div>
@@ -447,7 +454,7 @@ class Forms {
 
 
   function userForm() { ?>
-    <title>Add New <?php _show_( ucfirst( $_GET['create'] ) ); ?> [ <?php showOption( 'name' ); ?> ]</title>
+    <title>Add New <?php echo( ucfirst( $_GET['create'] ) ); ?> - <?php showOption( 'name' ); ?></title>
     <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-color--<?php primaryColor(); ?> mdl-card">
       <form enctype="multipart/form-data" name="registerUser" method="POST" action="" class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card__supporting-text">
           <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-grid">
@@ -468,12 +475,12 @@ class Forms {
             <div class="input-field mdl-cell--4-col mdl-js-textfield mdl-textfield--floating-label getmdl-select">
               <i class="material-icons prefix">perm_identity</i>
               <input class="mdl-textfield__input" id="ilk" name="ilk" type="text" readonly tabIndex="-1" value="<?php if ( isset( $_GET['create'] ) ) {
-                _show_( ucwords( $_GET['create'] ) );
+                echo( ucwords( $_GET['create'] ) );
               } ?>" >
               <label for="ilk"><i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i></label>
               <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="ilk"><?php
               if ( isCap( 'admin' )  ) {
-                _show_( '<li class="mdl-menu__item" data-val="admin">Admin<i class="mdl-color-text--white mdi mdi-lock alignright" role="presentation"></i></li>' );
+                echo( '<li class="mdl-menu__item" data-val="admin">Admin<i class="mdl-color-text--white mdi mdi-lock alignright" role="presentation"></i></li>' );
               } ?>
               <li class="mdl-menu__item" data-val="organization">Organization<i class="mdl-color-text--white mdi mdi-city alignright" role="presentation"></i></li>
               <li class="mdl-menu__item" data-val="editor">Editor<i class="mdl-color-text--white mdi mdi-note alignright" role="presentation"></i></li>
@@ -552,7 +559,7 @@ class Forms {
 
             <div class="input-field mdl-cell--12-col">
               <i class="material-icons prefix">description</i>
-              <textarea  id="details" name="details" type="text" class="materialize-textarea" rows="5">Details about <?php _show_( $_GET['create'] ); ?>.</textarea>
+              <textarea  id="details" name="details" type="text" class="materialize-textarea" rows="5">Details about <?php echo( $_GET['create'] ); ?>.</textarea>
               <label for="details" class="center-align">About</label>
             </div>
 
@@ -566,7 +573,7 @@ class Forms {
           <div style="height:0px; overflow:hidden">
             <input type="file" id="avatar" name="avatar" />
           </div>
-          <img id="havatar" onclick="chooseFile();" src="<?php _show_( _IMAGES.'avatar.svg' ); ?>" width="100%">
+          <img id="havatar" onclick="chooseFile();" src="<?php echo( _IMAGES.'avatar.svg' ); ?>" width="100%">
 
           <script>
           $(function () {
@@ -603,8 +610,8 @@ class Forms {
       while ( $userDetails = mysqli_fetch_assoc( $getUserCode ) ){
         $names = explode( " ", $userDetails['name'] );
 
-        ?><title>Editing <?php _show_( $userDetails['name'] ); ?> [ <?php showOption( 'name' ); ?> ]</title>
-        <form enctype="multipart/form-data" name="registerUser" method="POST" action="<?php _show_( _ADMIN.'users?view='.$code.'&key='.$userDetails['name'] ); ?>" class="mdl-grid" >
+        ?><title>Editing <?php echo( $userDetails['name'] ); ?> - <?php showOption( 'name' ); ?></title>
+        <form enctype="multipart/form-data" name="registerUser" method="POST" action="<?php echo( _ADMIN.'users?view='.$code.'&key='.$userDetails['name'] ); ?>" class="mdl-grid" >
               <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
 
                   <div class="mdl-card__supporting-text mdl-card--expand mdl-grid ">
@@ -612,22 +619,22 @@ class Forms {
 
                       <div class="input-field mdl-cell mdl-cell--6-col">
                       <i class="material-icons prefix">label</i>
-                      <input id="fname" name="fname" type="text" value="<?php _show_( $names[0] ); ?>">
+                      <input id="fname" name="fname" type="text" value="<?php echo( $names[0] ); ?>">
                       <label for="fname">First Name</label>
                       </div>
 
                       <div class="input-field mdl-cell mdl-cell--6-col">
                       <i class="material-icons prefix">label_outline</i>
-                      <input id="lname" name="lname" type="text" value="<?php _show_( $names[1] ); ?>">
+                      <input id="lname" name="lname" type="text" value="<?php echo( $names[1] ); ?>">
                       <label for="lname">Last Name</label>
                       </div>
 
                       <div class="input-field inline mdl-js-textfield mdl-textfield--floating-label getmdl-select">
                       <i class="material-icons prefix">donut_large</i>
-                       <input class="mdl-textfield__input" id="ilk" name="ilk" type="text" readonly tabIndex="-1" placeholder="<?php _show_( ucfirst( $userDetails['ilk'] ) ); ?>" value="<?php _show_( ucwords( $userDetails['ilk'] ) ); ?>">
+                       <input class="mdl-textfield__input" id="ilk" name="ilk" type="text" readonly tabIndex="-1" placeholder="<?php echo( ucfirst( $userDetails['ilk'] ) ); ?>" value="<?php echo( ucwords( $userDetails['ilk'] ) ); ?>">
                          <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="ilk"><?php
                            if ( $_SESSION[JBLSALT.'Cap'] == "admin"  ) {
-                            _show_( '<li class="mdl-menu__item" data-val="admin">Admin</li>' );
+                            echo( '<li class="mdl-menu__item" data-val="admin">Admin</li>' );
                            } ?>
                      <li class="mdl-menu__item" data-val="organization">Organization<i class="mdl-color-text--white mdi mdi-city alignright" role="presentation"></i></li>
                      <li class="mdl-menu__item" data-val="editor">Editor<i class="mdl-color-text--white mdi mdi-note alignright" role="presentation"></i></li>
@@ -639,7 +646,7 @@ class Forms {
                       <?php if ( $userDetails['ilk'] !== "organization"  ) { ?>
                       <div class="input-field mdl-js-textfield mdl-textfield--floating-label getmdl-select">
                       <i class="mdi mdi-gender-transgender prefix"></i>
-                       <input class="mdl-textfield__input" id="gender" name="gender" type="text" readonly tabIndex="-1" placeholder="<?php _show_( ucfirst( $userDetails['gender'] ) ); ?>" value="<?php _show_( ucwords( $userDetails['gender'] ) ); ?>">
+                       <input class="mdl-textfield__input" id="gender" name="gender" type="text" readonly tabIndex="-1" placeholder="<?php echo( ucfirst( $userDetails['gender'] ) ); ?>" value="<?php echo( ucwords( $userDetails['gender'] ) ); ?>">
                          <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="gender">
                            <li class="mdl-menu__item" data-val="male">Male</li>
                            <li class="mdl-menu__item" data-val="female">Female</li>
@@ -649,7 +656,7 @@ class Forms {
 
                       <div class="input-field inline mdl-js-textfield getmdl-select getmdl-select__fix-height">
                         <i class="material-icons prefix">room</i>
-                      <input class="mdl-textfield__input" type="text" id="counties" name="location" readonly tabIndex="-1" placeholder="<?php _show_( ucwords( $userDetails['location'] ) ); ?>" value="<?php _show_( ucwords( $userDetails['location'] ) ); ?>">
+                      <input class="mdl-textfield__input" type="text" id="counties" name="location" readonly tabIndex="-1" placeholder="<?php echo( ucwords( $userDetails['location'] ) ); ?>" value="<?php echo( ucwords( $userDetails['location'] ) ); ?>">
                       <ul for="counties" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
                           <?php
                           $county_list = "baringo, bomet, bungoma, busia, elgeyo-marakwet, embu, garissa, homa bay, isiolo, kakamega, kajiado, kapenguria, kericho, kiambu, kilifi, kirinyanga, kisii, kisumu, kitui, kwale, laikipia, lamu, machakos, makueni, mandera, marsabit, meru, migori, mombasa, muranga, nairobi, nakuru, nandi, narok, nyamira, nyandarua, nyeri, ol kalou, samburu, siaya, taita-taveta, tana river, tharaka-nithi, trans-nzoia, turkana, uasin-gishu, vihiga, wajir, west pokot";
@@ -664,29 +671,29 @@ class Forms {
 
                       <div class="input-field mdl-cell mdl-cell--4-col">
                       <i class="material-icons prefix">phone</i>
-                      <input  id="phone" name="phone" type="text" value="<?php _show_( $userDetails['phone'] ); ?>">
+                      <input  id="phone" name="phone" type="text" value="<?php echo( $userDetails['phone'] ); ?>">
                       <label for="phone" class="center-align">Phone Number</label>
                       </div>
 
                       <div class="input-field mdl-cell mdl-cell--6-col">
                       <i class="material-icons prefix">mail</i>
-                      <input class="validate" id="email" name="email " type="email" value="<?php _show_( $userDetails['email'] ); ?>">
+                      <input class="validate" id="email" name="email " type="email" value="<?php echo( $userDetails['email'] ); ?>">
                       <label for="email" class="center-align">Email Address</label>
                       </div>
 
                       <div class="input-field mdl-cell mdl-cell--12-col">
                       <i class="mdi mdi-bio prefix"></i>
                       <textarea class="materialize-textarea col s12" rows="5" id="details" name="details" >
-                        <?php _show_( $userDetails['details'] ); ?>
+                        <?php echo( $userDetails['details'] ); ?>
                       </textarea>
                       <script>CKEDITOR.replace( 'details' );</script>
                       </div><?php
                       $social = json_decode( $userDetails['social'] );
                       foreach ($social as $key => $value) { ?>
                       <div class="input-field mdl-cell mdl-cell--3-col">
-                      <i class="fa fa-<?php _show_( $key ); ?> prefix"></i>
-                      <input id="<?php _show_( $key ); ?>" name="<?php _show_( $key ); ?>" type="text" value="<?php _show_( $value ); ?>">
-                      <label for="<?php _show_( $key ); ?>"><?php _show_( ucwords( $key ) ); ?></label>
+                      <i class="fa fa-<?php echo( $key ); ?> prefix"></i>
+                      <input id="<?php echo( $key ); ?>" name="<?php echo( $key ); ?>" type="text" value="<?php echo( $value ); ?>">
+                      <label for="<?php echo( $key ); ?>"><?php echo( ucwords( $key ) ); ?></label>
                       </div><?php } ?>
 
                       <br>
@@ -696,9 +703,9 @@ class Forms {
 
                       <div style="height:0px;overflow:hidden">
                          <input type="file" id="avatar" name="avatar" />
-                         <input type="hidden" id="new_avatar" name="new_avatar" value="<?php _show_( $userDetails['avatar'] ); ?>" />
+                         <input type="hidden" id="new_avatar" name="new_avatar" value="<?php echo( $userDetails['avatar'] ); ?>" />
                       </div><?php $savatar = file_exists( $userDetails['avatar'] ) ?: _IMAGES.'avatar.svg'; ?>
-                      <img id="havatar" onclick="chooseFile();" src="<?php _show_( $savatar ); ?>" width="100%">
+                      <img id="havatar" onclick="chooseFile();" src="<?php echo( $savatar ); ?>" width="100%">
 
                        <script>
                           $(function () {
@@ -753,8 +760,8 @@ class Forms {
                       </label>
                       </div>
                       <?php csrf(); ?>
-                      <input type="hidden" name="id" value="<?php _show_( $code ); ?>" >
-                      <input type="hidden" name="h_pass" value="<?php _show_( $userDetails['password'] ); ?>" >
+                      <input type="hidden" name="id" value="<?php echo( $code ); ?>" >
+                      <input type="hidden" name="h_pass" value="<?php echo( $userDetails['password'] ); ?>" >
                           <button type="submit" name="update" class="mdl-button mdl-button--fab mdl-button--colored alignright"><i class="material-icons">save</i></button>
                       </center><br><br>
 
@@ -770,9 +777,9 @@ class Forms {
 
 
   function resourceForm() { ?>
-        <title><?php _show_( $resourceDetails['name'] ); ?> Create <?php _show_( ucfirst( $_GET['create'] ) ); ?> [ <?php showOption( 'name' ); ?> ]</title>
+        <title><?php echo( $resourceDetails['name'] ); ?> Create <?php echo( ucfirst( $_GET['create'] ) ); ?> - <?php showOption( 'name' ); ?></title>
         <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-color--<?php primaryColor(); ?>">
-        <form enctype="multipart/form-data" name="registerResource" method="POST" action="<?php _show_( _ADMIN."resource?create=organization" ); ?>" class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-grid">
+        <form enctype="multipart/form-data" name="registerResource" method="POST" action="<?php echo( _ADMIN."resource?create=organization" ); ?>" class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-grid">
             <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
 
               <div class="input-field">
@@ -794,7 +801,7 @@ class Forms {
 
               <div class="input-field mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
                 <i class="material-icons prefix">room</i>
-              <input class="mdl-textfield__input" type="text" id="counties" name="location" readonly tabIndex="-1" value="<?php _show_( ucwords( $_SESSION[JBLSALT.'Location'] ) ); ?>">
+              <input class="mdl-textfield__input" type="text" id="counties" name="location" readonly tabIndex="-1" value="<?php echo( ucwords( $_SESSION[JBLSALT.'Location'] ) ); ?>">
               <ul for="counties" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
                   <?php
                   $county_list = "baringo, bomet, bungoma, busia, elgeyo-marakwet, embu, garissa, homa bay, isiolo, kakamega, kajiado, kapenguria, kericho, kiambu, kilifi, kirinyanga, kisii, kisumu, kitui, kwale, laikipia, lamu, machakos, makueni, mandera, marsabit, meru, migori, mombasa, muranga, nairobi, nakuru, nandi, narok, nyamira, nyandarua, nyeri, ol kalou, samburu, siaya, taita-taveta, tana river, tharaka-nithi, trans-nzoia, turkana, uasin-gishu, vihiga, wajir, west pokot";
@@ -823,13 +830,13 @@ class Forms {
 
               <div class="input-field inline">
                 <i class="material-icons prefix">phone</i>
-              <input  id="phone" name="phone" type="text" value="<?php _show_( $_SESSION[JBLSALT.'Phone'] ); ?>" >
+              <input  id="phone" name="phone" type="text" value="<?php echo( $_SESSION[JBLSALT.'Phone'] ); ?>" >
               <label for="phone" class="center-align">Contact Phone</label>
               </div>
 
               <div class="input-field inline">
                 <i class="material-icons prefix">mail</i>
-              <input class="validate" id="email" name="email " type="email" value="<?php _show_( $_SESSION[JBLSALT.'Email'] ); ?>">
+              <input class="validate" id="email" name="email " type="email" value="<?php echo( $_SESSION[JBLSALT.'Email'] ); ?>">
               <label for="email" data-error="wrong" data-success="right" class="center-align">Admin Email</label>
               </div>
 
@@ -846,7 +853,7 @@ class Forms {
                    ?>
               </ul>
               </div>
-              <input type="hidden" name="author" value="<?php _show_( $_SESSION[JBLSALT.'Code'] ); ?>">
+              <input type="hidden" name="author" value="<?php echo( $_SESSION[JBLSALT.'Code'] ); ?>">
 
               <div class="input-field">
                 <i class="material-icons prefix">description</i>
@@ -864,7 +871,7 @@ class Forms {
               </script>
               <div class="input-field inline">
                 <div style="height:0px;overflow:hidden">
-                  <input id="avatar" type="file" name="avatar" value="<?php _show_( _IMAGES.'placeholder.svg' ); ?>">
+                  <input id="avatar" type="file" name="avatar" value="<?php echo( _IMAGES.'placeholder.svg' ); ?>">
                 </div>
                 <img id="havatar" onclick="chooseFile();" src="../assets/images/placeholder.svg" width="100%"></i>
                 </div>
@@ -906,8 +913,8 @@ class Forms {
       while ( $resourceDetails = mysqli_fetch_assoc( $getResourceCode ) ){
         $names = explode( " ", $resourceDetails['name'] );
 
-        ?><title>Editing <?php _show_( $resourceDetails['name']." [ ".showOption( 'name' )." ]</title>" ); ?>
-        <form enctype="multipart/form-data" name="registerResource" method="POST" action="<?php _show_( _ADMIN.'resource?create' ); ?>" class="mdl-grid" >
+        ?><title>Editing <?php echo( $resourceDetails['name']." [ ".showOption( 'name' )." ]</title>" ); ?>
+        <form enctype="multipart/form-data" name="registerResource" method="POST" action="<?php echo( _ADMIN.'resource?create' ); ?>" class="mdl-grid" >
           <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
               <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
 
@@ -916,13 +923,13 @@ class Forms {
 
                       <div class="input-field">
                       <i class="material-icons prefix">label</i>
-                      <input id="name" name="name" type="text" value="<?php _show_( $resourceDetails['name'] ); ?>">
+                      <input id="name" name="name" type="text" value="<?php echo( $resourceDetails['name'] ); ?>">
                       <label for="name">Resource Name</label>
                       </div>
 
                       <div class="input-field mdl-js-textfield mdl-textfield--floating-label getmdl-select">
                       <i class="material-icons prefix">business</i>
-                       <input class="mdl-textfield__input" id="ilk" name="ilk" type="text" readonly tabIndex="-1" placeholder="<?php _show_( ucwords( $resourceDetails['ilk'] ) ); ?>" value="<?php _show_( ucwords( $resourceDetails['ilk'] ) ); ?>" >
+                       <input class="mdl-textfield__input" id="ilk" name="ilk" type="text" readonly tabIndex="-1" placeholder="<?php echo( ucwords( $resourceDetails['ilk'] ) ); ?>" value="<?php echo( ucwords( $resourceDetails['ilk'] ) ); ?>" >
                          <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="ilk">
                            <li class="mdl-menu__item" data-val="center">Center</li>
                            <li class="mdl-menu__item" data-val="equipment">Equipment</li>
@@ -933,13 +940,13 @@ class Forms {
 
                       <div class="input-field inline">
                       <i class="material-icons prefix">phone</i>
-                      <input  id="phone" name="phone" type="text" value="<?php _show_( $resourceDetails['phone'] ); ?>">
+                      <input  id="phone" name="phone" type="text" value="<?php echo( $resourceDetails['phone'] ); ?>">
                       <label for="phone" class="center-align">Contact Phone</label>
                       </div>
 
                       <div class="input-field mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
                         <i class="material-icons prefix">room</i>
-                      <input class="mdl-textfield__input" type="text" id="counties" name="location" readonly tabIndex="-1" placeholder="<?php _show_( ucwords( $resourceDetails['location'] ) ); ?>" value="<?php _show_( ucwords( $resourceDetails['location'] ) ); ?>">
+                      <input class="mdl-textfield__input" type="text" id="counties" name="location" readonly tabIndex="-1" placeholder="<?php echo( ucwords( $resourceDetails['location'] ) ); ?>" value="<?php echo( ucwords( $resourceDetails['location'] ) ); ?>">
                       <ul for="counties" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
                           <?php
                           $county_list = "baringo, bomet, bungoma, busia, elgeyo-marakwet, embu, garissa, homa bay, isiolo, kakamega, kajiado, kapenguria, kericho, kiambu, kilifi, kirinyanga, kisii, kisumu, kitui, kwale, laikipia, lamu, machakos, makueni, mandera, marsabit, meru, migori, mombasa, muranga, nairobi, nakuru, nandi, narok, nyamira, nyandarua, nyeri, ol kalou, samburu, siaya, taita-taveta, tana river, tharaka-nithi, trans-nzoia, turkana, uasin-gishu, vihiga, wajir, west pokot";
@@ -955,21 +962,21 @@ class Forms {
                       <?php if ( $resourceDetails['ilk'] !== "organization"  ) { ?>
                       <div class="input-field">
                       <i class="material-icons prefix">business</i>
-                      <input id="company" name="company" type="text" value="<?php _show_( $resourceDetails['company'] ); ?>">
+                      <input id="company" name="company" type="text" value="<?php echo( $resourceDetails['company'] ); ?>">
                       <label for="company">Center</label>
                       </div>
                       <?php } ?>
 
                       <div class="input-field">
                       <i class="material-icons prefix">mail</i>
-                      <input class="validate" id="email" name="email " type="email" value="<?php _show_( $resourceDetails['email'] ); ?>">
+                      <input class="validate" id="email" name="email " type="email" value="<?php echo( $resourceDetails['email'] ); ?>">
                       <label for="email" class="center-align">Admin Email</label>
                       </div>
 
                       <div class="input-field">
                       <i class="mdi mdi-bio prefix"></i>
                       <textarea class="materialize-textarea col s12" rows="5" id="details" name="details" >
-                      <?php _show_( $resourceDetails['details'] ); ?>
+                      <?php echo( $resourceDetails['details'] ); ?>
                       </textarea>
                       <script>CKEDITOR.replace( 'details' );</script>
                       <label for="details">Bio</label>
@@ -987,7 +994,7 @@ class Forms {
                       <div style="height:0px;overflow:hidden">
                          <input type="file" id="fileInput" name="avatar" />
                       </div>
-                      <img id="havatar" onclick="chooseFile();" src="<?php _show_( $resourceDetails['avatar'] ); ?>" width="100%" onclick="chooseFile();">
+                      <img id="havatar" onclick="chooseFile();" src="<?php echo( $resourceDetails['avatar'] ); ?>" width="100%" onclick="chooseFile();">
 
                    <script>
                       $(function () {

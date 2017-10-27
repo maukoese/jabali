@@ -114,7 +114,7 @@ class Menus {
 				if ( $menus['ilk'] == "drop" ) {
 					$subMenu = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."menus WHERE ilk != 'drop' AND location = 'drawer' AND state = 'visible' AND parent = '".$menus['code']."'" );
 					if ( $subMenu -> num_rows > 0 ) { ?>
-						<ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-left mdl-color--<?php primaryColor(); ?>" for="<?php _show_( $menus['code'] ); ?>"><?php
+						<ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-left mdl-color--<?php primaryColor(); ?>" for="<?php echo( $menus['code'] ); ?>"><?php
 						while ( $menusub = mysqli_fetch_assoc( $subMenu) ) {
 							echo '<a class="mdl-navigation__link" href="'.$menusub["link"].'"><i class="mdl-color-text--white material-icons" role="presentation">'.$menusub["avatar"].'</i>'.$menusub["name"].'</a>';
 						}
@@ -137,7 +137,7 @@ class Menus {
 				if ( $menus['ilk'] == "drop" ) {
 					$subMenu = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."menus WHERE ilk != 'drop' AND location = 'drawer' AND state = 'visible' AND parent = '".$menus['code']."'" );
 					if ( $subMenu -> num_rows > 0 ) { ?>
-						<ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor(); ?>" for="<?php _show_( $menus['code'] ); ?>"><?php
+						<ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor(); ?>" for="<?php echo( $menus['code'] ); ?>"><?php
 						while ( $menusub = mysqli_fetch_assoc( $subMenu) ) {
 							echo '<a class="mdl-navigation__link" href="'.$menusub["link"].'"><i class="mdl-color-text--white material-icons" role="presentation">'.$menusub["avatar"].'</i>'.$menusub["name"].'</a>';
                                    $this -> drawerTypes( $menus['code'] );
@@ -160,7 +160,7 @@ class Menus {
                     if ( $menus['ilk'] == "drop" ) {
                          $subMenu = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."menus WHERE ilk != 'drop' AND location = 'drawer' AND state = 'visible' AND for = '".$menus['code']."'" );
                          if ( $subMenu -> num_rows > 0 ) { ?>
-                              <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-left mdl-color--<?php primaryColor(); ?>" for="<?php _show_( $menus['code'] ); ?>"><?php
+                              <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-left mdl-color--<?php primaryColor(); ?>" for="<?php echo( $menus['code'] ); ?>"><?php
                               while ( $menusub = mysqli_fetch_assoc( $subMenu) ) {
                                    echo '<a class="mdl-navigation__link" href="'.$menusub["link"].'"><i class="mdl-color-text--white material-icons" role="presentation">'.$menusub["avatar"].'</i>'.$menusub["name"].'</a>';
                               }
@@ -192,19 +192,19 @@ class Menus {
 
           <div class="mdl-grcode">
             <div class="mdl-cell mdl-cell--2-col">
-            <a href="?edit=<?php _show_( $menu[0]['code'] ); ?>&key=menu"
+            <a href="?edit=<?php echo( $menu[0]['code'] ); ?>&key=menu"
               <i class="material-icons"><?php
               if ( $menu[0]['avatar'] == "" ) {
                     $icon = 'edit';
                } else {
                     $icon = $menu[0]['avatar'];
                     } 
-                    _show_( $icon ); ?></i>
+                    echo( $icon ); ?></i>
           </a>
             </div>
 
             <div class="mdl-cell mdl-cell--8-col">
-            <b><?php _show_( $menu[0]['name'] ); ?></b> <a class="alignrght" href="<?php _show_( $menu[0]['link'] ); ?>"><?php _show_( $menu[0]['link'] ); ?></a>
+            <b><?php echo( $menu[0]['name'] ); ?></b> <a class="alignrght" href="<?php echo( $menu[0]['link'] ); ?>"><?php echo( $menu[0]['link'] ); ?></a>
             </div>
 
             <div class="mdl-cell mdl-cell--2-col">
@@ -223,7 +223,7 @@ function subMenu( $code ) {
                $menu[] = $menus; 
           }
 
-           _show_( '<table class="mdl-data-table mdl-js-data-table">
+           echo( '<table class="mdl-data-table mdl-js-data-table">
                <thead>
                     <tr>
                          <th class="mdl-data-table__cell--non-numeric">ICON</th>
@@ -236,21 +236,21 @@ function subMenu( $code ) {
           foreach ($menu as $menui) { ?>
           
                <tr>
-                    <td class="mdl-data-table__cell--non-numeric" data-title=""><a href="?edit=<?php _show_( $menui['code'] ); ?>&key=menu">
+                    <td class="mdl-data-table__cell--non-numeric" data-title=""><a href="?edit=<?php echo( $menui['code'] ); ?>&key=menu">
                          <i class="material-icons"><?php
               if ( $menui['avatar'] == "" ) {
                     $icon = 'edit';
                } else {
                     $icon = $menu[0]['avatar'];
                     } 
-                    _show_( $icon ); ?></i></a>
+                    echo( $icon ); ?></i></a>
                          </td>
-                    <td class="mdl-data-table__cell--non-numeric" data-title=""><?php _show_( $menui['name'] ); ?></td>
-                    <td class="mdl-data-table__cell--non-numeric" data-title=""><?php _show_( $menui['link'] ); ?></td>
+                    <td class="mdl-data-table__cell--non-numeric" data-title=""><?php echo( $menui['name'] ); ?></td>
+                    <td class="mdl-data-table__cell--non-numeric" data-title=""><?php echo( $menui['link'] ); ?></td>
                </tr>
                     
 
-     <?php } _show_( '
+     <?php } echo( '
                </tbody>
           </table>' );
      }
@@ -263,7 +263,7 @@ function uMenu( ) {
                $menu[] = $menus; 
           }
 
-          _show_( '<table class="mdl-data-table mdl-js-data-table">
+          echo( '<table class="mdl-data-table mdl-js-data-table">
                <thead>
                     <tr>
                          <th class="mdl-data-table__cell--non-numeric">ICON</th>
@@ -276,25 +276,25 @@ function uMenu( ) {
           foreach ($menu as $menui) { ?>
           
                 <tr>
-                    <td class="mdl-data-table__cell--non-numeric" data-title=""><a href="?edit=<?php _show_( $menui['code'] ); ?>&key=menu">
+                    <td class="mdl-data-table__cell--non-numeric" data-title=""><a href="?edit=<?php echo( $menui['code'] ); ?>&key=menu">
                          <i class="material-icons"><?php
               if ( $menui['avatar'] == "" ) {
                     $icon = 'edit';
                } else {
                     $icon = $menu[0]['avatar'];
                     } 
-                    _show_( $icon ); ?></i></a>
+                    echo( $icon ); ?></i></a>
                          </td>
-                    <td class="mdl-data-table__cell--non-numeric" data-title=""><?php _show_( $menui['name'] ); ?></td>
-                    <td class="mdl-data-table__cell--non-numeric" data-title=""><?php _show_( $menui['link'] ); ?></td>
+                    <td class="mdl-data-table__cell--non-numeric" data-title=""><?php echo( $menui['name'] ); ?></td>
+                    <td class="mdl-data-table__cell--non-numeric" data-title=""><?php echo( $menui['link'] ); ?></td>
                </tr>
                     
 
-     <?php } _show_( '
+     <?php } echo( '
                </tbody>
           </table>' );
      } else {
-          _show_( '<h1> No Menus Found</h1>');
+          echo( '<h1> No Menus Found</h1>');
      }
 }
 
@@ -305,7 +305,7 @@ function headMenu( ) {
                $menu[] = $menus; 
           }
 
-          _show_( '<table class="mdl-data-table mdl-js-data-table">
+          echo( '<table class="mdl-data-table mdl-js-data-table">
                <thead>
                     <tr>
                          <th class="mdl-data-table__cell--non-numeric">ICON</th>
@@ -318,25 +318,25 @@ function headMenu( ) {
           foreach ($menu as $menui) { ?>
           
                 <tr>
-                    <td class="mdl-data-table__cell--non-numeric" data-title=""><a href="?edit=<?php _show_( $menui['code'] ); ?>&key=menu">
+                    <td class="mdl-data-table__cell--non-numeric" data-title=""><a href="?edit=<?php echo( $menui['code'] ); ?>&key=menu">
                          <i class="material-icons"><?php
               if ( $menui['avatar'] == "" ) {
                     $icon = 'edit';
                } else {
                     $icon = $menu[0]['avatar'];
                     } 
-                    _show_( $icon ); ?></i></a>
+                    echo( $icon ); ?></i></a>
                          </td>
-                    <td class="mdl-data-table__cell--non-numeric" data-title=""><?php _show_( $menui['name'] ); ?></td>
-                    <td class="mdl-data-table__cell--non-numeric" data-title=""><?php _show_( $menui['link'] ); ?></td>
+                    <td class="mdl-data-table__cell--non-numeric" data-title=""><?php echo( $menui['name'] ); ?></td>
+                    <td class="mdl-data-table__cell--non-numeric" data-title=""><?php echo( $menui['link'] ); ?></td>
                </tr>
                     
 
-     <?php } _show_( '
+     <?php } echo( '
                </tbody>
           </table>' );
      } else {
-          _show_( '<h1> No Menus Found</h1>');
+          echo( '<h1> No Menus Found</h1>');
      }
 }
 
@@ -1142,9 +1142,9 @@ function materialIcons($icon) {
         <div class="input-field inline mdl-js-textfield mdl-textfield--floating-label getmdl-select">
           <label for="h_icon">Menu Icon</label>
           <i class="material-icons prefix"><?php if( $icon !=="" ) {
-               _show_( $icon ); } else { _show_( 'code' ); } ?></i>
+               echo( $icon ); } else { echo( 'code' ); } ?></i>
          <input class="mdl-textfield__input" id="h_icon" name="avatar" type="text" readonly tabIndex="-1"  placeholder="Select Icon" <?php if( $icon !=="" ) {
-               _show_( 'value="'.$icon.'"' ); } ?>>
+               echo( 'value="'.$icon.'"' ); } ?>>
            <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="h_icon" style="max-height: 300px !important; overflow-y: auto;"><?php
            foreach ($material_icons as $key => $value) {
              echo '<li class="mdl-menu__item" data-val="'.$key.'"><i class="material-icons">'.$key.'</i></li>'; } ?>

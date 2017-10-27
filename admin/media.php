@@ -3,15 +3,15 @@ session_start();
 require_once( '../init.php' );
 require_once( 'header.php' ); ?>
 
-<title><?php if ( isset( $_GET['sort'] ) ) { _show_( ' Viewing ' . ucfirst( $_GET['sort']. ' [ ' ) ); } else {
-_show_( 'All Media [ ' ); } showOption( 'name' ); ?> ]</title>
+<title><?php if ( isset( $_GET['sort'] ) ) { echo( ' Viewing ' . ucfirst( $_GET['sort']. ' [ ' ) ); } else {
+echo( 'All Media [ ' ); } showOption( 'name' ); ?> ]</title>
 <div class="mdl-grid "><br>
 <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-color--<?php primaryColor(); ?>" >
 	<div class="mdl-cell mdl-cell--3-col" >
 		<form>
 		  	<div class="input-field mdl-js-textfield getmdl-select">
 			    <i class="material-icons prefix">sort</i>
-			     <input class="mdl-textfield__input" id="ilk" name="ilk" type="text" readonly tabIndex="-1" placeholder="<?php if ( isset( $_GET['sort'] ) ) { _show_( 'Sort By ' . ucfirst( $_GET['sort'] ) ); } else { _show_( 'Click to Sort' ); } ?>" >
+			     <input class="mdl-textfield__input" id="ilk" name="ilk" type="text" readonly tabIndex="-1" placeholder="<?php if ( isset( $_GET['sort'] ) ) { echo( 'Sort By ' . ucfirst( $_GET['sort'] ) ); } else { echo( 'Click to Sort' ); } ?>" >
 			   <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="ilk">
 			     <a href="?sort=images" class="mdl-menu__item mdl-list__item"><i class="material-icons mdl-list__item-icon">image</i><span style="padding-left: 20px">Images</span></a>
 			     <a href="?sort=video" class="mdl-menu__item mdl-list__item"><i class="material-icons mdl-list__item-icon">send</i><span style="padding-left: 20px">Video</span></a>
@@ -32,7 +32,7 @@ _show_( 'All Media [ ' ); } showOption( 'name' ); ?> ]</title>
 	</div>
 	<div class="mdl-cell mdl-cell--12-col mdl-grid  mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
 		<div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp">
-		<img src="<?php _show_( _IMAGES . '404.jpg'); ?>" width="100%" >
+		<img src="<?php echo( _IMAGES . '404.jpg'); ?>" width="100%" >
 
       <div class="mdl-card__supporting-text"><center><strong>Image Name</strong></center></div>
 			<div class="mdl-card__menu">
@@ -41,12 +41,12 @@ _show_( 'All Media [ ' ); } showOption( 'name' ); ?> ]</title>
 	        </div>
         </div>
 
-		<div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp"><img src="<?php _show_( _IMAGES . '404.jpg'); ?>" width="100%" ></div>
-		<div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp"><img src="<?php _show_( _IMAGES . '404.jpg'); ?>" width="100%" ></div>
-		<div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp"><img src="<?php _show_( _IMAGES . '404.jpg'); ?>" width="100%" ></div>		
-		<div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp"><img src="<?php _show_( _IMAGES . '404.jpg'); ?>" width="100%" ></div>
-		<div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp"><img src="<?php _show_( _IMAGES . '404.jpg'); ?>" width="100%" ></div>
-		<div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp"><img src="<?php _show_( _IMAGES . '404.jpg'); ?>" width="100%" ></div>
+		<div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp"><img src="<?php echo( _IMAGES . '404.jpg'); ?>" width="100%" ></div>
+		<div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp"><img src="<?php echo( _IMAGES . '404.jpg'); ?>" width="100%" ></div>
+		<div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp"><img src="<?php echo( _IMAGES . '404.jpg'); ?>" width="100%" ></div>		
+		<div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp"><img src="<?php echo( _IMAGES . '404.jpg'); ?>" width="100%" ></div>
+		<div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp"><img src="<?php echo( _IMAGES . '404.jpg'); ?>" width="100%" ></div>
+		<div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp"><img src="<?php echo( _IMAGES . '404.jpg'); ?>" width="100%" ></div>
 	</div>
 </div></div><?php
 

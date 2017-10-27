@@ -46,10 +46,9 @@ if ( isset( $_POST['update'] ) ) {
      $hMenu -> update ( $name, $author, $avatar, $id, $for, $link, $location, $state, $ilk );
 } ?>
 <div class="mdl-grid">
-
-<div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><?php
+<div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><?php
 if (isset( $_GET['add'] )) { ?>
-          <title>Add New Menu [ <?php showOption( 'name' ); ?> ]</title>
+          <title>Add New Menu - <?php showOption( 'name' ); ?></title>
          <div class="mdl-card__supporting-text">
            <form class="" action="?add<?php if ( !empty( $_GET['add'] )) {
                 echo "=".$_GET['add'];
@@ -68,11 +67,11 @@ if (isset( $_GET['add'] )) { ?>
 
              <?php $hMenu -> materialIcons( '' ); ?>
 
-             <input type="hidden" name="author" value="<?php _show_( $_SESSION[JBLSALT.'Code'] ); ?>">
+             <input type="hidden" name="author" value="<?php echo( $_SESSION[JBLSALT.'Code'] ); ?>">
 
              <div class="input-field inline mdl-js-textfield getmdl-select">
                <i class="material-icons prefix">room</i>
-              <input class="mdl-textfield__input" id="location" name="location" type="text" tabIndex="-1" placeholder="<?php _show_( 'Location' ); ?>" value="<?php if ( !empty( $_GET['add'] )) {
+              <input class="mdl-textfield__input" id="location" name="location" type="text" tabIndex="-1" placeholder="<?php echo( 'Location' ); ?>" value="<?php if ( !empty( $_GET['add'] )) {
                 echo ucwords( $_GET['add'] );
               } else {  } ?>" >
                 <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="location">
@@ -121,9 +120,9 @@ if (isset( $_GET['add'] )) { ?>
                      $menu[] = $menus; 
                 }
            } ?>
-     <title>Edit Menu [ <?php showOption( 'name' ); ?> ]</title>
+     <title>Edit Menu - <?php showOption( 'name' ); ?></title>
         <div class="mdl-card__menu mdl-button mdl-button--icon">
-          <a href="?delete=<?php _show_( $menu[0]['id'] ); ?>">
+          <a href="?delete=<?php echo( $menu[0]['id'] ); ?>">
                <i class="material-icons">delete</i>
           </a>
         </div>
@@ -132,13 +131,13 @@ if (isset( $_GET['add'] )) { ?>
         <div class="input-field">
           <label for="name">Menu Label</label>
           <i class="material-icons prefix">label</i>
-        <input id="name" name="name" type="text" value="<?php _show_( $menu[0]['name'] ); ?>">
+        <input id="name" name="name" type="text" value="<?php echo( $menu[0]['name'] ); ?>">
         </div>
 
         <div class="input-field">
           <label for="link">Link</label>
           <i class="material-icons prefix">link</i>
-        <input id="link" name="link" type="text" value="<?php _show_( $menu[0]['link'] ); ?>">
+        <input id="link" name="link" type="text" value="<?php echo( $menu[0]['link'] ); ?>">
         </div><?php
 
         $hMenu -> materialIcons( $menu[0]['avatar'] ); ?>
@@ -146,7 +145,7 @@ if (isset( $_GET['add'] )) { ?>
         <div class="input-field inline mdl-js-textfield getmdl-select">
           <label for="location">Location</label>
           <i class="material-icons prefix">room</i>
-         <input class="mdl-textfield__input" id="location" name="location" type="text" tabIndex="-1" value="<?php _show_( ucwords( $menu[0]['location'] ) ); ?>">
+         <input class="mdl-textfield__input" id="location" name="location" type="text" tabIndex="-1" value="<?php echo( ucwords( $menu[0]['location'] ) ); ?>">
            <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="location">
              <li class="mdl-menu__item" data-val="drawer">Drawer</li>
              <li class="mdl-menu__item" data-val="header">Header</li>
@@ -158,7 +157,7 @@ if (isset( $_GET['add'] )) { ?>
          <div class="input-field inline mdl-js-textfield mdl-textfield--floating-label getmdl-select">
           <label for="for">Parent</label>
           <i class="material-icons prefix">label_outline</i>
-         <input class="mdl-textfield__input" id="for" name="parent" type="text" readonly tabIndex="-1"  value="<?php _show_( ucwords( $menu[0]['parent'] ) ); ?>" >
+         <input class="mdl-textfield__input" id="for" name="parent" type="text" readonly tabIndex="-1"  value="<?php echo( ucwords( $menu[0]['parent'] ) ); ?>" >
            <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="for" style="max-height: 300px !important; overflow-y: auto;"><?php
           $getMenu = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."menus WHERE ilk = 'drop'");
           if ( $getMenu -> num_rows > 0 ) {
@@ -172,19 +171,20 @@ if (isset( $_GET['add'] )) { ?>
 
         <div class="mdl-cell">
           <input type="checkbox" id="ilk" name="ilk" value="drop" <?php if ( $menu[0]['ilk'] == "drop" ) {
-               _show_( 'checked' );
+               echo( 'checked' );
           } ?>>
           <label for="ilk">Has Dropdown</label>
         </div>
 
         <div class="mdl-cell">
         <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="state">
-          <input type="checkbox" id="state" class="mdl-switch__input" <?php if ( $menu[0]['state'] == "visible" ) {
-               _show_( 'checked' );
-          } ?> name="state" value="visible"> <span style="padding-left: 20px;">Visible</span>         
+          <input type="checkbox" id="state" class="mdl-switch__input" <?php if ( $menu[0]['state'] == "visible" ) { echo( 'checked' ); } ?> name="state" value="visible">
+          <span style="padding-left: 20px;">
+            Visible
+          </span>         
         </label>
         </div>
-        <input type="hidden" name="author" value="<?php _show_( strtolower( $menu[0]['author'] ) ); ?>">
+        <input type="hidden" name="author" value="<?php echo( strtolower( $menu[0]['author'] ) ); ?>">
         <?php csrf(); ?>
 
         <div class="input-field mdl-cell alignright">
@@ -209,7 +209,7 @@ if (isset( $_GET['add'] )) { ?>
         </div>
       </center><?php
 } else { ?>
-    <title>Menus [ <?php showOption( 'name' ); ?> ]</title>
+    <title>Menus - <?php showOption( 'name' ); ?></title>
     <div class="mdl-card__supporting-text">
         <ul id="tabs-swipe-demo" style="border-radius: 5px;" class="tabs mdl-card__title mdl-card--expand">
           <li class="tab col s3"><a class="active" href="#drawer">drawer</a></li>
@@ -280,45 +280,5 @@ if (isset( $_GET['add'] )) { ?>
         </div>
     </div><?php } ?>
   </div>
-
-  <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
-      
-      <div class="mdl-card__title">
-        <span class="mdl-button">Tips</span>
-          <div class="mdl-layout-spacer"></div>
-          <div class="mdl-card__subtitle-text mdl-button mdl-button--icon">
-               <a href="./menus?settings=menu">
-                   <i class="material-icons">arrow_back</i>
-                </a>
-          </div>
-      </div>
-      <div class="mdl-card__supporting-text">
-          <ul class="collapsible popout" data-collapsible="accordion">
-              <li>
-                <div class="collapsible-header active"><i class="material-icons">label</i>
-                    <b>Adding Main Menus</b>
-                </div>
-                <div class="collapsible-body">
-                 <article>
-                  <p>To add a menu that has dropdown options, use "#" as the link, and leave the "For" blank.</p>
-                  <p>Remember to check the "Visible" box otherwise your menu won't show.</p>
-                 </article>
-                </div>
-              </li>
-              <li>
-                <div class="collapsible-header"><i class="material-icons">label_outline</i>
-                    <b>Adding Dropdown Items</b>
-                </div>
-                <div class="collapsible-body">
-                <article>
-                  <p>To add a dropdown menu, fill all fields. Select the main menu for which you are adding a dropdown. Make sure the dropdown switch is not checked.</p>
-                  <p>Remember to check the "Visible" box otherwise your menu won't show.</p>
-                </article>
-                </div>
-              </li>
-        </ul>
-      </div>
-  </div>
-
 </div><?php 
 include './footer.php'; ?>

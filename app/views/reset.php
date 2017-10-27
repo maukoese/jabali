@@ -15,7 +15,7 @@
       <label for="password">Repeat Password</label>
       </div>
 
-      <input type="hidden" name="id" value="<?php _show_( $user[0]['id'] ); ?>">
+      <input type="hidden" name="id" value="<?php echo( $user[0]['id'] ); ?>">
 
       <button class="mdl-button mdl-button--fab mdl-button--colored alignright" type="submit" name="reset"><i class="material-icons">send</i></button>
 

@@ -2,9 +2,9 @@
 namespace Jabali\Data\Access\Layers;
 
 /**
-* Jabali MySQL Data Access Layer
+* Jabali SQLite Data Access Layer
 */
-class MySQLDB {
+class SQLiteDB {
 
 	private $host;
 	private $user;
@@ -63,7 +63,7 @@ class MySQLDB {
 	* @return Returns escaped data to prevent mysqli injection
 	**/
 	function clean( $data ){
-		return sqlite_real_escape_string( $this -> conn, $data );
+		return $this -> conn -> escape_string( $data );
 	}
 
 
@@ -105,7 +105,7 @@ class MySQLDB {
 	}
 
 	function setVal( $cols, $vals ){
-		$sql = "SET ( ";
+		$sql = "SET ";
 		if ( is_array( $cols ) && is_array( $vals ) ) {
 			array_walk( $cols, array( $this, 'clean' ) );
 			array_walk( $vals, array( $this, 'clean' ) );
@@ -121,8 +121,6 @@ class MySQLDB {
 		} else {
 			$sql .= $this -> clean( $cols ) . " = '" . $this -> clean( $vals ) . "'";
 		}
-		
-		$sql .= " ) ";
 
 		return $sql;
 	}

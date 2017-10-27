@@ -84,9 +84,6 @@ $(function() {
 </script>
 <script src="<?php echo _SCRIPTS ?>d3.js"></script>
 <script src="<?php echo _SCRIPTS ?>getmdl-select.min.js"></script>
-<script src="<?php echo _SCRIPTS ?>propeller.js"></script>
-<script src="<?php echo _SCRIPTS ?>propeller-admin.js"></script>
-<script src="<?php echo _SCRIPTS ?>propeller-theme.js"></script>
 <script src="<?php echo _SCRIPTS ?>material.js"></script>
 <script src="<?php echo _SCRIPTS ?>materialize.js"></script>
 <script src="<?php echo _SCRIPTS ?>nv.d3.js"></script>

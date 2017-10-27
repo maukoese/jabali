@@ -34,12 +34,61 @@ if ( isset( $_POST['createtheme'] ) ) {
   $comments .= "* @link ". $website ."\n";
   $comments .= "* @since ". $version ."\n";
   $comments .= "**/\n\n";
+  $tag = "$";
+  $thdi = "<?php echo( _THEMES ); ?>". $slug;
 
   $headertext = $comments."?>\n";
+  $headertext .= "
+  <!DOCTYPE html>\n
+    <html>\r
+      <head>\n
+        <?php head(); ?>\n
+        <link rel=\"styleshet\" href=\"". $thdi."/assets/css/".$slug .".css\">\n
+        <script type=\"javascript/\" src=\"". $thdi."/assets/js/".$slug .".js\" ></script>\r
+      </head>\r
+      <body>";
+
+  $atemplatetext = $comments."?>\n";
+  $atemplatetext .= "
+    <main>\n
+      <?php foreach (".$tag."posts as ".$tag."post ) : ?>\n
+        <title><?php echo( ".$tag."post -> name ); ?></title>\n
+        <?php echo( ".$tag."post -> name );\n
+        //echo( ".$tag."post -> details ); ?>\n
+      <?php endforeach; ?>\n
+    </main>";
 
   $templatetext = $comments."?>\n";
+  $templatetext .= "
+    <main>\n
+      <title><?php echo( ".$tag."post -> name ); ?></title>\n
+        <div>\n
+            <h1><?php echo( ".$tag."post -> name ); ?></h1>\n
+            <article>\n
+              <?php echo( ".$tag."post -> details ); ?>\n
+            </article>\n
+        </div>\n
+    </main>";
+
+  $htemplatetext = $comments."?>\n";
+  $htemplatetext .= "
+    <main>\n
+      <title><?php showOption( 'name' ); ?></title>\n
+      <?php echo( ".$tag."post -> name );\n
+      //echo( ".$tag."post -> details ); ?>\n
+    </main>";
 
   $footerertext = $comments."?>\n";
+  $footerertext .= "
+    <footer>\n
+      <?php if ( isLocalhost() ) : ?>\n
+        <script type=\"javascript/\" src=\"". $thdi."/assets/js/jquery.min.js\" >\r
+      <?php else: ?>\n
+        <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>\r
+      <?php endif; ?>\n
+    </footer>\r
+  <body>\r
+</html>";
 
   $themedir = _ABSTHEMES_ . $slug.'/';
   $templates = _ABSTHEMES_ . $slug.'/templates/';
@@ -57,28 +106,35 @@ if ( isset( $_POST['createtheme'] ) ) {
     <li>Use a very unique slug e.g <pre>myveryuniqueslug<pre></li>
     <li>Prefix your slug e.g <pre>myprefixed_slug<pre></li>", "error" );
   } else {
-    if ( mkdir( $themedir )) {
-      mkdir( $templates, 0777 );
+    if ( mkdir( $themedir, 0777 )) {
+      mkdir( $templates );
       mkdir( $css, 0777, true );
       mkdir( $js, 0777, true );
       mkdir( $images, 0777, true );
-      mkdir( $classes, 0777 );
+      mkdir( $classes );
 
       $themefunctions = fopen( $themedir.$slug.'.php', 'w');
       $themeheader = fopen( $themedir.'header.php', 'w');
       $themefooter = fopen( $themedir.'footer.php', 'w');
+      $themepoststemplate = fopen( $themedir.'templates/archive.php', 'w');
       $themeposttemplate = fopen( $themedir.'templates/post.php', 'w');
       $themehometemplate = fopen( $themedir.'templates/home.php', 'w');
       $themestyles = fopen( $themedir.'assets/css/'.$slug.'.css', 'w');
       $themescripts = fopen( $themedir.'assets/js/'.$slug.'.js', 'w');
+      $jquery = file_get_contents( 'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js' );
+      $jcss = file_get_contents( _STYLES.'normalize.css' );
+      $themejquery = fopen( $themedir.'assets/js/jquery.min.js', 'w');
       $themedata = fopen( $themedir.$slug.'.json', 'w');
 
       fwrite( $themefunctions, $comments );
       fwrite( $themedata, json_encode( $data ));
       fwrite( $themeheader, $headertext );
+      fwrite( $themepoststemplate, $atemplatetext );
       fwrite( $themeposttemplate, $templatetext );
-      fwrite( $themehometemplate, $templatetext );
+      fwrite( $themehometemplate, $htemplatetext );
       fwrite( $themefooter, $footerertext );
+      fwrite( $themejquery, $jquery );
+      fwrite( $themestyles, $jcss );
 
       fclose( $themefunctions );
       fclose( $themedata );
@@ -122,13 +178,6 @@ if ( isset( $_POST['copytheme'] ) ) {
   $comments .= "* @since ". $version ."\n";
   $comments .= "**/\n\n";
 
-  $headertext = $comments."?>";
-  $headertext .= "<!DOCTYPE html>\n<html>\r<head>\n</head>\r<body>";
-
-  $templatetext = $comments."?>\n";
-
-  $footerertext = $comments."?>\n";
-
   $newtheme = _ABSTHEMES_ . $slug.'/';
   $oldtheme = _ABSTHEMES_ . $source.'/';
   $templates = _ABSTHEMES_ . $slug.'/templates/';
@@ -136,6 +185,12 @@ if ( isset( $_POST['copytheme'] ) ) {
   $js = _ABSTHEMES_ . $slug.'/assets/js/';
   $images = _ABSTHEMES_ . $slug.'/assets/images/';
   $classes = _ABSTHEMES_ . $slug.'/classes/';
+
+  $headertext = $comments."?>";
+
+  $templatetext = $comments."?>\n";
+
+  $footerertext = $comments."?>\n";
 
   $data = array( "name" => $name, "slug" => $slug, "version" => $version, "author" => $author, "category" => $category, "screenshot" => "", "description" => $description, "social" => array( "facebook" => $facebook, "twitter" => $twitter, "github" => $github, "email" => $email ), "website" => $website, "support" => $support, "download" => "https://jabali.io/themes/".$slug, "licenses" => array( $license => $licenselink ) );
 
@@ -230,7 +285,7 @@ if ( isset( $_GET['install'] ) ) {
   } 
 } elseif ( isset( $_GET['create'] ) ) {
   $create = $_GET['create']; ?>
-  <title>Add <?php _show_( ucwords( $create ) ); ?> [ <?php showOption( 'name' ); ?> ]</title>
+  <title>Add <?php echo( ucwords( $create ) ); ?> - <?php showOption( 'name' ); ?></title>
   <?php if ( $create == "upload" ) { ?>
     <div class="mdl-grid">
     <form method="POST" action="" class="mdl-cell mdl-cell--8-col mdl-grid mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>" style="padding: 15%" >
@@ -295,6 +350,11 @@ if ( isset( $_GET['install'] ) ) {
           <i class="material-icons prefix">label_outline</i>
           <input type="text" id="themeslug" name="themeslug">
           <label for="themeslug" >Theme Slug</label>
+        </div>
+        <div class="input-field">
+          <i class="material-icons prefix">bubble_chart</i>
+          <input type="text" id="themecategory" name="themecategory">
+          <label for="themecategory" >Theme Category</label>
         </div>
         <div class="input-field">
           <i class="material-icons prefix">description</i>
@@ -384,6 +444,11 @@ if ( isset( $_GET['install'] ) ) {
           <label for="themeslug" >Theme Slug</label>
         </div>
         <div class="input-field">
+          <i class="material-icons prefix">bubble_chart</i>
+          <input type="text" id="themecategory" name="themecategory">
+          <label for="themecategory" >Theme Category</label>
+        </div>
+        <div class="input-field">
           <i class="material-icons prefix">description</i>
           <textarea id="themedesc" name="themedescription" class="materialize-textarea"></textarea>
           <label for="themedesc" >Theme Description</label>
@@ -466,14 +531,14 @@ if ( isset( $_GET['install'] ) ) {
    } else {
      $mode = $parts[1];
    } ?>
-  <title>Editing <?php _show_( $_GET['key'] ); ?> [ <?php showOption( 'name' ); ?> ]</title>
+  <title>Editing <?php echo( $_GET['key'] ); ?> - <?php showOption( 'name' ); ?></title>
   <form class="mdl-grid" method="POST" action="">
     <div class="mdl-cell mdl-cell--8-col mdl-card">
       <div class="mdl-card__supporting-text mdl-color--<?php primaryColor(); ?>">
       <p><?php echo '<code>themes/' . $theme . '/' . $file . '</code>'; ?><span class="alignright"><button class="mdl-button mdl-button--icon mdl-button--colored" type="submit" name="deletefile" value="<?php echo $file; ?>"><i class="material-icons">delete</i></button></span></p>
       <div class="input-field">
       <i class="material-icons prefix">label</i>
-        <input type="text" id="filename" name="file" value="<?php _show_( $file ); ?>">
+        <input type="text" id="filename" name="file" value="<?php echo( $file ); ?>">
         <label for="filename" >File Name</label>
       </div>
       <div class="input-field">
@@ -485,7 +550,7 @@ if ( isset( $_GET['install'] ) ) {
         }
         echo $contents; ?></textarea>
       </div>
-      <input type="hidden" name="theme" value="<?php _show_( $theme ); ?>">
+      <input type="hidden" name="theme" value="<?php echo( $theme ); ?>">
       <?php csrf(); ?>
       </div>
     </div>
@@ -508,7 +573,7 @@ if ( isset( $_GET['install'] ) ) {
               </div>
 
               <div class="mdl-card__menu">
-              <a href="?add=file&key=<?php _show_( $_GET['edit'] ); ?>" class="mdl-button mdl-button--icon"><i class="material-icons">add</i></a>
+              <a href="?add=file&key=<?php echo( $_GET['edit'] ); ?>" class="mdl-button mdl-button--icon"><i class="material-icons">add</i></a>
               </div>
       </div>
       <br>
@@ -633,14 +698,14 @@ if ( isset( $_GET['install'] ) ) {
      $path = "";
      $mode = "php";
    } ?>
-  <title>Adding File To <?php _show_( ucwords( $_GET['key'] ) ); ?> Theme [ <?php showOption( 'name' ); ?> ]</title>
+  <title>Adding File To <?php echo( ucwords( $_GET['key'] ) ); ?> Theme - <?php showOption( 'name' ); ?></title>
   <form class="mdl-grid" method="POST" action="">
         <div class="mdl-cell mdl-cell--8-col mdl-card">
           <div class="mdl-card__supporting-text mdl-color--<?php primaryColor(); ?>">
           <p><?php echo '<code>themes/' . $file . '/~.'. $theme .'</code>'; ?></p>
             <div class="input-field">
             <i class="material-icons prefix">label</i>
-              <input type="text" id="filename" name="file" value="<?php _show_( $path ); ?>/">
+              <input type="text" id="filename" name="file" value="<?php echo( $path ); ?>/">
               <label for="filename" >File Name</label>
             </div>
           <div class="input-field">
@@ -666,7 +731,7 @@ if ( isset( $_GET['install'] ) ) {
             echo '?>';
             ?></textarea>
           </div>
-          <input type="hidden" name="theme" value="<?php _show_( $file ); ?>">
+          <input type="hidden" name="theme" value="<?php echo( $file ); ?>">
           <?php csrf(); ?>
           </div>
         </div>
@@ -690,7 +755,7 @@ if ( isset( $_GET['install'] ) ) {
                   </div>
 
                   <div class="mdl-card__menu">
-                  <a href="?add=file&key=<?php _show_( $_GET['key'] ); ?>" class="mdl-button mdl-button--icon"><i class="material-icons">add</i></a>
+                  <a href="?add=file&key=<?php echo( $_GET['key'] ); ?>" class="mdl-button mdl-button--icon"><i class="material-icons">add</i></a>
                   </div>
           </div>
           <br>
@@ -806,7 +871,7 @@ if ( isset( $_GET['install'] ) ) {
   $theme = $_GET['view'];
   $xJson = file_get_contents( _ABSTHEMES_.$theme."/".$theme.".json" );
   $xD = json_decode( $xJson, true ); ?>
-  <title>Theme - <?php _show_( $_GET['key'] ); ?> [ <?php showOption( 'name' )?> ]</title>
+  <title>Theme - <?php echo( $_GET['key'] ); ?> - <?php showOption( 'name' ); ?></title>
   <div class="mdl-grid">
   <form method="POST" action="" class="mdl-cell mdl-cell--8-col mdl-shadow--2dp mdl-color--<?php primaryColor(); ?> mdl-card">
             <div class="mdl-card-media">
@@ -889,9 +954,9 @@ if ( isset( $_GET['install'] ) ) {
   </div> 
   </div><?php
 } elseif ( isset( $_GET['showcase'] ) ) { ?>
-  <title>Themes Showcase [ <?php showOption( 'name' )?> ]</title>
+  <title>Themes Showcase - <?php showOption( 'name' ); ?></title>
   <form method="POST" action="" class="mdl-grid"><?php
-    $themes = file_get_contents( _ROOT . '/rest/themes/' );
+    $themes = file_get_contents( _ROOT . '/api/themes/' );
     $showcase = json_decode( $themes, true );
     foreach ($showcase as $theme => $xD ) { ?>
       <div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
@@ -960,7 +1025,7 @@ if ( isset( $_GET['install'] ) ) {
   </ul>
   </div><?php
 } else { ?>
-  <title>Themes [ <?php showOption( 'name' )?> ]</title>
+  <title>Themes - <?php showOption( 'name' ); ?></title>
   <form method="POST" action="" class="mdl-grid"><?php
       $path = _ABSTHEMES_;
       $dir = new DirectoryIterator($path);

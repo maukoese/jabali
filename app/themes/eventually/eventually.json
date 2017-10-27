@@ -1,0 +1,23 @@
+{
+	"name": "Eventually.",
+	"slug": "eventually",
+	"version": "0.17.06",
+	"author": "HTML5",
+	"modified": "Mauko Maunde",
+	"category": "e-commerce",
+	"screenshot": "http://localhost/jabali/assets/images/avatar.svg",
+	"description": "Remember, whenever you query a table looking for equality on a primary key, you'll only receive one record back. This works well for our simple DataObject, but we'll discuss retrieving multiple rows a little later.",
+	"social": {
+		"facebook": "http://facebook.com/maukoese",
+		"twitter": "http://twitter.com/maukoese",
+		"github": "http://github.com/maukoese",
+		"email": "maukoese@gmail.com"
+	},
+	"link": "http://jabali.mauko.co.ke/extensions/zahra",
+	"website": "http://jabali.mauko.co.ke/extensions/zahra",
+	"support": "http://jabali.mauko.co.ke/support",
+	"download": "http://code.mauko.co.ke/dl/extensions/zahra.zip",
+	"licences": {
+		"Creative Commons Attribution 3.0 Unported": "https://opensource.org/licenses/MIT"
+	}
+}

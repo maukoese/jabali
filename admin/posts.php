@@ -7,7 +7,7 @@ if ( isset( $_POST['create'] ) ) {
     if ( empty( $_POST['name'] ) ) { $_POST['name'] = 'name'; }
     if ( empty( $_POST['author'] ) ) { $_POST['author'] = '1'; }
     if ( empty( $_POST['author_name'] ) ) { $_POST['author_name'] = 'Undefined'; }
-    if ( empty( $_POST['category'] ) ) { $_POST['category'] = "Uncategorized"; }
+    if ( empty( $_POST['categories'] ) ) { $_POST['categories'] = "Uncategorized"; }
     if ( empty( $_POST['created_d'] ) ) { $_POST['created_d'] = date( "Y-m-d" ); }
     if ( empty( $_POST['created_t'] ) ) { $_POST['created_t'] = date( "H:i:s" ); }
     if ( empty( $_POST['details'] ) ) { $_POST['details'] = "Post details"; }

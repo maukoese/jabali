@@ -18,7 +18,7 @@ class Widgets {
 		  }
 		  if ( !empty( $posts ) ) {
 		    foreach ($posts as $post) { ?>
-		      <a href="<?php _show_( _ROOT.$post['link'] ); ?>" class="mdl-list__item"><i class="material-icons mdl-list__item-icon">keyboard_arrow_right</i><span style="padding-left: 20px"><?php _show_( $post['name'] ); ?></span></a><?php 
+		      <a href="<?php echo( _ROOT.$post['link'] ); ?>" class="mdl-list__item"><i class="material-icons mdl-list__item-icon">keyboard_arrow_right</i><span style="padding-left: 20px"><?php echo( $post['name'] ); ?></span></a><?php 
 		    } 
 		  } ?>
 		  </div>
@@ -66,7 +66,7 @@ class Widgets {
   	function quickLinks() { ?>
 		<div class="mdl-card__supporting-text" id="quickLinks" draggable="true" ondragstart="dragStartH(event);" ondragstart="dragStartH(event);" ondrop="dropH(event);" ondragover="dragOverH();"  >
 		    <h3>Quick Links</h3>
-			<a href="<?php _show_(  'users?edit='. $_SESSION[JBLSALT.'Code'] .'&key='.$_SESSION[JBLSALT.'Alias'] ); ?>" class="mdl-list__item"><i class="mdi mdi-account-edit mdl-list__item-icon"></i><span style="padding-left: 20px">Edit Your Account</span></a>  
+			<a href="<?php echo(  'users?edit='. $_SESSION[JBLSALT.'Code'] .'&key='.$_SESSION[JBLSALT.'Alias'] ); ?>" class="mdl-list__item"><i class="mdi mdi-account-edit mdl-list__item-icon"></i><span style="padding-left: 20px">Edit Your Account</span></a>  
 			<a href="options?settings=color" class="mdl-list__item"><i class="mdi mdi-palette mdl-list__item-icon"></i><span style="padding-left: 20px">Change Theme</span></a>  
 			<a href="options?settings=general" class="mdl-list__item"><i class="mdi mdi-settings mdl-list__item-icon"></i><span style="padding-left: 20px">General Settings</span></a>  
 			<a href="options?settings=user" class="mdl-list__item"><i class="mdi mdi-account-settings mdl-list__item-icon"></i><span style="padding-left: 20px">User Settings</span></a>  
@@ -121,7 +121,7 @@ chart.render();
           }
           if ( !empty( $bposts ) ) {
             foreach ($bposts as $post) { ?>
-              <a href="<?php _show_( $post['link'] ); ?>" class="mdl-list__item"><i class="mdi mdi-account-edit mdl-list__item-icon"></i><span style="padding-left: 20px"><?php _show_( $post['name'] ); ?></span></a><?php 
+              <a href="<?php echo( $post['link'] ); ?>" class="mdl-list__item"><i class="mdi mdi-account-edit mdl-list__item-icon"></i><span style="padding-left: 20px"><?php echo( $post['name'] ); ?></span></a><?php 
             } 
           } ?>
           </div><?php

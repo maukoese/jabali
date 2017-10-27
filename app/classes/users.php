@@ -177,7 +177,7 @@ class Users {
   }
 
   function getUsersType( $type) { ?>
-    <title><?php _show_( ucfirst( $type) ); ?>s List [ <?php showOption( 'name' ); ?> ]</title>
+    <title><?php echo( ucfirst( $type) ); ?>s List - <?php showOption( 'name' ); ?></title>
     <div class="mdl-cell mdl-cell--12-col"><?php 
     $getUsersBy = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."users WHERE state = 'active' AND ilk='".$type."'" );
     if ( $getUsersBy -> num_rows > 0) {
@@ -197,24 +197,24 @@ class Users {
         <tbody>
         <tr>
         <td class="mdl-data-table__cell--non-numeric" data-title="Username">
-          <?php _show_( $usersDetails['username'] ); ?>
+          <?php echo( $usersDetails['username'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="Email">
-          <?php _show_( $usersDetails['email'] ); ?>
+          <?php echo( $usersDetails['email'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="Phone">
-          <?php _show_( $usersDetails['phone'] ); ?>
+          <?php echo( $usersDetails['phone'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="Location">
-          <?php _show_( ucwords( $usersDetails['location'] ) ); ?>
+          <?php echo( ucwords( $usersDetails['location'] ) ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="Actions">
-        <a href="./users?view=<?php _show_( $usersDetails['id'] ); ?>&key=<?php _show_( $usersDetails['name'] ); ?>" ><i class="material-icons">perm_identity</i></a> 
-        <a href="tel:<?php _show_( $usersDetails['phone'] ); ?>" ><i class="material-icons">phone</i></a> 
-        <a href="./message?create=message&code=<?php _show_( $_SESSION[JBLSALT.'Code'] ); ?>" ><i class="material-icons">message</i></a><?php 
+        <a href="./users?view=<?php echo( $usersDetails['id'] ); ?>&key=<?php echo( $usersDetails['name'] ); ?>" ><i class="material-icons">perm_identity</i></a> 
+        <a href="tel:<?php echo( $usersDetails['phone'] ); ?>" ><i class="material-icons">phone</i></a> 
+        <a href="./message?create=message&code=<?php echo( $_SESSION[JBLSALT.'Code'] ); ?>" ><i class="material-icons">message</i></a><?php 
         if ( isCap( 'admin' ) ) { ?>  
-        <a href="./users?edit=<?php _show_( $usersDetails['id'] ); ?>&key=<?php _show_( $usersDetails['name'] ); ?>" ><i class="material-icons">edit</i></a> 
-        <a href="./users?delete=<?php _show_( $usersDetails['id'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
+        <a href="./users?edit=<?php echo( $usersDetails['id'] ); ?>&key=<?php echo( $usersDetails['name'] ); ?>" ><i class="material-icons">edit</i></a> 
+        <a href="./users?delete=<?php echo( $usersDetails['id'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
         </td>
         </tr>
         </tbody><?php 
@@ -234,7 +234,7 @@ class Users {
             <tbody>
               <tr>
                 <td>
-                  <p>No <?php _show_( ucfirst( $type) ); ?>s Found</p>
+                  <p>No <?php echo( ucfirst( $type) ); ?>s Found</p>
                 </td>
               </tr>
             </tbody>
@@ -244,7 +244,7 @@ class Users {
   }
 
   function getUsersAuthor( $author) { ?>
-    <title>Users List [ <?php showOption( 'name' ); ?> ]</title><?php 
+    <title>Users List - <?php showOption( 'name' ); ?></title><?php 
     $getUsersBy = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."users WHERE state = 'active' AND author='".$author."'" );
     if ( $getUsersBy -> num_rows > 0) {
       ?>
@@ -264,24 +264,24 @@ class Users {
         <tbody>
         <tr>
         <td class="mdl-data-table__cell--non-numeric" data-title="Username">
-          <?php _show_( $usersDetails['username'] ); ?>
+          <?php echo( $usersDetails['username'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="Email">
-          <?php _show_( $usersDetails['email'] ); ?>
+          <?php echo( $usersDetails['email'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="Phone">
-          <?php _show_( $usersDetails['phone'] ); ?>
+          <?php echo( $usersDetails['phone'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="Location">
-          <?php _show_( ucwords( $usersDetails['location'] ) ); ?>
+          <?php echo( ucwords( $usersDetails['location'] ) ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="Actions">
-        <a href="./users?view=<?php _show_( $usersDetails['id'] ); ?>&key=<?php _show_( $usersDetails['name'] ); ?>" ><i class="material-icons">perm_identity</i></a> 
-        <a href="tel:<?php _show_( $usersDetails['phone'] ); ?>" ><i class="material-icons">phone</i></a> 
-        <a href="./message?create=message&code=<?php _show_( $_SESSION[JBLSALT.'Code'] ); ?>" ><i class="material-icons">message</i></a><?php 
+        <a href="./users?view=<?php echo( $usersDetails['id'] ); ?>&key=<?php echo( $usersDetails['name'] ); ?>" ><i class="material-icons">perm_identity</i></a> 
+        <a href="tel:<?php echo( $usersDetails['phone'] ); ?>" ><i class="material-icons">phone</i></a> 
+        <a href="./message?create=message&code=<?php echo( $_SESSION[JBLSALT.'Code'] ); ?>" ><i class="material-icons">message</i></a><?php 
         if ( isCap( 'admin' ) ) { ?>  
-        <a href="./users?edit=<?php _show_( $usersDetails['id'] ); ?>&key=<?php _show_( $usersDetails['name'] ); ?>" ><i class="material-icons">edit</i></a> 
-        <a href="./users?delete=<?php _show_( $usersDetails['id'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
+        <a href="./users?edit=<?php echo( $usersDetails['id'] ); ?>&key=<?php echo( $usersDetails['name'] ); ?>" ><i class="material-icons">edit</i></a> 
+        <a href="./users?delete=<?php echo( $usersDetails['id'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
         </td>
         </tr>
         </tbody><?php 
@@ -302,7 +302,7 @@ class Users {
         <tbody>
         <tr>
           <td>
-            <p>No <?php _show_( ucfirst( $type) ); ?>s Found</p>
+            <p>No <?php echo( ucfirst( $type) ); ?>s Found</p>
           </td>
         </tr>
         </tbody>
@@ -313,7 +313,7 @@ class Users {
   }
 
   function getUsersLoc( $location) { ?>
-    <title><?php _show_( ucfirst( $type) ); ?>s List [ <?php showOption( 'name' ); ?> ]</title><?php 
+    <title><?php echo( ucfirst( $type) ); ?>s List - <?php showOption( 'name' ); ?></title><?php 
     $getUsersBy = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."users WHERE state = 'active' AND location='".$location."'" );
     if ( $getUsersBy -> num_rows > 0) {
       ?>
@@ -321,7 +321,7 @@ class Users {
             <center>
             <div class="input-field search-box">
             <i class="material-icons prefix">search</i>
-            <input type="text" placeholder="Search <?php _show_( ucfirst( $type) ); ?>">
+            <input type="text" placeholder="Search <?php echo( ucfirst( $type) ); ?>">
             </div></center>
             <div class="result"></div>
         </div>
@@ -342,27 +342,27 @@ class Users {
         <tbody>
         <tr>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $usersDetails['username'] ); ?>
+          <?php echo( $usersDetails['username'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $usersDetails['email'] ); ?>
+          <?php echo( $usersDetails['email'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $usersDetails['phone'] ); ?>
+          <?php echo( $usersDetails['phone'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $usersDetails['company'] ); ?>
+          <?php echo( $usersDetails['company'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( ucwords( $usersDetails['location'] ) ); ?>
+          <?php echo( ucwords( $usersDetails['location'] ) ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-        <a href="./users?view=<?php _show_( $usersDetails['id'] ); ?>&key=<?php _show_( $usersDetails['name'] ); ?>" ><i class="material-icons">perm_identity</i></a> 
-        <a href="tel:<?php _show_( $usersDetails['phone'] ); ?>" ><i class="material-icons">phone</i></a> 
-        <a href="./message?create=message&code=<?php _show_( $_SESSION[JBLSALT.'Code'] ); ?>" ><i class="material-icons">message</i></a><?php 
+        <a href="./users?view=<?php echo( $usersDetails['id'] ); ?>&key=<?php echo( $usersDetails['name'] ); ?>" ><i class="material-icons">perm_identity</i></a> 
+        <a href="tel:<?php echo( $usersDetails['phone'] ); ?>" ><i class="material-icons">phone</i></a> 
+        <a href="./message?create=message&code=<?php echo( $_SESSION[JBLSALT.'Code'] ); ?>" ><i class="material-icons">message</i></a><?php 
         if ( isCap( 'admin' ) ) { ?>  
-        <a href="./users?edit=<?php _show_( $usersDetails['id'] ); ?>&key=<?php _show_( $usersDetails['name'] ); ?>" ><i class="material-icons">edit</i></a> 
-        <a href="./users?delete=<?php _show_( $usersDetails['id'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
+        <a href="./users?edit=<?php echo( $usersDetails['id'] ); ?>&key=<?php echo( $usersDetails['name'] ); ?>" ><i class="material-icons">edit</i></a> 
+        <a href="./users?delete=<?php echo( $usersDetails['id'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
         </td>
         </tr>
         </tbody><?php 
@@ -384,7 +384,7 @@ class Users {
         <tbody>
         <tr>
           <td>
-            <p>No <?php _show_( ucfirst( $type) ); ?>s Found In <?php _show_( ucfirst( $location) ); ?></p>
+            <p>No <?php echo( ucfirst( $type) ); ?>s Found In <?php echo( ucfirst( $location) ); ?></p>
           </td>
         </tr>
         </tbody>
@@ -394,7 +394,7 @@ class Users {
   }
 
   function getUsersTypeLoc( $type, $location) { ?>
-    <title><?php _show_( ucfirst( $type) ); ?>s List [ <?php showOption( 'name' ); ?> ]</title><?php 
+    <title><?php echo( ucfirst( $type) ); ?>s List - <?php showOption( 'name' ); ?></title><?php 
     $getUsersBy = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."users WHERE state = 'active' AND location='".$location."'" );
     if ( $getUsersBy -> num_rows > 0) {
       ?>
@@ -402,7 +402,7 @@ class Users {
             <center>
             <div class="input-field search-box">
             <i class="material-icons prefix">search</i>
-            <input type="text" placeholder="Search <?php _show_( ucfirst( $type) ); ?>">
+            <input type="text" placeholder="Search <?php echo( ucfirst( $type) ); ?>">
             </div></center>
             <div class="result"></div>
         </div>
@@ -423,27 +423,27 @@ class Users {
         <tbody>
         <tr>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $usersDetails['username'] ); ?>
+          <?php echo( $usersDetails['username'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $usersDetails['email'] ); ?>
+          <?php echo( $usersDetails['email'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $usersDetails['phone'] ); ?>
+          <?php echo( $usersDetails['phone'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $usersDetails['company'] ); ?>
+          <?php echo( $usersDetails['company'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( ucwords( $usersDetails['location'] ) ); ?>
+          <?php echo( ucwords( $usersDetails['location'] ) ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-        <a href="./users?view=<?php _show_( $usersDetails['id'] ); ?>&key=<?php _show_( $usersDetails['name'] ); ?>" ><i class="material-icons">perm_identity</i></a> 
-        <a href="tel:<?php _show_( $usersDetails['phone'] ); ?>" ><i class="material-icons">phone</i></a> 
-        <a href="./message?create=message&code=<?php _show_( $_SESSION[JBLSALT.'Code'] ); ?>" ><i class="material-icons">message</i></a><?php 
+        <a href="./users?view=<?php echo( $usersDetails['id'] ); ?>&key=<?php echo( $usersDetails['name'] ); ?>" ><i class="material-icons">perm_identity</i></a> 
+        <a href="tel:<?php echo( $usersDetails['phone'] ); ?>" ><i class="material-icons">phone</i></a> 
+        <a href="./message?create=message&code=<?php echo( $_SESSION[JBLSALT.'Code'] ); ?>" ><i class="material-icons">message</i></a><?php 
         if ( isCap( 'admin' ) ) { ?>  
-        <a href="./users?edit=<?php _show_( $usersDetails['id'] ); ?>&key=<?php _show_( $usersDetails['name'] ); ?>" ><i class="material-icons">edit</i></a> 
-        <a href="./users?delete=<?php _show_( $usersDetails['id'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
+        <a href="./users?edit=<?php echo( $usersDetails['id'] ); ?>&key=<?php echo( $usersDetails['name'] ); ?>" ><i class="material-icons">edit</i></a> 
+        <a href="./users?delete=<?php echo( $usersDetails['id'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
         </td>
         </tr>
         </tbody><?php 
@@ -465,7 +465,7 @@ class Users {
         <tbody>
         <tr>
           <td>
-            <p>No <?php _show_( ucfirst( $type) ); ?>s Found In <?php _show_( ucfirst( $location) ); ?></p>
+            <p>No <?php echo( ucfirst( $type) ); ?>s Found In <?php echo( ucfirst( $location) ); ?></p>
           </td>
         </tr>
         </tbody>
@@ -474,7 +474,7 @@ class Users {
   }
 
   function getPendingUsers() { ?>
-    <title>All Users [ <?php showOption( 'name' ); ?> ]</title><?php 
+    <title>All Users - <?php showOption( 'name' ); ?></title><?php 
     $getUsers = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."users WHERE state = 'pending' ORDER BY created DESC" );
 
     if ( $getUsers -> num_rows > 0) { ?>
@@ -484,7 +484,7 @@ class Users {
             <center>
             <div class="input-field">
             <i class="material-icons prefix">search</i>
-            <input type="text" placeholder="Search <?php _show_( "User" ); ?>">
+            <input type="text" placeholder="Search <?php echo( "User" ); ?>">
             </div></center>
             </form>
         </div>
@@ -504,25 +504,25 @@ class Users {
         <tbody>
         <tr>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $usersDetails['username'] ); ?>
+          <?php echo( $usersDetails['username'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $usersDetails['email'] ); ?>
+          <?php echo( $usersDetails['email'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $usersDetails['phone'] ); ?>
+          <?php echo( $usersDetails['phone'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( ucwords( $usersDetails['location'] ) ); ?>
+          <?php echo( ucwords( $usersDetails['location'] ) ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-        <a href="./users?view=<?php _show_( $usersDetails['id'] ); ?>&key=<?php _show_( $usersDetails['name'] ); ?>" ><i class="material-icons">perm_identity</i></a> 
-        <a href="tel:<?php _show_( $usersDetails['phone'] ); ?>" ><i class="material-icons">phone</i></a> 
-        <a href="./message?create=message&code=<?php _show_( $_SESSION[JBLSALT.'Code'] ); ?>" ><i class="material-icons">message</i></a><?php 
+        <a href="./users?view=<?php echo( $usersDetails['id'] ); ?>&key=<?php echo( $usersDetails['name'] ); ?>" ><i class="material-icons">perm_identity</i></a> 
+        <a href="tel:<?php echo( $usersDetails['phone'] ); ?>" ><i class="material-icons">phone</i></a> 
+        <a href="./message?create=message&code=<?php echo( $_SESSION[JBLSALT.'Code'] ); ?>" ><i class="material-icons">message</i></a><?php 
         if ( isCap( 'admin' ) ) { ?>  
-        <a href="./users?edit=<?php _show_( $usersDetails['id'] ); ?>&key=<?php _show_( $usersDetails['name'] ); ?>" ><i class="material-icons">edit</i></a> 
-        <a href="./users?delete=<?php _show_( $usersDetails['id'] ); ?>" ><i class="material-icons">delete</i></a>
-        <a href="./users?activate=<?php _show_( $usersDetails['id'] ); ?>" ><i class="material-icons">done</i></a><?php } ?>
+        <a href="./users?edit=<?php echo( $usersDetails['id'] ); ?>&key=<?php echo( $usersDetails['name'] ); ?>" ><i class="material-icons">edit</i></a> 
+        <a href="./users?delete=<?php echo( $usersDetails['id'] ); ?>" ><i class="material-icons">delete</i></a>
+        <a href="./users?activate=<?php echo( $usersDetails['id'] ); ?>" ><i class="material-icons">done</i></a><?php } ?>
         </td>
         </tr>
         </tbody><?php 
@@ -553,7 +553,7 @@ class Users {
   }
 
   function getUsers() { ?>
-    <title>All Users [ <?php showOption( 'name' ); ?> ]</title><?php 
+    <title>All Users - <?php showOption( 'name' ); ?></title><?php 
     $getUsers = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."users WHERE state = 'active' ORDER BY created DESC" );
 
     if ( $getUsers -> num_rows > 0) { ?>
@@ -563,7 +563,7 @@ class Users {
             <center>
             <div class="input-field">
             <i class="material-icons prefix">search</i>
-            <input type="text" placeholder="Search <?php _show_( "User" ); ?>">
+            <input type="text" placeholder="Search <?php echo( "User" ); ?>">
             </div></center>
             </form>
         </div>
@@ -583,28 +583,28 @@ class Users {
         <tbody>
         <tr>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $usersDetails['username'] ); ?>
+          <?php echo( $usersDetails['username'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $usersDetails['email'] ); ?>
+          <?php echo( $usersDetails['email'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( $usersDetails['phone'] ); ?>
+          <?php echo( $usersDetails['phone'] ); ?>
         </td>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
-          <?php _show_( ucwords( $usersDetails['location'] ) ); ?>
+          <?php echo( ucwords( $usersDetails['location'] ) ); ?>
         </td>
         <td class="mdl-data-table__cell">
-        <a href="./users?view=<?php _show_( $usersDetails['id'] ); ?>&key=<?php _show_( $usersDetails['name'] ); ?>" ><i class="material-icons">perm_identity</i></a> 
-        <a href="tel:<?php _show_( $usersDetails['phone'] ); ?>" ><i class="material-icons">phone</i></a> 
-        <a href="./message?create=message&code=<?php _show_( $usersDetails['id'] ); ?>" ><i class="material-icons">message</i></a><?php 
+        <a href="./users?view=<?php echo( $usersDetails['id'] ); ?>&key=<?php echo( $usersDetails['name'] ); ?>" ><i class="material-icons">perm_identity</i></a> 
+        <a href="tel:<?php echo( $usersDetails['phone'] ); ?>" ><i class="material-icons">phone</i></a> 
+        <a href="./message?create=message&code=<?php echo( $usersDetails['id'] ); ?>" ><i class="material-icons">message</i></a><?php 
         if ( isCap( 'admin' ) ) { ?>  
-        <a href="#" id="<?php _show_( $usersDetails['id'] ); ?>" class="" ><i class="material-icons ">edit</i></a>
+        <a href="#" id="<?php echo( $usersDetails['id'] ); ?>" class="" ><i class="material-icons ">edit</i></a>
         <div id="editModal" class="modal">
           <div class="modal-content mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
           <div class="mdl-card__title">
-            <a href="./users?edit=<?php _show_( $usersDetails['id'] ); ?>&key=<?php _show_( $usersDetails['name'] ); ?>" class="material-icons mdl-button--icon">open_in_new</a>
-            <span class="mdl-card__title-text">Edit <?php _show_( $usersDetails['name'] ); ?></span>
+            <a href="./users?edit=<?php echo( $usersDetails['id'] ); ?>&key=<?php echo( $usersDetails['name'] ); ?>" class="material-icons mdl-button--icon">open_in_new</a>
+            <span class="mdl-card__title-text">Edit <?php echo( $usersDetails['name'] ); ?></span>
               <div class="mdl-layout-spacer"></div>
               <div class="mdl-card__subtitle-text">
                   <span class="close">
@@ -615,14 +615,14 @@ class Users {
             </div>
 
             <div class="mdl-card__supporting-text">
-              <form enctype="multipart/form-data" name="registerUser" method="POST" action="<?php _show_( _ADMIN.'users?view='.$usersDetails['id'].'&key='.$usersDetails['name'] ); ?>" >
+              <form enctype="multipart/form-data" name="registerUser" method="POST" action="<?php echo( _ADMIN.'users?view='.$usersDetails['id'].'&key='.$usersDetails['name'] ); ?>" >
 
                       <div class="input-field inline mdl-js-textfield getmdl-select">
                       <i class="material-icons prefix">donut_large</i>
-                       <input class="mdl-textfield__input" id="ilk" name="ilk" type="text" readonly tabIndex="-1" placeholder="<?php _show_( ucfirst( $usersDetails['ilk'] ) ); ?>" value="<?php _show_( ucwords( $usersDetails['ilk'] ) ); ?>">
+                       <input class="mdl-textfield__input" id="ilk" name="ilk" type="text" readonly tabIndex="-1" placeholder="<?php echo( ucfirst( $usersDetails['ilk'] ) ); ?>" value="<?php echo( ucwords( $usersDetails['ilk'] ) ); ?>">
                          <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="ilk"><?php 
                            if ( $_SESSION[JBLSALT.'Cap'] == "admin" ) {
-                            _show_( '<li class="mdl-menu__item" data-val="admin">Admin</li>' );
+                            echo( '<li class="mdl-menu__item" data-val="admin">Admin</li>' );
                            } ?>
                            <li class="mdl-menu__item" data-val="doctor">Doctor</li>
                            <li class="mdl-menu__item" data-val="center">Center</li>
@@ -631,13 +631,13 @@ class Users {
 
                       <div class="input-field inline">
                       <i class="material-icons prefix">phone</i>
-                      <input  id="phone" name="phone" type="text" value="<?php _show_( $usersDetails['phone'] ); ?>">
+                      <input  id="phone" name="phone" type="text" value="<?php echo( $usersDetails['phone'] ); ?>">
                       <label for="phone" class="center-align">Phone Number</label>
                       </div>
 
                       <div class="input-field inline mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
                         <i class="material-icons prefix">room</i>
-                      <input class="mdl-textfield__input" type="text" id="counties" name="location" readonly tabIndex="-1" placeholder="<?php _show_( ucwords( $usersDetails['location'] ) ); ?>" value="<?php _show_( ucwords( $usersDetails['location'] ) ); ?>">
+                      <input class="mdl-textfield__input" type="text" id="counties" name="location" readonly tabIndex="-1" placeholder="<?php echo( ucwords( $usersDetails['location'] ) ); ?>" value="<?php echo( ucwords( $usersDetails['location'] ) ); ?>">
                       <ul for="counties" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
                           <?php 
                           $county_list = "baringo, bomet, bungoma, busia, elgeyo-marakwet, embu, garissa, homa bay, isiolo, kakamega, kajiado, kapenguria, kericho, kiambu, kilifi, kirinyanga, kisii, kisumu, kitui, kwale, laikipia, lamu, machakos, makueni, mandera, marsabit, meru, migori, mombasa, muranga, nairobi, nakuru, nandi, narok, nyamira, nyandarua, nyeri, ol kalou, samburu, siaya, taita-taveta, tana river, tharaka-nithi, trans-nzoia, turkana, uasin-gishu, vihiga, wajir, west pokot";
@@ -652,13 +652,13 @@ class Users {
 
                       <div class="input-field">
                       <i class="material-icons prefix">label</i>
-                      <input class="validate" id="name" name="name" type="text" value="<?php _show_( $usersDetails['name'] ); ?>">
+                      <input class="validate" id="name" name="name" type="text" value="<?php echo( $usersDetails['name'] ); ?>">
                       <label for="name" class="center-align">Full Names</label>
                       </div>
 
                       <div class="input-field inline">
                       <i class="material-icons prefix">mail</i>
-                      <input class="validate" id="email" name="email " type="email" value="<?php _show_( $usersDetails['email'] ); ?>">
+                      <input class="validate" id="email" name="email " type="email" value="<?php echo( $usersDetails['email'] ); ?>">
                       <label for="email" class="center-align">Email Address</label>
                       </div>
 
@@ -690,7 +690,7 @@ class Users {
         <script>
         // Get the modal
         var modal = document.getElementById('editModal' );
-        var a = document.getElementById( "<?php _show_( $usersDetails['id'] ); ?>" );
+        var a = document.getElementById( "<?php echo( $usersDetails['id'] ); ?>" );
         var span = document.getElementsByClassName( "close" )[0];
         a.onclick = function() {
             modal.style.display = "block";
@@ -704,7 +704,7 @@ class Users {
             }
         }
         </script>
-        <a href="./users?delete=<?php _show_( $usersDetails['id'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
+        <a href="./users?delete=<?php echo( $usersDetails['id'] ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
         </td>
         </tr>
         </tbody><?php 
@@ -756,7 +756,7 @@ class Users {
           $name = explode( " ", $userDetails['name'] );
           $greettype = '<b>Hello </b> '.ucfirst( $name[0] )."!";
         }
-        ?><title><?php _show_( $userDetails['name'] ); ?> [ <?php showOption( 'name' ); ?> ]</title>
+        ?><title><?php echo( $userDetails['name'] ); ?> - <?php showOption( 'name' ); ?></title>
               <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
                     <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
                         <div class="mdl-card__supporting-text mdl-card--expand mdl-grid">
@@ -775,41 +775,41 @@ class Users {
                             } ?> mdl-button-icon mdl-badge mdl-badge--overlap alignright">
                               </i>
                             <h5>
-                            <h6><b>Email:</b> <a href="mailto:<?php _show_( $userDetails['email'] ); ?>"><?php _show_( $userDetails['email'] ); ?></a><br><?php if ( $userDetails['ilk'] !== "organization" ) { ?>
-                            <b>Organization:</b> <a href="./resource?organization=<?php _show_( ucwords( $userDetails['company'] ) ); ?>"><?php _show_( $userDetails['company'] ); ?></a><br><?php } ?>
-                            <b>Location:</b> <a href="./resource?location=<?php _show_( $userDetails['location'] ); ?>"><?php _show_( ucwords( $userDetails['location'] ) ); ?></a><br>
-                            <b>Phone:</b> <a href="tel:<?php _show_( $userDetails['phone'] ); ?>"><?php _show_( $userDetails['phone'] ); ?></a></h6>
-                            <a href="tel:<?php _show_( $userDetails['phone'] ); ?>"><i class="material-icons">phone</i></a>
-                            <a href="mailto:<?php _show_( $userDetails['email'] ); ?>"><i class="material-icons">mail_outline</i></a>
-                            <a href="./message?create=message&code=<?php _show_( $userDetails['id'] ); ?>"><i class="material-icons">message</i></a>
-                            <a href="./message?chat=<?php _show_( $userDetails['id'] ); ?>"><i class="material-icons">forum</i></a>
+                            <h6><b>Email:</b> <a href="mailto:<?php echo( $userDetails['email'] ); ?>"><?php echo( $userDetails['email'] ); ?></a><br><?php if ( $userDetails['ilk'] !== "organization" ) { ?>
+                            <b>Organization:</b> <a href="./resource?organization=<?php echo( ucwords( $userDetails['company'] ) ); ?>"><?php echo( $userDetails['company'] ); ?></a><br><?php } ?>
+                            <b>Location:</b> <a href="./resource?location=<?php echo( $userDetails['location'] ); ?>"><?php echo( ucwords( $userDetails['location'] ) ); ?></a><br>
+                            <b>Phone:</b> <a href="tel:<?php echo( $userDetails['phone'] ); ?>"><?php echo( $userDetails['phone'] ); ?></a></h6>
+                            <a href="tel:<?php echo( $userDetails['phone'] ); ?>"><i class="material-icons">phone</i></a>
+                            <a href="mailto:<?php echo( $userDetails['email'] ); ?>"><i class="material-icons">mail_outline</i></a>
+                            <a href="./message?create=message&code=<?php echo( $userDetails['id'] ); ?>"><i class="material-icons">message</i></a>
+                            <a href="./message?chat=<?php echo( $userDetails['id'] ); ?>"><i class="material-icons">forum</i></a>
                             
                           </div>
                           <div class="mdl-cell mdl-cell--5-col-desktop mdl-cell--5-col-tablet mdl-cell--12-col-phone mdl-grid">
                           <div class="mdl-cell mdl-cell--12-col">
-                            <img src="<?php _show_( $userDetails['avatar'] ); ?>" width="100%">
+                            <img src="<?php echo( $userDetails['avatar'] ); ?>" width="100%">
                           </div>
                           <div class="mdl-cell mdl-cell--12-col">
                           <center><?php
                           $social = json_decode( $userDetails['social'] ); 
                           foreach ($social as $key => $value) { ?>
                           <div style="display: inline;">
-                          <a href="<?php _show_( $value ); ?>" type="text" value="<?php _show_( $value ); ?>">
-                          <i class="fa fa-<?php _show_( $key ); ?> fa-2x"></i></a>
+                          <a href="<?php echo( $value ); ?>" type="text" value="<?php echo( $value ); ?>">
+                          <i class="fa fa-<?php echo( $key ); ?> fa-2x"></i></a>
                           </div><?php } ?>
                           </center>
                           </div>
                           </div>
                           <div class="mdl-cell mdl-cell--12-col">
-                          <div><?php _show_( $userDetails['details'] ); ?></div></div>
-                          <div><h6><b>Joined:</b> <?php _show_( $userDetails['created'] ); ?></h6></div>
+                          <div><?php echo( $userDetails['details'] ); ?></div></div>
+                          <div><h6><b>Joined:</b> <?php echo( $userDetails['created'] ); ?></h6></div>
                         </div>
 
                       <div class="mdl-card__menu"><?php if ( strtolower( $userDetails['ilk'] ) == "organization" ) { ?>
-                          <a href="./resource?author=<?php _show_( $userDetails['id'] ); ?>" class="material-icons mdl-badge mdl-badge--overlap">business</a><?php } ?>
-                          <a href="./users?view=<?php _show_( $userDetails['id'] ); ?>&key=<?php _show_( $userDetails['name'] ); ?>&fav=true" class="material-icons mdl-badge mdl-badge--overlap">favorite</a><?php 
+                          <a href="./resource?author=<?php echo( $userDetails['id'] ); ?>" class="material-icons mdl-badge mdl-badge--overlap">business</a><?php } ?>
+                          <a href="./users?view=<?php echo( $userDetails['id'] ); ?>&key=<?php echo( $userDetails['name'] ); ?>&fav=true" class="material-icons mdl-badge mdl-badge--overlap">favorite</a><?php 
                           if ( isCap( 'admin' ) || isProfile( $_SESSION[JBLSALT.'Code'] ) ) { ?>
-                          <a href="./users?edit=<?php _show_( $userDetails['id'] ); ?>&key=<?php _show_( $userDetails['name'] ); ?>" ><i class="material-icons">edit</i></a><?php } ?>
+                          <a href="./users?edit=<?php echo( $userDetails['id'] ); ?>&key=<?php echo( $userDetails['name'] ); ?>" ><i class="material-icons">edit</i></a><?php } ?>
                       </div>
                     </div>
                 </div>
@@ -820,10 +820,10 @@ class Users {
                           if ( $getNotes && $getNotes -> num_rows > 0) { ?>
                             <div class="mdl-card__title">
                             <i class="material-icons">query_builder</i>
-                              <span class="mdl-button">Recently From <?php _show_( ucfirst( $name[0] ) ); ?></span>
+                              <span class="mdl-button">Recently From <?php echo( ucfirst( $name[0] ) ); ?></span>
                             <div class="mdl-layout-spacer"></div>
                             <div class="mdl-card__subtitle-text">
-                              <a href="./message?chat=<?php _show_( $userDetails['id'] ); ?>" ><i class="material-icons">question_answer</i></a>
+                              <a href="./message?chat=<?php echo( $userDetails['id'] ); ?>" ><i class="material-icons">question_answer</i></a>
                             </div>
                             </div>
                             <div class="mdl-card__supporting-text">
@@ -832,16 +832,16 @@ class Users {
                                   <li>
                                     <div class="collapsible-header"><i class="material-icons">label_outline</i>
                                       
-                                        <b><?php _show_( $note['name'] ); ?></b><span class="alignright"><?php 
-                                        _show_( $note['created'] ); ?></span>
+                                        <b><?php echo( $note['name'] ); ?></b><span class="alignright"><?php 
+                                        echo( $note['created'] ); ?></span>
                                     </div>
                                     <div class="collapsible-body"><span class="alignright">
-                                        <a href="./message?create=note&code=<?php _show_( $note['author'] ); ?>" ><i class="material-icons">reply</i></a> 
-                                        <a href="./message?view=<?php _show_( $note['id'] ); ?>" ><i class="material-icons">open_in_new</i></a> 
-                                        <a href="./message?delete=<?php _show_( $note['id'] ); ?>" ><i class="material-icons">delete</i></a>
+                                        <a href="./message?create=note&code=<?php echo( $note['author'] ); ?>" ><i class="material-icons">reply</i></a> 
+                                        <a href="./message?view=<?php echo( $note['id'] ); ?>" ><i class="material-icons">open_in_new</i></a> 
+                                        <a href="./message?delete=<?php echo( $note['id'] ); ?>" ><i class="material-icons">delete</i></a>
                                         </span>
                                         <span><?php 
-                                        _show_( $note['details'] ); ?></span>
+                                        echo( $note['details'] ); ?></span>
                                     </div>
                                   </li><?php 
                                   } ?>
@@ -850,11 +850,11 @@ class Users {
                           } else { ?>
                           <div class="mdl-card__title"><?php if( !isProfile( $_SESSION[JBLSALT.'Code'] ) ) { ?>
                             <div class="mdl-card__title-text">
-                              <span><b>Contact </b><?php _show_( ucfirst( $name[0] ) ); ?></span>
+                              <span><b>Contact </b><?php echo( ucfirst( $name[0] ) ); ?></span>
                             </div>
                             <div class="mdl-layout-spacer"></div>
                             <div class="mdl-card__subtitle-text">
-                              <a href="./message?create=message&code=<?php _show_( $userDetails['id'] ); ?>" class="material-icons mdl-badge mdl-badge--overlap">message</a>
+                              <a href="./message?create=message&code=<?php echo( $userDetails['id'] ); ?>" class="material-icons mdl-badge mdl-badge--overlap">message</a>
                             </div><?php } ?>
                           </div><?php 
                         }

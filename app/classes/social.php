@@ -39,8 +39,8 @@ class Social {
         <li class="waves-effect waves-light"><a href="./options?settings=social"><i class="mdl-color-text--red fa fa-instagram fa-2x" role="presentation"></i></a></li>
         <li class="waves-effect waves-light"><a href="./options?settings=social"><i class="mdl-color-text--light-blue fa fa-twitter fa-2x" role="presentation"></i></a></li>
         <li class="waves-effect waves-light"><a href="./options?settings=social"><i class="mdl-color-text--red fa fa-envelope fa-2x" role="presentation"></i></a></li>
-        <li class="waves-effect waves-light"><a href="sms://<?php _show_( $_SESSION[JBLSALT.'Phone'] ); ?>?body=<?php _show_( $post['name'].' '._ROOT ); ?><?php _show_( $post['link'] ); ?>"><i class="mdl-color-text--black mdi mdi-message fa-2x" role="presentation"></i></a></li>
-        <li class="waves-effect waves-light"><a href="whatsapp://send?text=<?php _show_( $post['name'] ); _show_( _ROOT.$post['link'] ); ?>"><i class="mdl-color-text--green fa fa-whatsapp fa-2x" role="presentation"></i></a></li>
+        <li class="waves-effect waves-light"><a href="sms://<?php echo( $_SESSION[JBLSALT.'Phone'] ); ?>?body=<?php echo( $post['name'].' '._ROOT ); ?><?php echo( $post['link'] ); ?>"><i class="mdl-color-text--black mdi mdi-message fa-2x" role="presentation"></i></a></li>
+        <li class="waves-effect waves-light"><a href="whatsapp://send?text=<?php echo( $post['name'] ); echo( _ROOT.$post['link'] ); ?>"><i class="mdl-color-text--green fa fa-whatsapp fa-2x" role="presentation"></i></a></li>
      </ul>
     </div><?php 
       }
@@ -56,17 +56,17 @@ class Social {
                 <i class="material-icons">public</i>
               </a>
               <ul>
-                <li><a href="<?php _show_( $facebook ); ?>" class="btn-floating mdl-color--indigo"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="<?php echo( $facebook ); ?>" class="btn-floating mdl-color--indigo"><i class="fa fa-facebook"></i></a></li>
 
                 <li><a href="https://twitter.com/intent/tweet?url={url}&text={title}&via={via}&hashtags={hashtags}" class="btn-floating mdl-color--light-blue"><i class="fa fa-twitter"></i></a></li>
 
-                <li><a href="<?php _show_( $github ); ?>" class="btn-floating mdl-color--purple"><i class="fa fa-github"></i></a></li>
+                <li><a href="<?php echo( $github ); ?>" class="btn-floating mdl-color--purple"><i class="fa fa-github"></i></a></li>
 
-                <li><a href="<?php _show_( $linkedin ); ?>" class="btn-floating mdl-color--blue"><i class="fa fa-linkedin"></i></a></li>
+                <li><a href="<?php echo( $linkedin ); ?>" class="btn-floating mdl-color--blue"><i class="fa fa-linkedin"></i></a></li>
 
-                <li><a href="tel:<?php _show_( $tel ); ?>" class="btn-floating mdl-color--green"><i class="fa fa-phone"></i></a></li>
+                <li><a href="tel:<?php echo( $tel ); ?>" class="btn-floating mdl-color--green"><i class="fa fa-phone"></i></a></li>
 
-                <li><a href="mailto:<?php _show_( $mail ); ?>" class="btn-floating mdl-color--grey"><i class="fa fa-envelope"></i></a></li>
+                <li><a href="mailto:<?php echo( $mail ); ?>" class="btn-floating mdl-color--grey"><i class="fa fa-envelope"></i></a></li>
               </ul>
             </div><?php 
   }

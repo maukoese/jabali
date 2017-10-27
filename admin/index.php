@@ -53,7 +53,7 @@ $hPost -> create( $name, $author, $avatar, $by, $category, $company, $id, $creat
     renderSettingsForm( $_GET['x'] );
   } else {
     global $hWidget; ?>
-    <title><?php _show_( ucwords( $_SESSION[JBLSALT.'Cap'] ) ); ?> Dashboard [ <?php showOption( 'name' ); ?> ]</title>
+    <title><?php echo( ucwords( $_SESSION[JBLSALT.'Cap'] ) ); ?> Dashboard - <?php showOption( 'name' ); ?></title>
     	<div class="mdl-cell mdl-cell--3-col mdl-card mdl-color--<?php primaryColor(); ?>" >
           <?php $hWidget -> quickLinks(); ?>
       </div>

@@ -13,7 +13,7 @@
 require_once ( 'app/config.php' );
 
 /**
-* Script Directories
+* Script Directories.
 **/
 define( '_ABS_', __DIR__ );
 define( '_ABSAD_', _ABS_ . '/admin/' );
@@ -26,7 +26,7 @@ define( '_ABSUP_', _ABS_ . '/uploads/' );
 define( '_ABSTEMP_', _ABSUP_. 'temp/' );
 
 /**
-* Scripts
+* URL Paths.
 **/
 define( '_ADMIN', _ROOT .'/admin/' );
 define( '_RES', _ROOT .'/app/' );
@@ -120,6 +120,7 @@ $GLOBALS['POSTS'] = new Jabali\Data\Access\Objects\Posts;
 //$GLOBALS['MESSAGES'] = new Jabali\Data\Access\Objects\Users;
 //$GLOBALS['OPTIONS'] = new Jabali\Data\Access\Objects\Users;
 $GLOBALS['GUZZLE'] = new \GuzzleHttp\Client;
+$GLOBALS['MAILER'] = new \PHPMailer\PHPMailer\PHPMailer;
 
 // $res = $GLOBALS['GUZZLE']->request('GET', 'https://api.github.com/user', [ 'auth' => ['maukoese', 'MyZahra5fad35'] ]);
 // echo $res->getStatusCode();
@@ -160,11 +161,11 @@ $GLOBALS['GSettingsField'] = array();
 
 $GLOBALS['GTypes'] = array();
 if ( isOption ( 'usertypes' ) ) {
-	$GLOBALS['GTypes']['users'] = json_decode( getOption( 'usertypes' ), true );
-	$GLOBALS['GTypes']['posts'] = json_decode( getOption( 'posttypes' ), true );
-	$GLOBALS['GTypes']['resources'] = json_decode( getOption( 'resourcetypes' ), true );
-	$GLOBALS['GTypes']['comments'] = json_decode( getOption( 'commenttypes' ), true );
-	$GLOBALS['GTypes']['messages'] = json_decode( getOption( 'messagetypes' ), true );
+	$GLOBALS['GTypes']['users'] = getOption( 'usertypes' );
+	$GLOBALS['GTypes']['posts'] = getOption( 'posttypes' );
+	$GLOBALS['GTypes']['resources'] = getOption( 'resourcetypes');
+	$GLOBALS['GTypes']['comments'] = getOption( 'commenttypes');
+	$GLOBALS['GTypes']['messages'] = getOption( 'messagetypes');
 }
 
 /**
@@ -196,7 +197,7 @@ if ( $_SERVER['REQUEST_METHOD'] !== "GET" ) {
 }
 
 if ( isOption ( 'modules' ) ) {
-	$exts = json_decode ( getOption( 'modules' ), true );
+	$exts = getOption( 'modules' );
 	foreach ( $exts as $ext ) {
 	require_once _ABSX_.$ext.'/'.$ext.'.php';
 	}
