@@ -1,3 +1,4 @@
 
 .htaccess
-inc/config.php
+app/config.php
+app/admin/sql.php
