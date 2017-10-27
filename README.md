@@ -10,58 +10,20 @@ These instructions will get you a copy of the project up and running on your loc
 A running PHP server.
 A database system - MySQL/MariaDB/SQLite/PostgreSQL/Mongo
 
-```
-Give examples
-```
 
 ### Installing
 
-Grab a copy of Jabali from here
+Grab a copy of Jabali LTS from here(https://cdn.mauko.co.ke/jabali/jabali.zip) and extract it in your server. Point your browser to your site and the Jabali Install Bot will handle the rest - just follow the prompts.
 
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Material Design](http://material.io/) - The web framework used
-* [JQuery](https://code.google.com/jquery/) - Dependency Management
+* [Material Design](http://material.io/) - Interactive UI
+* [JQuery](https://code.google.com/jquery/) - UX
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
@@ -69,11 +31,7 @@ We use [CalVer]( http://calver.org ) for versioning. For the versions available,
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Mauko Maunde** - *Initial work* - [Website](https://mauko.co.ke)
 
 See also the list of [contributors](https://github.com/maukoese/jabali/contributors) who participated in this project.
 

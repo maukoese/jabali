@@ -1,42 +1,44 @@
 <?php
 namespace Jabali\Lib;
 
-class atomRSS {
+class atomRSS
+{
 
-  public function head( $title, $description, $siteurl ){
-    echo '<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">';
-    echo '<channel>';
-    echo '<title>'.$title.'</title>';
-    echo '<link>'.$siteurl.'</link>';
-    echo '<description>'.$description.'</description>';
-    echo '<language>en-us</language>';
-    echo '<atom:link href="'.$siteurl.'/rss.xml" rel="self" type="application/rss+xml"/>';
+  public function render()
+  {
+    echo $this->getDetails() . $this->getItems();
   }
 
-  public function feed( $post ){
-      echo '<item>
-        <title>' . htmlspecialchars( $post -> name ) . '</title>
-        <link>' . htmlspecialchars( $post -> link ) . '<link>
-        <description>' . htmlspecialchars( $post -> details ) . '</description>
-        <category>' . htmlspecialchars( $post -> categories ) . '</category>
-        <comments>' . htmlspecialchars( _ROOT . '/comments/posts/' . $post -> id ) . '</comments>
-        <guid>' . htmlspecialchars( $post -> id ) . '</guid>
-        <pubDate' . date( "D, d M Y H:i:s O", strtotime( htmlspecialchars( $post -> created ) ) ) . '</pubDate
-        </item>';
+  private function getDetails()
+  {  
+    $details = '<?xml version="1.0" encoding="UTF-8" ?>
+        <rss version="2.0">
+          <channel>
+            <title>'. getOption( 'name' ) .'</title>
+            <link>'. _ROOT .'</link>
+            <description>'. getOption( 'description' ) .'</description>
+            <language>'. getOption( 'language' ) .'</language>
+            <image>
+              <title>'. getOption( 'name' ) .'</title>
+              <url>'. getOption( 'favicon' ) .'</url>
+              <link>'. getOption( 'headerlogo' ) .'</link>
+              <width>88</width>
+              <height>88</height>
+            </image>';
+    return $details;
   }
-
-  public function foot(){
-    echo '</channel>';
-    echo '</rss>';
-  }
-
-  public function clean( $string ){
-    $string = strtolower( preg_replace('@[\W_]+@', '-', $string) );
-    $string = rtrim($string,'-');
-    $string = strtolower($string);
-
-    return $string;
+  private function getItems()
+  {
+    $posts = $GLOBALS['POSTS'] -> sweep();
+    foreach( $posts as $row ) {
+    $items = '<item>
+      <title>'. $row["title"] .'</title>
+      <link>'. $row["link"] .'</link>
+      <description><![CDATA['. $row["description"] .']]></description>
+    </item>';
+    }
+    $items .= '</channel>
+        </rss>';
+    return $items;
   }
 }
-
-?> 

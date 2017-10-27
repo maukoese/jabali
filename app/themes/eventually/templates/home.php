@@ -5,7 +5,7 @@
 <title><?php showOption( 'name' ); ?> - <?php showOption( 'description' ); ?></title>
 <!-- Header -->
 	<header id="header">
-		<?php headerLogo(); ?>
+		<?php headerLogo( 300 ); ?>
 		<h1><?php showOption( 'name' ); ?></h1>
 		<p><?php showOption( 'about' ); ?></span></p>
 	</header>

@@ -1202,7 +1202,7 @@ function rssFeed( $type ){
 					<height>88</height>
 				</image>\n";
 
-		$posts = $GLOBALS['POSTS'] -> getTypes();
+		$posts = $GLOBALS['POSTS'] -> sweep();
 
 		foreach ( $posts as $post ) {
 			$post = (object)$post;
@@ -1231,15 +1231,7 @@ function rssFeed( $type ){
 		header('Expires: -1');
 		$url = _ROOT;
 		$rss = new Jabali\Lib\atomRSS;
-		$rssTitle = getOption( 'name' );
-		$rssDescription = getOption( 'description' );
-		$rss -> head( $rssTitle, $rssDescription, $url );
-		$posts = $GLOBALS['POSTS'] -> sweepy();
-		for ( $i=0; $i < $posts -> rowCount(); $i++ ) {
-        $post = $posts -> getNext( $GLOBALS['POSTS'] );
-		$rss -> feed( $post );
-		}
-		$rss-> foot();
+		$rss -> render();
 	}
 }
 
