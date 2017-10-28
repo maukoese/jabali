@@ -15,7 +15,7 @@ class SQLiteDB {
 
 	function __construct( $dbname ) {
 
-		$this -> conn = new \SQLite3( _ABSDB_.'sqlite/'.$dbname.'.db' );
+		$this -> conn = new \SQLite3( _ABSDB_.'sqlite/'.$dbname.'.sq3' );
 		if ( !$this -> conn ) {
 		    printf( "Connection failed: %s\n", $this -> error() );
 		    exit();
@@ -36,6 +36,7 @@ class SQLiteDB {
 	}
 
 	function error(){
+		$this -> errorcode = $this -> conn -> lastErrorCode();
 		return $this -> conn -> lastErrorMsg();
 	}
 
@@ -44,7 +45,7 @@ class SQLiteDB {
 	* or null if there are no rows in the result
 	**/
 	function fetchArray( $result ){
-		return $result -> fetch_assoc( );
+		return $result -> fetchArray(SQLITE3_ASSOC);
 	}
 
 	/**
@@ -52,18 +53,15 @@ class SQLiteDB {
 	* or null if there are no rows in the result
 	**/
 	function fetchObject( $result ){
-		return $result -> fetch_object();
+		return (object)$result -> fetchArray(SQLITE3_ASSOC);
 	}
 
 	/**
 	* Preparing our data
-	**/
-
-	/**
 	* @return Returns escaped data to prevent mysqli injection
 	**/
 	function clean( $data ){
-		return $this -> conn -> escape_string( $data );
+		return $this -> conn -> escapeString( $data );
 	}
 
 
@@ -165,7 +163,7 @@ class SQLiteDB {
 	}
 
 	function insertId(){
-		return $this -> conn -> insert_id;
+		return $this -> conn -> lastInsertRowID();
 	}
 
 	function update( $table, $cols, $vals, $conds = null ){
@@ -262,7 +260,11 @@ class SQLiteDB {
 	* Query Reports
 	**/
 	function numRows( $result ){
-		return $result -> num_rows;
+		$numRows = 0;
+        while($rows = $result->fetchArray()){
+            ++$numRows;
+        }
+        return $numRows;
 	}
 
 	function rowExists ( $sql ){

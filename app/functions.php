@@ -15,144 +15,164 @@
 * Install main instance of Jabali
 **/
 function installSQLDB() {
+	$prefix = _DBPREFIX;
 
-	$GLOBALS['JBLDB'] -> query( "CREATE TABLE IF NOT EXISTS ". _DBPREFIX ."users(
-	id INT AUTO_INCREMENT,
-	authkey VARCHAR(100),
-	author VARCHAR(12),
-	author_name VARCHAR(20), 
-	avatar VARCHAR(100),
-	categories VARCHAR(20),  
-	company VARCHAR(100),
-	created DATETIME,
-	custom VARCHAR(150),
-	details TEXT,
-	email  VARCHAR(50) UNIQUE,
-	excerpt TEXT,
-	gender VARCHAR(8),
-	level VARCHAR(12),
-	link VARCHAR(100),
-	location VARCHAR(50),
-	name VARCHAR(100),
-	password VARCHAR(50),
-	phone VARCHAR(20),
-	social TEXT,
-	state VARCHAR(20),
-	style VARCHAR(100),
-	ilk VARCHAR(20),
-	updated DATE,
-	username VARCHAR(20) UNIQUE,
-	PRIMARY KEY(id, username)
-	)" );
+	$tables = array();
+	$tables[] = <<<SQL
+		CREATE TABLE IF NOT EXISTS {$prefix}users
+		( id INT AUTO_INCREMENT,
+		authkey VARCHAR(100),
+		author VARCHAR(12),
+		author_name VARCHAR(20), 
+		avatar VARCHAR(100),
+		categories VARCHAR(20),  
+		company VARCHAR(100),
+		created DATETIME,
+		custom VARCHAR(150),
+		details TEXT,
+		email  VARCHAR(50) UNIQUE,
+		excerpt TEXT,
+		gender VARCHAR(8),
+		level VARCHAR(12),
+		link VARCHAR(100),
+		location VARCHAR(50),
+		name VARCHAR(100),
+		password VARCHAR(50),
+		phone VARCHAR(20),
+		social TEXT,
+		state VARCHAR(20),
+		style VARCHAR(100),
+		ilk VARCHAR(20),
+		updated DATE,
+		username VARCHAR(20) UNIQUE,
+		PRIMARY KEY(id, username)
+		)
+SQL;
 
-	$GLOBALS['JBLDB'] -> query( "CREATE TABLE IF NOT EXISTS ". _DBPREFIX ."resources (
-	id INT AUTO_INCREMENT,
-	name VARCHAR(100),
-	author VARCHAR(12),
-	avatar VARCHAR(20),
-	author_name VARCHAR(20), 
-	company VARCHAR(20),
-	created DATETIME,
-	custom VARCHAR(12),
-	details TEXT,
-	email  VARCHAR(50),
-	authkey VARCHAR(100),
-	level VARCHAR(12),
-	link VARCHAR(100),
-	location VARCHAR(50),
-	excerpt TEXT,
-	phone VARCHAR(20),
-	social VARCHAR(500),
-	state VARCHAR(20),
-	ilk VARCHAR(50),
-	updated DATE,
-	PRIMARY KEY(id)
-	)" );
+	$tables[] = <<<SQL
+		CREATE TABLE IF NOT EXISTS {$prefix}resources (
+		id INT AUTO_INCREMENT,
+		name VARCHAR(100),
+		author VARCHAR(12),
+		avatar VARCHAR(20),
+		author_name VARCHAR(20), 
+		company VARCHAR(20),
+		created DATETIME,
+		custom VARCHAR(12),
+		details TEXT,
+		email  VARCHAR(50),
+		authkey VARCHAR(100),
+		level VARCHAR(12),
+		link VARCHAR(100),
+		location VARCHAR(50),
+		excerpt TEXT,
+		phone VARCHAR(20),
+		social VARCHAR(500),
+		state VARCHAR(20),
+		ilk VARCHAR(50),
+		updated DATE,
+		PRIMARY KEY(id)
+		)
+SQL;
 
-	$GLOBALS['JBLDB'] -> query( "CREATE TABLE IF NOT EXISTS ". _DBPREFIX ."messages(
-	id INT AUTO_INCREMENT,
-	authkey VARCHAR(100),
-	name VARCHAR(100),
-	author VARCHAR(20),
-	author_name VARCHAR(20),
-	created DATETIME,
-	details TEXT,
-	email  VARCHAR(50),
-	for VARCHAR(20),
-	level VARCHAR(12),
-	link VARCHAR(100),
-	phone VARCHAR(20),
-	state VARCHAR(20),
-	ilk VARCHAR(50),
-	PRIMARY KEY(id)
-	)" );
+	$tables[] = <<<SQL
+		CREATE TABLE IF NOT EXISTS {$prefix}messages(
+		id INT AUTO_INCREMENT,
+		authkey VARCHAR(100),
+		name VARCHAR(100),
+		author VARCHAR(20),
+		author_name VARCHAR(20),
+		created DATETIME,
+		details TEXT,
+		email  VARCHAR(50),
+		for VARCHAR(20),
+		level VARCHAR(12),
+		link VARCHAR(100),
+		phone VARCHAR(20),
+		state VARCHAR(20),
+		ilk VARCHAR(50),
+		PRIMARY KEY(id)
+		)
+SQL;
 
-	$GLOBALS['JBLDB'] -> query( "CREATE TABLE IF NOT EXISTS ". _DBPREFIX ."comments(
-	id INT AUTO_INCREMENT,
-	authkey VARCHAR(100),
-	name VARCHAR(100),
-	author VARCHAR(20),
-	author_name VARCHAR(20),
-	created DATETIME,
-	details TEXT,
-	email  VARCHAR(50),
-	for VARCHAR(20),
-	level VARCHAR(12),
-	link VARCHAR(100),
-	state VARCHAR(20),
-	ilk VARCHAR(50),
-	updated DATE,
-	PRIMARY KEY(id)
-	)" );
+	$tables[] = <<<SQL
+		CREATE TABLE IF NOT EXISTS {$prefix}comments(
+		id INT AUTO_INCREMENT,
+		authkey VARCHAR(100),
+		name VARCHAR(100),
+		author VARCHAR(20),
+		author_name VARCHAR(20),
+		created DATETIME,
+		details TEXT,
+		email  VARCHAR(50),
+		for VARCHAR(20),
+		level VARCHAR(12),
+		link VARCHAR(100),
+		state VARCHAR(20),
+		ilk VARCHAR(50),
+		updated DATE,
+		PRIMARY KEY(id)
+		)
+SQL;
 
-	$GLOBALS['JBLDB'] -> query( "CREATE TABLE IF NOT EXISTS ". _DBPREFIX ."posts(
-	name VARCHAR(300),
-	author VARCHAR(20),
-	author_name VARCHAR(100),
-	avatar VARCHAR(100),
-	categories VARCHAR(20),
-	id INT AUTO_INCREMENT,
-	created DATETIME,
-	details TEXT,
-	gallery VARCHAR(500),
-	authkey VARCHAR(100),
-	level VARCHAR(12),
-	link VARCHAR(100),
-	excerpt TEXT,
-	readings VARCHAR(500),
-	state VARCHAR(20),
-	subtitle VARCHAR(100),
-	slug VARCHAR(300) UNIQUE,
-	tags VARCHAR(50),
-	template VARCHAR(50),
-	ilk VARCHAR(50),
-	updated DATE,
-	PRIMARY KEY(id)
-	)" );
+	$tables[] = <<<SQL
+		CREATE TABLE IF NOT EXISTS {$prefix}posts(
+		name VARCHAR(300),
+		author VARCHAR(20),
+		author_name VARCHAR(100),
+		avatar VARCHAR(100),
+		categories VARCHAR(20),
+		id INT AUTO_INCREMENT,
+		created DATETIME,
+		details TEXT,
+		gallery VARCHAR(500),
+		authkey VARCHAR(100),
+		level VARCHAR(12),
+		link VARCHAR(100),
+		excerpt TEXT,
+		readings VARCHAR(500),
+		state VARCHAR(20),
+		subtitle VARCHAR(100),
+		slug VARCHAR(300) UNIQUE,
+		tags VARCHAR(50),
+		template VARCHAR(50),
+		ilk VARCHAR(50),
+		updated DATE,
+		PRIMARY KEY(id)
+		)
+SQL;
 
-	$GLOBALS['JBLDB'] -> query( "CREATE TABLE IF NOT EXISTS ". _DBPREFIX ."options (
-	id INT(10) NOT NULL AUTO_INCREMENT,
-	name VARCHAR(200),
-	code VARCHAR(100) UNIQUE,
-	details TEXT,
-	updated DATETIME,
-	PRIMARY KEY(id, code)
-	)" );
+	$tables[] = <<<SQL
+		CREATE TABLE IF NOT EXISTS {$prefix}options (
+		id INT AUTO_INCREMENT,
+		name VARCHAR(200),
+		code VARCHAR(100) UNIQUE,
+		details TEXT,
+		updated DATETIME,
+		PRIMARY KEY(id, code)
+		)
+SQL;
 
-	$GLOBALS['JBLDB'] -> query( "CREATE TABLE IF NOT EXISTS ". _DBPREFIX ."menus (
-	id INT(10) NOT NULL AUTO_INCREMENT,
-	author VARCHAR(20),
-	avatar VARCHAR(100),
-	code VARCHAR(100) UNIQUE,
-	parent VARCHAR(20),
-	link VARCHAR(100),
-	location VARCHAR(100),
-	name VARCHAR(200),
-	ilk VARCHAR(50),
-	state VARCHAR(50),
-	updated DATETIME,
-	PRIMARY KEY(id, code)
-	)" );
+	$tables[] = <<<SQL
+		CREATE TABLE IF NOT EXISTS {$prefix}menus (
+		id INT AUTO_INCREMENT,
+		author VARCHAR(20),
+		avatar VARCHAR(100),
+		code VARCHAR(100) UNIQUE,
+		parent VARCHAR(20),
+		link VARCHAR(100),
+		location VARCHAR(100),
+		name VARCHAR(200),
+		ilk VARCHAR(50),
+		state VARCHAR(50),
+		updated DATETIME,
+		PRIMARY KEY(id, code)
+		)
+SQL;
+
+	foreach ($tables as $table ) {
+		$GLOBALS['JBLDB'] -> execute( $table );
+	}
 } 
  
 
@@ -199,14 +219,14 @@ function loadScript( $link, $theme = false ) {
 /**
 * Load Javascript
 **/
-function loadImage( $link, $theme = false, $width = 250, $alt = '' ) {
+function loadImage( $link, $theme = false, $width = 250, $alt = '', $class = "" ) {
 	if ( $theme !== false ) {
 	 	$themes = _THEMES.$theme.'/assets/';
 	 } else {
 	 	$themes = '';
 	 } ?>
 
-	<img src="<?php echo $themes.$link; ?>" width="<?php echo( $width ); ?>" alt="<?php echo( $alt )?>" /><?php 
+	<img src="<?php echo $themes.$link; ?>" width="<?php echo( $width ); ?>" alt="<?php echo( $alt )?>" class="<?php echo $class; ?>" /><?php 
 }
 /**
 * Load stylesheets
@@ -218,7 +238,7 @@ function loadStyles( $links, $theme = false ) {
 	 	$themes = false;
 	 }
 
-	 foreach ($links as $link ) {
+	 foreach ( $links as $link ) {
 	 	loadStyle( $link, $themes );
 	 }
 }
@@ -233,7 +253,7 @@ function loadScripts( $links, $theme = false ) {
 	 	$themes = false;
 	 }
 
-	 foreach ($links as $link ) {
+	 foreach ( $links as $link ) {
 	 	loadScript( $link, $themes );
 	 }
 }
@@ -495,8 +515,8 @@ function textSColor() {
 function getOption( $code ) {
 	$option = "";
     $getOptions = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."options WHERE code='".$code."'" );
-    if ( $getOptions -> num_rows > 0 ) {
-        while ( $siteOption = mysqli_fetch_assoc( $getOptions) ) { 
+    if ( $GLOBALS['JBLDB'] -> numRows($getOptions) > 0 ) {
+        while ( $siteOption = $GLOBALS['JBLDB'] -> fetchArray($getOptions) ) { 
 			if ( substr( $siteOption['details'], 0,1 ) == "[" || substr( $siteOption['details'], 0,1 ) == "{" ) {
 				$option = json_decode( $siteOption['details'], true );
 			} else {
@@ -513,8 +533,8 @@ function getOption( $code ) {
 **/
 function showOption( $code ) {
     $getOptions = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."options WHERE code='".$code."'" );
-    if ( $getOptions -> num_rows > 0 ) {
-        while ( $siteOption = mysqli_fetch_assoc( $getOptions) ) { 
+    if ( $GLOBALS['JBLDB'] -> numRows($getOptions) > 0 ) {
+        while ( $siteOption = $GLOBALS['JBLDB'] -> fetchArray($getOptions) ) { 
             echo( $siteOption['details'] );
         }
     }
@@ -525,7 +545,7 @@ function showOption( $code ) {
 **/
 function isOption( $code ) {
     $getOptions = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."options WHERE code='".$code."'" );
-    if ( $getOptions && $getOptions -> num_rows > 0 ) {
+    if ( $getOptions && $GLOBALS['JBLDB'] -> numRows($getOptions) > 0 ) {
         return true;
     } else {
     	return false;

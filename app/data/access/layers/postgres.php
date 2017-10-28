@@ -31,31 +31,27 @@ class PostgreDB {
 	}
 
 	function query( $sql ){
-		return $this -> conn -> query( $sql );
-	}
-
-	function execute( $sql ){
-		return $this -> conn -> query( $sql );
+		return pg_query( $sql );
 	}
 
 	function error(){
-		return $this -> conn -> error;
+		return pg_last_error();
 	}
 
 	/**
 	* @return Returns an associative array of database records from a query result, 
 	* or null if there are no rows in the result
 	**/
-	function fetchArray( $result ){
-		return $result -> fetch_assoc();
+	function fetch( $result ){
+		return  pg_fetch_array( $result, NULL, PGSQL_ASSOC );
 	}
 
 	/**
 	* @return Returns an object of database records from a query result, 
 	* or null if there are no rows in the result
 	**/
-	function fetchObject( $result ){
-		return $result -> fetch_object();
+	function fetchObj( $result ){
+		mysqli_fetch_object( $result );
 	}
 
 	/**
@@ -108,7 +104,7 @@ class PostgreDB {
 	}
 
 	function setVal( $cols, $vals ){
-		$sql = "SET ";
+		$sql = "SET ( ";
 		if ( is_array( $cols ) && is_array( $vals ) ) {
 			array_walk( $cols, array( $this, 'clean' ) );
 			array_walk( $vals, array( $this, 'clean' ) );
@@ -124,6 +120,8 @@ class PostgreDB {
 		} else {
 			$sql .= $this -> clean( $cols ) . " = '" . $this -> clean( $vals ) . "'";
 		}
+		
+		$sql .= " ) ";
 
 		return $sql;
 	}

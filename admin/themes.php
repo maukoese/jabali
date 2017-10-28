@@ -956,7 +956,7 @@ if ( isset( $_GET['install'] ) ) {
 } elseif ( isset( $_GET['showcase'] ) ) { ?>
   <title>Themes Showcase - <?php showOption( 'name' ); ?></title>
   <form method="POST" action="" class="mdl-grid"><?php
-    $themes = file_get_contents( _ROOT . '/api/themes/' );
+    $themes = file_get_contents( 'https://mauko.co.ke/api/themes/' );
     $showcase = json_decode( $themes, true );
     foreach ($showcase as $theme => $xD ) { ?>
       <div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">

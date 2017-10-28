@@ -32,80 +32,12 @@ class Users {
   public $username;
   public $allowed = array( "id", "author", "avatar", "categories", "company", "created", "custom", "details", "email","excerpt", "gender", "level", "link", "location", "name", "phone", "social", "state", "style", "ilk", "updated", "username" );
 
-  private $authkey;
-  private $password;
+  public $authkey;
+  public $password;
   private $table = "users";
 
   public function create(){
     $cols = array( "authkey", "author", "author_name", "avatar", "categories", "company", "created", "custom", "details", "email","excerpt", "gender", "level", "link", "location", "name", "phone", "social", "state", "style", "ilk", "updated", "username", "password" );
-
-    if ( empty( $_POST['authkey'] ) ) { $_POST['authkey'] = str_shuffle( generateCode() ); }
-    if ( empty( $_POST['name'] ) ) { $_POST['name'] = 'name'; }
-    if ( empty( $_POST['author'] ) ) { $_POST['author'] = '1'; }
-    if ( empty( $_POST['author_name'] ) ) { $_POST['author_name'] = 'Undefined'; }
-    if ( empty( $_POST['categories'] ) ) { $_POST['categories'] = "Uncategorized"; }
-    if ( empty( $_POST['company'] ) ) { $_POST['company'] = "Jabali"; }
-    if ( empty( $_POST['created_d'] ) ) { $_POST['created_d'] = date( "Y-m-d" ); }
-    if ( empty( $_POST['created_t'] ) ) { $_POST['created_t'] = date( "H:i:s" ); }
-    if ( empty( $_POST['custom'] ) ) { $_POST['custom'] = "{}"; }
-    if ( empty( $_POST['details'] ) ) { $_POST['details'] = "User bio"; }
-    if ( empty( $_POST['email'] ) ) { $_POST['email'] = "user@jabali.co.ke"; }
-    if ( empty( $_POST['excerpt'] ) ) { $_POST['excerpt'] = substr( $_POST['details'], 250 ); }
-    if ( empty( $_POST['gender'] ) ) { $_POST['gender'] = "other"; }
-    if ( empty( $_POST['level'] ) ) { $_POST['level'] = "public"; }
-    if ( empty( $_POST['location'] ) ) { $_POST['level'] = "public"; }
-    if ( empty( $_POST['phone'] ) ) { $_POST['level'] = "+254204404993"; }
-    if ( empty( $_POST['social'] ) ) { $_POST['social'] = '{"facebook":"https://www.facebook.com/","twitter":"https://twitter.com/","instagram":"https://instagram.com/","github":"https://github.com/"}'; }
-    if ( empty( $_POST['style'] ) ) { $_POST['style'] = "zahra"; }
-    if ( empty( $_POST['state'] ) ) { $_POST['state'] = "published"; } 
-    if ( empty( $_POST['ilk'] ) ) { $_POST['ilk'] = "article"; } 
-    if ( empty( $_POST['password'] ) ) { $_POST['password'] = md5($_POST['name'].date("Y-m-d H:i:s")); } 
-    if ( empty( $_POST['updated'] ) ) { $_POST['updated'] = date('Y-m-d H:i:s'); }
-
-    if ( empty( $_FILES['new_avatar'] ) ) {
-      $uploaddir = _ABSUP_ .date('Y' ).'/'.date('m' ).'/'.date('d' ).'/';
-
-      $upload = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'. basename( $_FILES['new_avatar']['name'] );
-      if ( file_exists( $upload) ) {
-        $new_avatar = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'. basename( $_FILES['new_avatar']['name'] )."_".date('H_m_s');
-      } else {
-        $new_avatar = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/' . basename( $_FILES['new_avatar']['name'] );
-      }
-
-      move_uploaded_file( $_FILES['new_avatar']["tmp_name"], $uploaddir);
-
-      $avatar = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'. $new_avatar;
-    } else {
-      $avatar = $_POST['the_avatar'];
-    }
-
-    $this -> authkey = $_POST['authkey'];
-    $this -> name = $_POST['name']; 
-    $this -> author = $_POST['author'];
-    $this -> author_name = $_POST['author_name'];
-    $this -> avatar = $avatar;
-    $this -> categories = $_POST['categories'];
-    $created = $_POST['created_d'];
-    $created_t = $_POST['created_t'];
-    $this -> created = $created.' '.$created_t;
-    $this -> company = $_POST['company'];
-    $this -> custom = $_POST['custom'];
-    $this -> details = $_POST['details'];
-    $this -> email = $_POST['email'];
-    $this -> excerpt = $_POST['excerpt'];
-    $this -> gender = $_POST['gender'];
-    $this -> level = $_POST['level'];
-    $link = preg_replace('/\s+/', '', $_POST['name'] );
-    $this -> username = strtolower( $link );
-    $this -> link = _ROOT . '/users/' . $this -> username ;
-    $this -> location = $_POST['location'];
-    $this -> phone = $_POST['phone'];  
-    $this -> state = $_POST['state'];
-    $this -> social = $_POST['social'];
-    $this -> style = $_POST['style'];  
-    $this -> ilk = $_POST['ilk']; 
-    $this -> updated = $_POST['updated'];
-    $this -> password = $_POST['password'];
 
     $vals = array( $this -> authkey, $this -> author, $this -> author_name, $this -> avatar, $this -> categories, $this -> company, $this -> created, $this -> custom, $this -> details, $this -> email, $this -> excerpt, $this -> gender, $this -> level, $this -> link, $this -> location, $this -> name, $this -> phone, $this -> social, $this -> state, $this -> style, $this -> ilk, $this -> updated, $this -> username, $this -> password );
 
@@ -119,74 +51,14 @@ class Users {
   public function update(){
     $cols = array( "authkey", "author", "author_name", "avatar", "categories", "company", "created", "custom", "details", "email","excerpt", "gender", "level", "link", "location", "name", "phone", "social", "state", "style", "ilk", "updated", "username", "password" );
 
-    if ( empty( $_POST['name'] ) ) { $_POST['name'] = 'name'; }
-    if ( empty( $_POST['author'] ) ) { $_POST['author'] = '1'; }
-    if ( empty( $_POST['author_name'] ) ) { $_POST['author_name'] = 'Undefined'; }
-    if ( empty( $_POST['category'] ) ) { $_POST['category'] = "Uncategorized"; }
-    if ( empty( $_POST['created_d'] ) ) { $_POST['created_d'] = date( "Y-m-d" ); }
-    if ( empty( $_POST['created_t'] ) ) { $_POST['created_t'] = date( "H:i:s" ); }
-    if ( empty( $_POST['details'] ) ) { $_POST['details'] = "Post details"; }
-    $_POST['gallery'] = "none";
-    if ( empty( $_POST['authkey'] ) ) { $_POST['authkey'] = str_shuffle( generateCode() ); }
-    if ( empty( $_POST['level'] ) ) { $_POST['level'] = "public"; }
-    if ( empty( $_POST['excerpt'] ) ) { $_POST['excerpt'] = substr( $_POST['details'], 250 ); }
-    if ( empty( $_POST['readings'] ) ) { $_POST['readings'] = "none"; }
-    if ( empty( $_POST['state'] ) ) { $_POST['state'] = "published"; } 
-    if ( empty( $_POST['subtitle'] ) ) { $_POST['subtitle'] = 'undefined'; }
-    if ( empty( $_POST['tags'] ) ) { $_POST['tags'] = "none"; } 
-    if ( empty( $_POST['template'] ) ) { $_POST['template'] = "post"; } 
-    if ( empty( $_POST['ilk'] ) ) { $_POST['ilk'] = "article"; } 
-    if ( empty( $_POST['updated'] ) ) { $_POST['updated'] = date('Y-m-d H:i:s'); }
-
-    if ( empty( $_FILES['new_avatar'] ) ) {
-      $uploaddir = _ABSUP_ .date('Y' ).'/'.date('m' ).'/'.date('d' ).'/';
-
-      $upload = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'. basename( $_FILES['new_avatar']['name'] );
-      if ( file_exists( $upload) ) {
-        $new_avatar = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'. basename( $_FILES['new_avatar']['name'] )."_".date('H_m_s');
-      } else {
-        $new_avatar = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/' . basename( $_FILES['new_avatar']['name'] );
-      }
-
-      move_uploaded_file( $_FILES['new_avatar']["tmp_name"], $uploaddir);
-
-      $avatar = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'. $new_avatar;
-    } else {
-      $avatar = $_POST['the_avatar'];
-    }
-
-    $this -> name = $_POST['name']; 
-    $this -> author = $_POST['author'];
-    $this -> author_name = $_POST['author_name'];
-    $this -> avatar = $avatar;
-    $this -> categories = $_POST['categories'];
-    $created = $_POST['created_d'];
-    $created_t = $_POST['created_t'];
-    $this -> created = $created.' '.$created_t;
-    $this -> details = $_POST['details'];
-    $this -> gallery = $_POST['gallery'];
-    $this -> authkey = $_POST['authkey'];
-    $this -> level = $_POST['level'];
-    $link = preg_replace('/\s+/', '-', $_POST['name'] );
-    $this -> slug = strtolower( $link );
-    $this -> link = _ROOT . '/' . $this -> slug ;
-    $this -> excerpt = $_POST['excerpt'];
-    $this -> readings = $_POST['readings']; 
-    $this -> state = $_POST['state']; 
-    $this -> subtitle = $_POST['subtitle']; 
-    $this -> tags = $_POST['tags']; 
-    $this -> template = strtolower( $_POST['template'] ); 
-    $this -> ilk = $_POST['ilk']; 
-    $this -> updated = $_POST['updated'];
-
     $vals = array( $this -> authkey, $this -> author, $this -> author_name, $this -> avatar, $this -> categories, $this -> company, $this -> created, $this -> custom, $this -> details, $this -> email, $this -> excerpt, $this -> gender, $this -> level, $this -> link, $this -> location, $this -> name, $this -> phone, $this -> social, $this -> state, $this -> style, $this -> ilk, $this -> updated, $this -> username, $this -> password );
 
     $conds = array( "id" => $this -> id );
 
     if ( $GLOBALS['JBLDB'] -> update( $this -> table, $cols, $vals, $conds ) ) {
-      return array( "success" => "User of id ". $GLOBALS['JBLDB'] -> insertId() ." updated successfully" );
+      return array( "status" => "User of id ". $this -> id ." updated successfully" );
     } else {
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array(  "status" => "Failed", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 

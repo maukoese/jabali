@@ -42,6 +42,10 @@ class MySQLDB {
 		return $this -> conn -> query( $sql );
 	}
 
+	function execute( $sql ){
+		return $this -> conn -> query( $sql );
+	}
+
 	function error(){
 		return $this -> conn -> error;
 	}
@@ -50,7 +54,7 @@ class MySQLDB {
 	* @return Returns an associative array of database records from a query result, 
 	* or null if there are no rows in the result
 	**/
-	function 	fetchArray( $result ){
+	function fetchArray( $result ){
 		return $result -> fetch_assoc();
 	}
 
@@ -133,7 +137,6 @@ class MySQLDB {
 	}
 
 	function setCond( $conds ){
-		$sql = "";
 		$where = array();
 
 		foreach ( $conds as $id => $val ) {
@@ -141,7 +144,7 @@ class MySQLDB {
 	    }
 
 	    if ( count( $where ) > 0){
-	      $sql .= " WHERE " . implode( ' AND ', $where );
+	      $sql = " WHERE " . implode( ' AND ', $where );
 	    }
 
 		return $sql;
@@ -179,7 +182,7 @@ class MySQLDB {
 		$sql = "UPDATE " . _DBPREFIX . $table . " ";
 		$sql .= $this -> setVal( $cols, $vals );
 
-		if ( $conds !== null ) {
+		if ( !is_null( $conds ) ) {
 		 	$sql .= $this -> setCond( $conds );
 		}
 

@@ -213,7 +213,7 @@ class Posts {
     }
   }
 
-  public function getTypes( $type = "article" ){
+  public function getTypes( $type = "article", $limit = 10 ){
 
     $conds = array( "ilk" => $type );
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
@@ -255,7 +255,7 @@ class Posts {
     }
   }
 
-  public function sweep( $type = "article" ){
+  public function sweep( $type = "article", $limit = 10 ){
 
     $conds = array( "state" => "published", "ilk" => $type );
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );

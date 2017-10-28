@@ -547,13 +547,13 @@ class Forms {
 
             <div class="input-field mdl-cell--6-col">
               <i class="material-icons prefix">mail</i>
-              <input class="validate" id="email" name="email " type="email" >
+              <input class="validate" id="email" name="email" type="email" >
               <label for="email" data-error="wrong" data-success="right" class="center-align">Email Address</label>
             </div>
 
             <div class="input-field mdl-cell--6-col">
               <i class="material-icons prefix">lock</i>
-              <input id="password" name=="password" type="text" >
+              <input id="password" name="password" type="text" >
               <label for="password">Password</label>
             </div>
 
@@ -563,7 +563,7 @@ class Forms {
               <label for="details" class="center-align">About</label>
             </div>
 
-            <div class="input-field center-align">
+            <div class="center-align">
               <input type="checkbox" id="remember-me" name="state" value="active"/>
               <label for="remember-me">Activate Account</label>
             </div>
@@ -571,7 +571,8 @@ class Forms {
           </div>
         <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
           <div style="height:0px; overflow:hidden">
-            <input type="file" id="avatar" name="avatar" />
+            <input type="file" id="avatar" name="new_avatar" />
+            <input type="hidden" name="the_avatar" value="<?php echo( _IMAGES.'avatar.svg' ); ?>" />
           </div>
           <img id="havatar" onclick="chooseFile();" src="<?php echo( _IMAGES.'avatar.svg' ); ?>" width="100%">
 
@@ -598,7 +599,7 @@ class Forms {
           </script>
           <?php csrf(); ?>
 
-          <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" type="submit" style="margin-left: 150px;margin-top: 100px;" name="register"><i class="material-icons">save</i></button>
+          <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored addfab" type="submit" style="margin-left: 150px;margin-top: 100px;" name="register"><i class="material-icons">save</i></button>
         </div>
       </form>
     </div><?php
@@ -611,7 +612,7 @@ class Forms {
         $names = explode( " ", $userDetails['name'] );
 
         ?><title>Editing <?php echo( $userDetails['name'] ); ?> - <?php showOption( 'name' ); ?></title>
-        <form enctype="multipart/form-data" name="registerUser" method="POST" action="<?php echo( _ADMIN.'users?view='.$code.'&key='.$userDetails['name'] ); ?>" class="mdl-grid" >
+        <form enctype="multipart/form-data" name="registerUser" method="POST" action="" class="mdl-grid" >
               <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
 
                   <div class="mdl-card__supporting-text mdl-card--expand mdl-grid ">
@@ -645,8 +646,8 @@ class Forms {
 
                       <?php if ( $userDetails['ilk'] !== "organization"  ) { ?>
                       <div class="input-field mdl-js-textfield mdl-textfield--floating-label getmdl-select">
-                      <i class="mdi mdi-gender-transgender prefix"></i>
-                       <input class="mdl-textfield__input" id="gender" name="gender" type="text" readonly tabIndex="-1" placeholder="<?php echo( ucfirst( $userDetails['gender'] ) ); ?>" value="<?php echo( ucwords( $userDetails['gender'] ) ); ?>">
+                      <i class="mdi mdi-gender-<?php echo( strtolower( $userDetails['gender'] ) ); ?> prefix"></i>
+                       <input class="mdl-textfield__input" id="gender" name="gender" type="text" readonly tabIndex="-1" placeholder="<?php echo( strtolower( $userDetails['gender'] ) ); ?>" value="<?php echo( ucwords( $userDetails['gender'] ) ); ?>">
                          <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="gender">
                            <li class="mdl-menu__item" data-val="male">Male</li>
                            <li class="mdl-menu__item" data-val="female">Female</li>
@@ -677,7 +678,7 @@ class Forms {
 
                       <div class="input-field mdl-cell mdl-cell--6-col">
                       <i class="material-icons prefix">mail</i>
-                      <input class="validate" id="email" name="email " type="email" value="<?php echo( $userDetails['email'] ); ?>">
+                      <input class="validate" id="email" name="email" type="email" value="<?php echo( $userDetails['email'] ); ?>">
                       <label for="email" class="center-align">Email Address</label>
                       </div>
 
@@ -692,7 +693,7 @@ class Forms {
                       foreach ($social as $key => $value) { ?>
                       <div class="input-field mdl-cell mdl-cell--3-col">
                       <i class="fa fa-<?php echo( $key ); ?> prefix"></i>
-                      <input id="<?php echo( $key ); ?>" name="<?php echo( $key ); ?>" type="text" value="<?php echo( $value ); ?>">
+                      <input id="<?php echo( $key ); ?>" name="social[<?php echo( $key ); ?>]" type="text" value="<?php echo( $value ); ?>">
                       <label for="<?php echo( $key ); ?>"><?php echo( ucwords( $key ) ); ?></label>
                       </div><?php } ?>
 
@@ -702,8 +703,8 @@ class Forms {
                     <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
 
                       <div style="height:0px;overflow:hidden">
-                         <input type="file" id="avatar" name="avatar" />
-                         <input type="hidden" id="new_avatar" name="new_avatar" value="<?php echo( $userDetails['avatar'] ); ?>" />
+                         <input type="file" id="avatar" name="new_avatar" />
+                         <input type="hidden" id="the_avatar" name="the_avatar" value="<?php echo( $userDetails['avatar'] ); ?>" />
                       </div><?php $savatar = file_exists( $userDetails['avatar'] ) ?: _IMAGES.'avatar.svg'; ?>
                       <img id="havatar" onclick="chooseFile();" src="<?php echo( $savatar ); ?>" width="100%">
 
@@ -761,8 +762,10 @@ class Forms {
                       </div>
                       <?php csrf(); ?>
                       <input type="hidden" name="id" value="<?php echo( $code ); ?>" >
+                      <input type="hidden" name="username" value="<?php echo( $userDetails['username'] ); ?>" >
+                      <input type="hidden" name="categories" value="<?php echo( $userDetails['categories'] ); ?>" >
                       <input type="hidden" name="h_pass" value="<?php echo( $userDetails['password'] ); ?>" >
-                          <button type="submit" name="update" class="mdl-button mdl-button--fab mdl-button--colored alignright"><i class="material-icons">save</i></button>
+                          <button type="submit" name="update" class="mdl-button mdl-button--fab mdl-button--colored addfab"><i class="material-icons">save</i></button>
                       </center><br><br>
 
                     </div>
