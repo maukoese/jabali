@@ -1555,3 +1555,37 @@ function noAccess( $access = null )
 		exit();
 	}
 }
+
+function eMail($receipients, $subject, $message, $cc = null, $attachments = null, $isHTML = true )
+{
+	$GLOBALS['MAILER'] -> From = getOption('email');
+	$GLOBALS['MAILER'] -> FromName = getOption('name');
+
+	if ( is_array( $receipient ) ) {
+		foreach ($receipients as $email => $name ) {
+			$GLOBALS['MAILER'] -> addAddress( $email, $name );
+		}
+	} else {
+		$GLOBALS['MAILER'] -> addAddress( $receipients );
+	}
+
+
+	//Provide file path and name of the attachments
+	$GLOBALS['MAILER'] -> addAttachment("file.txt", "File.txt");        
+	$GLOBALS['MAILER'] -> addAttachment("images/profile.png"); //Filename is optional
+
+	$GLOBALS['MAILER'] -> isHTML(true);
+
+	$GLOBALS['MAILER'] -> Subject = "Subject Text";
+	$GLOBALS['MAILER'] -> Body = "<i>Mail body in HTML</i>";
+	$GLOBALS['MAILER'] -> AltBody = "This is the plain text version of the email content";
+
+	if(!$GLOBALS['MAILER'] -> send()) 
+	{
+	    return array( "status" => "Failed", "error" => $GLOBALS['MAILER'] -> ErrorInfo );
+	} 
+	else 
+	{
+	    return array( "status", "Message has been sent successfully" );
+	}
+}
