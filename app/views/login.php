@@ -1,18 +1,14 @@
 
 <div class="mdl-grid" >
-	<div class="mdl-cell mdl-cell--3-col"></div>
-	<div id="login_div" class="mdl-cell mdl-cell--6-col mdl-color--madge">
+	<div class="mdl-cell mdl-cell--4-col"></div>
+	<div id="login_div" class="mdl-cell mdl-cell--4-col mdl-color--madge" style="border-radius: 2%">
 		<center>
 			<?php echo '<br><a href="'._ROOT.'"><img src="'._IMAGES.'logo-w.png" width="150px;"></a>'; 
 			if ( isset( $_GET['alert'] ) ) {
-			if ( $_GET['alert'] == "password" ) { ?>
-			<div id="fail" class="alert mdl-color--red">
-			<span>Wrong Password!<br>Please Try Again</span>
-			</div><?php 
-			} elseif ( $_GET['alert'] == "user" ) { ?>
-			<div id="fail" class="alert mdl-color--red">
-			<span>Wrong Email/Username!<br>Please Try Again</span>
-			</div><?php 
+			if ( $_GET['alert'] == "password" ) {
+				_shout_('Wrong Password! Please Try Again', 'error');
+			} elseif ( $_GET['alert'] == "user" ) { 
+				_shout_('Wrong Email/Username! Please Try Again', 'error'); 
 			}
 			} ?>
 			<div class="mdl-grid">
@@ -61,7 +57,7 @@
 					<?php csrf(); ?>
 
 					<div class="input-field input-field mdl-cell mdl-cell--12-col">
-						<button class="mdl mdl-button mdl-button--fab mdl-js-button mdl-button--raised mdl-color--green alignright" type="submit" name="login"><i class="material-icons">send</i></button><br>
+						<button class="addfab mdl-button mdl-button--fab mdl-js-button mdl-button--raised mdl-color--green alignright" type="submit" name="login"><i class="material-icons">send</i></button><br>
 					</div>
 				</form>
 			</div>

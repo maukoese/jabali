@@ -5,7 +5,8 @@
 
 namespace Jabali\Classes;
 
-class Actions {
+class Renders 
+{
 
 	//Users
 	function login( $provider ) {
@@ -27,7 +28,7 @@ class Actions {
 			if ( $provider == "jabali" || empty( $provider ) ) { ?>
 				  	<title>Sign In <?php if( isset( $_GET['alert'] )){ echo( ucfirst( $_GET['alert'] ) ); } ?> - <?php showOption( 'name' ); ?></title><?php
 				  	renderView( 'login' );
-			} else { ?>
+			} elseif ( $provider == "facebook" || $provider == "twitter" || $provider == "github" || $provider == "google" ) { ?>
 			  	<title>Sign In - <?php showOption( 'name' ); ?></title><?php
 			  	include 'app/lib/hybridauth/config.php';
 			  	require_once( 'app/lib/hybridauth/Hybrid/Auth.php' );
@@ -68,7 +69,10 @@ class Actions {
 
 			        echo "<hr /><h3>Trace</h3> <pre>" . $e->getTraceAsString() . "</pre>";
 			    }
-			}
+			} else { ?>
+				<title>Sign In <?php if( isset( $_GET['alert'] )){ echo( ucfirst( $_GET['alert'] ) ); } ?> - <?php showOption( 'name' ); ?></title><?php
+					renderView( 'login' );
+				  }
 			theFooter();
 		}
 	}
@@ -122,9 +126,9 @@ class Actions {
 	}
 
 	function reset( $id, $key ){
-	    $theUser = $GLOBALS['JBLDB'] -> query( "SELECT id , authkey FROM ". _DBPREFIX ."users WHERE id  = '".$id."'" );
-	    if ( $theUser -> num_rows > 0 ) {
-	      while ( $thisuser = mysqli_fetch_assoc( $theUser) ) {
+	    $theUser = $GLOBALS['JBLDB'] -> select( 'users', array( 'id', 'authkey' ), array( 'id' => $id ));
+	    if ( !isset( $theUser['error'] ) ) {
+	      while ( $thisuser = $GLOBALS['JBLDB'] -> fetchArray( $theUser) ) {
 	        $user[] = $thisuser;
 	      }
 
@@ -148,7 +152,7 @@ class Actions {
 
 	function postTypes() {
 		$getTypes = $GLOBALS['JBLDB'] -> query( "SELECT DISTINCT ilk FROM ". _DBPREFIX ."posts");
-		$types = mysqli_fetch_assoc( $getTypes );
+		$types = $GLOBALS['JBLDB'] -> fetchArray( $getTypes );
 		return $types;
 	}
 
@@ -162,7 +166,7 @@ class Actions {
 			} else {
 				$posty = $GLOBALS['POSTS'] -> getPost( $slug );
 			}
-
+			$GLOBALS['gpost'] = $posty;
 			$post = (object)$posty;
 
 			if ( !isset( $posty['error'] ) ) {
@@ -192,8 +196,8 @@ class Actions {
 
 	function authors( $author ) { ?>
 		<title>Author : @<?php echo( $author ); ?> - <?php showOption( 'name' ); ?></title><?php
-		$posts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE ( state = 'published' AND ilk = 'article' AND author = '".$author."' ) ORDER BY created DESC" );
-		if ( count( $posts ) > 0) {
+		$posts = $GLOBALS['JBLDB'] -> select( 'posts', '*', array( 'state' => 'published', 'ilk' => 'article', 'author' => $author ), array( 'created', 'DESC') );
+		if ( !isset( $post['error'] ) ) {
 			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
 		} else {
 			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' );
@@ -268,7 +272,7 @@ class Actions {
 	function users( $profile ) {
 		if ( $profile == 'all' || $profile == "" ) { ?>
 			<title>All Users - <?php showOption( 'name' ); ?></title><?php
-			$getProfiles = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."users WHERE state = 'active'" );
+			$getProfiles = $GLOBALS['USERS'] -> getState( 'active' );
 			if ( $getProfiles -> num_rows > 0) {
 				require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/users.php' );
 			} else {
@@ -289,5 +293,4 @@ class Actions {
 			}
 		}
 	}
-
 }

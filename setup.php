@@ -22,37 +22,22 @@ if ( file_exists('app/config.php' ) ) {
 if ( !file_exists( '.htaccess' ) ) {
 	$rewrite = fopen( '.htaccess', 'w' );
 
-	$text = '# JABALI INIT';
+	$text = "# JABALI INIT\n\n";
 	fwrite( $rewrite,  $text );
 
-	$txt = "\n\n";
-	fwrite( $rewrite,  $txt );
-
-	$text = '<IfModule mod_rewrite.c>';
+	$text = "<IfModule mod_rewrite.c>\n";
 	fwrite( $rewrite,  $text );
 
-	$txt = "\n";
-	fwrite( $rewrite,  $txt );
-
-	$text = "RewriteEngine On";
+	$text = "RewriteEngine On\n";
 	fwrite( $rewrite,  $text );
-
-	$txt = "\n";
-	fwrite( $rewrite,  $txt );
 
 	if ( !isLocalhost() ) {
 		
-		$text = 'RewriteCond %{HTTPS} off';
+		$text = "RewriteCond %{HTTPS} off\n";
 		fwrite( $rewrite,  $text );
 
-		$txt = "\n";
-		fwrite( $rewrite,  $txt );
-
-		$text = 'RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]';
+		$text = "RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]\n";
 		fwrite( $rewrite,  $text );
-
-		$txt = "\n";
-		fwrite( $rewrite,  $txt );
 	}
 
 	if ( isLocalhost() && $_SERVER['DOCUMENT_ROOT'] !== __DIR__ ) {
@@ -60,10 +45,7 @@ if ( !file_exists( '.htaccess' ) ) {
 	} else {
 		$base = '/';
 	}
-	fwrite( $rewrite, 'RewriteBase ' . $base );
-
-	$txt = "\n";
-	fwrite( $rewrite,  $txt );
+	fwrite( $rewrite, "RewriteBase " . $base."\n" );
 
 	$text = 'RewriteRule ^index\.php$ - [L]';
 	fwrite( $rewrite,  $text );
@@ -194,12 +176,12 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 		$txt = "\n";
 		fwrite( $dbfile, $txt );
 		$salts = sha1(date('YmdHis')).sha1(date('YmdHm' ) );
-		$text = 'define( "JBLSALT", "'.str_shuffle( $salts ).'" );';
+		$text = 'define( "JBLSALT", "'.str_shuffle( md5($salts) ).'" );';
 		fwrite( $dbfile, $text );
 		$txt = "\n";
 		fwrite( $dbfile, $txt );
-		$salts = sha1(date('YmdHs')).sha1(date('YmdHmi' ) );
-		$text = 'define( "JBLAUTH", "'.base64_encode( $salts ).'" );';
+		$salts = sha1(date('YmdHs')).sha1(date('YmdHmis' ) );
+		$text = 'define( "JBLAUTH", "'.str_shuffle( sha1( $salts ) ).'" );';
 		fwrite( $dbfile, $text );
 		fclose( $dbfile );
 
@@ -207,7 +189,7 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 	}
 
 	if ( conFigure( $dbhost, $dbname, $dbuser, $dbpass, $home, $dbprefix, $dbtype, $dbport, $dbip ) ) {
-		header( "Location: ./install.php" );
+		header( "Location: install.php" );
 	} else {
 		_shout_( 'Could Not create configuration file <code>config.php</code><br>
 		<h4>Suggestions</h4><br>
@@ -223,7 +205,7 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 	  © 2017 Mauko Maunde. All rights reserved.
 
 	  Licensed under the MIT license (the "License" );
-	  you may not use this file except in compliance with the License.
+	  You may not use this file except in compliance with the License.
 	  You may obtain a copy of the License at https://opensource.org/licenses/MIT
 	-->
 	<html lang="en" xmlns="http://www.w3.org/1999/html">
@@ -291,10 +273,10 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 						        <label for="ilk" class="center-align">Database Type</label>
 							<label for="ilk"><i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i></label>
 							<ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--madge" for="ilk">
-							<li class="mdl-menu__item" data-val="MySQL">MySQL<i class="mdl-color-text--white mdi mdi-city alignright" role="presentation"></i></li>
-							<!-- <li class="mdl-menu__item" data-val="SQLite">SQLite<i class="mdl-color-text--white mdi mdi-note alignright" role="presentation"></i></li>
-							<li class="mdl-menu__item" data-val="PostgreSQL">PostgreSQL<i class="mdl-color-text--white mdi mdi-note-plus alignright" role="presentation"></i></li>
-							<li class="mdl-menu__item" data-val="SethDB">SethDB<i class="mdl-color-text--white mdi mdi-emailalignright" role="presentation"></i></li> -->
+							<li class="mdl-menu__item" data-val="MySQL">MySQL</li>
+							<li class="mdl-menu__item" data-val="SQLite">SQLite</li>
+							<!-- <li class="mdl-menu__item" data-val="PostgreSQL">PostgreSQL</li>
+							<li class="mdl-menu__item" data-val="SethDB">SethDB</li> -->
 							</ul>
 							</div>
 					        <input name="home" type="hidden" value="<?php 

@@ -7,8 +7,9 @@
 	<header id="header">
 		<?php headerLogo(); ?>
 		<hr>
-		<h1><?php echo( $post -> name ); ?></h1>
-		<p><?php echo( $post -> details ); ?></p>
+		<h1><?php theTitle(); ?></h1>
+		<p><?php theContent(); ?></p>
+		<span><?php theCategories(); ?></span>
 	</header>
 
 <!-- Signup Form -->

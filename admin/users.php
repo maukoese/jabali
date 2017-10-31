@@ -64,7 +64,7 @@ if ( isset( $_POST['register'] ) ) {
     $GLOBALS['USERS'] -> state = $_POST['state'];
     $GLOBALS['USERS'] -> social = $_POST['social'];
     $GLOBALS['USERS'] -> style = $_POST['style'];  
-    $GLOBALS['USERS'] -> ilk = $_POST['ilk']; 
+    $GLOBALS['USERS'] -> ilk = strtolower( $_POST['ilk'] );
     $GLOBALS['USERS'] -> updated = $_POST['updated'];
     $GLOBALS['USERS'] -> password = $_POST['password'];
     $create = $GLOBALS['USERS'] -> create();
@@ -139,7 +139,7 @@ if ( isset( $_POST['update'] ) ) {
     $GLOBALS['USERS'] -> state = $_POST['state'];
     $GLOBALS['USERS'] -> social = $_POST['social'];
     $GLOBALS['USERS'] -> style = $_POST['style'];  
-    $GLOBALS['USERS'] -> ilk = $_POST['ilk']; 
+    $GLOBALS['USERS'] -> ilk = strtolower( $_POST['ilk'] );
     $GLOBALS['USERS'] -> updated = $_POST['updated'];
     $GLOBALS['USERS'] -> password = $_POST['password'];
     $update = $GLOBALS['USERS'] -> update();

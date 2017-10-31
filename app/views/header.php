@@ -83,29 +83,3 @@
     <script src="<?php echo _ASSETS; ?>js/ckeditor/ckeditor.js"></script>
     <script src="<?php echo _ASSETS; ?>js/list.js"></script>
 </head>
-<div class="mdl-layout mdl-layout-transparent mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-  <body>
-  <header class="mdl-layout__header mdl-layout__header--waterfall mdl-color-text--grey-600 mdl-color--<?php if ( isset( $_SESSION[JBLSALT.'Code'] ) ) { primaryColor(); } else { echo "madge"; } ?>">
-    <div class="mdl-layout__header-row">
-      <a href="<?php echo _ROOT; ?>">
-        <span class="mdl-layout-title">
-          <img src="<?php echo _IMAGES.'head-w.png'; ?>" width="100px;">
-        </span>
-      </a>
-      <div class="mdl-layout-spacer"></div>
-
-      <?php if ( isset( $_SESSION[JBLSALT.'Code'] ) ) { ?>
-      <a id="admin" href="#" class="mdi mdi-lock mdl-badge mdl-badge--overlap mdl-button--icon"></a>
-      <div class="mdl-tooltip" for="admin">Admin</div>
-        <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-color--<?php primaryColor(); ?>" for="admin">
-        <a class="mdl-cell" href="<?php echo(  _ADMIN .'index?page=my dashboard' ); ?>"><i class="material-icons mdl-list__item-icon">dashboard</i></a>
-        <a class="mdl-cell" href="<?php echo(  _ADMIN .'users?view='. $_SESSION[JBLSALT.'Code'] .'&key='.$_SESSION[JBLSALT.'Alias'] ); ?>"><i class="material-icons mdl-list__item-icon">perm_identity</i></a>
-        <a class="mdl-cell" href="<?php echo(  _ADMIN .'options?settings=color' ); ?>"><i class="material-icons mdl-list__item-icon">palette</i></a>
-        </ul><?php
-      } else { ?>
-      <a id="admin" href="<?php echo(  _ROOT.'signin/jabali' ); ?>" class="mdi mdi-exit-to-app mdl-badge mdl-badge--overlap mdl-button--icon"></a><?php 
-      } ?>
-
-    </div>
-  </header>
-  <main class="mdl-layout__content mdl-color-text--white">

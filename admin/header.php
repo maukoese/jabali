@@ -96,7 +96,7 @@ $GLOBALS['GTextS'] = $GUSkin['texts']; ?>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js"></script>
     <?php } ?>
     <script src="<?php echo _SCRIPTS ?>jquery-ui.min.js"></script>
-    <script src="<?php echo _SCRIPTS ?>ckeditor/ckeditor.js"></script>
+    <script src="<?php echo _SCRIPTS ?>ckeditor/ckeditor.js"></script><script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
   </head>
   <body>
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">

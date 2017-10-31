@@ -15,7 +15,7 @@ class SQLiteDB {
 
 	function __construct( $dbname ) {
 
-		$this -> conn = new \SQLite3( _ABSDB_.'sqlite/'.$dbname.'.sq3' );
+		$this -> conn = new \SQLite3( _ABSDB_.'sqlite/'.$dbname.'.db' );
 		if ( !$this -> conn ) {
 		    printf( "Connection failed: %s\n", $this -> error() );
 		    exit();

@@ -204,8 +204,12 @@ if ( isOption ( 'modules' ) ) {
 }
 
 if ( isOption ( 'activetheme' ) ) {
-	$themefile = _ABSTHEMES_ . getOption( 'activetheme' ) . '/' . getOption( 'activetheme' ) . '.php';
-	if ( file_exists( $themefile ) ){
-		require_once( $themefile );
-	}
+	$GLOBALS['GTheme'] = getOption( 'activetheme' );
+	$themefile = _ABSTHEMES_ . $GLOBALS['GTheme'] . '/' . $GLOBALS['GTheme'] . '.php';
+} else {
+	$themefile = _ABSTHEMES_ . '/eventually/eventually.php';
+}
+
+if ( file_exists( $themefile ) ){
+	require_once( $themefile );
 }

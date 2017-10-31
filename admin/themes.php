@@ -957,62 +957,66 @@ if ( isset( $_GET['install'] ) ) {
   <title>Themes Showcase - <?php showOption( 'name' ); ?></title>
   <form method="POST" action="" class="mdl-grid"><?php
     $themes = file_get_contents( 'https://mauko.co.ke/api/themes/' );
-    $showcase = json_decode( $themes, true );
-    foreach ($showcase as $theme => $xD ) { ?>
-      <div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
-        <div class="mdl-card__title mdl-card--expand">
-          <h5 class="mdl-card__title-text"><?php echo $xD[ 'name' ] ; ?></h5>
-        <div class="mdl-layout-spacer"></div>
-        <div class="mdl-card__subtitle-text">
-          <a id="<?php echo $xD[ 'slug' ] ; ?>web" href="<?php echo $xD[ 'website' ] ; ?>" class="material-icons">public</a>
-          <div class="mdl-tooltip" for="<?php echo $xD[ 'slug' ] ; ?>web"><?php echo $xD[ 'name' ] ; ?> Help</div>
-          <a id="<?php echo $xD[ 'slug' ] ; ?>help" href="<?php echo $xD[ 'support' ] ; ?>" class="material-icons">help</a>
-          <div class="mdl-tooltip" for="<?php echo $xD[ 'slug' ] ; ?>help"><?php echo $xD[ 'name' ] ; ?> Help</div>
-        </div>
-        </div>
-        <div class="mdl-card-media">
-          <img src="<?php echo _IMAGES . 'placeholder.svg'; ?>" width="100%" style="overflow: hidden;" >
-        </div>
-        <div class="mdl-card__actions mdl-card--border">
-          <?php $path = _ABSTHEMES_;
-          $dir = new DirectoryIterator($path);
-          $installed = array();
-          foreach ($dir as $fileinfo) {
-            if ($fileinfo->isDir() && !$fileinfo->isDot()) {
-              $theme = $fileinfo->getFilename();
-              $installed[] = $theme;
+    if ( $themes !== false ){
+      $showcase = json_decode( $themes, true );
+      foreach ($showcase as $theme => $xD ) { ?>
+        <div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+          <div class="mdl-card__title mdl-card--expand">
+            <h5 class="mdl-card__title-text"><?php echo $xD[ 'name' ] ; ?></h5>
+          <div class="mdl-layout-spacer"></div>
+          <div class="mdl-card__subtitle-text">
+            <a id="<?php echo $xD[ 'slug' ] ; ?>web" href="<?php echo $xD[ 'website' ] ; ?>" class="material-icons">public</a>
+            <div class="mdl-tooltip" for="<?php echo $xD[ 'slug' ] ; ?>web"><?php echo $xD[ 'name' ] ; ?> Help</div>
+            <a id="<?php echo $xD[ 'slug' ] ; ?>help" href="<?php echo $xD[ 'support' ] ; ?>" class="material-icons">help</a>
+            <div class="mdl-tooltip" for="<?php echo $xD[ 'slug' ] ; ?>help"><?php echo $xD[ 'name' ] ; ?> Help</div>
+          </div>
+          </div>
+          <div class="mdl-card-media">
+            <img src="<?php echo _IMAGES . 'placeholder.svg'; ?>" width="100%" style="overflow: hidden;" >
+          </div>
+          <div class="mdl-card__actions mdl-card--border">
+            <?php $path = _ABSTHEMES_;
+            $dir = new DirectoryIterator($path);
+            $installed = array();
+            foreach ($dir as $fileinfo) {
+              if ($fileinfo->isDir() && !$fileinfo->isDot()) {
+                $theme = $fileinfo->getFilename();
+                $installed[] = $theme;
+              }
             }
-          }
 
-          if ( !in_array( $xD[ 'slug' ], $installed )) { ?>
-            <a class="waves-effect waves-light btn red" href="?install=<?php echo $xD[ 'slug' ] ; ?>">INSTALL</a><?php
-          } else { ?>
-            <div class="input-field">
-                    <button class="mdl-button mdl-button--icon <?php if ( activeTheme( $xD[ 'slug' ] ) ) {
-                      echo "mdl-button--colored";
-                    } ?>" id="<?php echo $xD[ 'slug' ] ; ?>" name="activetheme" value="<?php echo $xD[ 'slug' ] ; ?>" type="submit">
-                        <i class="material-icons"><?php if ( activeTheme( $xD[ 'slug' ] ) ) {
-                      echo "check";
-                    } else {
-                      echo "save";
-                      } ?></i>
-                    </button>
-                </div><?php
-            } ?>
-            <div class="mdl-layout-spacer"></div>
-            <a id = "<?php echo $xD[ 'slug' ] ; ?>author" href="#" class="material-icons alignright">more_vert</a>
-            <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-right mdl-color--<?php primaryColor(); ?> option-drop" for="<?php echo $xD[ 'slug' ] ; ?>author" style="overflow-y: auto;">
-            <a href="?view=<?php echo $xD[ 'slug' ] ; ?>&key=<?php echo $xD[ 'name'] ; ?>" class="mdl-list__item"><i class="mdi mdi-details mdl-list__item-icon"></i><span style="padding-left: 20px">Full Details</span></a>
-            <a href="<?php echo $xD[ 'website'] ; ?>" class="mdl-list__item"><i class="mdi mdi-account mdl-list__item-icon"></i><span style="padding-left: 20px">Author: <?php echo $xD[ 'author' ] ; ?></span></a>
-            <div class="mdl-layout-spacer"></div>
-            <a href="<?php echo $xD[ 'social' ]['facebook'] ; ?>" class="mdl-list__item"><i class="mdi mdi-facebook mdl-list__item-icon"></i><span style="padding-left: 20px">Facebook</span></a>
-            <a href="<?php echo $xD[ 'social' ]['twitter'] ; ?>" class="mdl-list__item"><i class="mdi mdi-twitter mdl-list__item-icon"></i><span style="padding-left: 20px">Twitter</span></a>
-            <a href="<?php echo $xD[ 'social' ]['github'] ; ?>" class="mdl-list__item"><i class="mdi mdi-github-circle mdl-list__item-icon"></i><span style="padding-left: 20px">Github</span></a>
-            <a href="mailto:<?php echo $xD[ 'social' ][ 'email' ] ; ?>" class="mdl-list__item"><i class="mdi mdi-email mdl-list__item-icon"></i><span style="padding-left: 20px"><?php echo $xD[ 'social' ][ 'email' ] ; ?></span></a>
-            </ul>
-        </div>
-      </div><?php
-    } ?>
+            if ( !in_array( $xD[ 'slug' ], $installed )) { ?>
+              <a class="waves-effect waves-light btn red" href="?install=<?php echo $xD[ 'slug' ] ; ?>">INSTALL</a><?php
+            } else { ?>
+              <div class="input-field">
+                      <button class="mdl-button mdl-button--icon <?php if ( activeTheme( $xD[ 'slug' ] ) ) {
+                        echo "mdl-button--colored";
+                      } ?>" id="<?php echo $xD[ 'slug' ] ; ?>" name="activetheme" value="<?php echo $xD[ 'slug' ] ; ?>" type="submit">
+                          <i class="material-icons"><?php if ( activeTheme( $xD[ 'slug' ] ) ) {
+                        echo "check";
+                      } else {
+                        echo "save";
+                        } ?></i>
+                      </button>
+                  </div><?php
+              } ?>
+              <div class="mdl-layout-spacer"></div>
+              <a id = "<?php echo $xD[ 'slug' ] ; ?>author" href="#" class="material-icons alignright">more_vert</a>
+              <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-right mdl-color--<?php primaryColor(); ?> option-drop" for="<?php echo $xD[ 'slug' ] ; ?>author" style="overflow-y: auto;">
+              <a href="?view=<?php echo $xD[ 'slug' ] ; ?>&key=<?php echo $xD[ 'name'] ; ?>" class="mdl-list__item"><i class="mdi mdi-details mdl-list__item-icon"></i><span style="padding-left: 20px">Full Details</span></a>
+              <a href="<?php echo $xD[ 'website'] ; ?>" class="mdl-list__item"><i class="mdi mdi-account mdl-list__item-icon"></i><span style="padding-left: 20px">Author: <?php echo $xD[ 'author' ] ; ?></span></a>
+              <div class="mdl-layout-spacer"></div>
+              <a href="<?php echo $xD[ 'social' ]['facebook'] ; ?>" class="mdl-list__item"><i class="mdi mdi-facebook mdl-list__item-icon"></i><span style="padding-left: 20px">Facebook</span></a>
+              <a href="<?php echo $xD[ 'social' ]['twitter'] ; ?>" class="mdl-list__item"><i class="mdi mdi-twitter mdl-list__item-icon"></i><span style="padding-left: 20px">Twitter</span></a>
+              <a href="<?php echo $xD[ 'social' ]['github'] ; ?>" class="mdl-list__item"><i class="mdi mdi-github-circle mdl-list__item-icon"></i><span style="padding-left: 20px">Github</span></a>
+              <a href="mailto:<?php echo $xD[ 'social' ][ 'email' ] ; ?>" class="mdl-list__item"><i class="mdi mdi-email mdl-list__item-icon"></i><span style="padding-left: 20px"><?php echo $xD[ 'social' ][ 'email' ] ; ?></span></a>
+              </ul>
+          </div>
+        </div><?php
+      } 
+    } else {
+        _shout_( 'Error: Problem connecting to Jabalicms.org. Please try again later.', 'error');
+      } ?>
   </form>
   <div class="fixed-action-btn horizontal">
   <a class="btn-floating btn-large accent">

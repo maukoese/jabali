@@ -4,7 +4,8 @@ namespace Jabali\Data\Access\Layers;
 /**
 * Jabali MySQL Data Access Layer
 */
-class MySQLDB {
+class MySQLDB
+{
 
 	private $host;
 	private $user;
@@ -13,7 +14,8 @@ class MySQLDB {
 
 	private $conn;
 
-	function __construct( $dbhost, $dbuser, $dbpass, $dbname ) {
+	function __construct( $dbhost, $dbuser, $dbpass, $dbname )
+	{
 		$temp_conn = new \mysqli( $dbhost, $dbuser, $dbpass );
 		mysqli_query( $temp_conn, "CREATE DATABASE IF NOT EXISTS ". $dbname );
 		if ($temp_conn -> connect_errno) {
@@ -34,19 +36,23 @@ class MySQLDB {
 
 	}
 
-	function __destruct(){
+	function __destruct()
+	{
 		$this -> conn -> close();
 	}
 
-	function query( $sql ){
+	function query( $sql )
+	{
 		return $this -> conn -> query( $sql );
 	}
 
-	function execute( $sql ){
+	function execute( $sql )
+	{
 		return $this -> conn -> query( $sql );
 	}
 
-	function error(){
+	function error()
+	{
 		return $this -> conn -> error;
 	}
 
@@ -54,7 +60,8 @@ class MySQLDB {
 	* @return Returns an associative array of database records from a query result, 
 	* or null if there are no rows in the result
 	**/
-	function fetchArray( $result ){
+	function fetchArray( $result )
+	{
 		return $result -> fetch_assoc();
 	}
 
@@ -62,7 +69,8 @@ class MySQLDB {
 	* @return Returns an object of database records from a query result, 
 	* or null if there are no rows in the result
 	**/
-	function fetchObject( $result ){
+	function fetchObject( $result )
+	{
 		return $result -> fetch_object();
 	}
 
@@ -73,13 +81,15 @@ class MySQLDB {
 	/**
 	* @return Returns escaped data to prevent mysqli injection
 	**/
-	function clean( $data ){
+	function clean( $data )
+	{
 		return mysqli_real_escape_string( $this -> conn, $data );
 	}
 
 
 
-	function setCols( $cols ){
+	function setCols( $cols )
+	{
 		if ( is_array( $cols ) ) {
 
 			array_walk( $cols, array($this, 'clean' ) );
@@ -92,7 +102,8 @@ class MySQLDB {
 		return $sql;
 	}
 
-	function setVals( $vals ){
+	function setVals( $vals )
+	{
 		$sql = " VALUES ( ";
 		if ( is_array( $vals ) ) {
 
@@ -115,7 +126,8 @@ class MySQLDB {
 		return $sql;
 	}
 
-	function setVal( $cols, $vals ){
+	function setVal( $cols, $vals )
+	{
 		$sql = "SET ";
 		if ( is_array( $cols ) && is_array( $vals ) ) {
 			array_walk( $cols, array( $this, 'clean' ) );
@@ -136,7 +148,8 @@ class MySQLDB {
 		return $sql;
 	}
 
-	function setCond( $conds ){
+	function setCond( $conds )
+	{
 		$where = array();
 
 		foreach ( $conds as $id => $val ) {
@@ -150,7 +163,8 @@ class MySQLDB {
 		return $sql;
 	}
 
-	function setLike( $data ){
+	function setLike( $data )
+	{
 		$sql = "LIKE '%" . $data . "%'";
 
 		return $sql;
@@ -161,7 +175,8 @@ class MySQLDB {
 	/**
 	* Creating Data
 	**/
-	function insert( $table, $cols, $vals, $conds = null ){
+	function insert( $table, $cols, $vals, $conds = null )
+	{
 		$sql = "INSERT INTO " . _DBPREFIX.$table . " ( ";
 		$sql .= $this -> setCols( $cols );
 		$sql .= " )";
@@ -174,11 +189,13 @@ class MySQLDB {
 		return $this -> query( $sql ); 
 	}
 
-	function insertId(){
+	function insertId()
+	{
 		return $this -> conn -> insert_id;
 	}
 
-	function update( $table, $cols, $vals, $conds = null ){
+	function update( $table, $cols, $vals, $conds = null )
+	{
 		$sql = "UPDATE " . _DBPREFIX . $table . " ";
 		$sql .= $this -> setVal( $cols, $vals );
 
@@ -192,13 +209,15 @@ class MySQLDB {
 	/**
 	* Creating Data
 	**/
-	function sweep( $table ) {
+	function sweep( $table )
+	{
 		$sql = "SELECT * FROM " . _DBPREFIX . $table;
 
 		return $this -> query( $sql ); 
 	}
 
-	function select( $table, $cols, $conds = null, $order = null, $limit = null, $offset = null ){
+	function select( $table, $cols, $conds = null, $order = null, $limit = null, $offset = null )
+	{
 		$sql = "SELECT ";
 		$sql .= $this -> setCols( $cols );
 		$sql .= " FROM ". _DBPREFIX . $table . " ";
@@ -229,7 +248,8 @@ class MySQLDB {
 
 
 
-	function search( $table, $cols, $conds, $val = null ){
+	function search( $table, $cols, $conds, $val = null )
+	{
 		$sql = "SELECT ";
 		$sql .= $this -> setCols( $cols );
 		$sql .= " FROM". _DBPREFIX . $table . " ";
@@ -242,10 +262,12 @@ class MySQLDB {
 
 		return $this -> query( $sql ); 
 	}
+
 	/**
 	* Deleting Data
 	**/
-	function delete( $table, $conds ){
+	function delete( $table, $conds )
+	{
 		$sql = "DELETE FROM " . _DBPREFIX . $table . " ";
 		
 		if ( $conds !== null ) {
@@ -258,7 +280,8 @@ class MySQLDB {
 	/**
 	* Query Reports
 	**/
-	function rowsCount( $table, $cols ){
+	function rowsCount( $table, $cols )
+	{
 		$sql = "SELECT ";
 		$sql .= $this -> setCols( $cols );
 		$sql .= "FROM " . _DBPREFIX . $table . " ";
@@ -271,11 +294,13 @@ class MySQLDB {
 	/**
 	* Query Reports
 	**/
-	function numRows( $result ){
+	function numRows( $result )
+	{
 		return $result -> num_rows;
 	}
 
-	function rowExists ( $sql ){
+	function rowExists ( $sql )
+	{
 		if ( $this -> query( $sql -> num_rows > 0 ) ) {
 			return true;
 		} else {
@@ -283,11 +308,13 @@ class MySQLDB {
 		}
 	}
 
-	function affectedRows(){
+	function affectedRows()
+	{
 		return $this -> conn -> affected_rows;
 	}
 
-	function reset( $result ){
-    	return mysqli_data_seek( $result, 0 );
+	function reset( $result, $row = 0 )
+	{
+    	return mysqli_data_seek( $result, $row );
   	}
 }

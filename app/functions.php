@@ -619,9 +619,17 @@ function showTitle( $class ) { ?>
 			echo "Edit ".$class;
 		}
 	}?> 
-	[ <?php
-	showOption( 'name' ); ?> ]
+	- <?php
+	showOption( 'name' ); ?>
     </title><?php
+}
+
+
+/**
+* 
+**/
+function headTitle( $text ) {
+    echo( '<title>'.ucwords( $text ).' - '.getOption( 'name' ).'</title>' );
 }
 
 /**
@@ -1363,7 +1371,7 @@ function theCategories( $class = '' ){
 	$tags = explode(", ", $tags );
 	$tagged = array(); 
 	foreach ($tags as $tag ) {
-		$tagged[] = '<a class="'.$class.'" href="'._ROOT.'/categories/'.$tag.'">'.ucwords( $tag ).'</a>';
+		$tagged[] = ' <a class="'.$class.'" href="'._ROOT.'/categories/'.$tag.'">'.ucwords( $tag ).'</a> ';
 	}
 
 	$tags = implode(', ', $tagged );
@@ -1382,11 +1390,13 @@ function theTags( $class = '' ){
 	echo $tags;
 }
 
-function theImage(){
+function theImage()
+{
 	echo $GLOBALS['gpost']['avatar'];
 }
 
-function headerTitle( $table ){
+function headerTitle( $table )
+{
 	if ( isset( $_GET['type'] ) ) {
 		$text = ucwords( $table .': '.$_GET['type'].'s ');
 	} elseif ( isset( $_GET['view'] ) ) {
@@ -1436,8 +1446,10 @@ function headerTitle( $table ){
 //   $user = $rs -> getNext( $GLOBALS['POSTS'] );
 // }
 
-function head(){
-	echo( '<!-- Basic App Metadata -->
+function head()
+{
+	echo( '
+<!-- Basic App Metadata -->
 <meta charset="'. getOption( 'charset' ) .'">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
@@ -1472,7 +1484,8 @@ function head(){
 <link rel="manifest" href="'. _ROOT.'/manifest" >' );
 }
 
-function manifest(){
+function manifest()
+{
 	$manifest["name"] = getOption('name');
 	$manifest["short_name"] = getOption('name');
 	$manifest["start_url"] = ".";
@@ -1495,6 +1508,12 @@ function submitButton( $name = "create", $position = "alignright", $icon = "save
 {	csrf();
 	if ( $form == true ) $form = '</form>'; else $form = '';
 	echo( '<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored '.$position.'" type="submit" name="'.$name.'"><i class="material-icons">'.$icon.'</i></button>'.$form );
+}
+
+function sendButton( $name = "create", $value = "", $class = "alignright", $icon = "save", $form = false )
+{	csrf();
+	$value = !empty( $value ) ?? $name;
+	echo( '<button class="'.$class.'" type="submit" name="'.$name.'">'.$value.'</button>' );
 }
 
 
@@ -1569,7 +1588,6 @@ function eMail($receipients, $subject, $message, $cc = null, $attachments = null
 		$GLOBALS['MAILER'] -> addAddress( $receipients );
 	}
 
-
 	//Provide file path and name of the attachments
 	$GLOBALS['MAILER'] -> addAttachment("file.txt", "File.txt");        
 	$GLOBALS['MAILER'] -> addAttachment("images/profile.png"); //Filename is optional
@@ -1587,5 +1605,18 @@ function eMail($receipients, $subject, $message, $cc = null, $attachments = null
 	else 
 	{
 	    return array( "status", "Message has been sent successfully" );
+	}
+}
+
+function keyGen( $key )
+{
+	if ( $key == "salt" ) {
+		echo( md5( date( 'YYMMDDHHIISS').rand(89, 489900) ) );
+	} elseif ( $key == "auth" ) {
+		echo( sha1( md5( date( 'YYMMDDHHIISS').rand(89, 489900) ) ) );
+	} else {
+		echo( md5( date( 'YYMMDDHHIISS').rand(89, 489900) ) );
+		echo( '<br>');
+		echo( sha1( md5( date( 'YYMMDDHHIISS').rand(89, 489900) ) ) );
 	}
 }

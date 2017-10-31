@@ -358,12 +358,12 @@ class Users {
           header( 'Location: '._ROOT.'/admin/index?page=my dashboard' );
           exit();
         } else {
-          header('Location: '._ROOT.'/signin/jabali?alert=password' );
+          header('Location: '._ROOT.'/login/jabali?alert=password' );
           exit();
         }
       }
     } else {
-      header('Location: '._ROOT.'/signin?alert=user' );
+      header('Location: '._ROOT.'/login?alert=user' );
       exit();
     }
   }

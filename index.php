@@ -73,7 +73,7 @@ if ( is_localhost() && ( $_SERVER['DOCUMENT_ROOT'] !== __DIR__ ) ) {
   $url = ltrim( '/', $_SERVER['REQUEST_URI'] );
 }
 
-$action = new Jabali\Classes\Actions;
+$render = new Jabali\Classes\Renders;
 $elements = explode('/', $url );
 $match = $elements[0];
 array_shift( $elements );
@@ -82,9 +82,9 @@ if( empty( $match ) || $match == "?logout" ) {
 	getHeader();
 	if ( getOption( 'homepage' ) == "posts" ) {
 		echo( '<title> Home [ '. getOption( 'name' ) .' ]</title>' );
-		$action -> blog();
+		$render -> blog();
 	} else {
-		$action -> fetchPosts( getOption( 'homepage' ) );
+		$render -> fetchPosts( getOption( 'homepage' ) );
 	}
 	getFooter();
 } elseif ( in_array( $match, $GLOBALS['GRules'])) {
@@ -95,54 +95,57 @@ if( empty( $match ) || $match == "?logout" ) {
 			header( 'Location: '. _ROOT .'/admin/index?page=my dashboard' );
 			exit();
 		} else {
-			$action -> login( $elements[0] );
+			$render -> login( $elements[0] );
 		}
 		break;
 	case "register":
-		$action -> register( $elements[0] );
+		$render -> register( $elements[0] );
 		break;
-	case "admin":
-		header( "Location: /admin/index?page=my dashboard");
+	case "keygen":
+		keyGen( $elements[0] );
+		break;
+	case "dash":
+		header( "Location: admin/index?page=my dashboard");
 		break;
 	case "dashboard":
-		header( "Location: /admin/index?page=my dashboard");
+		header( "Location: admin/index?page=my dashboard");
 		break;
 	case "reset":
 		theHeader();
-		$action -> reset( $elements[0], $elements[1] );
+		$render -> reset( $elements[0], $elements[1] );
 		theFooter();
 		break;
 	case "forgot":
-		$action -> forgot();
+		$render -> forgot();
 		break;
 	case 'portfolio':
 		getHeader();
-		$action -> portfolio( $elements );
+		$render -> portfolio( $elements );
 		getFooter();
 		break;
 	case "authors":
 		getHeader();
-		$action -> authors( $elements[0] );
+		$render -> authors( $elements[0] );
 		getFooter();
 		break;
 	case "categories":
 		getHeader();
-		$action -> category( $elements[0] );
+		$render -> category( $elements[0] );
 		getFooter();
 		break;
 	case "comments":
 		getHeader();
-		$action -> comments( $elements );
+		$render -> comments( $elements );
 		getFooter();
 		break;
 	case "tags":
 		getHeader();
-		$action -> tag( $elements[0] );
+		$render -> tag( $elements[0] );
 		getFooter();
 		break;
 	case "users":
 		getHeader();
-		$action -> users( $elements[0] );
+		$render -> users( $elements[0] );
 		getFooter();
 		break;
 	case "api":
@@ -158,6 +161,6 @@ if( empty( $match ) || $match == "?logout" ) {
 		break;
 	default:
 		getHeader();
-		$action -> fetchPosts( $match );
+		$render -> fetchPosts( $match );
 		getFooter();
 }
