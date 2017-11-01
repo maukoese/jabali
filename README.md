@@ -10,7 +10,6 @@ These instructions will get you a copy of the project up and running on your loc
 A running PHP server.
 A database system - MySQL/MariaDB/SQLite/PostgreSQL/Mongo
 
-
 ### Installing
 
 Grab a copy of Jabali LTS from here(https://cdn.mauko.co.ke/jabali/jabali.zip) and extract it in your server. Point your browser to your site and the Jabali Install Bot will handle the rest - just follow the prompts.

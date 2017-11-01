@@ -213,7 +213,7 @@ function loadScript( $link, $theme = false ) {
 	 	$themes = '';
 	 } ?>
 
-	<script src="<?php echo $themes.$link; ?>"></script><?php 
+	<script type="text/javascript" src="<?php echo $themes.$link; ?>"></script><?php 
 }
 
 /**
@@ -554,6 +554,13 @@ function isOption( $code ) {
 
 function theHeader() {
 	require_once( _ABSRES_ . 'views/header.php' );
+	echo( 
+		'<style>
+			.toast{
+				bottom: 5px;
+				right: 5px;
+			}
+		</style>' );
 }
 
 function theFooter() {
@@ -562,6 +569,21 @@ function theFooter() {
 
 function getHeader() {
 	require_once( _ABSTHEMES_ . getOption( 'activetheme' ) . '/header.php' );
+	echo( 
+		'<style>
+			.toast{
+				bottom: 5px;
+				right: 5px;
+				position: absolute;
+				color: green;
+			}
+			.etoast{
+				bottom: 5px;
+				right: 5px;
+				position: absolute;
+				color: red;
+			}
+		</style>' );
 }
 
 function getFooter() {
@@ -869,7 +891,7 @@ function rewriteRules( $rule, $args ){
 	}
 }
 
-function addSetting( $page = "", $label = "Options", $callable = "echo", $args = "" ){
+function addSetting( $page, $label = "Options", $callable = "echo", $args = "" ){
 	if ( !isset( $GLOBALS['GSettings'][$page] ) ) {
 		$GLOBALS['GSettings'][$page] = array();
 	}
@@ -1362,8 +1384,16 @@ function theTitle(){
 	echo $GLOBALS['gpost']['name'];
 }
 
+function theLink( $text = "read more"){
+	echo ( '<a href="'.$GLOBALS['gpost']['link'].'" >'. $text . '</a>');
+}
+
 function theContent(){
 	echo $GLOBALS['gpost']['details'];
+}
+
+function theExcerpt( $length = "250"){
+	echo substr( $GLOBALS['gpost']['details'], 0, $length );
 }
  
 function theCategories( $class = '' ){
@@ -1390,9 +1420,17 @@ function theTags( $class = '' ){
 	echo $tags;
 }
 
-function theImage()
+function theImage( $width = 500, $height = "", $class = "" )
 {
-	echo $GLOBALS['gpost']['avatar'];
+	echo ( '<img src = "'. $GLOBALS['gpost']['avatar'] .'" width = "'.$width.'" height ="'.$height.'" class="'.$class.'" >');
+}
+
+function theDate( $format = "M d, Y" )
+{
+	$created = $GLOBALS['gpost']['created'];
+	$timed = strtotime( $created );
+	$formatted = date( $format, $timed );
+	echo( $formatted );
 }
 
 function headerTitle( $table )

@@ -11,7 +11,10 @@
 	</header>
 
 <!-- Signup Form -->
-	<form id="signup-form" method="post" action="#">
+	<form id="signup-form" method="post" action=>
+		<input type="text" name="name" id="name" placeholder="Name (optional)" />
 		<input type="email" name="email" id="email" placeholder="Email Address" />
-		<input type="submit" value="Sign Up" />
+		<input type="hidden" name="message" value="New Subscription">
+		<input type="submit" name="contact" value="Sign Up" />
+		<?php csrf(); ?>
 	</form>

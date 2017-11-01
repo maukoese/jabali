@@ -37,7 +37,58 @@ if ( isset( $_POST['forgot'] ) && $_POST['email'] !== "" ) {
 }
 
 if ( isset( $_POST['contact'] ) && $_POST['email'] !== "" ) {
-  $MAILER ->send();
+  	$MAILER -> setFrom( getOption( 'email' ), getOption( 'name' ));
+	$MAILER -> addAddress( $_POST['email'], $_POST['name'] );
+	$MAILER -> Subject  = 'Contact Message From '.getOption( 'name' );
+	$MAILER -> Body     = $_POST['message'];
+	if(!$MAILER -> send()) {
+	  echo '<div class="etoast">Sorry but we could not send your message at this time. Try again</div>';
+	  /*Mailer error: ' . $MAILER -> ErrorInfo.'*/
+	} else {
+	  echo '<div class="toast">Message successfully sent. Thank you.</div>';
+	}
+
+	// $mail->From = "from@yourdomain.com";
+	// $mail->FromName = "Full Name";
+
+	// $mail->addAddress("recipient1@example.com", "Recipient Name");
+
+	// //Provide file path and name of the attachments
+	// $mail->addAttachment("file.txt", "File.txt");        
+	// $mail->addAttachment("images/profile.png"); //Filename is optional
+
+	// $mail->isHTML(true);
+
+	// $mail->Subject = "Subject Text";
+	// $mail->Body = "<i>Mail body in HTML</i>";
+	// $mail->AltBody = "This is the plain text version of the email content";
+
+	//Enable SMTP debugging. 
+	// $mail->SMTPDebug = 3;                               
+	// //Set PHPMailer to use SMTP.
+	// $mail->isSMTP();            
+	// //Set SMTP host name                          
+	// $mail->Host = "smtp.gmail.com";
+	// //Set this to true if SMTP host requires authentication to send email
+	// $mail->SMTPAuth = true;                          
+	// //Provide username and password     
+	// $mail->Username = "name@gmail.com";                 
+	// $mail->Password = "super_secret_password";                           
+	// //If SMTP requires TLS encryption then set it
+	// $mail->SMTPSecure = "tls";                           
+	// //Set TCP port to connect to 
+	// $mail->Port = 587;                                   
+
+	// $mail->From = "name@gmail.com";
+	// $mail->FromName = "Full Name";
+
+	// $mail->addAddress("name@example.com", "Recepient Name");
+
+	// $mail->isHTML(true);
+
+	// $mail->Subject = "Subject Text";
+	// $mail->Body = "<i>Mail body in HTML</i>";
+	// $mail->AltBody = "This is the plain text version of the email content";
 }
 
 if ( isset( $_SESSION[JBLSALT.'Code' ] ) ) {

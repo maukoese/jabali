@@ -25,69 +25,77 @@ if ( isset( $_POST['createtheme'] ) ) {
   $email = $_POST['themeemail'];
   $version = $_POST['themeversion'];
 
-  $comments = "<?php ";
-  $comments .= "\n\n";
-  $comments .= "/**\n";
-  $comments .= "* @package Jabali \n";
-  $comments .= "* @subpackage ". $name ."\n";
-  $comments .= "* @author ". $author ."\n";
-  $comments .= "* @link ". $website ."\n";
-  $comments .= "* @since ". $version ."\n";
-  $comments .= "**/\n\n";
+  $comments = "
+  <?php
+  /**
+  * @package Jabali 
+  * @subpackage ". $name ."
+  * @author ". $author ."
+  * @link ". $website ."
+  * @since ". $version ."
+  **/";
   $tag = "$";
   $thdi = "<?php echo( _THEMES ); ?>". $slug;
 
-  $headertext = $comments."?>\n";
-  $headertext .= "
-  <!DOCTYPE html>\n
-    <html>\r
-      <head>\n
-        <?php head(); ?>\n
-        <link rel=\"styleshet\" href=\"". $thdi."/assets/css/".$slug .".css\">\n
-        <script type=\"javascript/\" src=\"". $thdi."/assets/js/".$slug .".js\" ></script>\r
-      </head>\r
+  $headertext = $comments."
+  ?>
+  <!DOCTYPE html>
+    <html>
+      <head>
+        <?php head();
+        loadStyle( 'css/".$slug .".css', '".$slug ."');
+        if ( isLocalhost() ):
+          loadScript( 'js/jquery.min.js', '".$slug ."');
+        else:
+          loadScript( 'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js');
+        endif;
+        loadScript( 'js/".$slug .".js', '".$slug ."'); ?>
+      </head>
       <body>";
 
-  $atemplatetext = $comments."?>\n";
-  $atemplatetext .= "
-    <main>\n
-      <?php foreach (".$tag."posts as ".$tag."post ) : ?>\n
-        <title><?php echo( ".$tag."post -> name ); ?></title>\n
-        <?php echo( ".$tag."post -> name );\n
-        //echo( ".$tag."post -> details ); ?>\n
-      <?php endforeach; ?>\n
-    </main>";
+  $atemplatetext = $comments."
+  ?>
+    <?php if( hasPosts() ): ?>
+      <?php while( hasPosts() ): ?>
+        <?php thePost(); ?>
+        <title><?php theTitle(); ?> - <?php showOption( 'name' ); ?></title>
+        <h1><?php theTitle(); ?></h1>
+        <p><?php theDate(); ?></p>
+        <p><?php theCategories(); ?></p>
+        <p><?php theTags(); ?></p>
+        <article><?php theContent(); ?></article>
+      <?php endwhile; ?>
+    <?php endif; ?>";
 
-  $templatetext = $comments."?>\n";
-  $templatetext .= "
-    <main>\n
-      <title><?php echo( ".$tag."post -> name ); ?></title>\n
-        <div>\n
-            <h1><?php echo( ".$tag."post -> name ); ?></h1>\n
-            <article>\n
-              <?php echo( ".$tag."post -> details ); ?>\n
-            </article>\n
-        </div>\n
-    </main>";
+  $templatetext = $comments."
+  ?>
+    <title><?php theTitle(); ?> - <?php showOption( 'name' ); ?></title>
+    <h1><?php theTitle(); ?></h1>
+    <p><?php theDate(); ?></p>
+    <p><?php theCategories(); ?></p>
+    <p><?php theTags(); ?></p>
+    <article><?php theContent(); ?></article>";
 
-  $htemplatetext = $comments."?>\n";
-  $htemplatetext .= "
-    <main>\n
-      <title><?php showOption( 'name' ); ?></title>\n
-      <?php echo( ".$tag."post -> name );\n
-      //echo( ".$tag."post -> details ); ?>\n
-    </main>";
+  $htemplatetext = $comments."
+  ?>
+    <title>Home - <?php showOption( 'name' ); ?></title>
+    <?php if( hasPosts() ): ?>
+      <?php while( hasPosts() ): ?>
+        <?php thePost(); ?>
+        <h1><?php theTitle(); ?></h1>
+        <p><?php theDate(); ?></p>
+        <p><?php theCategories(); ?></p>
+        <p><?php theTags(); ?></p>
+        <article><?php theContent(); ?></article>
+      <?php endwhile; ?>
+    <?php endif; ?>";
 
-  $footerertext = $comments."?>\n";
-  $footerertext .= "
-    <footer>\n
-      <?php if ( isLocalhost() ) : ?>\n
-        <script type=\"javascript/\" src=\"". $thdi."/assets/js/jquery.min.js\" >\r
-      <?php else: ?>\n
-        <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>\r
-      <?php endif; ?>\n
-    </footer>\r
-  <body>\r
+  $footerertext = $comments."
+  ?>
+    <footer>
+      <?php showOption( 'copyright' ); ?> - <a class=\"\" href=\"<?php showOption( 'attribution_link' ); ?>\"><?php showOption( 'attribution' ); ?></a>
+    </footer>
+  <body>
 </html>";
 
   $themedir = _ABSTHEMES_ . $slug.'/';
@@ -97,7 +105,30 @@ if ( isset( $_POST['createtheme'] ) ) {
   $images = _ABSTHEMES_ . $slug.'/assets/images/';
   $classes = _ABSTHEMES_ . $slug.'/classes/';
 
-  $data = array( "name" => $name, "slug" => $slug, "version" => $version, "author" => $author, "category" => $category, "screenshot" => "", "description" => $description, "social" => array( "facebook" => $facebook, "twitter" => $twitter, "github" => $github, "email" => $email ), "website" => $website, "support" => $support, "download" => "https://jabali.io/themes/".$slug, "licenses" => array( $license => $licenselink ) );
+  $data = '
+  {
+  "name": "'.$name.'",
+  "slug": "'.$slug.'",
+  "version": "'.$name.'",
+  "author": "'.$author.'",
+  "modified": "'.$author.'",
+  "category": "'.$category.'",
+  "screenshot": "app/assets/images/avatar.svg",
+  "description": "'.$description.'",
+  "social": {
+    "facebook": "'.$facebook.'",
+    "twitter": "'.$twitter.'",
+    "github": "'.$github.'",
+    "email": "'.$email.'"
+  },
+  "link": "http://jabali.mauko.co.ke/themes/'.$slug.'",
+  "website": "'.$website.'",
+  "support": "'.$support.'",
+  "download": "http://code.mauko.co.ke/dl/themes/'.$slug.'.zip",
+  "licences": {
+    "'.$license.'": "'.$licenselink.'"
+  }
+}';
 
   if ( is_dir( _ABSTHEMES_ . $slug.'/' ) ) {
     _shout_( "<p>A theme by that name already exists.</p>
@@ -107,11 +138,11 @@ if ( isset( $_POST['createtheme'] ) ) {
     <li>Prefix your slug e.g <pre>myprefixed_slug<pre></li>", "error" );
   } else {
     if ( mkdir( $themedir, 0777 )) {
-      mkdir( $templates );
+      mkdir( $templates, 0777, true );
       mkdir( $css, 0777, true );
       mkdir( $js, 0777, true );
       mkdir( $images, 0777, true );
-      mkdir( $classes );
+      mkdir( $classes, 0777, true );
 
       $themefunctions = fopen( $themedir.$slug.'.php', 'w');
       $themeheader = fopen( $themedir.'header.php', 'w');
@@ -121,13 +152,13 @@ if ( isset( $_POST['createtheme'] ) ) {
       $themehometemplate = fopen( $themedir.'templates/home.php', 'w');
       $themestyles = fopen( $themedir.'assets/css/'.$slug.'.css', 'w');
       $themescripts = fopen( $themedir.'assets/js/'.$slug.'.js', 'w');
-      $jquery = file_get_contents( 'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js' );
-      $jcss = file_get_contents( _STYLES.'normalize.css' );
+      $jquery = file_get_contents( _SCRIPTS.'jquery-3.2.1.min.js' );
+      $jcss = file_get_contents( _STYLES.'made.css' );
       $themejquery = fopen( $themedir.'assets/js/jquery.min.js', 'w');
       $themedata = fopen( $themedir.$slug.'.json', 'w');
 
       fwrite( $themefunctions, $comments );
-      fwrite( $themedata, json_encode( $data ));
+      fwrite( $themedata, $data );
       fwrite( $themeheader, $headertext );
       fwrite( $themepoststemplate, $atemplatetext );
       fwrite( $themeposttemplate, $templatetext );
@@ -145,9 +176,9 @@ if ( isset( $_POST['createtheme'] ) ) {
       fclose( $themescripts );
       fclose( $themefooter );
 
-      _shout_( '<p>New theme created successfully! <a href="?edit='.$slug.'&key='.$slug.'.php">Click here</a> to edit.</p>', 'success' );
+      _shout_( 'New theme created successfully! <a href="?edit='.$slug.'&key='.$slug.'.php">Click here</a> to edit.', 'success' );
     } else {
-      _shout_( "<p>Could not create theme files. Make sure Jabali has the correct write permissions to the installation directory and try again.</p>", "error" );
+      _shout_( "Could not create theme files. Make sure Jabali has the correct write permissions to the installation directory and try again.", "error" );
     }
   }
 }
@@ -168,15 +199,16 @@ if ( isset( $_POST['copytheme'] ) ) {
   $email = $_POST['themeemail'];
   $version = $_POST['themeversion'];
 
-  $comments = "<?php ";
-  $comments .= "\n\n";
-  $comments .= "/**\n";
-  $comments .= "* @package Jabali \n";
-  $comments .= "* @subpackage ". $name ."\n";
-  $comments .= "* @author ". $author ."\n";
-  $comments .= "* @link ". $website ."\n";
-  $comments .= "* @since ". $version ."\n";
-  $comments .= "**/\n\n";
+  $comments = "
+  <?php 
+  \n\n
+  /**\n
+  * @package Jabali \n
+  * @subpackage ". $name ."\n
+  * @author ". $author ."\n
+  * @link ". $website ."\n
+  * @since ". $version ."\n
+  **/\n";
 
   $newtheme = _ABSTHEMES_ . $slug.'/';
   $oldtheme = _ABSTHEMES_ . $source.'/';
