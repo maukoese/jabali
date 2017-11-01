@@ -25,8 +25,7 @@ if ( isset( $_POST['createtheme'] ) ) {
   $email = $_POST['themeemail'];
   $version = $_POST['themeversion'];
 
-  $comments = "
-  <?php
+  $comments = "<?php
   /**
   * @package Jabali 
   * @subpackage ". $name ."
@@ -137,6 +136,7 @@ if ( isset( $_POST['createtheme'] ) ) {
     <li>Use a very unique slug e.g <pre>myveryuniqueslug<pre></li>
     <li>Prefix your slug e.g <pre>myprefixed_slug<pre></li>", "error" );
   } else {
+    $umaskz = umask(0);
     if ( mkdir( $themedir, 0777 )) {
       mkdir( $templates, 0777, true );
       mkdir( $css, 0777, true );
@@ -180,6 +180,7 @@ if ( isset( $_POST['createtheme'] ) ) {
     } else {
       _shout_( "Could not create theme files. Make sure Jabali has the correct write permissions to the installation directory and try again.", "error" );
     }
+    umask( $umaskz );
   }
 }
 
