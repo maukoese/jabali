@@ -1221,61 +1221,6 @@ function isTheme ( $theme) {
     }
 }
 
-function rssFeed( $type ){
-	header("Content-Type: application/xml; charset=UTF-8");
-
-	if ( empty( $type)  || $type == "rss" ) {
-		$content = "
-		<?xml version=\"1.0\" encoding=\"utf-8\" ?>
-			<rss version=\"2.0\">
-			<channel>
-				<title>" . getOption( 'name' ) . "</title>
-				<link>" . _ROOT . "</link>" . "
-				<description>" . getOption( 'description' ) . "</description>
-				<language>" . getOption( 'language' ) . "</language>
-				<copyright>" . getOption( 'copyright' ) . "</copyright>
-				<pubDate>" . date( 'Y-m-d' ). "</pubDate>
-				<generator>Jabali RSS Feed</generator>
-				<image>" . getOption( 'name' ) . "</image>
-					<title>" . getOption( 'name' ) . "</title>
-					<url>" . _ROOT . "</url>
-					<width>88</width>
-					<height>88</height>
-				</image>\n";
-
-		$posts = $GLOBALS['POSTS'] -> sweep();
-
-		foreach ( $posts as $post ) {
-			$post = (object)$post;
-			$data = "
-			<item>
-				<title>" . htmlspecialchars( $post -> name ) . "</title>
-				<link>" . htmlspecialchars( $post -> link ) . "<link>
-				<description>" . htmlspecialchars( $post -> details ) . "</description>
-				<category>" . htmlspecialchars( $post -> categories ) . "</category>
-				<comments>" . htmlspecialchars( _ROOT . "/comments/posts/" . $post -> id ) . "</comments>
-				<guid>" . htmlspecialchars( $post -> id ) . "</guid>
-				<pubDate" . date( "D, d M Y H:i:s O", strtotime( htmlspecialchars( $post -> created ) ) ) . "</pubDate
-			</item>";
-
-			echo $data;
-		}
-
-		$content .= '</channel>' . "\n";
-		$content .= '</rss>';
-		echo $content;
-		
-	} elseif ( $type == "atom") {
-		header("Content-Type: application/xml; charset=UTF-8");
-		header('Pragma: public');
-		header('Cache-control: private');
-		header('Expires: -1');
-		$url = _ROOT;
-		$rss = new Jabali\Lib\atomRSS;
-		$rss -> render();
-	}
-}
-
 function intallTheme( $source ) {
 	$install = new ZipArchive();
 	$xT = $install -> open( $source );
@@ -1289,9 +1234,9 @@ function intallTheme( $source ) {
 }
 
 /**
-* @type - File type
-* @class - Class of file
-* @package - Package name
+* @param $type - File type
+* @param $class - Class of file
+* @param $package - Package name
 **/
 
 function fileContents( $type, $package = null, $class = null ){
@@ -1548,7 +1493,8 @@ function head()
 
 <link rel="shortcut icon" href="' . getOption( 'favicon' ) .'">
 
-<link rel="manifest" href="'. _ROOT.'/manifest" >' );
+<link rel="manifest" href="'. _ROOT.'/manifest" >
+<link rel="alternate" type="application/rss+xml" href="'. _ROOT.'/feed/" title="'. getOption( 'name' ) .'">' );
 }
 
 function manifest()
@@ -1675,7 +1621,7 @@ function eMail($receipients, $subject, $message, $cc = null, $attachments = null
 	}
 }
 
-function keyGen( $key )
+function keyGen( string $key )
 {
 	if ( $key == "salt" ) {
 		echo( md5( date( 'YYMMDDHHIISS').rand(89, 489900) ) );
@@ -1704,4 +1650,93 @@ function guzzler( string $url, string $method, array $auth,  bool $async = false
 		return $data;
 	}
 	
+}
+
+function feed( $type = "rss" )
+{
+	$title = getOption('name');
+	$link = _ROOT;
+	$description = getOption('description');
+	$copyright = getOption('copyright');
+	$mail = getOption('email');
+	$date = date( 'Y-m-d H:i:s');
+	$salt = JBLSALT;
+	$rssdata = <<<RSS
+<?xml version="1.0" encoding="UTF-8" ?>
+	<rss version="2.0">
+		<channel>
+			<title>{$title}</title>
+			<link>{$link}</link>
+			<description>{$description}</description>
+			<category>Web development</category>
+			<copyright>{$copyright}</copyright>
+			<language>en-us</language>
+			<docs>https://docs.jabalicms.org/api/feed</docs>
+			<webMaster>{$mail}</webMaster>
+			<pubDate>{$date}</pubDate>
+RSS;
+
+	$atomdata = <<<RSS
+<?xml version="1.0" encoding="utf-8"?>
+	<feed xmlns="http://www.w3.org/2005/Atom">
+		<title>{$title}</title> 
+		<link href="{$link}"/>
+		<updated>{$date}</updated>
+		<id>{$salt}</id>
+RSS;
+
+	$posts = $GLOBALS['POSTS'] -> sweep();
+	foreach ( $posts as $post ) {
+		$details = htmlspecialchars( $post['details']);
+		$atomdata .= <<<RSS
+			<entry>
+				<title>{$post['name']}</title>
+				<link href="{$post['link']}"/>
+				<id>{$post['id']}</id>
+				<updated>{$post['created']}</updated>
+				<summary>{$details}</summary>
+			</entry>
+RSS;
+
+		$rssdata .= <<<RSS
+			<item>
+				<title>{$post['name']}</title>
+				<link>{$post['link']}</link>
+				<description>{$details}</description>
+				<comments>{$link}/comments/{$post['slug']}</comments>
+				<pubDate>{$post['created']}</pubDate>
+				<guid>{$post['id']}</guid>
+				<category>{$post['categories']}</category>
+			</item>
+RSS;
+}
+
+	$rssdata .= <<<RSS
+		</channel>
+	</rss>
+RSS;
+
+	$atomdata .= <<<RSS
+	</feed>
+RSS;
+
+	if ( $type == "rss") {
+		header("Content-Type: application/xml; charset=UTF-8");
+		header('Pragma: public');
+		header('Cache-control: private');
+		header('Expires: -1');
+		echo( $rssdata );
+	} elseif ( $type == "atom") {
+		header("Content-Type: application/atom+xml; charset=UTF-8");
+		header('Pragma: public');
+		header('Cache-control: private');
+		header('Expires: -1');
+		echo( $atomdata );
+	} else {
+		header("Content-Type: application/xml; charset=UTF-8");
+		header('Pragma: public');
+		header('Cache-control: private');
+		header('Expires: -1');
+		echo( $rssdata );
+	}
 }

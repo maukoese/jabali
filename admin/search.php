@@ -18,7 +18,5 @@ if ( isset( $_REQUEST['searchterm'] ) ) {
 	} else {
 		echo "Nothing found!";
 	}
-} ?>
-
-<?php
-require_once( './footer.php' );
+}
+require_once( 'footer.php' );

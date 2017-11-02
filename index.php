@@ -203,7 +203,7 @@ if( empty( $match ) || $match == "?logout" ) {
 		restApi( $elements );
 		break;
 	case "feed":
-		rssFeed( $elements[0] );
+		feed( $elements[0] );
 		break;
 	case 'manifest':
 		header('Content-Type:Application/json' );

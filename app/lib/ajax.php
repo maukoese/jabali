@@ -45,7 +45,7 @@ class AjaxWarning extends Exception {}
 
 class AjaxHandler{
 
-    private $responseContentType = /* "application/x-json"; # */ "text/javascript"; # for debugging
+    private $responseContentType = "application/x-json";
     private $timers = array();
     private $callback;
     private $body;
