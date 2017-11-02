@@ -1,4 +1,12 @@
-<?php 
+<?php
+/**
+* @package Jabali
+* @subpackage Themes Creation Client
+* @author Mauko Maunde
+* @link https://docs.jabalicms.org/api/themes
+* @since 0.17.06
+**/
+
 session_start();
 require_once( '../init.php' );
 require_once( 'header.php' );
@@ -36,24 +44,17 @@ if ( isset( $_POST['createtheme'] ) ) {
   $tag = "$";
   $thdi = "<?php echo( _THEMES ); ?>". $slug;
 
-  $headertext = $comments."
-  ?>
+  $headertext = $comments." ?>
   <!DOCTYPE html>
-    <html>
+    <html lang=\"<?php showOption( 'language'); ?>\" xmlns=\"http://www.w3.org/1999/html\">
       <head>
         <?php head();
-        loadStyle( 'css/".$slug .".css', '".$slug ."');
-        if ( isLocalhost() ):
-          loadScript( 'js/jquery.min.js', '".$slug ."');
-        else:
-          loadScript( 'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js');
-        endif;
-        loadScript( 'js/".$slug .".js', '".$slug ."'); ?>
+        loadStyle( 'css/".$slug .".css', '".$slug ."'); ?>
       </head>
-      <body>";
+      <body class=\"\" >
+      <?php headerLogo(); ?>";
 
-  $atemplatetext = $comments."
-  ?>
+  $atemplatetext = $comments." ?>
     <?php if( hasPosts() ): ?>
       <?php while( hasPosts() ): ?>
         <?php thePost(); ?>
@@ -66,8 +67,7 @@ if ( isset( $_POST['createtheme'] ) ) {
       <?php endwhile; ?>
     <?php endif; ?>";
 
-  $templatetext = $comments."
-  ?>
+  $templatetext = $comments." ?>
     <title><?php theTitle(); ?> - <?php showOption( 'name' ); ?></title>
     <h1><?php theTitle(); ?></h1>
     <p><?php theDate(); ?></p>
@@ -75,8 +75,7 @@ if ( isset( $_POST['createtheme'] ) ) {
     <p><?php theTags(); ?></p>
     <article><?php theContent(); ?></article>";
 
-  $htemplatetext = $comments."
-  ?>
+  $htemplatetext = $comments." ?>
     <title>Home - <?php showOption( 'name' ); ?></title>
     <?php if( hasPosts() ): ?>
       <?php while( hasPosts() ): ?>
@@ -89,13 +88,19 @@ if ( isset( $_POST['createtheme'] ) ) {
       <?php endwhile; ?>
     <?php endif; ?>";
 
-  $footerertext = $comments."
-  ?>
-    <footer>
-      <?php showOption( 'copyright' ); ?> - <a class=\"\" href=\"<?php showOption( 'attribution_link' ); ?>\"><?php showOption( 'attribution' ); ?></a>
-    </footer>
-  <body>
-</html>";
+  $footerertext = $comments." ?>
+        <footer>
+          <?php showOption( 'copyright' ); ?> - <a class=\"\" href=\"<?php showOption( 'attribution_link' ); ?>\"><?php showOption( 'attribution' ); ?></a>
+        </footer>
+        <?php 
+        if ( isLocalhost() ):
+          loadScript( 'js/jquery.min.js', '".$slug ."');
+        else:
+          loadScript( 'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js');
+        endif;
+        loadScript( 'js/".$slug .".js', '".$slug ."'); ?>
+      <body>
+    </html>";
 
   $themedir = _ABSTHEMES_ . $slug.'/';
   $templates = _ABSTHEMES_ . $slug.'/templates/';
@@ -104,8 +109,7 @@ if ( isset( $_POST['createtheme'] ) ) {
   $images = _ABSTHEMES_ . $slug.'/assets/images/';
   $classes = _ABSTHEMES_ . $slug.'/classes/';
 
-  $data = '
-  {
+  $data = '{
   "name": "'.$name.'",
   "slug": "'.$slug.'",
   "version": "'.$name.'",
@@ -298,20 +302,26 @@ if ( isset( $_POST['uploadtheme'] ) ) {
 }
 
 if ( isset( $_GET['install'] ) ) {
+  if ( isset( $_GET['download'] ) ) {
+    $download = $_GET['download'];
+  } else {
+    $download = 'http://code.mauko.co.ke/dl/jabali/themes/'.$_GET['install'].'.zip';
+  }
+
   if ( !is_file(  _ABSTEMP_.'themes/'.$_GET['install'].'.zip' ) ) { ?>
      <div class="mdl-grid" >
       <div class="mdl-cell mdl-cell--12-col mdl-card mdl-color--<?php primaryColor() ?>" >
         <div class="mdl-card__supporting-text">
         <p>Downloading Theme from Jabali</p><?php
-    if ( fopen('http://code.mauko.co.ke/dl/jabali/themes/'.$_GET['install'].'.zip', 'r') ) {
+    if ( fopen( $download, 'r') ) {
 
       $directory = _ABSTEMP_ . "themes/";
 
       if ( !is_dir( $directory ) ) { mkdir( $directory, 0777, true ); }
 
-      file_put_contents( _ABSTEMP_.'themes/'.$_GET['install'].'.zip', fopen('http://code.mauko.co.ke/dl/jabali/themes/'.$source.'.zip', 'r') );
+      file_put_contents( _ABSTEMP_.'themes/'.$_GET['install'].'.zip', fopen('http://code.mauko.co.ke/dl/jabali/themes/'.$_GET['install'].'.zip', 'r') );
       echo '<p>Theme Downloaded And Saved</p>Installing theme...';
-      intallTheme( $_GET['install'].".zip" );
+      intallTheme( _ABSTEMP_.'themes/'.$_GET['install'].".zip" );
     } else {
       echo '<p>Could not get theme from Jabali.</p></div></div></div>';
     }
@@ -893,17 +903,20 @@ if ( isset( $_GET['install'] ) ) {
           </div>
           <button class="mdl-button mdl-button--fab addfab mdl-color--red right" name="savefile" type="submit"><i class="material-icons">save</i></button>
       </form><?php
-} elseif ( isset( $_GET['activate'] ) ) {
-	function activateX( $x) {
-
-    $GLOBALS['JBLDB'] -> query( "UPDATE hthemes SET state='active' WHERE id='".$x."'" );
-	}
-
-  activateX( $_GET['activate'] );
 } elseif ( isset( $_GET['view'] ) ) { 
   $theme = $_GET['view'];
   $xJson = file_get_contents( _ABSTHEMES_.$theme."/".$theme.".json" );
-  $xD = json_decode( $xJson, true ); ?>
+  $xD = json_decode( $xJson, true );
+
+  $path = _ABSTHEMES_;
+  $dir = new DirectoryIterator($path);
+  $installed = array();
+  foreach ($dir as $fileinfo) {
+    if ($fileinfo->isDir() && !$fileinfo->isDot()) {
+      $theme = $fileinfo->getFilename();
+      $installed[] = $theme;
+    }
+  } ?>
   <title>Theme - <?php echo( $_GET['key'] ); ?> - <?php showOption( 'name' ); ?></title>
   <div class="mdl-grid">
   <form method="POST" action="" class="mdl-cell mdl-cell--8-col mdl-shadow--2dp mdl-color--<?php primaryColor(); ?> mdl-card">
@@ -917,11 +930,13 @@ if ( isset( $_GET['install'] ) ) {
                 <a href="?edit=<?php echo $xD[ 'slug' ] ; ?>&key=<?php echo $xD[ 'slug' ] ; ?>.php" class="material-icons">create</a>
                 <a href="options?options=<?php echo $xD[ 'settings' ] ; ?>&page=theme settings" class="material-icons" >settings</a>
               </div>
-              <div class="mdl-card__actions mdl-card--border">
+              <div class="mdl-card__actions mdl-card--border"><?php
+                if ( in_array( $xD[ 'slug' ], $installed )) { ?>
                     <div class="input-field">
                         <button class="mdl-button mdl-button--icon <?php if ( activeTheme( $xD[ 'slug' ] ) ) {
                           echo "mdl-button--colored";
                         } ?>" id="<?php echo $xD[ 'slug' ] ; ?>" name="activetheme" value="<?php echo $xD[ 'slug' ] ; ?>" type="submit">
+                          <?php csrf(); ?>
                             <i class="material-icons"><?php if ( activeTheme( $xD[ 'slug' ] ) ) {
                           echo "check";
                         } else {
@@ -929,8 +944,13 @@ if ( isset( $_GET['install'] ) ) {
                           } ?></i>
                         </button>
                     </div>
+                        <?php } ?>
               <div class="mdl-layout-spacer"></div>
-                    <a class="waves-effect waves-light btn red" href="?install=">INSTALL</a>
+                  <?php 
+
+                    if ( !in_array( $xD[ 'slug' ], $installed )) { ?>
+                      <a class="waves-effect waves-light btn red" href="?install=">INSTALL</a>
+                    <?php } ?>
                     <a id="<?php echo $xD[ 'slug' ] ; ?>web" href="<?php echo $xD[ 'website' ] ; ?>" class="mdl-button mdl-button--icon"><i class="material-icons">public</i></a>
                     <div class="mdl-tooltip" for="<?php echo $xD[ 'slug' ] ; ?>web"><?php echo $xD[ 'name' ] ; ?> Website</div>
                     <a id="<?php echo $xD[ 'slug' ] ; ?>help" href="<?php echo $xD[ 'support' ] ; ?>" class="mdl-button mdl-button--icon"><i class="material-icons">help</i></a>

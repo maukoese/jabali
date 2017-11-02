@@ -108,14 +108,14 @@ class Menus {
 	**/
 	function drawerdef( $code ) {
 		$getMenu = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."menus WHERE ilk = 'drop' AND author = 'jabali' AND location = 'drawer' AND state = 'visible' AND code = '".$code."'" );
-		if ( $getMenu -> num_rows > 0 ) {
-			while ( $menus = mysqli_fetch_assoc( $getMenu) ) {
+		if ( $GLOBALS['JBLDB'] -> numRows( $getMenu ) > 0 ) {
+			while ( $menus = $GLOBALS['JBLDB'] -> fetchArray( $getMenu) ) {
 				echo '<a class="mdl-navigation__link" id= "'.$menus['code'].'" href="'.$menus["link"].'"><i class="mdl-color-text--white material-icons" role="presentation">'.$menus["avatar"].'</i>'.$menus["name"].'</a>';
 				if ( $menus['ilk'] == "drop" ) {
 					$subMenu = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."menus WHERE ilk != 'drop' AND location = 'drawer' AND state = 'visible' AND parent = '".$menus['code']."'" );
-					if ( $subMenu -> num_rows > 0 ) { ?>
+					if ( $GLOBALS['JBLDB'] -> numRows( $subMenu ) > 0 ) { ?>
 						<ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-left mdl-color--<?php primaryColor(); ?>" for="<?php echo( $menus['code'] ); ?>"><?php
-						while ( $menusub = mysqli_fetch_assoc( $subMenu) ) {
+						while ( $menusub = $GLOBALS['JBLDB'] -> fetchArray( $subMenu) ) {
 							echo '<a class="mdl-navigation__link" href="'.$menusub["link"].'"><i class="mdl-color-text--white material-icons" role="presentation">'.$menusub["avatar"].'</i>'.$menusub["name"].'</a>';
 						}
                               $this -> drawerTypes( $code );
@@ -131,14 +131,14 @@ class Menus {
 	**/
 	function drawer() {
 		$getMenu = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."menus WHERE ilk = 'drop' AND author != 'jabali' AND location = 'drawer' AND state = 'visible'" );
-		if ( $getMenu -> num_rows > 0 ) {
-			while ( $menus = mysqli_fetch_assoc( $getMenu) ) {
+		if ( $GLOBALS['JBLDB'] -> numRows( $getMenu ) > 0 ) {
+			while ( $menus = $GLOBALS['JBLDB'] -> fetchArray( $getMenu) ) {
 				echo '<a class="mdl-navigation__link" code= "'.$menus['code'].'" href="'.$menus["link"].'"><i class="mdl-color-text--white material-icons" role="presentation">'.$menus["avatar"].'</i>'.$menus["name"].'</a>';
 				if ( $menus['ilk'] == "drop" ) {
 					$subMenu = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."menus WHERE ilk != 'drop' AND location = 'drawer' AND state = 'visible' AND parent = '".$menus['code']."'" );
-					if ( $subMenu -> num_rows > 0 ) { ?>
+					if ( $GLOBALS['JBLDB'] -> numRows( $subMenu ) > 0 ) { ?>
 						<ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor(); ?>" for="<?php echo( $menus['code'] ); ?>"><?php
-						while ( $menusub = mysqli_fetch_assoc( $subMenu) ) {
+						while ( $menusub = $GLOBALS['JBLDB'] -> fetchArray( $subMenu) ) {
 							echo '<a class="mdl-navigation__link" href="'.$menusub["link"].'"><i class="mdl-color-text--white material-icons" role="presentation">'.$menusub["avatar"].'</i>'.$menusub["name"].'</a>';
                                    $this -> drawerTypes( $menus['code'] );
 						}
@@ -154,14 +154,14 @@ class Menus {
 	**/
 	function header() {
           $getMenu = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."menus WHERE location = 'header' AND state = 'visible' ORDER BY code DESC" );
-          if ( $getMenu -> num_rows > 0 ) {
-               while ( $menus = mysqli_fetch_assoc( $getMenu) ) {
+          if ( $GLOBALS['JBLDB'] -> numRows( $getMenu ) > 0 ) {
+               while ( $menus = $GLOBALS['JBLDB'] -> fetchArray( $getMenu) ) {
                     echo '<a class="mdl-list__item" code= "'.$menus['code'].'" href="'.$menus["link"].'">'.$menus["name"].'</a>';
                     if ( $menus['ilk'] == "drop" ) {
                          $subMenu = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."menus WHERE ilk != 'drop' AND location = 'drawer' AND state = 'visible' AND for = '".$menus['code']."'" );
-                         if ( $subMenu -> num_rows > 0 ) { ?>
+                         if ( $GLOBALS['JBLDB'] -> numRows( $subMenu ) > 0 ) { ?>
                               <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-left mdl-color--<?php primaryColor(); ?>" for="<?php echo( $menus['code'] ); ?>"><?php
-                              while ( $menusub = mysqli_fetch_assoc( $subMenu) ) {
+                              while ( $menusub = $GLOBALS['JBLDB'] -> fetchArray( $subMenu) ) {
                                    echo '<a class="mdl-navigation__link" href="'.$menusub["link"].'"><i class="mdl-color-text--white material-icons" role="presentation">'.$menusub["avatar"].'</i>'.$menusub["name"].'</a>';
                               }
                               echo "</ul>";
@@ -185,8 +185,8 @@ class Menus {
 
 	function theMenu( $code ) {
      $getMenu = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."menus WHERE code ='".$code."'");
-     if ( $getMenu -> num_rows > 0 ) {
-          while ($menus = mysqli_fetch_assoc( $getMenu )) {
+     if ( $GLOBALS['JBLDB'] -> numRows( $getMenu ) > 0 ) {
+          while ($menus = $GLOBALS['JBLDB'] -> fetchArray( $getMenu )) {
                $menu[] = $menus; 
           } ?>
 
@@ -218,8 +218,8 @@ class Menus {
 
 function subMenu( $code ) {
      $getMenu = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."menus WHERE parent ='".$code."'");
-     if ( $getMenu -> num_rows > 0 ) {
-          while ($menus = mysqli_fetch_assoc( $getMenu )) {
+     if ( $GLOBALS['JBLDB'] -> numRows( $getMenu ) > 0 ) {
+          while ($menus = $GLOBALS['JBLDB'] -> fetchArray( $getMenu )) {
                $menu[] = $menus; 
           }
 
@@ -258,8 +258,8 @@ function subMenu( $code ) {
 
 function uMenu( ) {
      $getMenu = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."menus WHERE author !='jabali' AND location= 'drawer'");
-     if ( $getMenu -> num_rows > 0 ) {
-          while ($menus = mysqli_fetch_assoc( $getMenu )) {
+     if ( $GLOBALS['JBLDB'] -> numRows( $getMenu ) > 0 ) {
+          while ($menus = $GLOBALS['JBLDB'] -> fetchArray( $getMenu )) {
                $menu[] = $menus; 
           }
 
@@ -300,8 +300,8 @@ function uMenu( ) {
 
 function headMenu( ) {
      $getMenu = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."menus WHERE author !='jabali' AND location= 'header'");
-     if ( $getMenu -> num_rows > 0 ) {
-          while ($menus = mysqli_fetch_assoc( $getMenu )) {
+     if ( $GLOBALS['JBLDB'] -> numRows( $getMenu ) > 0 ) {
+          while ($menus = $GLOBALS['JBLDB'] -> fetchArray( $getMenu )) {
                $menu[] = $menus; 
           }
 

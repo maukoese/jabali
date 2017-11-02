@@ -163,9 +163,18 @@ class MySQLDB
 		return $sql;
 	}
 
-	function setLike( $data )
+	function setLike( $conds )
 	{
-		$sql = "LIKE '%" . $data . "%'";
+
+		$where = array();
+
+		foreach ( $conds as $id => $val ) {
+	        $where[] = $id . " LIKE '%" . $val . "%'";
+	    }
+
+	    if ( count( $where ) > 0){
+	      $sql = " WHERE " . implode( ' AND ', $where );
+	    }
 
 		return $sql;
 	}
@@ -224,6 +233,36 @@ class MySQLDB
 
 		if ( $conds !== null ) {
 			$sql .= $this -> setCond( $conds );
+		}
+
+		if ( $order !== null ) {
+			$sql .= "ORDER BY ";
+			if ( is_array( $order ) ) {
+				$sql .= $order[0] ." ". $order[1];
+			} else {
+				$sql .= $order . " ASC";
+			}
+		}
+
+		if ( $offset !== null ) {
+			$sql .= "OFFSET " . $offset;
+		}
+
+		if ( $limit !== null ) {
+			$sql .= "LIMIT " . $limit;
+		}
+
+		return $this -> query( $sql );
+	}
+
+	function selectLike( $table, $cols, $like = null, $order = null, $limit = null, $offset = null )
+	{
+		$sql = "SELECT ";
+		$sql .= $this -> setCols( $cols );
+		$sql .= " FROM ". _DBPREFIX . $table . " ";
+
+		if ( $like !== null ) {
+			$sql .= $this -> setLike( $like );
 		}
 
 		if ( $order !== null ) {

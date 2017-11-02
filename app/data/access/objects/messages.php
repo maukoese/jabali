@@ -1,7 +1,11 @@
 <?php
 /**
-* Jabali Messages Data Access Object
-**/ 
+* @package Jabali
+* @subpackage Options Data Access Object
+* @author Mauko Maunde
+* @link https://docs.jabalicms.org/data/access/obects/options
+* @since 0.17.09
+**/
 
 namespace Jabali\Data\Access\Objects;
 

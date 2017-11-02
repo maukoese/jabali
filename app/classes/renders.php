@@ -167,6 +167,7 @@ class Renders
 				$posty = $GLOBALS['POSTS'] -> getPost( $slug );
 			}
 			$GLOBALS['gpost'] = $posty;
+			//resetLoop( 'getSingle', $slug );
 			$post = (object)$posty;
 
 			if ( !isset( $posty['error'] ) ) {
@@ -176,7 +177,7 @@ class Renders
 					require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/post.php' );
 				}
 			} else {
-				require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' );
+				error404();
 			}
 		}
 	}
@@ -206,13 +207,8 @@ class Renders
 
 	function category( $category ) { ?>
 		<title>Category : <?php echo( ucwords( $category ) ); ?> - <?php showOption( 'name' ); ?></title><?php
-		$posts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE state = 'published' AND ilk = 'article' AND categories LIKE '%".$category."%' ORDER BY created DESC" );
-		if ( $posts && count( $posts ) > 0) {
-			//$GLOBALS['gposts'] = (array)$posts;
-			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
-		} else {
-			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' );
-		}
+		resetLoop( 'getCategories', $category );
+		require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
 	}
 
 	function portfolio( $elements ) {
@@ -261,12 +257,8 @@ class Renders
 
 	function tag( $tag ) { ?>
 		<title>Tag : <?php echo( ucwords( $tag ) ); ?> - <?php showOption( 'name' ); ?></title><?php
-		$posts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE ( state = 'published' AND ilk = 'article' AND tags LIKE '%".$tag."%' ) ORDER BY created DESC" );
-		if ( count( $posts ) > 0) {
-			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
-		} else {
-			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' );
-		}
+		resetLoop( 'getTags', $tag );
+		require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
 	}
 
 	function users( $profile ) {

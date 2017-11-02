@@ -70,6 +70,11 @@ require_once('app/lib/guzzle/vendor/autoload.php');
 require_once('app/lib/phpmailer/vendor/autoload.php');
 
 /**
+* Load common Jabali functions
+**/
+require_once ( 'app/functions.php' );
+
+/**
 * Load correct database, according to type selected in cofiguration file.
 **/
 switch ( $server["dbtype"] ) {
@@ -90,15 +95,11 @@ switch ( $server["dbtype"] ) {
 		break;
 }
 
+installSQLDB();
 /**
 * Flush $server variable so configuration details are not available beyond this point
 **/
 unset( $server );
-
-/**
-* Load common Jabali functions
-**/
-require_once ( 'app/functions.php' );
 
 /**
 * Set default timezone.
@@ -115,24 +116,12 @@ if ( isOption ( 'timezone' ) ) {
 
 $GLOBALS['USERS'] = new Jabali\Data\Access\Objects\Users;
 $GLOBALS['POSTS'] = new Jabali\Data\Access\Objects\Posts;
-//$GLOBALS['RESOURCES'] = new Jabali\Data\Access\Objects\Users;
-//$GLOBALS['COMMENTS'] = new Jabali\Data\Access\Objects\Users;
-//$GLOBALS['MESSAGES'] = new Jabali\Data\Access\Objects\Users;
-//$GLOBALS['OPTIONS'] = new Jabali\Data\Access\Objects\Users;
+//$GLOBALS['RESOURCES'] = new Jabali\Data\Access\Objects\Resources;
+//$GLOBALS['COMMENTS'] = new Jabali\Data\Access\Objects\Comments;
+//$GLOBALS['MESSAGES'] = new Jabali\Data\Access\Objects\Messages;
+$GLOBALS['OPTIONS'] = new Jabali\Data\Access\Objects\Options;
 $GLOBALS['GUZZLE'] = new \GuzzleHttp\Client;
 $GLOBALS['MAILER'] = new \PHPMailer\PHPMailer\PHPMailer;
-
-// $res = $GLOBALS['GUZZLE']->request('GET', 'https://api.github.com/user', [ 'auth' => ['maukoese', 'MyZahra5fad35'] ]);
-// echo $res->getStatusCode();
-// echo $res->getHeader('content-type');
-// echo $res->getBody();
-//
-// // Send an asynchronous request.
-// $request = new \GuzzleHttp\Psr7\Request('GET', 'http://httpbin.org');
-// $promise = $GLOBALS['GUZZLE']->sendAsync($request)->then(function ($response) {
-//     echo 'I completed! ' . $response->getBody();
-// });
-// $promise -> wait();
 
 $GLOBALS['gposts'] = $GLOBALS['POSTS'] -> sweep();
 $GLOBALS['gpost'] = null;

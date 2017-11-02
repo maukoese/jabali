@@ -7,8 +7,8 @@ class Posts {
   function getPostsType( $type ) { ?>
     <title>All <?php echo( ucwords( $type) ); ?>s - <?php showOption( 'name' ); ?></title>
       <div class="mdl-cell mdl-cell--12-col"><?php
-            $getPosts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE ilk = '" . $type . "'" );
-            if ( $getPosts -> num_rows > 0) { ?>
+            $posts = $GLOBALS['POSTS'] -> getTypes( $type );
+            if ( !isset( $posts['error'] ) ) { ?>
                       <table class="table pmd-table pmd-table-card mdl-color--<?php primaryColor(); ?> mdl-color-text--white">
                       <thead>
                         <tr>
@@ -23,7 +23,8 @@ class Posts {
                         </tr>
                       </thead>
                       <tbody><?php
-                        while ( $post = mysqli_fetch_object( $getPosts)){ ?>
+                        foreach( $posts as $post ){
+                        $post = (object)$post; ?>
                           <tr>
                           <td class="mdl-data-table__cell--non-numeric" data-title="Post"><?php echo( $post -> name ); ?></td>
                           <td class="mdl-data-table__cell--non-numeric" data-title="Author"><?php echo( $post -> author_name ); ?></td>
@@ -33,9 +34,7 @@ class Posts {
                             <?php } ?>
                           <td class="mdl-data-table__cell--non-numeric" data-title="Created"><?php echo( $post -> created ); ?></td>
                           <td class="mdl-data-table__cell--non-numeric" data-title="Actions">
-                          <a href="./posts?view=<?php echo( $post -> id ); ?>&key=<?php echo( $post -> name ); ?>" ><i class="material-icons">open_in_new</i></a>
-                          <a href="tel:<?php echo( $post -> phone ); ?>" ><i class="material-icons">phone</i></a>
-                          <a href="?posts?view=<?php echo( $_SESSION[JBLSALT.'Code'] ); ?>&action=chat&by=<?php echo( $post -> id ); ?>" ><i class="material-icons">message</i></a><?php if ( isCap( 'admin' ) || isAuthor( $post -> author ) ) { ?>
+                          <a href="./posts?view=<?php echo( $post -> id ); ?>&key=<?php echo( $post -> name ); ?>" ><i class="material-icons">open_in_new</i></a><?php if ( isCap( 'admin' ) || isAuthor( $post -> author ) ) { ?>
                           <a href="./posts?edit=<?php echo( $post -> id ); ?>&key=<?php echo( ucwords( $post -> name ) ); ?>" ><i class="material-icons">edit</i></a>
                           <a href="./posts?delete=<?php echo( $post -> id ); ?>" ><i class="material-icons">delete</i></a><?php } ?>
                           </td>
@@ -72,8 +71,8 @@ class Posts {
         <section class="row component-section">
         <div class="col-md-12">
           <div class="component-box"><?php
-            $getPosts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE ilk = 'article'" );
-            if ( $getPosts -> num_rows > 0) { ?>
+            $posts = $GLOBALS['POSTS'] -> sweep();
+            if ( !isset( $posts['error'] )) { ?>
                   <div class="pmd-card pmd-z-depth pmd-card-custom-view">
                     <div class="pmd-table-card">
                       <table class="table pmd-table mdl-color--<?php primaryColor(); ?> mdl-color-text--white">
@@ -88,7 +87,8 @@ class Posts {
                         </tr>
                       </thead>
                       <tbody><?php
-                        while ( $post = mysqli_fetch_object( $getPosts)){ ?>
+                        foreach( $posts as $post ){
+                        $post = (object)$post; ?>
                           <tr>
                           <td class="mdl-data-table__cell--non-numeric" data-title="Post"><?php echo( $post -> name ); ?></td>
                           <td class="mdl-data-table__cell--non-numeric" data-title="Author"><?php echo( $post -> author_name ); ?></td>
@@ -138,8 +138,8 @@ class Posts {
         <section class="row component-section">
         <div class="col-md-12">
           <div class="component-box"><?php
-            $getPosts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE ilk = 'draft'" );
-            if ( $getPosts -> num_rows > 0) { ?>
+            $posts = $GLOBALS['POSTS'] -> getStatus( 'draft' );
+            if ( !isset( $posts['error'] )) { ?>
                   <div class="pmd-card pmd-z-depth pmd-card-custom-view">
                     <div class="pmd-table-card">
                       <table class="table pmd-table mdl-color--<?php primaryColor(); ?> mdl-color-text--white">
@@ -154,7 +154,8 @@ class Posts {
                         </tr>
                       </thead>
                       <tbody><?php
-                        while ( $post = mysqli_fetch_object( $getPosts)){ ?>
+                        foreach( $posts as $post ){
+                        $post = (object)$post; ?>
                           <tr>
                           <td class="mdl-data-table__cell--non-numeric" data-title="Post"><?php echo( $post -> name ); ?></td>
                           <td class="mdl-data-table__cell--non-numeric" data-title="Author"><?php echo( $post -> author_name ); ?></td>
@@ -198,9 +199,10 @@ class Posts {
   }
 
   function dashDrafts() {
-    $getDrafts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE (ilk = 'article' AND state = 'draft' ) ORDER BY created ASC LIMIT 4" );
-    if ( $getDrafts -> num_rows > 0) {
-      while ( $draft = mysqli_fetch_assoc( $getDrafts)){ ?>
+    $drafts = $GLOBALS['JBLDB'] -> getStatus( 'draft' );
+    if ( !isset( $drafts['error'] )) {
+        foreach( $drafts as $draft ){
+        $draft = (object)$draft; ?>
         <a href="./posts?edit=<?php echo( $draft['id'] ); ?>&key=<?php echo( $draft['name'] ); ?>"><b><?php echo( $draft['name'] ); ?></b></a>
         <a href="./?ddelete=<?php echo( $draft['id'] ); ?>"><i class="mdi mdi-delete alignright"></i></a>
       <br><?php
@@ -209,9 +211,9 @@ class Posts {
   }
 
   function getPost( $code) {
-    $getPostCode = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE id = '".$code."'" );
-    if ( $getPostCode -> num_rows > 0 ) {
-      while( $post = mysqli_fetch_object( $getPostCode ) ){ ?>
+    $post = $GLOBALS['POSTS'] -> getId( $code );
+    if ( !isset( $post['error'] ) ) {
+      $post = (object)$post; ?>
         <title><?php echo( ucwords( $post -> name ) ); ?> - <?php showOption( 'name' ); ?></title>
         <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
           <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
@@ -247,7 +249,7 @@ class Posts {
         <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
           <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><?php
             $getNotes = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."comments LIMIT 5" );
-              if ( $getNotes && $getNotes -> num_rows > 0) { ?>
+              if ( $getNotes && $GLOBALS['JBLDB'] -> numRows( $getNotes ) > 0) { ?>
                 <div class="mdl-card__title">
                   <i class="material-icons">comment</i>
                   <span class="mdl-button">Comments</span>
@@ -255,7 +257,7 @@ class Posts {
                 </div>
                 <div class="mdl-card__supporting-text mdl-card--expand">
                   <ul class="collapsible popout" data-collapsible="accordion"><?php
-                  while ( $note = mysqli_fetch_assoc( $getNotes) ) { ?>
+                  while ( $note = $GLOBALS['JBLDB'] -> fetchArray( $getNotes) ) { ?>
                   <li>
                   <div class="collapsible-header"><i class="material-icons">label_outline</i>
 
@@ -301,7 +303,6 @@ class Posts {
             </div>
           </div>
         </div><?php
-      }
     } else {
       echo( 'No Post Found' );
     }

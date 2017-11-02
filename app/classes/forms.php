@@ -31,8 +31,8 @@ class Forms {
                     <input class="mdl-textfield__input" type="text" id="for" name="for" readonly tabIndex="-1" placeholder="Select Receipient">
                     <ul for="for" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;"><?php
                         $centers = $GLOBALS['JBLDB'] -> query( "SELECT name, avatar, id FROM ". _DBPREFIX ."users ORDER BY name" );
-                        if ( $centers -> num_rows > 0 );
-                        while ( $center = mysqli_fetch_assoc( $centers ) ) {
+                        if ( $GLOBALS['JBLDB'] -> numRows( $centers ) > 0 );
+                        while ( $center = $GLOBALS['JBLDB'] -> fetchArray( $centers ) ) {
                           echo( '<li class="mdl-menu__item" data-val="'.$center['id'].'">'.$center['name'].'<span style=""><img class="alignright" style="padding-right:20px;margin:auto;" src="'.$center['avatar'].'" height="18px;"></span></li>' );
                         } ?>
                     </ul>
@@ -44,8 +44,8 @@ class Forms {
                   <input class="mdl-textfield__input" type="text" id="forc" name="forc" readonly tabIndex="-1" placeholder="Cc/Bcc">
                   <ul for="forc" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;"><?php
                       $centers = $GLOBALS['JBLDB'] -> query( "SELECT name, avatar, id FROM ". _DBPREFIX ."users ORDER BY name" );
-                      if ( $centers -> num_rows > 0 );
-                      while ( $center = mysqli_fetch_assoc( $centers ) ) {
+                      if ( $GLOBALS['JBLDB'] -> numRows( $centers ) > 0 );
+                      while ( $center = $GLOBALS['JBLDB'] -> fetchArray( $centers ) ) {
                         echo( '<li class="mdl-menu__item" data-val="'.$center['id'].'">'.$center['name'].'<span style=""><img class="alignright" style="padding-right:20px;margin:auto;" src="'.$center['avatar'].'" height="18px;"></span></li>' );
                       } ?>
                   </ul>
@@ -298,8 +298,8 @@ class Forms {
 
   function editPostForm( $code ) {
     $getPostCode = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE id = '".$code."'" );
-    if ( $getPostCode -> num_rows > 0 ) {
-      while ( $post = mysqli_fetch_object( $getPostCode ) ){
+    if ( $GLOBALS['JBLDB'] -> numRows( $getPostCode ) > 0 ) {
+      while ( $post = $GLOBALS['JBLDB'] -> fetchObject( $getPostCode ) ){
         $names = explode( " ", $post -> name ); ?>
         <title>Edit <?php echo( $post -> name ); ?> - <?php showOption( 'name' ); ?></title>
       <form enctype="multipart/form-data" name="postForm" method="POST" action="" style="width:100%;" class="mdl-grid">
@@ -535,8 +535,8 @@ class Forms {
                 <ul for="centers" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
                 <?php
                 $centers = $GLOBALS['JBLDB'] -> query( "SELECT name, id FROM ". _DBPREFIX ."users WHERe ilk = 'center' ORDER BY name" );
-                if ( $centers -> num_rows > 0 ) {
-                while ( $center = mysqli_fetch_assoc( $centers ) ) {
+                if ( $GLOBALS['JBLDB'] -> numRows( $centers ) > 0 ) {
+                while ( $center = $GLOBALS['JBLDB'] -> fetchArray( $centers ) ) {
                 echo '<li class="mdl-menu__item" data-val="'.$center['id'].'">'.$center['name'].'</li>';
                 }
                 }
@@ -607,8 +607,8 @@ class Forms {
 
   function editUserForm( $code ) {
     $getUserCode = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."users WHERE id = '".$code."'" );
-    if ( $getUserCode -> num_rows > 0 ) {
-      while ( $userDetails = mysqli_fetch_assoc( $getUserCode ) ){
+    if ( $GLOBALS['JBLDB'] -> numRows( $getUserCode ) > 0 ) {
+      while ( $userDetails = $GLOBALS['JBLDB'] -> fetchArray( $getUserCode ) ){
         $names = explode( " ", $userDetails['name'] );
 
         ?><title>Editing <?php echo( $userDetails['name'] ); ?> - <?php showOption( 'name' ); ?></title>
@@ -730,24 +730,6 @@ class Forms {
                          }
                        </script>
 
-
-
-                      <?php if ( $userDetails['ilk'] !== "organization"  ) { ?>
-                      <div class="input-field mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
-                        <i class="material-icons prefix">business</i>
-                      <input class="mdl-textfield__input" type="text" id="centers" name="company" readonly tabIndex="-1" placeholder="Change Center">
-                      <ul for="centers" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
-                          <?php
-                          $centers = $GLOBALS['JBLDB'] -> query( "SELECT name, id FROM ". _DBPREFIX ."users WHERe ilk = 'center' ORDER BY name" );
-                          if ( $centers -> num_rows > 0 ) {
-                            while ( $center = mysqli_fetch_assoc( $centers ) ) {
-                                echo '<li class="mdl-menu__item" data-val="'.$center['id'].'">'.$center['name'].'</li>';
-                            }
-                          }
-                          echo '<center>Your Organization Not Listed? <br><a href="./users?create=organization">Register it Now</a></center>'; ?>
-                      </ul>
-                      </div><?php } ?>
-
                       <div class="input-field">
                       <i class="material-icons prefix">lock</i>
                       <input id="password" name=="password" type="password" value="">
@@ -762,6 +744,7 @@ class Forms {
                       </div>
                       <?php csrf(); ?>
                       <input type="hidden" name="id" value="<?php echo( $code ); ?>" >
+                      <input type="hidden" name="style" value="<?php echo( $userDetails['style'] ); ?>" >
                       <input type="hidden" name="username" value="<?php echo( $userDetails['username'] ); ?>" >
                       <input type="hidden" name="categories" value="<?php echo( $userDetails['categories'] ); ?>" >
                       <input type="hidden" name="h_pass" value="<?php echo( $userDetails['password'] ); ?>" >
@@ -823,8 +806,8 @@ class Forms {
               <ul for="centers" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
                   <?php
                   $centers = $GLOBALS['JBLDB'] -> query( "SELECT name, id FROM ". _DBPREFIX ."users WHERe ilk = 'center' ORDER BY name" );
-                  if ( $centers -> num_rows > 0 );
-                  while ( $center = mysqli_fetch_assoc( $centers ) ) {
+                  if ( $GLOBALS['JBLDB'] -> numRows( $centers ) > 0 );
+                  while ( $center = $GLOBALS['JBLDB'] -> fetchArray( $centers ) ) {
                       echo '<li class="mdl-menu__item" data-val="'.$center['id'].'">'.$center['name'].'</li>';
                   }
                    ?>
@@ -849,8 +832,8 @@ class Forms {
               <ul for="doctors" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
                   <?php
                   $centers = $GLOBALS['JBLDB'] -> query( "SELECT name, id FROM ". _DBPREFIX ."users WHERe ilk = 'doctor' ORDER BY name" );
-                  if ( $centers -> num_rows > 0 );
-                  while ( $center = mysqli_fetch_assoc( $centers ) ) {
+                  if ( $GLOBALS['JBLDB'] -> numRows( $centers ) > 0 );
+                  while ( $center = $GLOBALS['JBLDB'] -> fetchArray( $centers ) ) {
                       echo '<li class="mdl-menu__item" data-val="'.$center['id'].'">'.$center['name'].'</li>';
                   }
                    ?>
@@ -913,7 +896,7 @@ class Forms {
   function editResourceForm( $code ) {
     $getResourceCode = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."resources WHERE id = '".$code."'" );
     if ( $getResourceCode -> num_rows > 0 ) {
-      while ( $resourceDetails = mysqli_fetch_assoc( $getResourceCode ) ){
+      while ( $resourceDetails = $GLOBALS['JBLDB'] -> fetchArray( $getResourceCode ) ){
         $names = explode( " ", $resourceDetails['name'] );
 
         ?><title>Editing <?php echo( $resourceDetails['name']." [ ".showOption( 'name' )." ]</title>" ); ?>

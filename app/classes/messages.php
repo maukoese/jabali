@@ -21,7 +21,7 @@ class Messages {
   function getType( $type ) { ?>
   <title><?php echo( ucfirst( $type) ); ?>'s  List - <?php getMsgCount(); ?> Unread - <?php showOption( 'name' ); ?></title><?php 
     $getMessagesBy = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."messages WHERE (ilk = '".$type."' AND for = '".$_SESSION[JBLSALT.'Code']."' ) " );
-    if ( $getMessagesBy -> num_rows > 0) { ?>
+    if ( $GLOBALS['JBLDB'] -> numRows( $getMessagesBy ) > 0) { ?>
       <div class="mdl-cell mdl-cell--12-col">
       <table class="table pmd-table mdl-color--<?php primaryColor(); ?> mdl-color-text--white"><thead>
         <tr>
@@ -32,7 +32,7 @@ class Messages {
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
         </thead><?php 
-      while ( $messagesDetails = mysqli_fetch_assoc( $getMessagesBy)){ ?>
+      while ( $messagesDetails = $GLOBALS['JBLDB'] -> fetchArray( $getMessagesBy)){ ?>
         <tbody>
         <tr>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
@@ -84,7 +84,7 @@ class Messages {
   function getMessages() { ?>
     <title>All Messages - <?php getMsgCount(); ?> Unread - <?php showOption( 'name' ); ?></title><?php 
     $getMessages = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."messages WHERE for = '".$_SESSION[JBLSALT.'Code']."' ORDER BY created DESC" );
-    if ( $getMessages -> num_rows > 0) { ?>
+    if ( $GLOBALS['JBLDB'] -> numRows( $getMessages ) > 0) { ?>
       <div style="margin:1%;" >
       <table class="table pmd-table mdl-color--<?php primaryColor(); ?> mdl-color-text--white"><thead>
         <tr>
@@ -95,7 +95,7 @@ class Messages {
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
         </thead><?php 
-      while ( $messagesDetails = mysqli_fetch_assoc( $getMessages)){ ?>
+      while ( $messagesDetails = $GLOBALS['JBLDB'] -> fetchArray( $getMessages)){ ?>
         <tbody>
         <tr>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
@@ -147,7 +147,7 @@ class Messages {
   function getSentMessages() { ?>
     <title>Sent Messages - <?php showOption( 'name' ); ?></title><?php 
     $getMessages = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."messages WHERE author = '".$_SESSION[JBLSALT.'Code']."' ORDER BY created DESC" );
-    if ( $getMessages -> num_rows > 0) { ?>
+    if ( $GLOBALS['JBLDB'] -> numRows( $getMessages ) > 0) { ?>
       <div style="margin:1%;" >
       <table class="table pmd-table mdl-color--<?php primaryColor(); ?> mdl-color-text--white"><thead>
         <tr>
@@ -157,7 +157,7 @@ class Messages {
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
         </thead><?php 
-      while ( $messagesDetails = mysqli_fetch_assoc( $getMessages)){ ?>
+      while ( $messagesDetails = $GLOBALS['JBLDB'] -> fetchArray( $getMessages)){ ?>
         <tbody>
         <tr>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
@@ -204,7 +204,7 @@ class Messages {
   function getUnreadMessages() { ?>
     <title>Unread Messages - <?php getMsgCount(); ?> - <?php showOption( 'name' ); ?></title><?php 
     $getMessages = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."messages WHERE (state = 'unread' AND for = '".$_SESSION[JBLSALT.'Code']."' ) ORDER BY created DESC" );
-    if ( $getMessages -> num_rows > 0) { ?>
+    if ( $GLOBALS['JBLDB'] -> numRows( $getMessages ) > 0) { ?>
       <div class="mdl-cell mdl-cell--12-col">
       <table class="table pmd-table mdl-color--<?php primaryColor(); ?> mdl-color-text--white"><thead>
         <tr>
@@ -214,7 +214,7 @@ class Messages {
         <th class="mdl-data-table__cell--non-numeric">Date</th>
         </tr>
         </thead><?php 
-      while ( $messagesDetails = mysqli_fetch_assoc( $getMessages)){ ?>
+      while ( $messagesDetails = $GLOBALS['JBLDB'] -> fetchArray( $getMessages)){ ?>
         <tbody>
         <tr>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
@@ -259,8 +259,8 @@ class Messages {
   function getMessageCode( $code) {
     $getMessageCode = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."messages WHERE id = '".$code."'" );
     $GLOBALS['JBLDB'] -> query( "UPDATE hmessages SET state = 'read' WHERE id = '".$code."'" );
-    if ( $getMessageCode -> num_rows > 0) {
-      while ( $messageDetails = mysqli_fetch_assoc( $getMessageCode)){ ?>
+    if ( $GLOBALS['JBLDB'] -> numRows( $getMessageCode ) > 0) {
+      while ( $messageDetails = $GLOBALS['JBLDB'] -> fetchArray( $getMessageCode)){ ?>
       <title><?php echo( $messageDetails['name'] ); ?> - <?php showOption( 'name' ); ?></title>
         <div class="mdl-grid" >
               <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
@@ -317,7 +317,7 @@ class Messages {
   function getComments() { ?>
     <title>All Comments - <?php getMsgCount(); ?> Unread - <?php showOption( 'name' ); ?></title><?php 
     $getMessages = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."messages WHERE ilk = 'comment' ORDER BY created DESC" );
-    if ( $getMessages -> num_rows > 0) { ?>
+    if ( $GLOBALS['JBLDB'] -> numRows( $getMessages ) > 0) { ?>
       <div style="margin:1%;" >
       <table class="table pmd-table mdl-color--<?php primaryColor(); ?> mdl-color-text--white"><thead>
         <tr>
@@ -328,7 +328,7 @@ class Messages {
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
         </thead><?php 
-      while ( $messagesDetails = mysqli_fetch_assoc( $getMessages)){ ?>
+      while ( $messagesDetails = $GLOBALS['JBLDB'] -> fetchArray( $getMessages)){ ?>
         <tbody>
         <tr>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
@@ -380,7 +380,7 @@ class Messages {
   function getCommentsFor( $for) { ?>
     <title>Comments on - <?php getMsgCount(); ?> Unread - <?php showOption( 'name' ); ?></title><?php 
     $getMessages = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."messages WHERE for = '".$for."' ORDER BY created DESC" );
-    if ( $getMessages -> num_rows > 0) { ?>
+    if ( $GLOBALS['JBLDB'] -> numRows( $getMessages ) > 0) { ?>
       <div style="margin:1%;" >
       <table class="table pmd-table mdl-color--<?php primaryColor(); ?> mdl-color-text--white"><thead>
         <tr>
@@ -391,7 +391,7 @@ class Messages {
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
         </thead><?php 
-      while ( $messagesDetails = mysqli_fetch_assoc( $getMessages)){ ?>
+      while ( $messagesDetails = $GLOBALS['JBLDB'] -> fetchArray( $getMessages)){ ?>
         <tbody>
         <tr>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
@@ -443,8 +443,8 @@ class Messages {
   function getComment( $code) {
     $getMessageCode = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."messages WHERE id = '".$code."'" );
     $GLOBALS['JBLDB'] -> query( "UPDATE hmessages SET state = 'read' WHERE id = '".$code."'" );
-    if ( $getMessageCode -> num_rows > 0) {
-      while ( $messageDetails = mysqli_fetch_assoc( $getMessageCode)){ ?>
+    if ( $GLOBALS['JBLDB'] -> numRows( $getMessageCode ) > 0) {
+      while ( $messageDetails = $GLOBALS['JBLDB'] -> fetchArray( $getMessageCode)){ ?>
       <title><?php echo( $messageDetails['name'] ); ?> - <?php showOption( 'name' ); ?></title>
         <div class="mdl-grid" >
               <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
@@ -500,8 +500,8 @@ class Messages {
 
   function getChatCode( $code) {
     $getMessageCode = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."messages WHERE author = '".$code."'" );
-    if ( $getMessageCode -> num_rows > 0) {
-      while ( $messageDetail = mysqli_fetch_assoc( $getMessageCode)){
+    if ( $GLOBALS['JBLDB'] -> numRows( $getMessageCode ) > 0) {
+      while ( $messageDetail = $GLOBALS['JBLDB'] -> fetchArray( $getMessageCode)){
         $messageDetails[] = $messageDetail;
       }
     } else {
@@ -555,7 +555,7 @@ class Messages {
                     </div>
                     <div class="mdl-card__supporting-text">
                       <ul class="collapsible popout" data-collapsible="accordion"><?php 
-                          while ( $note = mysqli_fetch_assoc( $getNotes) ) { ?>
+                          while ( $note = $GLOBALS['JBLDB'] -> fetchArray( $getNotes) ) { ?>
                           <li>
                             <div class="collapsible-header"><i class="material-icons">label_outline</i>
                               

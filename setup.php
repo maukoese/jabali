@@ -106,37 +106,27 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 
 	function conFigure( $dbhost, $dbname, $dbuser, $dbpass, $home, $dbprefix, $dbtype, $dbport, $dbip ) {
 		$dbfile = fopen( "app/config.php", "w" ) or die( "Unable to create configuration file!" );
-		$txt = "<?php ";
-		fwrite( $dbfile, $txt );
-		$txt = "\n";
-		fwrite( $dbfile, $txt );
-		$text = '/**';
-		fwrite( $dbfile, $text );
-		$txt = "\n";
-		fwrite( $dbfile, $txt );
-		$txt = '* @package Jabali Framework';
-		fwrite( $dbfile, $txt );
-		$txt = "\n";
-		fwrite( $dbfile, $txt );
-		$txt = '* @subpackage Server Configuration File';
-		fwrite( $dbfile, $txt );
-		$txt = "\n";
-		fwrite( $dbfile, $txt );
-		$txt = '* @link https://docs.mauko.co.ke/jabali/configuration';
-		fwrite( $dbfile, $txt );
-		$txt = "\n";
-		fwrite( $dbfile, $txt );
-		$txt = '* @author Mauko Maunde';
-		fwrite( $dbfile, $txt );
-		$txt = "\n";
-		fwrite( $dbfile, $txt );
-		$txt = '* @since 0.17.04';
-		fwrite( $dbfile, $txt );
-		$txt = "\n";
-		fwrite( $dbfile, $txt );
-		$txt = '**/';
-		fwrite( $dbfile, $txt );
-		$txt = "\n\n";
+		$txt = '<?php 
+	/**
+	* @package Jabali Framework
+	* @subpackage Server Configuration File
+	* @link https://docs.mauko.co.ke/jabali/configuration
+	* @author Mauko Maunde
+	* @since 0.17.04
+	*
+	* @param $server["dbhost"] The name of your host, usually localhost
+	* @param $server["dbuser"] Your server username
+	* @param $server["dbpass"] Your server password
+	* @param $server["dbname"] The name of the database to use
+	* @param $server["dbtype"] The type of database management system. Jabali supports
+	* @param $server["dbport"] Port through which to communicate with server
+	* @param $server["dbip"] IP address of the server
+	* 
+	* @param _ROOT The app\'s home/root url
+	* @param _DBPRFIX A prefix to be added before all database tables. Allows multiple Jabali installations on same database.
+	* @param JBLSALT A unique, app-specific string for authentication.
+	* @param JBLAUTH Used in conjuction with JBLSALT for authentication and Cross-site Request Forgery(CSRF). Also unique and app-specific
+	**/';
 		fwrite( $dbfile, $txt );
 
 		$text = '$server["dbhost"] = "'.$dbhost.'";';

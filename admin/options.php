@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once( '../init.php' );
+$hOpt = $GLOBALS['OPTIONS'];
 
 addSetting( "general", array(), array( $hOpt, "general" ) );
 addSetting( "types", array(), array( $hOpt, "types") );
@@ -30,27 +31,27 @@ if ( isset( $_POST['preferences'] ) ) {
     $date = date('Y-m-d' );
     $uploads = _ABSUP_.date('Y' ).'/'.date('m' ).'/'.date('d' )."/";
 
-    if ( !empty( $_FILES['newheaderlogo'] ) ) {
+    if ( $_FILES['newheaderlogo'] !== "" ) {
         $headerlogo = $uploads . basename( $_FILES['newheaderlogo']['name'] );
         if ( !move_uploaded_file( $_FILES['newheaderlogo']["tmp_name"], $headerlogo ) ) {
             echo "Sorry, there was an error uploading your file.";
         }
     } else {
-        $header_logo = $_POST['headerlogo'];
+        $headerlogo = $_POST['headerlogo'];
     }
 
-    if ( !empty( $_FILES['newhomelogo'] ) ) {
+    if ( $_FILES['newhomelogo'] !== "" ) {
         $homelogo = $uploads . basename( $_FILES['newhomelogo']['name'] );
         if ( !move_uploaded_file( $_FILES['newhomelogo']["tmp_name"], $homelogo ) ) {
             echo "Sorry, there was an error uploading your file.";
         }
 
-        $home_logo = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'.$_FILES['newhomelogo']['name'];
+        $homelogo = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'.$_FILES['newhomelogo']['name'];
     } else {
-        $home_logo = $_POST['homelogo'];
+        $homelogo = $_POST['homelogo'];
     }
 
-    if ( !empty( $_FILES['newfavicon'] ) ) {
+    if ( $_FILES['newfavicon'] !== "" ) {
         $favicon = $uploads . basename( $_FILES['newfavicon']['name'] );
         if ( !move_uploaded_file( $_FILES['newfavicon']["tmp_name"], $headerlogo ) ) {
             echo "Sorry, there was an error uploading your file.";
@@ -60,6 +61,11 @@ if ( isset( $_POST['preferences'] ) ) {
         $favicon = $_POST['favicon'];
     }
 
+    // if ( $GLOBALS['OPTIONS'] -> bulkupdate( $options ) ) {
+    //    _shout_( 'Settings Updated Successfully', 'success');
+    // } else {
+    //     _shout_( 'Sorry, could not update your settings', 'error');
+    // }
 
     $hOpt -> update ( 'name', $_POST['name'], $date );
     $hOpt -> update ( 'description', $_POST['description'], $date );
@@ -70,8 +76,8 @@ if ( isset( $_POST['preferences'] ) ) {
     $hOpt -> update ( 'copyright', $_POST['copyright'], $date );
     $hOpt -> update ( 'attribution', $_POST['attribution'], $date );
     $hOpt -> update ( 'attribution_link', $_POST['attribution_link'], $date );
-    $hOpt -> update ( 'headerlogo', $header_logo, $date );
-    $hOpt -> update ( 'homelogo', $home_logo, $date );
+    $hOpt -> update ( 'headerlogo', $headerlogo, $date );
+    $hOpt -> update ( 'homelogo', $homelogo, $date );
     $hOpt -> update ( 'favicon', $favicon, $date );
     $hOpt -> update ( 'registration', $_POST['registration'], $date );
     $hOpt -> update ( 'timezone', $_POST['timezone'], $date );

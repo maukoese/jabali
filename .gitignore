@@ -1,4 +1,5 @@
 
 .htaccess
 app/config.php
+app/modules/
 admin/sql.php

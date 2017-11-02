@@ -409,9 +409,8 @@ function uploadFile( $file ) {
 function getMsgCount() {
     $getMessages = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."messages WHERE (state = 'unread' AND for = '".$_SESSION[JBLSALT.'Code']."' )" );
     if ( $getMessages ){
-	    if ( $getMessages -> num_rows > 0 ) {
-	      $messagecount = $getMessages -> num_rows;
-	      echo $messagecount;
+	    if ( $GLOBALS['JBLDB'] -> numRows( $getMessages ) > 0 ) {
+	      echo $GLOBALS['JBLDB'] -> numRows( $getMessages );
 	    } else {
 	      echo( '0' );
 	    }
@@ -426,9 +425,8 @@ function getMsgCount() {
 function getNoteCount() {
 	$getMessages = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."comments" );
     if ( $getMessages ){
-		if ( $getMessages -> num_rows > 0 ) {
-		  	$messagecount = $getMessages -> num_rows;
-		  	echo $messagecount;
+	    if ( $GLOBALS['JBLDB'] -> numRows( $getMessages ) > 0 ) {
+	      echo $GLOBALS['JBLDB'] -> numRows( $getMessages );
 		} else {
 		  	echo( '0' );
 		}
@@ -742,29 +740,23 @@ function recordExists( $record ) {
 	}
 }
 
-function error404( $code ) { ?>
-	<title>Error 404</title>
-	<div style="margin:1%;" class="mdl-grid" >
+function error404( $id = "error-404", $code = "404", $message = 'The page you are looking for can\'t be found. Go home by <a href=".">Clicking here.</a>', $class = "error-container" ) { ?>
+	<title>Error 404 - <?php showOption( 'name' ); ?></title>
+	<?php if ( file_exists( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' ) ):
+		require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' );
+	else:
+		$code = <<<HTML
 		<center>
-			<div class="mdl-cell mdl-cell--7-col mdl-card mdl-color--red" >
-				<div class="mdl-card-media">
-					<img src="<?php echo( _IMAGES.'404.jpg'); ?>" width="100%" style="overflow: hidden;" >
-				</div>
-				<div class="mdl-card__title mdl-card--expand">
-					<div class="mdl-card__title-text">
-					<center>Error 404! <?php echo( ucwords( $code ) ); ?> Not Found!</center>
-				</div>
-			  	<div class="mdl-layout-spacer"></div>
-			  	<div class="mdl-card__subtitle-text">
-			    	<i class="material-icons">search</i>
-			 	</div>
-			</div>
-			<div class="mdl-card__menu">
-			<a href="./index.php" class="mdl-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons">home</i></a>
-			</div>
+			<div class="{$class}">
+				<h1>{$code}</h1>
+				<h2>{$message}</h2>
+				<br>
+				<br>
 			</div>
 		</center>
-	</div><?php 
+HTML;
+		echo( $code);
+	endif;
 }
 
 function snuffle() {
@@ -778,7 +770,6 @@ function isActiveX( $ext ) {
 	} else {
 		$exts = "{'zahra':'zahra'}";
 	}
-	$exts = json_decode ( $exts, true );
 	if ( in_array( $ext, $exts ) ) {
 	return true;
   }
@@ -1091,7 +1082,7 @@ function rrmdir( $src ){
 	}
 }
 
-function renderView( $view ){
+function renderView( $view, $data = "" ){
 	require_once( _ABSVIEWS_.$view.'.php' );
 }
 
@@ -1154,7 +1145,7 @@ function restApi( $elements ){
 				echo json_encode( (array) $table -> delete( /*$details['id']*/ $elements[2] ) );
 				break;
 
-			case 'get':
+			case 'view':
 				if ( empty( $elements[2] ) ) {
 					 echo json_encode( $table -> sweep() );
 				} elseif ( is_numeric( $elements[2] ) ) {
@@ -1206,7 +1197,7 @@ function restApi( $elements ){
 				}
 				break;
 			default:
-				# code...
+				echo json_encode( $table -> getId( $elements[1] ) );
 				break;
 		}
 	}
@@ -1221,8 +1212,8 @@ function isLocalhost() {
 
 function isTheme ( $theme) {
     $themes = $GLOBALS['JBLDB'] -> query( "SELECT style FROM ". _DBPREFIX ."users WHERE id = '".$_SESSION[JBLSALT.'Code']."'" );
-    if ( $themes -> num_rows > 0) {
-        while ( $mytheme = mysqli_fetch_assoc( $themes) ) {
+    if ( $GLOBALS['JBLDB'] -> numRows($themes) > 0) {
+        while ( $mytheme = $GLOBALS['JBLDB'] -> fetchArray( $themes) ) {
             if ( $theme == $mytheme['style'] ) {
                 echo 'checked';
             }
@@ -1290,6 +1281,7 @@ function intallTheme( $source ) {
 	$xT = $install -> open( $source );
 	if ( $xT === TRUE ) {
 	  $install -> extractTo( _ABSTHEMES_ );
+	  echo( 'Extracting theme files' );
 	  $install -> close();
 	} else {
 	  _shout_( "Could not install theme!", "error" );
@@ -1380,12 +1372,22 @@ function thePost(){
 	return $GLOBALS['gpost'];
 }
 
+function resetLoop( $callback = "sweep", $args = [] )
+{	if ( !is_array( $args ) ) {
+		$args = array( $args );
+	}
+	$GLOBALS['gposts'] = call_user_func_array( array($GLOBALS['POSTS'], $callback ), $args );
+	$GLOBALS['gpost'] = null;
+	$GLOBALS['gpost_count'] = 0;
+	$GLOBALS['gpost_index'] = 0;
+}
+
 function theTitle(){
 	echo $GLOBALS['gpost']['name'];
 }
 
-function theLink( $text = "read more"){
-	echo ( '<a href="'.$GLOBALS['gpost']['link'].'" >'. $text . '</a>');
+function theLink( $text = "read more", $class = "" ){
+	echo ( '<a href="'.$GLOBALS['gpost']['link'].'" class = "'.$class.'" >'. $text . '</a>');
 }
 
 function theContent(){
@@ -1393,7 +1395,15 @@ function theContent(){
 }
 
 function theExcerpt( $length = "250"){
-	echo substr( $GLOBALS['gpost']['details'], 0, $length );
+	echo substr( $GLOBALS['gpost']['details'], 0, $length ).' ...';
+}
+
+function theId(){
+	echo $GLOBALS['gpost']['id'];
+}
+
+function theSlug(){
+	echo $GLOBALS['gpost']['slug'];
 }
  
 function theCategories( $class = '' ){
@@ -1404,7 +1414,19 @@ function theCategories( $class = '' ){
 		$tagged[] = ' <a class="'.$class.'" href="'._ROOT.'/categories/'.$tag.'">'.ucwords( $tag ).'</a> ';
 	}
 
-	$tags = implode(', ', $tagged );
+	$tags = implode(' ', $tagged );
+	echo $tags;
+}
+
+function postCategories( $class = '' ){
+	$tags = $GLOBALS['gpost']['categories'];
+	$tags = explode(", ", $tags );
+	$tagged = array(); 
+	foreach ($tags as $tag ) {
+		$tagged[] = $tag;
+	}
+
+	$tags = implode(' ', $tagged );
 	echo $tags;
 }
 
@@ -1416,7 +1438,19 @@ function theTags( $class = '' ){
 		$tagged[] = '<a class="'.$class.'" href="'._ROOT.'/tags/'.$tag.'">'.ucwords( $tag ).'</a>';
 	}
 
-	$tags = implode(', ', $tagged );
+	$tags = implode(' ', $tagged );
+	echo $tags;
+}
+
+function postTags( $class = '' ){
+	$tags = $GLOBALS['gpost']['tags'];
+	$tags = explode(", ", $tags );
+	$tagged = array(); 
+	foreach ($tags as $tag ) {
+		$tagged[] = $tag;
+	}
+
+	$tags = implode(' ', $tagged );
 	echo $tags;
 }
 
@@ -1478,11 +1512,6 @@ function headerTitle( $table )
 	//author-key, category, type, status, for-key, id-key, page, settings, options, x
 	return $text;
 }
-
-// $rs = $GLOBALS['POSTS'] -> sweepy();
-// for ( $i=0; $i < $rs -> rowCount(); $i++ ) {
-//   $user = $rs -> getNext( $GLOBALS['POSTS'] );
-// }
 
 function head()
 {
@@ -1657,4 +1686,22 @@ function keyGen( $key )
 		echo( '<br>');
 		echo( sha1( md5( date( 'YYMMDDHHIISS').rand(89, 489900) ) ) );
 	}
+}
+
+function guzzler( string $url, string $method, array $auth,  bool $async = false )
+{
+	if ( $async !== false ) {
+		$request = new \GuzzleHttp\Psr7\Request( $method, $url );
+		$promise = $GLOBALS['GUZZLE']->sendAsync($request)->then(function ($response) {
+		    return $response->getBody();
+		});
+		$promise -> wait();
+	} else {
+		$res = $GLOBALS['GUZZLE']->request($method, $url, [ 'auth' => [$auth[0], $auth[1]] ]);
+		$data = $res->getStatusCode();
+		$data .= $res->getHeader('content-type');
+		$data .= $res->getBody();
+		return $data;
+	}
+	
 }

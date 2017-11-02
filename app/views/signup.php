@@ -1,6 +1,6 @@
 <div style="padding-top:40px;" class="mdl-grid">
-	<div class="mdl-cell mdl-cell--2-col"></div>
-	<div id="login_div" class="mdl-cell mdl-cell--8-col mdl-color--<?php if ( isset( $_SESSION[JBLSALT.'Code'] ) ) { primaryColor(); } else { echo "madge"; } ?>">
+	<div class="mdl-cell mdl-cell--4-col"></div>
+	<div id="login_div" class="mdl-cell mdl-cell--4-col mdl-color--<?php if ( isset( $_SESSION[JBLSALT.'Code'] ) ) { primaryColor(); } else { echo "madge"; } ?>">
 		<center>
 			<?php frontLogo(); ?>
 		</center>
@@ -84,5 +84,5 @@
 		  <br>
 		</form>  
 	</div>
-	<div class="mdl-cell mdl-cell--2-col"></div>
+	<div class="mdl-cell mdl-cell--4-col"></div>
 </div>

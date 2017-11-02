@@ -5,6 +5,7 @@ if ( !file_exists( 'app/config.php' ) ) {
 }
 
 require 'init.php';
+installSQLDB();
 
 if (isset($_POST['register']) ) {
 	$date = date( "YmdHms" );
@@ -113,11 +114,11 @@ if (isset($_POST['register']) ) {
     $hOpt -> install ( 'Attribution', 'attribution', 'Mauko by Design', $created );
 	$hOpt -> install ( 'Attribution Link', 'attribution_link', 'http://mauko.co.ke', $created );
 	$hOpt -> install ( 'Header Logo', 'headerlogo', _IMAGES."logo.png", $created );
-	$hOpt -> install ( 'Home Logo', 'homelogo', _IMAGES."logo2.png", $created );
+	$hOpt -> install ( 'Home Logo', 'homelogo', _IMAGES."logo-w.png", $created );
 	$hOpt -> install ( 'Favicon', 'favicon', _IMAGES."marker.png", $created );
 	$hOpt -> install ( 'Terms Of Service', 'tos', $tos, $created );
 	$hOpt -> install ( 'Site Social', 'social', $social, $created );
-	$hOpt -> install ( 'Allow Registration', 'registration', '', $created );
+	$hOpt -> install ( 'Allow Registration', 'registration', 'checked', $created );
     $hOpt -> install ( 'User Types', 'usertypes', '{}', $created );
     $hOpt -> install ( 'Post Types', 'posttypes', '{}', $created );
     $hOpt -> install ( 'Resource Types', 'resourcetypes', '{}', $created );
@@ -143,7 +144,7 @@ if (isset($_POST['register']) ) {
 	*/
 	//Dashboard Link
 	$hMenu -> install ( 'Dashboard', 'jabali', 'dashboard', 'dashboard'
-        , '', _ADMIN.'index?page= my dashboard', 'drawer', 'visible', 'drop' );
+        , '', _ADMIN.'index?page=dashboard', 'drawer', 'visible', 'drop' );
 
 	//Posts Menu
 	$hMenu -> install ( 'Posts', 'jabali', 'description', 'posts', '', '#', 'drawer', 'visible', 'drop' );
@@ -182,7 +183,7 @@ if (isset($_POST['register']) ) {
     VALUES ('".$name."', '".$author."', '".$avatar."', '".$company."', '".$id."', '".$created."', '".$email."', '".$gender."', '".$authkey."', '".$level."', '".$link."', '".$location."', '".$excerpt."', '".$password."', '".$social."', '".$state."', '".$style."', '".$ilk."', '".$username."')" ) ) {
 
         $GLOBALS['JBLDB'] -> query( "INSERT INTO ". _DBPREFIX ."posts (name, author, author_name, avatar, categories, created, details, gallery, authkey, level, link, excerpt, readings, state, subtitle, slug, tags, template, ilk, updated) 
-    VALUES ('Home', '1', '', '"._IMAGES."404.jpg"."', 'Uncategorized', '".$created."', 'This is a sample page. Edit it or delete it alltogether.', '', '".md5( $created )."', 'public', '', '', '', 'published', 'Home', 'home', '', 'page', 'page', '".$created."')" );
+    VALUES ('Home', '1', '', '"._IMAGES."404.jpg"."', 'uncategorized', '".$created."', 'This is a sample page. Edit it or delete it alltogether.', '', '".md5( $created )."', 'public', '', '', '', 'published', 'Home', 'home', '', 'page', 'page', '".$created."')" );
 
         $GLOBALS['JBLDB'] -> query( "INSERT INTO ". _DBPREFIX ."posts (name, author, author_name, avatar, categories, created, details, gallery, authkey, level, link, excerpt, readings, state, subtitle, slug, tags, template, ilk, updated) 
     VALUES ('Hello World!', '1', '', '"._IMAGES."404.jpg"."', 'Uncategorized', '".$created."', 'This is a sample article. Edit it or delete it alltogether.', '', '".md5( $created )."', 'public', 'hello-world', '', '', 'published', 'Hello', 'hello-world', '', 'post', 'article', '".$created."')" );
@@ -194,8 +195,7 @@ if (isset($_POST['register']) ) {
             _shout_( "Error: " . $GLOBALS['JBLDB'] -> error(), "error");
     }
     
-} else {   
-    installSQLDB(); ?>
+} else { ?>
     <!DOCTYPE html>
     <html>
     <head>
@@ -206,7 +206,7 @@ if (isset($_POST['register']) ) {
     	<script src="app/assets/js/jquery-3.2.1.min.js"></script>
     	<script src="app/assets/js/materialize.min.js"></script>
     	<script src="app/assets/js/material.js"></script>
-    	<title>Admin Setup [ Jabali ]</title>
+    	<title>Admin Setup - Jabali</title>
     </head>
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
     	<body>

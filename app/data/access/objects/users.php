@@ -1,6 +1,10 @@
 <?php
 /**
-* Jabali Users Data Access Object
+* @package Jabali
+* @subpackage Users Data Access Object
+* @author Mauko Maunde
+* @link https://docs.jabalicms.org/data/access/obects/users
+* @since 0.17.09
 **/ 
 
 namespace Jabali\Data\Access\Objects;
@@ -62,6 +66,14 @@ class Users {
     }
   }
 
+  public function getSingle( $code )
+  {
+    if ( is_numeric( $code ) ) {
+      return $this -> getId( $code );
+    } else {
+      return $this -> getUser( $code );
+    }
+  }
 
   public function getId( $id ){
     $conds = array( "id" => $id );
@@ -77,7 +89,7 @@ class Users {
 
       return $users[0];
     } else {
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "error" => "User Not Found" );
     }
   }
 

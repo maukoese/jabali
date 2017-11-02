@@ -1,7 +1,11 @@
 <?php
 /**
-* Jabali Posts Data Access Object
-**/ 
+* @package Jabali
+* @subpackage Options Data Access Object
+* @author Mauko Maunde
+* @link https://docs.jabalicms.org/data/access/obects/options
+* @since 0.17.09
+**/
 
 namespace Jabali\Data\Access\Objects;
 
@@ -59,6 +63,15 @@ class Posts {
     
   }
 
+  public function getSingle( $code )
+  {
+    if ( is_numeric( $code ) ) {
+      return $this -> getId( $code );
+    } else {
+      return $this -> getPost( $code );
+    }
+  }
+
   public function getId( $id ){
     $vars = get_object_vars( $this );
 
@@ -113,14 +126,30 @@ class Posts {
 
       return $posts;
     } else{
-      return array( "status" => "Request Failed", "error" => "Posts Not Found" );
+      return array( "status" => "fail", "error" => "Posts By Author Not Found" );
     }
   }
 
   public function getCategories( $category, $type = "article" ){
 
-    $conds = array( "template" => $skin, "ilk" => $type );
-    $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
+    $conds = array( "categories" => $category, "ilk" => $type );
+    $results = $GLOBALS['JBLDB'] -> selectLike( $this -> table, $this -> allowed, $conds );
+    if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
+      $posts = array();
+      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $posts[] = $post;
+      }
+
+      return $posts;
+    } else{
+      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+    }
+  }
+
+  public function getTags( $tag, $type = "article" ){
+
+    $conds = array( "tags" => $tag, "ilk" => $type );
+    $results = $GLOBALS['JBLDB'] -> selectLike( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
       while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {

@@ -145,7 +145,7 @@ class Resources {
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
         </thead><?php 
-      while ( $resourcesDetails = mysqli_fetch_assoc( $getResourcesBy)){
+      while ( $resourcesDetails = $GLOBALS['JBLDB'] -> fetchArray( $getResourcesBy)){
         ?>
         <tbody>
         <tr>
@@ -222,7 +222,7 @@ class Resources {
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
         </thead><?php 
-      while ( $resourcesDetails = mysqli_fetch_assoc( $getResourcesBy)){
+      while ( $resourcesDetails = $GLOBALS['JBLDB'] -> fetchArray( $getResourcesBy)){
         ?>
         <tbody>
         <tr>
@@ -275,7 +275,7 @@ class Resources {
   function getResourcesAuthor( $author) { 
     $getUser = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."users WHERE id = '".$author."'" );
      if ( $getUser -> num_rows > 0) {
-       while ( $user = mysqli_fetch_assoc( $getUser) ) {
+       while ( $user = $GLOBALS['JBLDB'] -> fetchArray( $getUser) ) {
          $userDeet[] = $user;
        }
      }
@@ -310,7 +310,7 @@ class Resources {
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
         </thead><?php 
-      while ( $usersDetails = mysqli_fetch_assoc( $getResourcesBy)){
+      while ( $usersDetails = $GLOBALS['JBLDB'] -> fetchArray( $getResourcesBy)){
         ?>
         <tbody>
         <tr>
@@ -410,7 +410,7 @@ class Resources {
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
         </thead><?php 
-      while ( $resourcesDetails = mysqli_fetch_assoc( $getResources)){
+      while ( $resourcesDetails = $GLOBALS['JBLDB'] -> fetchArray( $getResources)){
         ?>
         <tbody>
         <tr>
@@ -463,7 +463,7 @@ class Resources {
   function getResourceCode( $code) {
     $getResourceCode = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."resources WHERE id = '".$code."'" );
     if ( $getResourceCode -> num_rows > 0) {
-      while ( $resourceDetails = mysqli_fetch_assoc( $getResourceCode)){
+      while ( $resourceDetails = $GLOBALS['JBLDB'] -> fetchArray( $getResourceCode)){
         if ( $_SESSION[JBLSALT.'Code'] !== $resourceDetails['id'] ) {
           $name = explode( " ", $resourceDetails['name'] );
           $greettype = 'Contact Details';

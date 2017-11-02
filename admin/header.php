@@ -5,9 +5,9 @@ if ( !isset( $_SESSION[JBLSALT.'Code'] ) ) {
 
 if ( isset( $_SESSION[JBLSALT.'Code' ] ) ) {
   $GStyles = $GLOBALS['JBLDB'] -> query( "SELECT style FROM ". _DBPREFIX ."users  WHERE id='".$_SESSION[JBLSALT.'Code']."'" );
-  if ( $GStyles -> num_rows > 0 ) {
+  if ( $GLOBALS['JBLDB'] -> numRows( $GStyles ) > 0 ) {
     $f = array();
-    while ( $s = mysqli_fetch_assoc( $GStyles )) {
+    while ( $s = $GLOBALS['JBLDB'] -> fetchArray( $GStyles )) {
       $f[] = $s;
     }
     if ( $f[0]['style'] !== "" ) {
@@ -38,7 +38,8 @@ $GLOBALS['GTextS'] = $GUSkin['texts']; ?>
 -->
 <html lang="en" xmlns="http://www.w3.org/1999/html">
   <head>
-    <?php head(); ?>  
+    <?php head();
+    loadStyles( [ _STYLES."lib/getmdl-select.min.css", _STYLES."lib/nv.d3.css"] ); ?>
 
     <link rel="stylesheet" href='<?php echo _STYLES; ?>lib/getmdl-select.min.css'>
     <link rel="stylesheet" href="<?php echo _STYLES; ?>lib/nv.d3.css">
@@ -95,7 +96,7 @@ $GLOBALS['GTextS'] = $GUSkin['texts']; ?>
     } else { ?>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js"></script>
     <?php } ?>
-    <script src="<?php echo _SCRIPTS ?>jquery-ui.min.js"></script>
+    <script src="<?php echo _SCRIPTS ?>jquery-ui.js"></script>
     <script src="<?php echo _SCRIPTS ?>ckeditor/ckeditor.js"></script><script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
   </head>
   <body>
@@ -144,13 +145,13 @@ $GLOBALS['GTextS'] = $GUSkin['texts']; ?>
           }
           ?></span>
           <div class="mdl-layout-spacer"></div>
-          <a href="<?php echo( _ROOT ); ?>" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification" id="home"
-               >
-              visibility
-          </a><div class="mdl-tooltip" for="home">View Site</div>
+          <a href="<?php echo( _ROOT ); ?>" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification" id="home" >visibility
+          </a>
+          <div class="mdl-tooltip" for="home">View Site</div>
 
           <a href="messages?view=list&type=notification" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification" id="h_notifications" data-badge="<?php getNoteCount() ?>">notifications_none
-          </a><div class="mdl-tooltip" for="h_notifications"><?php getNoteCount() ?> Notifications</div>
+          </a>
+          <div class="mdl-tooltip" for="h_notifications"><?php getNoteCount() ?> Notifications</div>
 
           <a href="messages?view=unread&key=unread%20messages#" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon" id="h_messages" data-badge="<?php getMsgCount() ?>">mail_outline
             </a><div class="mdl-tooltip" for="h_messages"><?php getMsgCount(); ?> Messages</div>
@@ -170,7 +171,7 @@ $GLOBALS['GTextS'] = $GUSkin['texts']; ?>
                 <a id="profile" href="options?options=<?php echo( $setting ); ?>&page=<?php echo( ucwords( $vals[0][2] ) ); ?> Options" class="mdl-list__item"><i class="mdi mdi-settings mdl-list__item-icon"></i><span style="padding-left: 20px"><?php echo( ucwords( $vals[0][2] ) ); ?></span></a>
               <?php endif ?>
             <?php endforeach; ?>
-          <a id="hdrbtn" href="<?php echo( _ROOT . '?logout' ); ?>" class="mdl-list__item"><i class="mdi mdi-exit-to-app mdl-list__item-icon"></i><span style="padding-left: 20px">Logout</span></a>
+          <a id="hdrbtn" href="<?php echo( _ROOT . '/?logout' ); ?>" class="mdl-list__item"><i class="mdi mdi-exit-to-app mdl-list__item-icon"></i><span style="padding-left: 20px">Logout</span></a>
           </ul>
         </div>
       </header>

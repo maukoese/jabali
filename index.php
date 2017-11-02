@@ -93,9 +93,9 @@ if ( isset( $_POST['contact'] ) && $_POST['email'] !== "" ) {
 
 if ( isset( $_SESSION[JBLSALT.'Code' ] ) ) {
 	$GStyles = $GLOBALS['JBLDB'] -> query( "SELECT style FROM ". _DBPREFIX ."users  WHERE id='".$_SESSION[JBLSALT.'Code']."'" );
-	if ( $GStyles -> num_rows > 0 ) {
+	if ( $GLOBALS['JBLDB'] -> numRows( $GStyles ) > 0 ) {
 		$f = array();
-		while ( $s = mysqli_fetch_assoc( $GStyles )) {
+		while ( $s = $GLOBALS['JBLDB'] -> fetchArray( $GStyles )) {
 			$f[] = $s;
 		}
 		if ( $f[0]['style'] !== "" ) {

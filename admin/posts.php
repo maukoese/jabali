@@ -44,7 +44,7 @@ if ( isset( $_POST['create'] ) ) {
     $GLOBALS['POSTS'] -> author = $_POST['author'];
     $GLOBALS['POSTS'] -> author_name = $_POST['author_name'];
     $GLOBALS['POSTS'] -> avatar = $avatar;
-    $GLOBALS['POSTS'] -> categories = $_POST['categories'];
+    $GLOBALS['POSTS'] -> categories = strtolower( $_POST['categories'] );
     $created = $_POST['created_d'];
     $created_t = $_POST['created_t'];
     $GLOBALS['POSTS'] -> created = $created.' '.$created_t;
@@ -59,7 +59,7 @@ if ( isset( $_POST['create'] ) ) {
     $GLOBALS['POSTS'] -> readings = $_POST['readings'];
     $GLOBALS['POSTS'] -> state = $_POST['state'];
     $GLOBALS['POSTS'] -> subtitle = $_POST['subtitle'];
-    $GLOBALS['POSTS'] -> tags = $_POST['tags'];
+    $GLOBALS['POSTS'] -> tags = strtolower( $_POST['tags'] );
     $GLOBALS['POSTS'] -> template = strtolower( $_POST['template'] );
     $GLOBALS['POSTS'] -> ilk = $_POST['ilk'];
     $GLOBALS['POSTS'] -> updated = $_POST['updated'];

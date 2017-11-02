@@ -5,182 +5,11 @@ namespace Jabali\Classes;
 
 class Users {
   
- function emailUser( $email, $subject, $key) {
-   if ( $subject == "create" ) { 
-      error_reporting(-1 );
-
-      $name = $_POST['name']; 
-      $submit_links = $_POST['submit_links']; 
-
-      if ( isset( $_POST['submit'] ))
-      {
-      $from_add = hEMAIL; 
-      $to_add = "ben@webdesignrepo.com"; 
-      $subject = "Your Subject Name";
-      $message = "Name:$name \n Sites: $submit_links";
-
-      $headers = 'From: submit@webdesignrepo.com' . "\r\n" .
-      'Reply-To: ben@webdesignrepo.com' . "\r\n" .
-      'X-Mailer: PHP/' . phpversion();
-
-      if ( mail( $to_add,$subject,$message,$headers)) 
-      {
-          $msg = "Mail sent";
-
-      echo $msg;
-
-      } 
-      }
-   } elseif ( $subject == "confirm" ) {
-   } elseif ( $subject == "forgot" ) {
-   } elseif ( $subject == "reset" ) {
-   }
- }
-  
-  function createUser() {
-
-    $date = date( "YmdHms" );
-    $email = $_SESSION[JBLSALT.'Email'];
-
-    $hash = str_shuffle(md5( $email.$date ) );
-    $abbr = substr( $_POST['lname'], 0,3 );
-
-    $name = $_POST['fname'].' '.$_POST['lname'];
-    $author = substr( $hash, 20 );
-    
-    if ( $_FILES['avatar'] == "" ) {
-      $avatar = _IMAGES.'avatar.svg';
-    } else {
-      $uploads = _ABSUP_.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/';
-      $upload = $uploads . basename( $_FILES['avatar']['name'] );
-
-      if ( file_exists( $upload) ) {
-        echo "Sorry, file already exists.";
-        $uploadOk = 0;
-      }
-
-      if ( move_uploaded_file( $_FILES['avatar']["tmp_name"], $upload) ) {
-          //Do nothing
-      } else {
-          echo "Sorry, there was an error uploading your file.";
-      }
-      $avatar = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'.$_FILES['avatar']['name'];
-    }
-
-    $company = $GLOBALS['JBLDB'] -> clean( $_POST['company'] );
-    $id = generateCode();
-    $details = "";
-    $created = date('Ymd' );
-    $email  = $GLOBALS['JBLDB'] -> clean( $_POST['email'] );
-    $gender = strtolower( $_POST['gender'] );
-    $authkey = $hash;
-    $level = $GLOBALS['JBLDB'] -> clean( $_POST['level'] );
-    $link = _ADMIN."users?view=$id&key=$name";
-    $location = strtolower( $_POST['location'] );
-    $excerpt = "Account created on ".$date;
-    $password = md5( $_POST['password'] );
-    $phone = $GLOBALS['JBLDB'] -> clean( $_POST['phone'] );
-
-    if ( !$_POST['state'] ) {
-      $state = "pending";
-    } else {
-      $state = $_POST['state'];
-    }
-    $social = '{"facebook":"https://www.facebook.com/","twitter":"https://twitter.com/","instagram":"https://instagram.com/","github":"https://github.com/"}';
-    $style = "zahra";
-    $ilk = strtolower( $_POST['ilk'] );
-    $username = strtolower( $_POST['fname'].$abbr );
-
-    if ( $GLOBALS['JBLDB'] -> query( "INSERT INTO ". _DBPREFIX ."users (name, author, avatar, company, id, created, details, email , gender, authkey, level, link, location, excerpt, password, phone, social, state, style, ilk, username) 
-    VALUES ('".$name."', '".$author."', '".$avatar."', '".$company."', '".$id."', '".$created."', '".$details."', '".$email ."', '".$gender."', '".$authkey."', '".$level."', '".$link."', '".$location."', '".$excerpt."', '".$password."', '".$phone."', '".$social."', '".$state."', '".$style."', '".$ilk."', '".$username."' )" ) ) {
-      echo "<script type = \"text/javascript\">
-              alert(\"User Created Successfully!\" );
-          </script>";
-    } else {
-        echo "Error: " . $GLOBALS['JBLDB'] -> error();
-    } 
-
-  }
-
-  function updateUser( $code ) {
-    
-    $date = date( "YmdHms" );
-    $email = $_SESSION[JBLSALT.'Email'];
-
-    $hash = str_shuffle(md5( $email.$date ) );
-    $abbr = substr( $_POST['lname'], 0,2 );
-
-    $name = $_POST['fname'].' '.$_POST['lname'];
-
-    if ( !empty( $_FILES['avatar'] ) ) {
-
-      $uploads = _ABSUP_.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/';
-      $upload = $uploads . basename( $_FILES['avatar']['name'] );
-      move_uploaded_file( $_FILES['avatar']["tmp_name"], $upload );
-      $avatar = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'.$_FILES['avatar']['name'];
-
-    } else {
-      $avatar = $_POST['avatar'];
-    }
-    $avatar = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'.$_FILES['avatar']['name'];
-
-    $company = $GLOBALS['JBLDB'] -> clean( $_POST['company'] );
-    $created = date('Ymd' );
-    $details = $GLOBALS['JBLDB'] -> clean( $_POST['details'] );
-    $email  = $_POST['email'];
-
-    $gender = $GLOBALS['JBLDB'] -> clean( $_POST['gender'] );
-    $gender = strtolower( $gender );
-
-    $authkey = $hash;
-    $level = $GLOBALS['JBLDB'] -> clean( $_POST['level'] );
-    $link = _ADMIN."users?view=$id&key=$name";
-
-    $location = $GLOBALS['JBLDB'] -> clean( $_POST['location'] );
-    $location = strtolower( $location );
-
-    $excerpt = "Account updated on ".$date;
-    
-    if ( $_POST['password'] !== "" ) {
-      $password = md5( $_POST['password'] );
-    } else {
-      $password = $_POST['h_pass'];
-    }
-
-    $phone = $_POST['phone'];
-
-    $h_fb = $GLOBALS['JBLDB'] -> clean( $_POST['facebook'] );
-    $h_tw = $GLOBALS['JBLDB'] -> clean( $_POST['twitter'] );
-    $h_ig = $GLOBALS['JBLDB'] -> clean( $_POST['instagram'] );
-    $h_git = $GLOBALS['JBLDB'] -> clean( $_POST['github'] );
-    $social = array('facebook' => $h_fb, 'twitter' => $h_tw, 'instagram' => $h_ig, 'github' => $h_git);
-    $social = json_encode( $social );
-
-    $ilk = $_POST['ilk'];
-    $ilk = strtolower( $ilk );
-
-    if ( $GLOBALS['JBLDB'] -> query( "UPDATE ". _DBPREFIX ."users SET name = '".$name."', avatar = '".$avatar."', company = '".$company."', created = '".$created."', details = '".$details."', email  = '".$email ."', gender = '".$gender."', authkey = '".$authkey."', level = '".$level."', link = '".$link."', location = '".$location."', excerpt = '".$excerpt."', password = '".$password."', phone = '".$phone."', social ='".$social."', ilk = '".$ilk."' WHERE id = '".$code."'" ) ) {
-      echo "<script type = \"text/javascript\">
-              alert(\" $name Updated Successfully!\" );
-          </script>";
-    } else {
-      echo '<script type = \"text/javascript\">
-              alert(\"Error: "'.$GLOBALS['JBLDB']->error.'!\" );
-          </script>';
-    }
-
-  }
-
-  function deleteUser( $id) {
-    
-    $deleteUser = $GLOBALS['JBLDB'] -> query( "DELETE FROM ". _DBPREFIX ."users WHERE id='".$id."'" );
-  }
-
   function getUsersType( $type) { ?>
     <title><?php echo( ucfirst( $type) ); ?>s List - <?php showOption( 'name' ); ?></title>
     <div class="mdl-cell mdl-cell--12-col"><?php 
     $getUsersBy = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."users WHERE state = 'active' AND ilk='".$type."'" );
-    if ( $getUsersBy -> num_rows > 0) {
+    if ( $GLOBALS['JBLDB'] -> numRows( $getUsersBy ) > 0) {
       ?>
       <table class="table pmd-table mdl-color--<?php primaryColor(); ?> mdl-color-text--white">
         <thead>
@@ -192,7 +21,7 @@ class Users {
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
         </thead><?php 
-      while ( $usersDetails = mysqli_fetch_assoc( $getUsersBy)){
+      while ( $usersDetails = $GLOBALS['JBLDB'] -> fetchArray( $getUsersBy)){
         ?>
         <tbody>
         <tr>
@@ -246,7 +75,7 @@ class Users {
   function getUsersAuthor( $author) { ?>
     <title>Users List - <?php showOption( 'name' ); ?></title><?php 
     $getUsersBy = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."users WHERE state = 'active' AND author='".$author."'" );
-    if ( $getUsersBy -> num_rows > 0) {
+    if ( $GLOBALS['JBLDB'] -> numRows( $getUsersBy ) > 0) {
       ?>
       <div class="mdl-cell--12-col mdl-grid">
       <table class="table pmd-table mdl-color--<?php primaryColor(); ?> mdl-color-text--white">
@@ -259,7 +88,7 @@ class Users {
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
         </thead><?php 
-      while ( $usersDetails = mysqli_fetch_assoc( $getUsersBy)){
+      while ( $usersDetails = $GLOBALS['JBLDB'] -> fetchArray( $getUsersBy)){
         ?>
         <tbody>
         <tr>
@@ -315,7 +144,7 @@ class Users {
   function getUsersLoc( $location) { ?>
     <title><?php echo( ucfirst( $type) ); ?>s List - <?php showOption( 'name' ); ?></title><?php 
     $getUsersBy = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."users WHERE state = 'active' AND location='".$location."'" );
-    if ( $getUsersBy -> num_rows > 0) {
+    if ( $GLOBALS['JBLDB'] -> numRows( $getUsersBy ) > 0) {
       ?>
         <div class="mdl-cell--12-col" >
             <center>
@@ -337,7 +166,7 @@ class Users {
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
         </thead><?php 
-      while ( $usersDetails = mysqli_fetch_assoc( $getUsersBy)){
+      while ( $usersDetails = $GLOBALS['JBLDB'] -> fetchArray( $getUsersBy)){
         ?>
         <tbody>
         <tr>
@@ -396,7 +225,7 @@ class Users {
   function getUsersTypeLoc( $type, $location) { ?>
     <title><?php echo( ucfirst( $type) ); ?>s List - <?php showOption( 'name' ); ?></title><?php 
     $getUsersBy = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."users WHERE state = 'active' AND location='".$location."'" );
-    if ( $getUsersBy -> num_rows > 0) {
+    if ( $GLOBALS['JBLDB'] -> numRows( $getUsersBy ) > 0) {
       ?>
         <div class="mdl-cell--12-col" >
             <center>
@@ -418,7 +247,7 @@ class Users {
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
         </thead><?php 
-      while ( $usersDetails = mysqli_fetch_assoc( $getUsersBy)){
+      while ( $usersDetails = $GLOBALS['JBLDB'] -> fetchArray( $getUsersBy)){
         ?>
         <tbody>
         <tr>
@@ -477,7 +306,7 @@ class Users {
     <title>All Users - <?php showOption( 'name' ); ?></title><?php 
     $getUsers = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."users WHERE state = 'pending' ORDER BY created DESC" );
 
-    if ( $getUsers -> num_rows > 0) { ?>
+    if ( $GLOBALS['JBLDB'] -> numRows( $getUsers ) > 0) { ?>
       <div class="mdl-grid">
         <div class="mdl-cell--12-col" >
           <form>
@@ -499,7 +328,7 @@ class Users {
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
         </thead><?php 
-      while ( $usersDetails = mysqli_fetch_assoc( $getUsers)){
+      while ( $usersDetails = $GLOBALS['JBLDB'] -> fetchArray( $getUsers)){
         ?>
         <tbody>
         <tr>
@@ -556,7 +385,7 @@ class Users {
     <title>All Users - <?php showOption( 'name' ); ?></title><?php 
     $getUsers = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."users WHERE state = 'active' ORDER BY created DESC" );
 
-    if ( $getUsers -> num_rows > 0) { ?>
+    if ( $GLOBALS['JBLDB'] -> numRows( $getUsers ) > 0) { ?>
       <div class="mdl-grid">
         <div class="mdl-cell--12-col" >
           <form>
@@ -578,7 +407,7 @@ class Users {
         <th class="mdl-data-table__cell">ACTIONS</th>
         </tr>
         </thead><?php 
-      while ( $usersDetails = mysqli_fetch_assoc( $getUsers)){
+      while ( $usersDetails = $GLOBALS['JBLDB'] -> fetchArray( $getUsers)){
         ?>
         <tbody>
         <tr>
@@ -669,8 +498,8 @@ class Users {
                       <ul for="centers" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
                           <?php 
                           $centers = $GLOBALS['JBLDB'] -> query( "SELECT name, id FROM ". _DBPREFIX ."users WHERe ilk = 'center' ORDER BY name" );
-                          if ( $centers -> num_rows > 0 );
-                          while ( $center = mysqli_fetch_assoc( $centers) ) {
+                          if ( $GLOBALS['JBLDB'] -> numRows( $centers ) > 0 );
+                          while ( $center = $GLOBALS['JBLDB'] -> fetchArray( $centers) ) {
                               echo '<li class="mdl-menu__item" data-val="'.$center['id'].'">'.$center['name'].'</li>';
                           }
                            ?>
@@ -737,8 +566,8 @@ class Users {
 
   function getCenters() {
     $centers = $GLOBALS['JBLDB'] -> query( "SELECT name, id FROM ". _DBPREFIX ."users WHERe ilk = 'center' ORDER BY name" );
-    if ( $centers -> num_rows > 0) {;
-      while ( $center = mysqli_fetch_assoc( $centers) ) {
+    if ( $GLOBALS['JBLDB'] -> numRows( $centers ) > 0) {;
+      while ( $center = $GLOBALS['JBLDB'] -> fetchArray( $centers) ) {
           echo '<li class="mdl-menu__item" data-val="'.$center['id'].'">'.$center['name'].'</li>';
       }
     }
@@ -747,8 +576,8 @@ class Users {
 
   function getUserCode( $code) {
     $getUserCode = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."users WHERE id = '".$code."'" );
-    if ( $getUserCode -> num_rows > 0) {
-      while ( $userDetails = mysqli_fetch_assoc( $getUserCode)){
+    if ( $GLOBALS['JBLDB'] -> numRows( $getUserCode ) > 0) {
+      while ( $userDetails = $GLOBALS['JBLDB'] -> fetchArray( $getUserCode)){
         if ( $_SESSION[JBLSALT.'Code'] !== $userDetails['id'] ) {
           $name = explode( " ", $userDetails['name'] );
           $greettype = 'About '.ucfirst( $name[0] );
@@ -817,7 +646,7 @@ class Users {
                 <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
                     <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><?php 
                           $getNotes = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."comments WHERE author = '".$userDetails['id']."'" );
-                          if ( $getNotes && $getNotes -> num_rows > 0) { ?>
+                          if ( $getNotes && $GLOBALS['JBLDB'] -> numRows( $getNotes ) > 0) { ?>
                             <div class="mdl-card__title">
                             <i class="material-icons">query_builder</i>
                               <span class="mdl-button">Recently From <?php echo( ucfirst( $name[0] ) ); ?></span>
@@ -828,7 +657,7 @@ class Users {
                             </div>
                             <div class="mdl-card__supporting-text">
                               <ul class="collapsible popout" data-collapsible="accordion"><?php 
-                                  while ( $note = mysqli_fetch_assoc( $getNotes) ) { ?>
+                                  while ( $note = $GLOBALS['JBLDB'] -> fetchArray( $getNotes) ) { ?>
                                   <li>
                                     <div class="collapsible-header"><i class="material-icons">label_outline</i>
                                       

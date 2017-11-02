@@ -1,6 +1,6 @@
 <div style="padding-top:40px;" class="mdl-grid">
-	<div class="mdl-cell mdl-cell--2-col"></div>
-	<div id="login_div" class="mdl-cell mdl-cell--8-col mdl-color--<?php if ( isset( $_SESSION[JBLSALT.'Code'] ) ) { primaryColor(); } else { echo "madge"; } ?>">
+	<div class="mdl-cell mdl-cell--4-col"></div>
+	<div id="login_div" class="mdl-cell mdl-cell--4-col mdl-color--<?php if ( isset( $_SESSION[JBLSALT.'Code'] ) ) { primaryColor(); } else { echo "madge"; } ?>">
 	<center><br><?php echo '<a href="'._ROOT.'"><img src="'._IMAGES.'logo-w.png" width="150px;"></a>'; 
 	if ( isset( $_GET['create'] ) ) {
 	if ( $_GET['create'] == "success" ) { ?>
@@ -27,7 +27,7 @@
 	<label for="email">Email Address</label>
 	</div>
 
-	<div class="input-field mdl-cell mdl-cell--3-col mdl-js-textfield getmdl-select">
+	<div class="input-field mdl-js-textfield getmdl-select mdl-cell mdl-cell--10-col">
 	<i class="material-icons prefix">perm_identity</i>
 	 <input class="mdl-textfield__input" id="ilk" name="ilk" type="text" readonly tabIndex="-1" placeholder="Type"><label for="ilk">
 	<i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
@@ -42,13 +42,10 @@
 	     <li class="mdl-menu__item" data-val="subscriber">Subscriber<i class="mdl-color-text--white mdi mdi-email alignright" role="presentation"></i></li>
 	   </ul>
 	</div>
-	<div class="input-field mdl-cell mdl-cell--6-col"></div>
 
 	<input type="hidden" name="ilk" value="<?php echo( $ilk ); ?>">
-	<div class="input-field mdl-cell mdl-cell--3-col">
 	<button class="mdl-button mdl-button--fab mdl-button--colored alignright" type="submit" name="register" value="true"><i class="material-icons">arrow_forward</i></button>
-	</div>
 	</form>  
 	</div>
-	<div class="mdl-cell mdl-cell--2-col"></div>
+	<div class="mdl-cell mdl-cell--4-col"></div>
 </div>

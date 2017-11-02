@@ -28,8 +28,8 @@ class Social {
 
   function bottomshare( $code) { 
     $getPostCode = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE id = '".$code."'" );
-    if ( $getPostCode -> num_rows > 0) {
-      while ( $post = mysqli_fetch_assoc( $getPostCode)){ ?>
+    if ( $GLOBALS['JBLDB'] -> numRows( $getPostCode ) > 0) {
+      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $getPostCode)){ ?>
     <div class="fixed-action-btn horizontal">
       <a class="btn-floating btn-large mdl-color--<?php if ( isset( $_SESSION[JBLSALT.'Code'] ) ) { primaryColor(); } else { echo "grey"; } ?>">
         <i class="large material-icons">share</i>

@@ -12,7 +12,7 @@ class Widgets {
 		    <h4>Recently Published</h4><?php 
 		  $getRecents = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts ORDER BY created ASC LIMIT 6" );
 		  if ( $getRecents -> num_rows > 0 ) {
-		     while ( $recent = mysqli_fetch_assoc( $getRecents ) ) {
+		     while ( $recent = $GLOBALS['JBLDB'] -> fetchArray( $getRecents ) ) {
 		       $posts[] = $recent;
 		     }
 		  }
@@ -115,7 +115,7 @@ chart.render();
           <h3>Jabali Central</h3><?php 
           $getRecents = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts ORDER BY created ASC LIMIT 5" );
           if ( $getRecents -> num_rows > 0 ) {
-             while ( $recent = mysqli_fetch_assoc( $getRecents ) ) {
+             while ( $recent = $GLOBALS['JBLDB'] -> fetchArray( $getRecents ) ) {
                $bposts[] = $recent;
              }
           }

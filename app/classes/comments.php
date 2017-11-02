@@ -75,7 +75,7 @@ class Comments {
         <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
         </tr>
         </thead><?php 
-      while ( $commentsDetails = mysqli_fetch_assoc( $getComments)){ ?>
+      while ( $commentsDetails = $GLOBALS['JBLDB'] -> fetchArray( $getComments)){ ?>
         <tbody>
         <tr>
         <td class="mdl-data-table__cell--non-numeric" data-title="">
@@ -138,7 +138,7 @@ class Comments {
               <th class="mdl-data-table__cell--non-numeric">ACTIONS</th>
             </tr>
           </thead><?php 
-        while ( $commentsDetails = mysqli_fetch_assoc( $getComments)){ ?>
+        while ( $commentsDetails = $GLOBALS['JBLDB'] -> fetchArray( $getComments)){ ?>
           <tbody>
             <tr>
               <td class="mdl-data-table__cell--non-numeric" data-title="">
@@ -191,7 +191,7 @@ class Comments {
     $getComment = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."comments WHERE id = '".$code."'" );
     $GLOBALS['JBLDB'] -> query( "UPDATE ". _DBPREFIX ."comments SET state = 'read' WHERE id = '".$code."'" );
     if ( $getComment -> num_rows > 0) {
-      while ( $commentDetails = mysqli_fetch_assoc( $getComment)){ ?>
+      while ( $commentDetails = $GLOBALS['JBLDB'] -> fetchArray( $getComment)){ ?>
       <title><?php echo( $commentDetails['name'] ); ?> - <?php showOption( 'name' ); ?></title>
         <div class="mdl-grid" >
               <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
@@ -235,7 +235,7 @@ class Comments {
                     </div>
                     <div class="mdl-card__supporting-text">
                       <ul class="collapsible popout" data-collapsible="accordion"><?php 
-                          while ( $note = mysqli_fetch_assoc( $getNotes) ) { ?>
+                          while ( $note = $GLOBALS['JBLDB'] -> fetchArray( $getNotes) ) { ?>
                           <li>
                             <div class="collapsible-header"><i class="material-icons">label_outline</i>
                               
