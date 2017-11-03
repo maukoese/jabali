@@ -2,5 +2,5 @@
 .htaccess
 app/config.php
 app/modules/
-uploads/
+uploads/2017/
 admin/sql.php
