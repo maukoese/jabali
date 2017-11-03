@@ -1,4 +1,11 @@
 <?php 
+/**
+* @package Jabali Framework
+* @subpackage Admin Footer
+* @link https://docs.jabalicms.org/dashboard/
+* @author Mauko Maunde
+* @since 0.17.04
+**/
 if ( !isset($_SESSION) ) { session_start(); } ?>
 </main>
 <footer class="mdl-footer mdl-color--<?php primaryColor(); ?>">

@@ -1,4 +1,12 @@
 <?php
+/**
+* @package Jabali Framework
+* @subpackage Admin Header
+* @link https://docs.jabalicms.org/dashboard/
+* @author Mauko Maunde
+* @since 0.17.09
+**/
+
 if ( !isset( $_SESSION[JBLSALT.'Code'] ) ) {
   header( "Location: ". _ROOT ."/login/jabali" );
 }

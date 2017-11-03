@@ -1,4 +1,11 @@
-<?php
+<?php 
+/**
+* @package Jabali Framework
+* @subpackage Admin Options
+* @link https://docs.jabalicms.org/options/
+* @author Mauko Maunde
+* @since 0.17.04
+**/
 session_start();
 require_once( '../init.php' );
 $hOpt = $GLOBALS['OPTIONS'];
@@ -12,7 +19,7 @@ addSetting( "restful", array(), array( $hOpt, "rest" ) );
 addSetting( "misc", array(), array( $hOpt, "misc" ) );
 
 if ( isset( $_POST['settings'] ) ) {
-    foreach ($GLOBALS['GSettingsField'][$_POST['settings']] as $name => $value) {
+    foreach ($GLOBALS['GSettingsField'][ $_POST['settings'] ] as $name => $value) {
         $date = date( "Y-m-d" );
         if ( !isOption( $name ) ) {
             $hOpt -> create ( ucwords( $name ), $name, $_POST[$name], $date );
@@ -24,39 +31,46 @@ if ( isset( $_POST['settings'] ) ) {
 
 if ( isset( $_POST['mystyle'] ) ) {
     $theme = $_POST['theme'];
+    // $cols = array( "style" );
+    // $vals = array( $theme );
+    // $conds = array( "id" => $_SESSION[JBLSALT.'Code'] );
+    // $GLOBALS['USERS'] -> getId( $_SESSION[JBLSALT.'Code'] );
+    // $GLOBALS['USERS'] -> style = $theme;
+    // $GLOBALS['USERS'] -> update();
     $GLOBALS['JBLDB'] -> query( "UPDATE ". _DBPREFIX ."users SET style = '".$theme."' WHERE id = '". $_SESSION[JBLSALT.'Code'] ."'" );
 }
 
 if ( isset( $_POST['preferences'] ) ) {
     $date = date('Y-m-d' );
-    $uploads = _ABSUP_.date('Y' ).'/'.date('m' ).'/'.date('d' )."/";
+    $uploaddir = _ABSUP_.date("Y/m/d/");
 
     if ( $_FILES['newheaderlogo'] !== "" ) {
-        $headerlogo = $uploads . basename( $_FILES['newheaderlogo']['name'] );
-        if ( !move_uploaded_file( $_FILES['newheaderlogo']["tmp_name"], $headerlogo ) ) {
+        $fheaderlogo = basename( $_FILES['newheaderlogo']['name'] );
+        if ( !move_uploaded_file( $_FILES['newheaderlogo']["tmp_name"], $uploaddir.$fheaderlogo ) ) {
             echo "Sorry, there was an error uploading your file.";
         }
+        $headerlogo = _UPLOADS.date("Y/m/d/").$fheaderlogo ;
     } else {
         $headerlogo = $_POST['headerlogo'];
     }
 
     if ( $_FILES['newhomelogo'] !== "" ) {
-        $homelogo = $uploads . basename( $_FILES['newhomelogo']['name'] );
-        if ( !move_uploaded_file( $_FILES['newhomelogo']["tmp_name"], $homelogo ) ) {
+        $fhomelogo = basename( $_FILES['newhomelogo']['name'] );
+        if ( !move_uploaded_file( $_FILES['newhomelogo']["tmp_name"], $uploaddir.$fhomelogo ) ) {
             echo "Sorry, there was an error uploading your file.";
         }
 
-        $homelogo = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'.$_FILES['newhomelogo']['name'];
+        $homelogo = _UPLOADS.date("Y/m/d/").$fhomelogo;
     } else {
         $homelogo = $_POST['homelogo'];
     }
 
     if ( $_FILES['newfavicon'] !== "" ) {
-        $favicon = $uploads . basename( $_FILES['newfavicon']['name'] );
-        if ( !move_uploaded_file( $_FILES['newfavicon']["tmp_name"], $headerlogo ) ) {
+        $ffavicon = basename( $_FILES['newfavicon']['name'] );
+        if ( !move_uploaded_file( $_FILES['newfavicon']["tmp_name"], $uploaddir.$ffavicon ) ) {
             echo "Sorry, there was an error uploading your file.";
         }
-        $favicon = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'.$_FILES['newfavicon']['name'];
+        $favicon = _UPLOADS.date("Y/m/d/").$ffavicon;
     } else {
         $favicon = $_POST['favicon'];
     }

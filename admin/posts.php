@@ -1,4 +1,11 @@
-<?php
+<?php 
+/**
+* @package Jabali Framework
+* @subpackage Admin Posts
+* @link https://docs.jabalicms.org/posts/
+* @author Mauko Maunde
+* @since 0.17.04
+**/
 session_start();
 require_once( '../init.php' );
 
@@ -24,18 +31,18 @@ if ( isset( $_POST['create'] ) ) {
     if ( empty( $_POST['updated'] ) ) { $_POST['updated'] = date('Y-m-d H:i:s'); }
 
     if ( empty( $_FILES['new_avatar'] ) ) {
-      $uploaddir = _ABSUP_ .date('Y' ).'/'.date('m' ).'/'.date('d' ).'/';
+      $uploaddir = _ABSUP_.date('Y/m/d/');
 
-      $upload = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'. basename( $_FILES['new_avatar']['name'] );
+      $upload = _UPLOADS.date('Y/m/d/').basename( $_FILES['new_avatar']['name'] );
       if ( file_exists( $upload) ) {
-        $new_avatar = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'. basename( $_FILES['new_avatar']['name'] )."_".date('H_m_s');
+        $new_avatar = _UPLOADS.date('Y/m/d/').basename( $_FILES['new_avatar']['name'] )."_".date('H_m_s');
       } else {
-        $new_avatar = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/' . basename( $_FILES['new_avatar']['name'] );
+        $new_avatar = _UPLOADS.date('Y/m/d/').basename( $_FILES['new_avatar']['name'] );
       }
 
       move_uploaded_file( $_FILES['new_avatar']["tmp_name"], $uploaddir);
 
-      $avatar = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'. $new_avatar;
+      $avatar = _UPLOADS.date('Y/m/d/').$new_avatar;
     } else {
       $avatar = $_POST['the_avatar'];
     }
@@ -95,18 +102,18 @@ if ( isset( $_POST['create'] ) ) {
     if ( empty( $_POST['updated'] ) ) { $_POST['updated'] = date('Y-m-d H:i:s'); }
 
     if ( empty( $_FILES['new_avatar'] ) ) {
-      $uploaddir = _ABSUP_ .date('Y' ).'/'.date('m' ).'/'.date('d' ).'/';
+      $uploaddir = _ABSUP_.date('Y/m/d/');
 
-      $upload = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'. basename( $_FILES['new_avatar']['name'] );
+      $upload = _UPLOADS.date('Y/m/d/').basename( $_FILES['new_avatar']['name'] );
       if ( file_exists( $upload) ) {
-        $new_avatar = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'. basename( $_FILES['new_avatar']['name'] )."_".date('H_m_s');
+        $new_avatar = _UPLOADS.date('Y/m/d/').basename( $_FILES['new_avatar']['name'] )."_".date('H_m_s');
       } else {
-        $new_avatar = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/' . basename( $_FILES['new_avatar']['name'] );
+        $new_avatar = _UPLOADS.date('Y/m/d/').basename( $_FILES['new_avatar']['name'] );
       }
 
       move_uploaded_file( $_FILES['new_avatar']["tmp_name"], $uploaddir);
 
-      $avatar = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'. $new_avatar;
+      $avatar = _UPLOADS.date('Y/m/d/').$new_avatar;
     } else {
       $avatar = $_POST['the_avatar'];
     }
@@ -184,4 +191,4 @@ if ( isset( $_GET['view'] )){
 
 } ?>
 </div><?php
-require_once( './footer.php' );
+require_once( 'footer.php' );

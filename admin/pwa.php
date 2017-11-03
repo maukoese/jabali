@@ -1,8 +1,11 @@
-<?php 
-/*
-*For Carrying out test SQLs
-* TO-Do: Remove in dist
-*/
+<?php
+/**
+* @package Jabali Framework
+* @subpackage Progressive Web App
+* @link https://docs.jabalicms.org/pwa/
+* @author Mauko Maunde
+* @since 0.17.09
+**/
 session_start();
 require_once( '../init.php' );
 require_once( 'header.php' );

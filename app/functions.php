@@ -8,13 +8,12 @@
 **/
 
 /**
-* Default Date/Timezone
-**/
-
-/**
 * Install main instance of Jabali
+* @param string $prefix = Database prefix, defined in the config.php file.
+* @param array $tables = Array of the default database tables required by the app.
 **/
-function installSQLDB() {
+function installSQLDB()
+{
 	$prefix = _DBPREFIX;
 
 	$tables = array();
@@ -176,7 +175,8 @@ SQL;
 } 
  
 
-function is_localhost() {
+function is_localhost()
+{
 	$whitelist = array( '127.0.0.1', '::1' );
 	if ( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) )
 	    return true;
@@ -185,7 +185,8 @@ function is_localhost() {
 /**
 * Include Function
 **/
-function getFile( $path, $file ) {
+function getFile( $path, $file )
+{
 
 	include $path.$file.'.php';
 }
@@ -193,7 +194,8 @@ function getFile( $path, $file ) {
 /**
 * Load stylesheets
 **/
-function loadStyle( $link, $theme = false ) {
+function loadStyle( $link, $theme = false )
+{
 	if ( $theme !== false ) {
 	 	$themes = _THEMES.$theme.'/assets/';
 	 } else {
@@ -206,7 +208,8 @@ function loadStyle( $link, $theme = false ) {
 /**
 * Load Javascript
 **/
-function loadScript( $link, $theme = false ) {
+function loadScript( $link, $theme = false )
+{
 	if ( $theme !== false ) {
 	 	$themes = _THEMES.$theme.'/assets/';
 	 } else {
@@ -219,7 +222,8 @@ function loadScript( $link, $theme = false ) {
 /**
 * Load Javascript
 **/
-function loadImage( $link, $theme = false, $width = 250, $alt = '', $class = "" ) {
+function loadImage( $link, $theme = false, $width = 250, $alt = "Image", $class = "" )
+{
 	if ( $theme !== false ) {
 	 	$themes = _THEMES.$theme.'/assets/';
 	 } else {
@@ -231,7 +235,8 @@ function loadImage( $link, $theme = false, $width = 250, $alt = '', $class = "" 
 /**
 * Load stylesheets
 **/
-function loadStyles( $links, $theme = false ) {
+function loadStyles( $links, $theme = false )
+{
 	if ( $theme !== false ) {
 	 	$themes = $theme;
 	 } else {
@@ -246,7 +251,8 @@ function loadStyles( $links, $theme = false ) {
 /**
 * Load Javascript
 **/
-function loadScripts( $links, $theme = false ) {
+function loadScripts( $links, $theme = false )
+{
 	if ( $theme !== false ) {
 	 	$themes = $theme;
 	 } else {
@@ -261,7 +267,8 @@ function loadScripts( $links, $theme = false ) {
 /**
 * Display home logo
 **/
-function frontlogo( $width = "250px;", $class = "" ) {
+function frontlogo( $width = "250px;", $class = "" )
+{
 	
 	echo '<a class = "'.$class.'" href="' ._ROOT. '"><img src="' . getOption( 'homelogo' ) . '" width="' . $width . '"></a>';
 }
@@ -269,12 +276,14 @@ function frontlogo( $width = "250px;", $class = "" ) {
 /**
 * Display main logo
 **/
-function headerLogo( $width = "150px;", $class = ""  ) {
+function headerLogo( $width = "150px;", $class = ""  )
+{
 	
 	echo '<a class = "'.$class.'" href="' ._ROOT. '"><img src="' . getOption( 'headerlogo' ) . '" width="' . $width . '"></a>';
 }
 
-function _shout_( $what, $type = "alert" ) {
+function _shout_( $what, $type = "alert" )
+{
 	switch ( $type ) {
 	 	case 'alert':
 	 		$color = "blue";
@@ -313,7 +322,8 @@ function _shout_( $what, $type = "alert" ) {
 /**
 * Window Alert
 **/
-function showAlert( $alert ) {
+function showAlert( $alert )
+{
 	?><script>
 	function showText() {
 	    alert( "<?php echo $alert; ?>" );
@@ -326,7 +336,8 @@ function showAlert( $alert ) {
 /**
 * Window Confirm
 **/
-function showConf( $message, $yes, $no, $where ) {
+function showConf( $message, $yes, $no, $where )
+{
 	?><script>
 	function confirmAcion() {
     var txt;
@@ -346,7 +357,8 @@ function showConf( $message, $yes, $no, $where ) {
 /**
 * Check if user has appropriate permisions
 **/
-function isCap( $cap ) {
+function isCap( $cap )
+{
 	if ( $_SESSION[JBLSALT.'Cap'] == $cap ) {
 		return true;
 	} else {
@@ -354,7 +366,8 @@ function isCap( $cap ) {
 	}
 }
 
-function isAuthor( $author ) {
+function isAuthor( $author )
+{
 	if ( $_SESSION[JBLSALT.'Code'] == $author ) {
 		return true;
 	} else {
@@ -362,7 +375,8 @@ function isAuthor( $author ) {
 	}
 }
 
-function emailExists( $email ) {
+function emailExists( $email )
+{
 	$theEmail = $GLOBALS['JBLDB'] -> query( "SELECT email  FROM ". _DBPREFIX ."users WHERE email  ='".$email."'" );
 	if ( $theEmail -> num_rows > 0 ) {
 		return true;
@@ -374,7 +388,8 @@ function emailExists( $email ) {
 /**
 * Check if user is viewing own profile
 **/
-function isProfile( $cap ) {
+function isProfile( $cap )
+{
 	if ( $_SESSION[JBLSALT.'Code'] == $_GET['view'] ) {
 		return true;
 	} else {
@@ -386,7 +401,8 @@ function isProfile( $cap ) {
 /**
 * 
 **/
-function uploadFile( $file ) {
+function uploadFile( $file )
+{
 	$year = date('Y' );
 	$month = date('m' );
 	$day = date('d' );
@@ -406,7 +422,8 @@ function uploadFile( $file ) {
 /**
 * 
 **/
-function getMsgCount() {
+function getMsgCount()
+{
     $getMessages = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."messages WHERE (state = 'unread' AND for = '".$_SESSION[JBLSALT.'Code']."' )" );
     if ( $getMessages ){
 	    if ( $GLOBALS['JBLDB'] -> numRows( $getMessages ) > 0 ) {
@@ -422,7 +439,8 @@ function getMsgCount() {
 /**
 * 
 **/
-function getNoteCount() {
+function getNoteCount()
+{
 	$getMessages = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."comments" );
     if ( $getMessages ){
 	    if ( $GLOBALS['JBLDB'] -> numRows( $getMessages ) > 0 ) {
@@ -435,7 +453,8 @@ function getNoteCount() {
 	}
 }
 
-function loadSkins(){
+function loadSkins()
+{
 	$skins = array();
 	$skins['zahra'] = array( "name" => "Zahra's Fade", "primary" => "teal", "accent" => "red", "textp" => "white", "texts" => "black" );
 	$skins['love'] = array( "name" => "Love, Olive", "primary" => "cyan", "accent" => "magenta", "textp" => "white", "texts" => "black" );
@@ -482,35 +501,40 @@ function loadSkins(){
 /**
 * 
 **/
-function primaryColor() {
+function primaryColor()
+{
 	echo $GLOBALS['GPrimary'];
 }
 
 /**
 * 
 **/
-function secondaryColor() {
+function secondaryColor()
+{
 	echo $GLOBALS['GAccent'];
 }
 
 /**
 * 
 **/
-function textColor() {
+function textColor()
+{
 	echo $GLOBALS['GTextP'];
 }
 
 /**
 * 
 **/
-function textSColor() {
+function textSColor()
+{
 	echo $GLOBALS['GTextS'];
 }
 
 /**
 * 
 **/
-function getOption( $code ) {
+function getOption( $code )
+{
 	$option = "";
     $getOptions = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."options WHERE code='".$code."'" );
     if ( $GLOBALS['JBLDB'] -> numRows($getOptions) > 0 ) {
@@ -529,7 +553,8 @@ function getOption( $code ) {
 /**
 * 
 **/
-function showOption( $code ) {
+function showOption( $code )
+{
     $getOptions = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."options WHERE code='".$code."'" );
     if ( $GLOBALS['JBLDB'] -> numRows($getOptions) > 0 ) {
         while ( $siteOption = $GLOBALS['JBLDB'] -> fetchArray($getOptions) ) { 
@@ -541,7 +566,8 @@ function showOption( $code ) {
 /**
 * 
 **/
-function isOption( $code ) {
+function isOption( $code )
+{
     $getOptions = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."options WHERE code='".$code."'" );
     if ( $getOptions && $GLOBALS['JBLDB'] -> numRows($getOptions) > 0 ) {
         return true;
@@ -550,7 +576,8 @@ function isOption( $code ) {
     }
 }
 
-function theHeader() {
+function theHeader()
+{
 	require_once( _ABSRES_ . 'views/header.php' );
 	echo( 
 		'<style>
@@ -561,11 +588,13 @@ function theHeader() {
 		</style>' );
 }
 
-function theFooter() {
+function theFooter()
+{
 	require_once( _ABSRES_ . 'views/footer.php' );
 }
 
-function getHeader() {
+function getHeader()
+{
 	require_once( _ABSTHEMES_ . getOption( 'activetheme' ) . '/header.php' );
 	echo( 
 		'<style>
@@ -584,7 +613,8 @@ function getHeader() {
 		</style>' );
 }
 
-function getFooter() {
+function getFooter()
+{
 	$theme = getOption( 'activetheme' );
 	require_once( _ABSTHEMES_ . getOption( 'activetheme' ) . '/footer.php' );
 }
@@ -593,7 +623,8 @@ function getFooter() {
 /**
 * 
 **/
-function showTitle( $class ) { ?>
+function showTitle( $class )
+{ ?>
     <title><?php
 
     $class = ucwords( $class );
@@ -648,14 +679,16 @@ function showTitle( $class ) { ?>
 /**
 * 
 **/
-function headTitle( $text ) {
+function headTitle( $text )
+{
     echo( '<title>'.ucwords( $text ).' - '.getOption( 'name' ).'</title>' );
 }
 
 /**
 * 
 **/
-function tableHeader( $collums ) { ?>
+function tableHeader( $collums )
+{ ?>
 	<div class="mdl-cell mdl-cell--12-col">
 		<table class="table pmd-table mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
 			<thead>
@@ -671,7 +704,8 @@ function tableHeader( $collums ) { ?>
 /**
 * 
 **/
-function tableBody( $results, $fields, $names, $error = "No Records Found") {
+function tableBody( $results, $fields, $names, $error = "No Records Found")
+{
 	if ( $results !== null ) {
 		$data = array_combine( $fields, $names );
 		foreach ( $data as $field => $name ) {
@@ -685,8 +719,8 @@ function tableBody( $results, $fields, $names, $error = "No Records Found") {
 /**
 * 
 **/
-function tableFooter() { ?>
-
+function tableFooter()
+{ ?>
 			</tbody>
 		</table>
 	</div><?php
@@ -696,7 +730,8 @@ function tableFooter() { ?>
 //$fields = $field1, $field2;
 //form( $name, , , ,, array( $fields ) );
 //
-function form( $name, $enctype = 'multipart/form-data', $method = 'POST', $action = '', $class = null, $fields = null ){ ?>
+function form( $name, $enctype = 'multipart/form-data', $method = 'POST', $action = '', $class = null, $fields = null )
+{ ?>
 	<form enctype="<?php echo( $enctype ); ?>" name="<?php echo( $name ); ?>" method="<?php echo( $method ); ?>" action="<?php echo( $action ); ?>" class="<?php echo( $class ); ?>">
 	<?php foreach ($fields as $field ) { ?>
 		<div class="input field <?php echo( $field['length'] ); ?>">
@@ -710,7 +745,8 @@ function form( $name, $enctype = 'multipart/form-data', $method = 'POST', $actio
 /**
 * 
 **/
-function isEmail( $data ) {
+function isEmail( $data )
+{
   if ( filter_var( $data, FILTER_VALIDATE_EMAIL) ) {
     return true;
   } else {
@@ -721,9 +757,10 @@ function isEmail( $data ) {
 /**
 * 
 **/
-function newButton( $class, $type, $icon ) {
-	echo '<a href="./'.$class.'?create='.$type.'" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-  <i class="material-icons">'.$icon.'</i></a>';
+function newButton( $class, $type, $icon )
+{
+	echo ( '<a href="./'.$class.'?create='.$type.'" class="addfab mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+  <i class="material-icons">'.$icon.'</i></a>' );
 }
 
 function generateCode() {
@@ -731,7 +768,8 @@ function generateCode() {
 	return $code;
 }
 
-function recordExists( $record ) {
+function recordExists( $record )
+{
 	$link = $GLOBALS['JBLDB'] -> query( "SELECT slug FROM ". _DBPREFIX ."posts WHERE slug = '".$record."'" );
 	if ( $link -> num_rows > 0 ) {
 		return true;
@@ -740,7 +778,8 @@ function recordExists( $record ) {
 	}
 }
 
-function error404( $id = "error-404", $code = "404", $message = 'The page you are looking for can\'t be found. Go home by <a href=".">Clicking here.</a>', $class = "error-container" ) { ?>
+function error404( $id = "error-404", $code = "404", $message = 'The page you are looking for can\'t be found. Go home by <a href=".">Clicking here.</a>', $class = "error-container" ) 
+{ ?>
 	<title>Error 404 - <?php showOption( 'name' ); ?></title>
 	<?php if ( file_exists( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' ) ):
 		require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' );
@@ -759,12 +798,13 @@ HTML;
 	endif;
 }
 
-function snuffle() {
-
+function snuffle() 
+{
 	exit();
 }
 
-function isActiveX( $ext ) {
+function isActiveX( $ext )
+{
 	if ( getOption( 'modules' ) !== "" ) {
 		$exts = getOption( 'modules' );
 	} else {
@@ -775,7 +815,8 @@ function isActiveX( $ext ) {
   }
 }
 
-function activeTheme( $theme ) {
+function activeTheme( $theme )
+{
 	if ( getOption( 'activetheme' ) == $theme ) {
 		return true;
 	} else {
@@ -783,11 +824,13 @@ function activeTheme( $theme ) {
 	}
 }
 
-function LoadActiveX( $ext ) {
+function LoadActiveX( $ext )
+{
     require_once _ABSX_.$ext.'/'.$ext.'.php';
 }
 
-function timeZones() {
+function timeZones()
+{
   $zones_array = array();
   $timestamp = time();
   foreach(timezone_identifiers_list() as $key => $zone) {
@@ -798,17 +841,19 @@ function timeZones() {
   return $zones_array;
 }
 
-function add_shortcode($tag, $callback) {
+function add_shortcode($tag, $callback)
+{
 
     return Classes\Shortcodes::instance()->register($tag, $callback);
 }
 
-function do_shortcode($str) {
-
+function do_shortcode($str) 
+{
     return Classes\Shortcodes::instance()->doShortcode($str);
 }
 
-function addMeta( $name, $content ){
+function addMeta( $name, $content )
+{
 	echo '<link name="' . $name . '" content="' . $content . '" >';
 }
 
@@ -816,11 +861,13 @@ function addMeta( $name, $content ){
 /**
 * Adds cross-site request forgery (CSRF) protection
 **/
-function csrf(){
+function csrf()
+{
 	echo '<input type="hidden" name="csrf_token" value="' . CSRF . '" />';
 }
 
-function serviceWorker(){ ?>
+function serviceWorker()
+{ ?>
 	<script>
 	if ('serviceWorker' in navigator) {
 	  window.addEventListener('load', function() {
@@ -836,7 +883,8 @@ function serviceWorker(){ ?>
 </script><?php
 }
 
-function addAction( $hook, $callable, $args ){
+function addAction( $hook, $callable, $args )
+{
 	if ( !isset( $GLOBALS['GActions'][$hook] ) ) {
 		$GLOBALS['GActions'][$hook] = array();
 	}
@@ -844,7 +892,8 @@ function addAction( $hook, $callable, $args ){
 	$GLOBALS['GActions'][$hook][] = array( $callable, $args );
 }
 
-function doActions( $hook ){
+function doActions( $hook )
+{
 
 	if ( isset( $GLOBALS['GActions'][$hook] ) ) {
 		foreach ($GLOBALS['GActions'][$hook] as $callable ) {
@@ -860,21 +909,25 @@ function doActions( $hook ){
 	}
 }
 
-function doHeader(){
+function doHeader()
+{
 	doActions( 'header' );
 }
 
-function doFooter(){
+function doFooter()
+{
 	doActions( 'footer' );
 }
 
-function addRule( $rule, $callback ){
+function addRule( $rule, $callback )
+{
 	if ( !isset( $GLOBALS['GRules'][$rule] ) ) {
 		$GLOBALS['GRules'][$rule] = $callback;
 	}
 }
 
-function rewriteRules( $rule, $args ){
+function rewriteRules( $rule, $args )
+{
 	$callback = $GLOBALS['GRules'][$rule];
 
 	if ( isset( $callback ) ) {
@@ -882,7 +935,8 @@ function rewriteRules( $rule, $args ){
 	}
 }
 
-function addSetting( $page, $label = "Options", $callable = "echo", $args = "" ){
+function addSetting( $page, $label = "Options", $callable = "echo", $args = "" )
+{
 	if ( !isset( $GLOBALS['GSettings'][$page] ) ) {
 		$GLOBALS['GSettings'][$page] = array();
 	}
@@ -890,7 +944,8 @@ function addSetting( $page, $label = "Options", $callable = "echo", $args = "" )
 	$GLOBALS['GSettings'][$page][] = array( $callable, $args, $label );
 }
 
-function doSetting( $page ){
+function doSetting( $page )
+{
 	$actions = $GLOBALS['GSettings'][$page];
 
 	if ( isset( $actions ) ) {
@@ -907,7 +962,8 @@ function doSetting( $page ){
 	}
 }
 
-function addSettingField( $page, $name, $label = null, $type = "text", $icon = "label", $attrs = null ){
+function addSettingField( $page, $name, $label = null, $type = "text", $icon = "label", $attrs = null )
+{
 	if ( !isset( $GLOBALS['GSettingsField'][$page] ) ) {
 		$GLOBALS['GSettingsField'][$page] = array();
 	}
@@ -919,7 +975,8 @@ function addSettingField( $page, $name, $label = null, $type = "text", $icon = "
 	$GLOBALS['GSettingsField'][$page][$name] = array( $type, $label, $icon, $attrs );
 }
 
-function renderSettingsForm( $page ){
+function renderSettingsForm( $page )
+{
 	echo '<title>'.$GLOBALS['GSettings'][$page][0][2].'</title>';
 	echo '<form class="mdl-cell mdl-cell--8-col '.$GLOBALS['GPrimary'].' mdl-card" name="'.$page.'" method="POST" action"" >
 		<div class="mdl-card__supporting-text">';
@@ -940,7 +997,8 @@ function renderSettingsForm( $page ){
 	</form>';
 }
 
-function doSettingFields( $name, $field ){
+function doSettingFields( $name, $field )
+{
 		$type = $field[0];
 		$label = $field[1];
 		$icon = $field[2];
@@ -1012,7 +1070,8 @@ function doSettingFields( $name, $field ){
 /**
 * Recursively copy directories
 **/
-function reCopy( $src, $dest ){
+function reCopy( $src, $dest )
+{
 	if ( is_dir( $dest ) ) {
 		die( "A directory by that name already exists.");
 	} else {
@@ -1039,7 +1098,8 @@ function reCopy( $src, $dest ){
 /**
 * Recursively copy directories
 **/
-function copyr( $source, $dest ){
+function copyr( $source, $dest )
+{
     if (is_link($source)) {
         return symlink(readlink($source), $dest);
     }
@@ -1068,7 +1128,8 @@ function copyr( $source, $dest ){
 /**
 * Recursively delete directories
 **/
-function rrmdir( $src ){
+function rrmdir( $src )
+{
 	$dir = opendir( $dir );
 	while ( false !== ( $file = readdir( $dir ) ) ) {
 		if ( ( $file != "." ) && ( $file !=".." ) ) {
@@ -1082,11 +1143,13 @@ function rrmdir( $src ){
 	}
 }
 
-function renderView( $view, $data = "" ){
+function renderView( $view, $data = "" )
+{
 	require_once( _ABSVIEWS_.$view.'.php' );
 }
 
-function restApi( $elements ){
+function restApi( $elements )
+{
 	if ( !empty( $elements[0] && $elements[0] !== "themes" ) ) {
 		$table = strtoupper( $elements[0] );
 		$table = $GLOBALS[$table];
@@ -1203,14 +1266,16 @@ function restApi( $elements ){
 	}
 }
 
-function isLocalhost() {
+function isLocalhost()
+{
     $whitelist = array( '127.0.0.1', '::1' );
     if ( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ) {
         return true;
     }
 }
 
-function isTheme ( $theme) {
+function isTheme ( $theme)
+{
     $themes = $GLOBALS['JBLDB'] -> query( "SELECT style FROM ". _DBPREFIX ."users WHERE id = '".$_SESSION[JBLSALT.'Code']."'" );
     if ( $GLOBALS['JBLDB'] -> numRows($themes) > 0) {
         while ( $mytheme = $GLOBALS['JBLDB'] -> fetchArray( $themes) ) {
@@ -1221,7 +1286,8 @@ function isTheme ( $theme) {
     }
 }
 
-function intallTheme( $source ) {
+function intallTheme( $source )
+{
 	$install = new ZipArchive();
 	$xT = $install -> open( $source );
 	if ( $xT === TRUE ) {
@@ -1239,7 +1305,8 @@ function intallTheme( $source ) {
 * @param $package - Package name
 **/
 
-function fileContents( $type, $package = null, $class = null ){
+function fileContents( $type, $package = null, $class = null )
+{
 	if ( is_null( $package ) ) {
 		$package = array();
 		$package['name'] = "Jabali";
@@ -1296,7 +1363,8 @@ function fileContents( $type, $package = null, $class = null ){
 	return $comments;
 }
 
-function hasPosts(){
+function hasPosts()
+{
 	if ( $GLOBALS['gpost_index'] <= $GLOBALS['gpost_count'] ) {
 		$GLOBALS['gpost_count'] = count( $GLOBALS['gposts'] )-1;
 		return true;
@@ -1306,7 +1374,8 @@ function hasPosts(){
 	}
 }
 
-function thePost(){
+function thePost()
+{
 	if ( $GLOBALS['gpost_index'] > $GLOBALS['gpost_count'] ) {
 		return false;
 	}
@@ -1363,7 +1432,8 @@ function theCategories( $class = '' ){
 	echo $tags;
 }
 
-function postCategories( $class = '' ){
+function postCategories( $class = '' )
+{
 	$tags = $GLOBALS['gpost']['categories'];
 	$tags = explode(", ", $tags );
 	$tagged = array(); 
@@ -1375,7 +1445,8 @@ function postCategories( $class = '' ){
 	echo $tags;
 }
 
-function theTags( $class = '' ){
+function theTags( $class = "" )
+{
 	$tags = $GLOBALS['gpost']['tags'];
 	$tags = explode(", ", $tags );
 	$tagged = array(); 
@@ -1387,7 +1458,8 @@ function theTags( $class = '' ){
 	echo $tags;
 }
 
-function postTags( $class = '' ){
+function postTags()
+{
 	$tags = $GLOBALS['gpost']['tags'];
 	$tags = explode(", ", $tags );
 	$tagged = array(); 
@@ -1523,7 +1595,7 @@ function submitButton( $name = "create", $position = "alignright", $icon = "save
 	echo( '<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored '.$position.'" type="submit" name="'.$name.'"><i class="material-icons">'.$icon.'</i></button>'.$form );
 }
 
-function sendButton( $name = "create", $value = "", $class = "alignright", $icon = "save", $form = false )
+function sendButton( $name = "create", $value = "", $class = "alignright" )
 {	csrf();
 	$value = !empty( $value ) ?? $name;
 	echo( '<button class="'.$class.'" type="submit" name="'.$name.'">'.$value.'</button>' );
@@ -1593,23 +1665,27 @@ function eMail($receipients, $subject, $message, $cc = null, $attachments = null
 	$GLOBALS['MAILER'] -> From = getOption('email');
 	$GLOBALS['MAILER'] -> FromName = getOption('name');
 
-	if ( is_array( $receipient ) ) {
-		foreach ($receipients as $email => $name ) {
-			$GLOBALS['MAILER'] -> addAddress( $email, $name );
-		}
-	} else {
-		$GLOBALS['MAILER'] -> addAddress( $receipients );
+	if ( !is_array( $receipients ) ) {
+		$receipients = array( $receipients );
 	}
 
-	//Provide file path and name of the attachments
-	$GLOBALS['MAILER'] -> addAttachment("file.txt", "File.txt");        
-	$GLOBALS['MAILER'] -> addAttachment("images/profile.png"); //Filename is optional
+	foreach ($receipients as $email => $name ) {
+		$GLOBALS['MAILER'] -> addAddress( $email, $name );
+	}
 
-	$GLOBALS['MAILER'] -> isHTML(true);
+	if ( !is_array( $attachments )) {
+		$attachments = array( $attachments );
+	}
 
-	$GLOBALS['MAILER'] -> Subject = "Subject Text";
-	$GLOBALS['MAILER'] -> Body = "<i>Mail body in HTML</i>";
-	$GLOBALS['MAILER'] -> AltBody = "This is the plain text version of the email content";
+	foreach ($attachments as $file => $name ) {
+		$GLOBALS['MAILER'] -> addAttachment( $file, $name);
+	}
+
+	$GLOBALS['MAILER'] -> isHTML( $isHTML );
+
+	$GLOBALS['MAILER'] -> Subject = $subject;
+	$GLOBALS['MAILER'] -> Body = "<i>".$message."</i>";
+	$GLOBALS['MAILER'] -> AltBody = $message;
 
 	if(!$GLOBALS['MAILER'] -> send()) 
 	{

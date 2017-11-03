@@ -3,7 +3,7 @@
 * @package Jabali
 * @subpackage Themes Creation Client
 * @author Mauko Maunde
-* @link https://docs.jabalicms.org/api/themes
+* @link https://docs.jabalicms.org/api/themes/
 * @since 0.17.06
 **/
 

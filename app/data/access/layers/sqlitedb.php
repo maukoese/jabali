@@ -13,7 +13,7 @@ class SQLiteDB {
 
 	private $conn;
 
-	function __construct( $dbname ) {
+	public function __construct( $dbname ) {
 
 		$this -> conn = new \SQLite3( _ABSDB_.'sqlite/'.$dbname.'.sq3' );
 		if ( !$this -> conn ) {
@@ -22,19 +22,19 @@ class SQLiteDB {
 		}
 	}
 
-	function __destruct(){
+	public function __destruct(){
 		$this -> conn -> close();
 	}
 
-	function query( $sql ){
+	public function query( $sql ){
 		return $this -> conn -> query( $sql );
 	}
 
-	function execute( $sql ){
+	public function execute( $sql ){
 		return $this -> conn -> exec( $sql );
 	}
 
-	function error(){
+	public function error(){
 		$this -> errorcode = $this -> conn -> lastErrorCode();
 		return $this -> conn -> lastErrorMsg();
 	}
@@ -43,7 +43,7 @@ class SQLiteDB {
 	* @return Returns an associative array of database records from a query result, 
 	* or null if there are no rows in the result
 	**/
-	function fetchArray( $result ){
+	public function fetchArray( $result ){
 		return $result -> fetchArray(SQLITE3_ASSOC);
 	}
 
@@ -51,7 +51,7 @@ class SQLiteDB {
 	* @return Returns an object of database records from a query result, 
 	* or null if there are no rows in the result
 	**/
-	function fetchObject( $result ){
+	public function fetchObject( $result ){
 		return (object)$result -> fetchArray(SQLITE3_ASSOC);
 	}
 
@@ -59,13 +59,13 @@ class SQLiteDB {
 	* Preparing our data
 	* @return Returns escaped data to prevent mysqli injection
 	**/
-	function clean( $data ){
+	public function clean( $data ){
 		return $this -> conn -> escapeString( $data );
 	}
 
 
 
-	function setCols( $cols ){
+	public function setCols( $cols ){
 		if ( is_array( $cols ) ) {
 
 			array_walk( $cols, array($this, 'clean' ) );
@@ -78,7 +78,7 @@ class SQLiteDB {
 		return $sql;
 	}
 
-	function setVals( $vals ){
+	public function setVals( $vals ){
 		$sql = " VALUES ( ";
 		if ( is_array( $vals ) ) {
 
@@ -101,7 +101,7 @@ class SQLiteDB {
 		return $sql;
 	}
 
-	function setVal( $cols, $vals ){
+	public function setVal( $cols, $vals ){
 		$sql = "SET ";
 		if ( is_array( $cols ) && is_array( $vals ) ) {
 			array_walk( $cols, array( $this, 'clean' ) );
@@ -122,7 +122,7 @@ class SQLiteDB {
 		return $sql;
 	}
 
-	function setCond( $conds ){
+	public function setCond( $conds ){
 		$sql = "";
 		$where = array();
 
@@ -137,18 +137,26 @@ class SQLiteDB {
 		return $sql;
 	}
 
-	function setLike( $data ){
-		$sql = "LIKE '%" . $data . "%'";
+	public function setLike( $conds )
+	{
+
+		$where = array();
+
+		foreach ( $conds as $id => $val ) {
+	        $where[] = $id . " LIKE '%" . $val . "%'";
+	    }
+
+	    if ( count( $where ) > 0){
+	      $sql = " WHERE " . implode( ' AND ', $where );
+	    }
 
 		return $sql;
 	}
 
-
-
 	/**
 	* Creating Data
 	**/
-	function insert( $table, $cols, $vals, $conds = null ){
+	public function insert( $table, $cols, $vals, $conds = null ){
 		$sql = "INSERT INTO " . _DBPREFIX.$table . " ( ";
 		$sql .= $this -> setCols( $cols );
 		$sql .= " )";
@@ -161,11 +169,11 @@ class SQLiteDB {
 		return $this -> query( $sql ); 
 	}
 
-	function insertId(){
+	public function insertId(){
 		return $this -> conn -> lastInsertRowID();
 	}
 
-	function update( $table, $cols, $vals, $conds = null ){
+	public function update( $table, $cols, $vals, $conds = null ){
 		$sql = "UPDATE " . _DBPREFIX . $table . " ";
 		$sql .= $this -> setVal( $cols, $vals );
 
@@ -179,13 +187,13 @@ class SQLiteDB {
 	/**
 	* Creating Data
 	**/
-	function sweep( $table ) {
+	public function sweep( $table ) {
 		$sql = "SELECT * FROM " . _DBPREFIX . $table;
 
 		return $this -> query( $sql ); 
 	}
 
-	function select( $table, $cols, $conds = null, $order = null, $limit = null, $offset = null ){
+	public function select( $table, $cols, $conds = null, $order = null, $limit = null, $offset = null ){
 		$sql = "SELECT ";
 		$sql .= $this -> setCols( $cols );
 		$sql .= " FROM ". _DBPREFIX . $table . " ";
@@ -214,9 +222,38 @@ class SQLiteDB {
 		return $this -> query( $sql );
 	}
 
+	public function selectLike( $table, $cols, $like = null, $order = null, $limit = null, $offset = null )
+	{
+		$sql = "SELECT ";
+		$sql .= $this -> setCols( $cols );
+		$sql .= " FROM ". _DBPREFIX . $table . " ";
+
+		if ( $like !== null ) {
+			$sql .= $this -> setLike( $like );
+		}
+
+		if ( $order !== null ) {
+			$sql .= "ORDER BY ";
+			if ( is_array( $order ) ) {
+				$sql .= $order[0] ." ". $order[1];
+			} else {
+				$sql .= $order . " ASC";
+			}
+		}
+
+		if ( $offset !== null ) {
+			$sql .= "OFFSET " . $offset;
+		}
+
+		if ( $limit !== null ) {
+			$sql .= "LIMIT " . $limit;
+		}
+
+		return $this -> query( $sql );
+	}
 
 
-	function search( $table, $cols, $conds, $val = null ){
+	public function search( $table, $cols, $conds, $val = null ){
 		$sql = "SELECT ";
 		$sql .= $this -> setCols( $cols );
 		$sql .= " FROM". _DBPREFIX . $table . " ";
@@ -232,7 +269,7 @@ class SQLiteDB {
 	/**
 	* Deleting Data
 	**/
-	function delete( $table, $conds ){
+	public function delete( $table, $conds ){
 		$sql = "DELETE FROM " . _DBPREFIX . $table . " ";
 		
 		if ( $conds !== null ) {
@@ -245,7 +282,7 @@ class SQLiteDB {
 	/**
 	* Query Reports
 	**/
-	function rowsCount( $table, $cols ){
+	public function rowsCount( $table, $cols ){
 		$sql = "SELECT ";
 		$sql .= $this -> setCols( $cols );
 		$sql .= "FROM " . _DBPREFIX . $table . " ";
@@ -258,7 +295,7 @@ class SQLiteDB {
 	/**
 	* Query Reports
 	**/
-	function numRows( $result ){
+	public function numRows( $result ){
 		$numRows = 0;
         while($rows = $result->fetchArray()){
             ++$numRows;
@@ -266,7 +303,7 @@ class SQLiteDB {
         return $numRows;
 	}
 
-	function rowExists ( $sql ){
+	public function rowExists ( $sql ){
 		if ( $this -> query( $sql -> num_rows > 0 ) ) {
 			return true;
 		} else {
@@ -274,11 +311,11 @@ class SQLiteDB {
 		}
 	}
 
-	function affectedRows(){
+	public function affectedRows(){
 		return $this -> conn -> affected_rows;
 	}
 
-	function reset( $result ){
-    	return mysqli_data_seek( $result, 0 );
+	public function reset( $result ){
+    	return $this -> conn -> seek( $result, 0 );
   	}
 }

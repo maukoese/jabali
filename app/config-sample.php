@@ -2,7 +2,7 @@
 /**
 * @package Jabali Framework
 * @subpackage Server Configuration File
-* @link https://docs.mauko.co.ke/jabali/configuration
+* @link https://docs.jabalicms.org/configuration/
 * @author Mauko Maunde
 * @since 0.17.04
 *

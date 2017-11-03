@@ -1,8 +1,10 @@
 <?php 
 /**
-* @package Jabali
-* @subpackage Import/Export Tools
-* @since 0.17.09
+* @package Jabali Framework
+* @subpackage Admin Transfer Tools
+* @link https://docs.jabalicms.org/transfer/
+* @author Mauko Maunde
+* @since 0.17.04
 **/
 session_start();
 require_once( '../init.php' );

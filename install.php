@@ -1,4 +1,11 @@
 <?php 
+/**
+* @package Jabali Framework
+* @subpackage App Instalation
+* @link https://docs.jabalicms.org/installation/
+* @author Mauko Maunde
+* @since 0.17.04
+**/
 
 if ( !file_exists( 'app/config.php' ) ) {
 	header( "Location: setup.php" );
@@ -195,7 +202,9 @@ if (isset($_POST['register']) ) {
             _shout_( "Error: " . $GLOBALS['JBLDB'] -> error(), "error");
     }
     
-} else { ?>
+} else { 
+
+    installSQLDB(); ?>
     <!DOCTYPE html>
     <html>
     <head>
@@ -206,7 +215,7 @@ if (isset($_POST['register']) ) {
     	<script src="app/assets/js/jquery-3.2.1.min.js"></script>
     	<script src="app/assets/js/materialize.min.js"></script>
     	<script src="app/assets/js/material.js"></script>
-    	<title>Admin Setup - Jabali</title>
+    	<title>Admin Setup - Jabali CMS</title>
     </head>
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
     	<body>

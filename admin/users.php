@@ -1,4 +1,11 @@
-<?php
+<?php 
+/**
+* @package Jabali Framework
+* @subpackage Admin Users
+* @link https://docs.jabalicms.org/users/
+* @author Mauko Maunde
+* @since 0.17.04
+**/
 session_start();
 require_once( '../init.php' );
 
@@ -28,11 +35,11 @@ if ( isset( $_POST['register'] ) ) {
     if ( empty( $_POST['updated'] ) ) { $_POST['updated'] = date('Y-m-d H:i:s'); }
 
     if ( !empty( $_FILES['new_avatar'] ) ) {
-      $upload = _ABSUP_.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'. basename( $_FILES['new_avatar']['name'] );
+      $upload = _ABSUP_.date('Y/m/d/').basename( $_FILES['new_avatar']['name'] );
       if ( file_exists( $upload) ) {
-        $avatar = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'. basename( $_FILES['new_avatar']['name'] )."_".date('H_m_s');
+        $avatar = _UPLOADS.date('Y/m/d/').basename( $_FILES['new_avatar']['name'] )."_".date('H_m_s');
       } else {
-        $avatar = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/' . basename( $_FILES['new_avatar']['name'] );
+        $avatar = _UPLOADS.date('Y/m/d/').basename( $_FILES['new_avatar']['name'] );
       }
 
       move_uploaded_file( $_FILES['new_avatar']["tmp_name"], $upload );
@@ -103,11 +110,11 @@ if ( isset( $_POST['update'] ) ) {
     if ( empty( $_POST['updated'] ) ) { $_POST['updated'] = date('Y-m-d H:i:s'); }
 
     if ( !empty( $_FILES['new_avatar'] ) ) {
-      $upload = _ABSUP_.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'. basename( $_FILES['new_avatar']['name'] );
+      $upload = _ABSUP_.date('Y/m/d/').basename( $_FILES['new_avatar']['name'] );
       if ( file_exists( $upload) ) {
-        $avatar = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/'. basename( $_FILES['new_avatar']['name'] )."_".date('H_m_s');
+        $avatar = _UPLOADS.date('Y/m/d/').basename( $_FILES['new_avatar']['name'] )."_".date('H_m_s');
       } else {
-        $avatar = _UPLOADS.date('Y' ).'/'.date('m' ).'/'.date('d' ).'/' . basename( $_FILES['new_avatar']['name'] );
+        $avatar = _UPLOADS.date('Y/m/d/').basename( $_FILES['new_avatar']['name'] );
       }
 
       move_uploaded_file( $_FILES['new_avatar']["tmp_name"], $upload );

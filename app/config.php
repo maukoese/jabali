@@ -17,7 +17,7 @@
 * @param _ROOT The app's home/root url
 * @param _DBPRFIX A prefix to be added before all database tables. Allows multiple Jabali installations on same database.
 * @param JBLSALT A unique, app-specific string for authentication.
-* @param JBLAUTH Used in conjuction with JBLSALT for authentication and Cross-site Request Forgery(CSRF). Also unique and app-specific
+* @param JBLAUTH Used in conjuction with JBLSALT for authentication and prevention of Cross-site Request Forgery(CSRF). Also unique and app-specific
 **/
 
 $server["dbhost"] = "localhost";

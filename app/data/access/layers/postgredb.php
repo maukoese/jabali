@@ -2,7 +2,7 @@
 namespace Jabali\Data\Access\Layers;
 
 /**
-* Jabali MySQL Data Access Layer
+* Jabali PostgreSQL Data Access Layer
 */
 class PostgreDB {
 
@@ -26,36 +26,42 @@ class PostgreDB {
 		   }
 	}
 
-	function __destruct(){
+	public function __destruct()
+	{
 		$this -> conn -> close();
 	}
 
-	function query( $sql ){
-		return $this -> conn -> query( $sql );
+	public function query( $sql )
+	{
+		return pg_query( $sql );
 	}
 
-	function execute( $sql ){
-		return $this -> conn -> query( $sql );
+	public function execute( $sql )
+	{
+		return pg_query( $sql );
 	}
 
-	function error(){
-		return $this -> conn -> error;
+	public function error()
+	{
+		return pg_last_error();
 	}
 
 	/**
 	* @return Returns an associative array of database records from a query result, 
 	* or null if there are no rows in the result
 	**/
-	function fetchArray( $result ){
-		return $result -> fetch_assoc();
+	public function fetchArray( $result )
+	{
+		return pg_fetch_array( $result, NULL, PGSQL_ASSOC );
 	}
 
 	/**
 	* @return Returns an object of database records from a query result, 
 	* or null if there are no rows in the result
 	**/
-	function fetchObject( $result ){
-		return $result -> fetch_object();
+	public function fetchObject( $result )
+	{
+		return (object)pg_fetch_array( $result, NULL, PGSQL_ASSOC );
 	}
 
 	/**
@@ -65,13 +71,15 @@ class PostgreDB {
 	/**
 	* @return Returns escaped data to prevent mysqli injection
 	**/
-	function clean( $data ){
+	public function clean( $data )
+	{
 		return mysqli_real_escape_string( $this -> conn, $data );
 	}
 
 
 
-	function setCols( $cols ){
+	public function setCols( $cols )
+	{
 		if ( is_array( $cols ) ) {
 
 			array_walk( $cols, array($this, 'clean' ) );
@@ -84,7 +92,8 @@ class PostgreDB {
 		return $sql;
 	}
 
-	function setVals( $vals ){
+	public function setVals( $vals )
+	{
 		$sql = " VALUES ( ";
 		if ( is_array( $vals ) ) {
 
@@ -107,7 +116,8 @@ class PostgreDB {
 		return $sql;
 	}
 
-	function setVal( $cols, $vals ){
+	public function setVal( $cols, $vals )
+	{
 		$sql = "SET ";
 		if ( is_array( $cols ) && is_array( $vals ) ) {
 			array_walk( $cols, array( $this, 'clean' ) );
@@ -128,8 +138,8 @@ class PostgreDB {
 		return $sql;
 	}
 
-	function setCond( $conds ){
-		$sql = "";
+	public function setCond( $conds )
+	{
 		$where = array();
 
 		foreach ( $conds as $id => $val ) {
@@ -137,24 +147,33 @@ class PostgreDB {
 	    }
 
 	    if ( count( $where ) > 0){
-	      $sql .= " WHERE " . implode( ' AND ', $where );
+	      $sql = " WHERE " . implode( ' AND ', $where );
 	    }
 
 		return $sql;
 	}
 
-	function setLike( $data ){
-		$sql = "LIKE '%" . $data . "%'";
+	public function setLike( $conds )
+	{
+
+		$where = array();
+
+		foreach ( $conds as $id => $val ) {
+	        $where[] = $id . " LIKE '%" . $val . "%'";
+	    }
+
+	    if ( count( $where ) > 0){
+	      $sql = " WHERE " . implode( ' AND ', $where );
+	    }
 
 		return $sql;
 	}
 
-
-
 	/**
 	* Creating Data
 	**/
-	function insert( $table, $cols, $vals, $conds = null ){
+	public function insert( $table, $cols, $vals, $conds = null )
+	{
 		$sql = "INSERT INTO " . _DBPREFIX.$table . " ( ";
 		$sql .= $this -> setCols( $cols );
 		$sql .= " )";
@@ -167,15 +186,17 @@ class PostgreDB {
 		return $this -> query( $sql ); 
 	}
 
-	function insertId(){
+	public function insertId()
+	{
 		return $this -> conn -> insert_id;
 	}
 
-	function update( $table, $cols, $vals, $conds = null ){
+	public function update( $table, $cols, $vals, $conds = null )
+	{
 		$sql = "UPDATE " . _DBPREFIX . $table . " ";
 		$sql .= $this -> setVal( $cols, $vals );
 
-		if ( $conds !== null ) {
+		if ( !is_null( $conds ) ) {
 		 	$sql .= $this -> setCond( $conds );
 		}
 
@@ -185,13 +206,15 @@ class PostgreDB {
 	/**
 	* Creating Data
 	**/
-	function sweep( $table ) {
+	public function sweep( $table )
+	{
 		$sql = "SELECT * FROM " . _DBPREFIX . $table;
 
 		return $this -> query( $sql ); 
 	}
 
-	function select( $table, $cols, $conds = null, $order = null, $limit = null, $offset = null ){
+	public function select( $table, $cols, $conds = null, $order = null, $limit = null, $offset = null )
+	{
 		$sql = "SELECT ";
 		$sql .= $this -> setCols( $cols );
 		$sql .= " FROM ". _DBPREFIX . $table . " ";
@@ -220,9 +243,38 @@ class PostgreDB {
 		return $this -> query( $sql );
 	}
 
+	public function selectLike( $table, $cols, $like = null, $order = null, $limit = null, $offset = null )
+	{
+		$sql = "SELECT ";
+		$sql .= $this -> setCols( $cols );
+		$sql .= " FROM ". _DBPREFIX . $table . " ";
 
+		if ( $like !== null ) {
+			$sql .= $this -> setLike( $like );
+		}
 
-	function search( $table, $cols, $conds, $val = null ){
+		if ( $order !== null ) {
+			$sql .= "ORDER BY ";
+			if ( is_array( $order ) ) {
+				$sql .= $order[0] ." ". $order[1];
+			} else {
+				$sql .= $order . " ASC";
+			}
+		}
+
+		if ( $offset !== null ) {
+			$sql .= "OFFSET " . $offset;
+		}
+
+		if ( $limit !== null ) {
+			$sql .= "LIMIT " . $limit;
+		}
+
+		return $this -> query( $sql );
+	}
+
+	public function search( $table, $cols, $conds, $val = null )
+	{
 		$sql = "SELECT ";
 		$sql .= $this -> setCols( $cols );
 		$sql .= " FROM". _DBPREFIX . $table . " ";
@@ -235,10 +287,12 @@ class PostgreDB {
 
 		return $this -> query( $sql ); 
 	}
+
 	/**
 	* Deleting Data
 	**/
-	function delete( $table, $conds ){
+	public function delete( $table, $conds )
+	{
 		$sql = "DELETE FROM " . _DBPREFIX . $table . " ";
 		
 		if ( $conds !== null ) {
@@ -251,7 +305,8 @@ class PostgreDB {
 	/**
 	* Query Reports
 	**/
-	function rowsCount( $table, $cols ){
+	public function rowsCount( $table, $cols )
+	{
 		$sql = "SELECT ";
 		$sql .= $this -> setCols( $cols );
 		$sql .= "FROM " . _DBPREFIX . $table . " ";
@@ -264,11 +319,13 @@ class PostgreDB {
 	/**
 	* Query Reports
 	**/
-	function numRows( $result ){
+	public function numRows( $result )
+	{
 		return $result -> num_rows;
 	}
 
-	function rowExists ( $sql ){
+	public function rowExists ( $sql )
+	{
 		if ( $this -> query( $sql -> num_rows > 0 ) ) {
 			return true;
 		} else {
@@ -276,11 +333,13 @@ class PostgreDB {
 		}
 	}
 
-	function affectedRows(){
+	public function affectedRows()
+	{
 		return $this -> conn -> affected_rows;
 	}
 
-	function reset( $result ){
-    	return mysqli_data_seek( $result, 0 );
+	public function reset( $result, $row = 0 )
+	{
+    	return mysqli_data_seek( $result, $row );
   	}
 }

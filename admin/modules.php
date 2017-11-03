@@ -1,4 +1,11 @@
-<?php 
+<?php
+/**
+* @package Jabali Framework
+* @subpackage Extension Modules
+* @link https://docs.jabalicms.org/extend/
+* @author Mauko Maunde
+* @since 0.17.09
+**/
 session_start();
 require_once( '../init.php' );
 require_once( 'header.php' );

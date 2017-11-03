@@ -139,6 +139,52 @@ class Options {
         </div>
 
         <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
+
+           <script>
+              $(function () {
+                $( ":file" ).change(function () {
+                    if ( this.files && this.files[0]  ) {
+                        var reader = new FileReader();
+                        reader.onload = imageIsLoaded;
+                        reader.readAsDataURL(this.files[0] );
+                    }
+                } );
+            } );
+
+            function imageIsLoaded(e ) {
+                $('#myfavicon' ).attr('src', e.target.result );
+            };
+            </script>
+           <script>
+              $(function () {
+                $( ":file" ).change(function () {
+                    if ( this.files && this.files[1]  ) {
+                        var reader = new FileReader();
+                        reader.onload = imageIsLoaded;
+                        reader.readAsDataURL(this.files[1] );
+                    }
+                } );
+            } );
+
+            function imageIsLoaded(e ) {
+                $('#myheaderlogo' ).attr('src', e.target.result );
+            };
+            </script>
+           <script>
+              $(function () {
+                $( ":file" ).change(function () {
+                    if ( this.files && this.files[2]  ) {
+                        var reader = new FileReader();
+                        reader.onload = imageIsLoaded;
+                        reader.readAsDataURL(this.files[2] );
+                    }
+                } );
+            } );
+
+            function imageIsLoaded(e ) {
+                $('#myhomelogo' ).attr('src', e.target.result );
+            };
+            </script>
             <script>
                    function chooseHeader() {
                       $( "#header_logo" ).click();
@@ -163,8 +209,8 @@ class Options {
                     <div style="height:0px;overflow:hidden">
                         <input id="my_favicon" type="file" name="newfavicon">
                     </div>
-                    <?php if ( is_file( getOption( 'favicon' ) ) ) { $favicon = _IMAGES.'marker.png'; } else { $favicon = getOption( 'favicon' ); } ?>
-                    <img src="<?php echo $favicon; ?>" width="50%" onclick="chooseFavicon();">
+                    <?php if ( !is_file( getOption( 'favicon' ) ) ) { $favicon = _IMAGES.'marker.png'; } else { $favicon = getOption( 'favicon' ); } ?>
+                    <img id="myfavicon" src="<?php echo $favicon; ?>" width="50%" onclick="chooseFavicon();">
                 </div>
             </div>
             <br>
@@ -179,8 +225,8 @@ class Options {
                     <div style="height:0px;overflow:hidden">
                         <input id="header_logo" type="file" name="newheaderlogo">
                     </div>
-                    <?php $hl = getOption( 'headerlogo' );  if ( file_exists( $hl ) ) { $headerlogo = _IMAGES.'marker.png'; } else { $headerlogo = getOption( 'headerlogo' ); } ?>
-                    <img src="<?php echo $headerlogo; ?>" width="100%" onclick="chooseHeader();">
+                    <?php $hl = getOption( 'headerlogo' );  if ( !file_exists( $hl ) ) { $headerlogo = _IMAGES.'logo.png'; } else { $headerlogo = getOption( 'headerlogo' ); } ?>
+                    <img id="myheaderlogo" src="<?php echo $headerlogo; ?>" width="100%" onclick="chooseHeader();">
                 </div>
             </div>
             <br>
@@ -195,8 +241,8 @@ class Options {
                     <div style="height:0px;overflow:hidden">
                     <input id="home_logo" type="file" name="newhomelogo">
                     </div>
-                    <?php $hl = getOption( 'homelogo' );  if ( file_exists( $hl ) ) { $homelogo = _IMAGES.'marker.png'; } else { $homelogo = getOption( 'homelogo' ); } ?>
-                    <img src="<?php echo $homelogo ?>" width="100%" onclick="chooseHome();">
+                    <?php $hl = getOption( 'homelogo' );  if ( is_file( $hl ) ) { $homelogo = _IMAGES.'logo-w.png'; } else { $homelogo = getOption( 'homelogo' ); } ?>
+                    <img id="myhomelogo" src="<?php echo $homelogo ?>" width="100%" onclick="chooseHome();">
                 </div>
             </div>
             <?php csrf(); ?>

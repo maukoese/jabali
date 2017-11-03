@@ -2,7 +2,7 @@
 /**
 * @package Jabali Framework
 * @subpackage Forms Class
-* @link https://docs.mauko.co.ke/jabali/classes/hforms
+* @link https://docs.jabalicms.org/classes/forms/
 * @author Mauko Maunde
 * @version 0.17.06
 **/

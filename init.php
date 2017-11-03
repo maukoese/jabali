@@ -2,7 +2,7 @@
 /**
 * @package Jabali Framework
 * @subpackage Initialization
-* @link https://docs.mauko.co.ke/jabali/initialization
+* @link https://docs.jabalicms.org/init/
 * @author Mauko Maunde
 * @since 0.17.09
 **/
@@ -95,7 +95,6 @@ switch ( $server["dbtype"] ) {
 		break;
 }
 
-installSQLDB();
 /**
 * Flush $server variable so configuration details are not available beyond this point
 **/

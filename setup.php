@@ -2,13 +2,14 @@
 /**
 * @package Jabali Framework
 * @subpackage Setup
-* @link https://docs.mauko.co.ke/jabali/setup/
+* @link https://docs.jabalicms.org/setup/
 * @author Mauko Maunde
 * @since 0.17.05
 **/
 
 
-function isLocalhost() {
+function isLocalhost()
+{
     $whitelist = array( '127.0.0.1', '::1' );
     if ( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ) {
         return true;
@@ -109,8 +110,8 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 		$txt = '<?php 
 	/**
 	* @package Jabali Framework
-	* @subpackage Server Configuration File
-	* @link https://docs.mauko.co.ke/jabali/configuration
+	* @subpackage App Configuration File
+	* @link https://docs.jabalicms.org/configuration/
 	* @author Mauko Maunde
 	* @since 0.17.04
 	*
@@ -125,7 +126,7 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 	* @param _ROOT The app\'s home/root url
 	* @param _DBPRFIX A prefix to be added before all database tables. Allows multiple Jabali installations on same database.
 	* @param JBLSALT A unique, app-specific string for authentication.
-	* @param JBLAUTH Used in conjuction with JBLSALT for authentication and Cross-site Request Forgery(CSRF). Also unique and app-specific
+	* @param JBLAUTH Used in conjuction with JBLSALT for authentication and prevention of Cross-site Request Forgery(CSRF). Also unique and app-specific
 	**/';
 		fwrite( $dbfile, $txt );
 
@@ -207,7 +208,7 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 		    <script src="app/assets/js/jquery-3.2.1.min.js"></script>
 		    <script src="app/assets/js/materialize.min.js"></script>
 		    <script src="app/assets/js/material.js"></script>
-			<title>Setup [ JABALI ]</title>
+			<title>Setup - Jabali CMS</title>
 		</head>
 
 		<div class="mdl-layout mdl-layout-transparent mdl-js-layout">
@@ -265,8 +266,8 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 							<ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--madge" for="ilk">
 							<li class="mdl-menu__item" data-val="MySQL">MySQL</li>
 							<li class="mdl-menu__item" data-val="SQLite">SQLite</li>
-							<!-- <li class="mdl-menu__item" data-val="PostgreSQL">PostgreSQL</li>
-							<li class="mdl-menu__item" data-val="SethDB">SethDB</li> -->
+							<li class="mdl-menu__item" data-val="PostgreSQL">PostgreSQL</li>
+							<!-- <li class="mdl-menu__item" data-val="SethDB">SethDB</li> -->
 							</ul>
 							</div>
 					        <input name="home" type="hidden" value="<?php 

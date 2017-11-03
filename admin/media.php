@@ -1,4 +1,11 @@
-<?php  
+<?php 
+/**
+* @package Jabali Framework
+* @subpackage Admin Media
+* @link https://docs.jabalicms.org/media/
+* @author Mauko Maunde
+* @since 0.17.04
+**/
 session_start();
 require_once( '../init.php' );
 require_once( 'header.php' ); ?>

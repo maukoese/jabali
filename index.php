@@ -1,4 +1,12 @@
-<?php
+<?php 
+/**
+* @package Jabali Framework
+* @subpackage App Conroller
+* @link https://docs.jabalicms.org/controller/
+* @author Mauko Maunde
+* @since 0.17.04
+**/
+
 session_start();
 if ( isset( $_GET['logout'] ) ) {
   session_destroy();
