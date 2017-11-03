@@ -2,7 +2,7 @@
 /**
 * @package Jabali Framework
 * @subpackage Common functions
-* @link https://docs.jabalicms.org/functions
+* @link https://docs.jabalicms.org/functions/
 * @author Mauko Maunde
 * @since 0.17.09
 **/
@@ -169,7 +169,7 @@ SQL;
 		)
 SQL;
 
-	foreach ($tables as $table ) {
+	foreach ( $tables as $table ) {
 		$GLOBALS['JBLDB'] -> execute( $table );
 	}
 } 
@@ -178,7 +178,7 @@ SQL;
 function is_localhost()
 {
 	$whitelist = array( '127.0.0.1', '::1' );
-	if ( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) )
+	if ( in_array( $_SERVER['REMOTE_ADDR'], $whitelist ) )
 	    return true;
 }
 
@@ -270,13 +270,13 @@ function loadScripts( $links, $theme = false )
 function frontlogo( $width = "250px;", $class = "" )
 {
 	
-	echo '<a class = "'.$class.'" href="' ._ROOT. '"><img src="' . getOption( 'homelogo' ) . '" width="' . $width . '"></a>';
+	echo ( '<a class = "'.$class.'" href="' ._ROOT. '"><img src="' . getOption( 'homelogo' ) . '" width="' . $width . '"></a>' );
 }
 
 /**
 * Display main logo
 **/
-function headerLogo( $width = "150px;", $class = ""  )
+function headerLogo( $width = "150px;", $class = "link"  )
 {
 	
 	echo '<a class = "'.$class.'" href="' ._ROOT. '"><img src="' . getOption( 'headerlogo' ) . '" width="' . $width . '"></a>';

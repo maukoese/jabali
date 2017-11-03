@@ -11,10 +11,10 @@
 		"github": "http://github.com/maukoese",
 		"email": "maukoese@gmail.com"
 	},
-	"website": "http://jabali.mauko.co.ke/",
-	"support": "http://jabali.mauko.co.ke/support",
-	"documentation": "http://jabali.mauko.co.ke/documentation",
-	"download": "http://code.mauko.co.ke/dl/jabali/jabali_0.17.10.zip",
+	"website": "http://jabalicms.org/",
+	"support": "http://jabalicms.org/support",
+	"documentation": "http://docs.jabalicms.org",
+	"download": "http://jabalicms.org/dl/jabali/jabali_0.17.10.zip",
 	"licenses": {
 		"MIT": "https://opensource.org/licenses/MIT",
 		"GNU": "https://opensource.org/licenses/gpl-license",

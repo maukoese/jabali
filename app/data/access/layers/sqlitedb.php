@@ -56,6 +56,15 @@ class SQLiteDB {
 	}
 
 	/**
+	* @return Returns an object of database records from a query result, 
+	* or null if there are no rows in the result
+	**/
+	function fetchAll( $result )
+	{
+		return $result -> fetchAll(SQLITE_ASSOC);;
+	}
+
+	/**
 	* Preparing our data
 	* @return Returns escaped data to prevent mysqli injection
 	**/

@@ -33,6 +33,28 @@ if ( isset( $_POST['createtheme'] ) ) {
   $email = $_POST['themeemail'];
   $version = $_POST['themeversion'];
 
+  $licensetext = 'MIT License
+
+Copyright (c) '.date( 'Y' ).' '. $author.'
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.';
+
   $comments = "<?php
   /**
   * @package Jabali 
@@ -60,6 +82,7 @@ if ( isset( $_POST['createtheme'] ) ) {
         <?php thePost(); ?>
         <title><?php theTitle(); ?> - <?php showOption( 'name' ); ?></title>
         <h1><?php theTitle(); ?></h1>
+        <?php theImage(); ?>
         <p><?php theDate(); ?></p>
         <p><?php theCategories(); ?></p>
         <p><?php theTags(); ?></p>
@@ -70,23 +93,11 @@ if ( isset( $_POST['createtheme'] ) ) {
   $templatetext = $comments." ?>
     <title><?php theTitle(); ?> - <?php showOption( 'name' ); ?></title>
     <h1><?php theTitle(); ?></h1>
+    <?php theImage(); ?>
     <p><?php theDate(); ?></p>
     <p><?php theCategories(); ?></p>
     <p><?php theTags(); ?></p>
     <article><?php theContent(); ?></article>";
-
-  $htemplatetext = $comments." ?>
-    <title>Home - <?php showOption( 'name' ); ?></title>
-    <?php if( hasPosts() ): ?>
-      <?php while( hasPosts() ): ?>
-        <?php thePost(); ?>
-        <h1><?php theTitle(); ?></h1>
-        <p><?php theDate(); ?></p>
-        <p><?php theCategories(); ?></p>
-        <p><?php theTags(); ?></p>
-        <article><?php theContent(); ?></article>
-      <?php endwhile; ?>
-    <?php endif; ?>";
 
   $footerertext = $comments." ?>
         <footer>
@@ -101,6 +112,18 @@ if ( isset( $_POST['createtheme'] ) ) {
         loadScript( 'js/".$slug .".js', '".$slug ."'); ?>
       <body>
     </html>";
+
+    $themeclass = $comments."
+
+    namespace Themes\\".ucwords( $slug ).";
+
+    class ".ucwords( $slug )."
+    {
+      public function __construct( \$args = \"\" )
+      {
+        //body
+      }
+    }";
 
   $themedir = _ABSTHEMES_ . $slug.'/';
   $templates = _ABSTHEMES_ . $slug.'/templates/';
@@ -124,10 +147,10 @@ if ( isset( $_POST['createtheme'] ) ) {
     "github": "'.$github.'",
     "email": "'.$email.'"
   },
-  "link": "http://jabali.mauko.co.ke/themes/'.$slug.'",
+  "link": "http://jabalicms.org/themes/'.$slug.'",
   "website": "'.$website.'",
   "support": "'.$support.'",
-  "download": "http://code.mauko.co.ke/dl/themes/'.$slug.'.zip",
+  "download": "http://jabalicms.org/dl/themes/'.$slug.'.zip",
   "licences": {
     "'.$license.'": "'.$licenselink.'"
   }
@@ -148,12 +171,13 @@ if ( isset( $_POST['createtheme'] ) ) {
       mkdir( $images, 0777, true );
       mkdir( $classes, 0777, true );
 
+      $licensefile = fopen($themedir.'LICENSE', 'w');
       $themefunctions = fopen( $themedir.$slug.'.php', 'w');
       $themeheader = fopen( $themedir.'header.php', 'w');
       $themefooter = fopen( $themedir.'footer.php', 'w');
-      $themepoststemplate = fopen( $themedir.'templates/archive.php', 'w');
+      $themearchivetemplate = fopen( $themedir.'templates/archive.php', 'w');
+      $themeclassfile = fopen( $themedir.'classes/'.$slug.'.php', 'w');
       $themeposttemplate = fopen( $themedir.'templates/post.php', 'w');
-      $themehometemplate = fopen( $themedir.'templates/home.php', 'w');
       $themestyles = fopen( $themedir.'assets/css/'.$slug.'.css', 'w');
       $themescripts = fopen( $themedir.'assets/js/'.$slug.'.js', 'w');
       $jquery = file_get_contents( _SCRIPTS.'jquery-3.2.1.min.js' );
@@ -161,21 +185,24 @@ if ( isset( $_POST['createtheme'] ) ) {
       $themejquery = fopen( $themedir.'assets/js/jquery.min.js', 'w');
       $themedata = fopen( $themedir.$slug.'.json', 'w');
 
+      fwrite( $licensefile, $licensetext );
       fwrite( $themefunctions, $comments );
       fwrite( $themedata, $data );
       fwrite( $themeheader, $headertext );
-      fwrite( $themepoststemplate, $atemplatetext );
+      fwrite( $themeclassfile, $themeclass );
+      fwrite( $themearchivetemplate, $atemplatetext );
       fwrite( $themeposttemplate, $templatetext );
-      fwrite( $themehometemplate, $htemplatetext );
       fwrite( $themefooter, $footerertext );
       fwrite( $themejquery, $jquery );
       fwrite( $themestyles, $jcss );
 
+      fclose( $licensefile );
+      fclose( $themeclassfile );  
       fclose( $themefunctions );
       fclose( $themedata );
       fclose( $themeheader );
+      fclose( $themearchivetemplate );
       fclose( $themeposttemplate );
-      fclose( $themehometemplate );
       fclose( $themestyles );
       fclose( $themescripts );
       fclose( $themefooter );
@@ -205,14 +232,13 @@ if ( isset( $_POST['copytheme'] ) ) {
   $version = $_POST['themeversion'];
 
   $comments = "
-  <?php 
-  \n\n
-  /**\n
-  * @package Jabali \n
-  * @subpackage ". $name ."\n
-  * @author ". $author ."\n
-  * @link ". $website ."\n
-  * @since ". $version ."\n
+  <?php
+  /**
+  * @package Jabali
+  * @subpackage ". $name ."
+  * @author ". $author ."
+  * @link ". $website ."
+  * @since ". $version ."
   **/\n";
 
   $newtheme = _ABSTHEMES_ . $slug.'/';
@@ -305,7 +331,7 @@ if ( isset( $_GET['install'] ) ) {
   if ( isset( $_GET['download'] ) ) {
     $download = $_GET['download'];
   } else {
-    $download = 'http://code.mauko.co.ke/dl/jabali/themes/'.$_GET['install'].'.zip';
+    $download = 'http://jabalicms.org/dl/jabali/themes/'.$_GET['install'].'.zip';
   }
 
   if ( !is_file(  _ABSTEMP_.'themes/'.$_GET['install'].'.zip' ) ) { ?>
@@ -319,7 +345,7 @@ if ( isset( $_GET['install'] ) ) {
 
       if ( !is_dir( $directory ) ) { mkdir( $directory, 0777, true ); }
 
-      file_put_contents( _ABSTEMP_.'themes/'.$_GET['install'].'.zip', fopen('http://code.mauko.co.ke/dl/jabali/themes/'.$_GET['install'].'.zip', 'r') );
+      file_put_contents( _ABSTEMP_.'themes/'.$_GET['install'].'.zip', fopen('http://jabalicms.org/dl/jabali/themes/'.$_GET['install'].'.zip', 'r') );
       echo '<p>Theme Downloaded And Saved</p>Installing theme...';
       intallTheme( _ABSTEMP_.'themes/'.$_GET['install'].".zip" );
     } else {
@@ -568,7 +594,7 @@ if ( isset( $_GET['install'] ) ) {
 } elseif ( isset( $_GET['edit'] ) ) {
   $theme =  $_GET['edit'];
   $file =  $_GET['key'];
-  $parts = explode(".", $file );
+  $parts = explode(".", $file.'.' );
   if ( $parts[1] == "js" ) {
      $mode = "javascript";
    } else {

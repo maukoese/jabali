@@ -33,7 +33,7 @@ if ( isset( $_GET['install'] ) ) {
     }
 	}
 
-  intallX( $_GET['install'], "http://code.mauko.co.ke/dl/extensions/".$_GET['install'].".zip" );
+  intallX( $_GET['install'], "http://jabalicms.org/dl/extensions/".$_GET['install'].".zip" );
 
 } elseif ( isset( $_GET['activate'] ) ) {
 	function activateX( $x) {

@@ -64,6 +64,12 @@ class PostgreDB {
 		return (object)pg_fetch_array( $result, NULL, PGSQL_ASSOC );
 	}
 
+
+	function fetchAll( $result )
+	{
+		return $result -> pg_fetch_all(SQLITE_ASSOC);;
+	}
+
 	/**
 	* Preparing our data
 	**/

@@ -18,7 +18,7 @@ ini_set('max_execution_time',60); ?>
 		$jD = json_decode( $jJson, true );
 		$curr_version = $jD['version'];
 
-		$nJson = file_get_contents( "https://jabali.mauko.co.ke/package.json" );
+		$nJson = file_get_contents( "https://jabalicms.org/package.json" );
 
 		if( $nJson !== false ){
 			$nJD = json_decode( $nJson, true );
@@ -33,8 +33,8 @@ ini_set('max_execution_time',60); ?>
 
 					if ( !is_file(  _ABSTEMP_.'update/jabali-'.$new_version.'.zip' ) ) { 
 							echo '<p>Downloading New Update</p>';
-							if ( fopen('https://code.mauko.co.ke/dl/jabali/jabali_'.$new_version.'.zip', 'r') ) {
-								$newUpdate = file_get_contents('https://code.mauko.co.ke/dl/jabali/jabali_'.$new_version.'.zip');
+							if ( fopen('https://jabalicms.org/dl/jabali/jabali_'.$new_version.'.zip', 'r') ) {
+								$newUpdate = file_get_contents('https://jabalicms.org/dl/jabali/jabali_'.$new_version.'.zip');
 
 								$directory = _ABSTEMP_ . "update/";
 
@@ -114,7 +114,7 @@ ini_set('max_execution_time',60); ?>
 					        	<i class="material-icons">system_update_alt</i>
 						    </a><div class="mdl-tooltip" for="updatenow">Update Now</div>
 					    <div class="mdl-layout-spacer"></div>
-				        	<a class="mdl-button mdl-button--fab mdl-button--colored" id="dlnow" href="https://code.mauko.co.ke/dl/jabali/jabali_<?php echo $new_version; ?>.zip">
+				        	<a class="mdl-button mdl-button--fab mdl-button--colored" id="dlnow" href="https://jabalicms.org/dl/jabali/jabali_<?php echo $new_version; ?>.zip">
 				        		<i class="material-icons">file_download</i>
 				        	</a><div class="mdl-tooltip" for="dlnow">Download Jabali</div>
 			        	</div><?php
@@ -144,7 +144,7 @@ ini_set('max_execution_time',60); ?>
 				  <span class="mdl-card__title-text"><?php echo ucwords( $xD['name']); ?></span>
 				    <div class="mdl-layout-spacer"></div>
 				    <div class="mdl-card__subtitle-text">
-				        <a id="updatenow" href="https://jabali.mauko.co.ke/versions/mshindi/">
+				        <a id="updatenow" href="https://jabalicms.org/versions/mshindi/">
 				        	Jabali version <?php echo ucwords( $xD['version']); ?>
 				        </a>
 				    </div>

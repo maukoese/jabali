@@ -66,12 +66,21 @@ class MySQLDB
 	}
 
 	/**
-	* @return Returns an object of database records from a query result, 
+	* @return Returns each row of database records from a query result as an object, 
 	* or null if there are no rows in the result
 	**/
 	function fetchObject( $result )
 	{
 		return $result -> fetch_object();
+	}
+
+	/**
+	* @return Returns an object of database records from a query result, 
+	* or null if there are no rows in the result. All results as an associative array
+	**/
+	function fetchAll( $result )
+	{
+		return $result -> fetch_all();
 	}
 
 	/**
