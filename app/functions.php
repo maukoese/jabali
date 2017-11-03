@@ -869,18 +869,12 @@ function csrf()
 function serviceWorker()
 { ?>
 	<script>
-	if ('serviceWorker' in navigator) {
-	  window.addEventListener('load', function() {
-	    navigator.serviceWorker.register('wacka.js').then(function(registration) {
-	      // Registration was successful
-	      console.log('ServiceWorker registration successful with scope: ', registration.scope);
-	    }, function(err) {
-	      // registration failed :(
-	      console.log('ServiceWorker registration failed: ', err);
-	    });
-	  });
-	} 
-</script><?php
+		if ('serviceWorker' in navigator) {
+			navigator.serviceWorker
+			         .register('./worker.js')
+			         .then(function() { console.log('Service Worker Registered'); });
+		}
+	</script><?php
 }
 
 function addAction( $hook, $callable, $args )
