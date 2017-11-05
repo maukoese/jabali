@@ -1,3 +1,11 @@
+<?php
+/**
+* @package Jabali - The Plug-N-Play Framework
+* @subpackage Password page Layout
+* @link https://docs.jabalicms.org/views/reset
+* @author Mauko Maunde
+* @since 0.17.09
+**/ ?>
 <div style="padding-top:40px;" >
   <div id="login_div">
 		<center><?php frontlogo(); ?></center>

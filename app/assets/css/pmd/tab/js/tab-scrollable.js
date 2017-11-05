@@ -1,8 +1,8 @@
 
 /*!
- * Propeller v1.1.0 (http://propeller.in): tab.js
+ * Propeller v1.1.0 (https://propeller.in): tab.js
  * Copyright 2016-2017 Digicorp, Inc.
- * Licensed under MIT (http://propeller.in/LICENSE)
+ * Licensed under MIT (https://propeller.in/LICENSE)
  */
 
 (function($) {

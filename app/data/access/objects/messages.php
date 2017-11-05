@@ -1,10 +1,10 @@
 <?php
 /**
 * @package Jabali
-* @subpackage Options Data Access Object
+* @subpackage Messages Data Access Object
 * @author Mauko Maunde
-* @link https://docs.jabalicms.org/data/access/obects/options
-* @since 0.17.09
+* @link https://docs.jabalicms.org/data/access/objects/messages/
+* @since 0.17.11
 **/
 
 namespace Jabali\Data\Access\Objects;
@@ -14,238 +14,230 @@ class Messages {
   public $name;
   public $author;
   public $author_name;
-  public $avatar;
-  public $categories;
   public $id;
   public $created;
   public $details;
-  public $gallery;
+  public $email;
+  public $receipient;
   public $authkey;
   public $level;
   public $link;
-  public $excerpt;
-  public $readings;
+  public $phone;
   public $state;
-  public $subtitle;
-  public $slug;
-  public $tags;
-  public $template;
   public $ilk;
-  public $updated;
-  public $allowed = array( "name", "author", "author_name", "avatar", "categories", "id", "created", "details", "gallery", "level", "link", "excerpt", "readings", "state", "subtitle", "slug", "tags", "template", "ilk", "updated" );
+
+  public $allowed = array( "name", "author", "author_name", "id", "created", "details", "email", "receipient", "authkey", "level", "link", "phone", "state", "ilk" );
 
   private $table = "messages";
 
-  public function create(){
-    $cols = array( "name", "author", "author_name", "avatar", "categories", "created", "details", "gallery", "authkey", "level", "link", "excerpt", "readings", "state", "subtitle", "slug", "tags", "updated", "template", "ilk" );
-
-    $vals = array( $this -> name, $this -> author, $this -> author_name, $this -> avatar, $this -> categories, $this -> created, $this -> details, $this -> gallery, $this -> authkey, $this -> level, $this -> link, $this -> excerpt, $this -> readings, $this -> state, $this -> subtitle, $this -> slug, $this -> tags, $this -> updated, $this -> template, $this -> ilk );
+  public function create()
+  {
+    $cols = array( "name", "author", "author_name", "id", "created", "details", "email", "receipient", "authkey", "level", "link", "phone", "state", "ilk" );
+    
+    $vals = array( $this -> name, $this -> author, $this -> author_name, $this -> created, $this -> details, $this -> email, $this -> receipient, $this -> authkey, $this -> level, $this -> link, $this -> phone, $this -> state, $this -> ilk ); 
 
     if ( $GLOBALS['JBLDB'] -> insert( $this -> table, $cols, $vals ) ) {
-      return array( "status" => "Post created successfully with id ". $GLOBALS['JBLDB'] -> insertId() );
+      return array( "status" => "success", "message" => "Message created successfully with id ". $GLOBALS['JBLDB'] -> insertId() );
     } else {
-      return array( "status" => "Failed", "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "message" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
-  public function update(){
-    $cols = array( "name", "author", "author_name", "avatar", "categories", "created", "details", "gallery", "authkey", "level", "link", "excerpt", "readings", "state", "subtitle", "slug", "tags", "updated", "template", "ilk" );
-
-    $vals = array( $this -> name, $this -> author, $this -> author_name, $this -> avatar, $this -> categories, $this -> created, $this -> details, $this -> gallery, $this -> authkey, $this -> level, $this -> link, $this -> excerpt, $this -> readings, $this -> state, $this -> subtitle, $this -> slug, $this -> tags, $this -> updated, $this -> template, $this -> ilk );
-
-    $conds = array( "id" => $this -> id );
-
-    if ( $GLOBALS['JBLDB'] -> update( $this -> table, $cols, $vals, $conds ) ) {
-      return array( "status" => "Post ". $this -> id . " updated successfully!" );
-    } else {
-      return array( "status" => "Failed", "error" => $GLOBALS['JBLDB'] -> error() );
-    }
-    
-  }
-
-  public function getId( $id ){
+  public function getId( $id )
+  {
     $vars = get_object_vars( $this );
 
     $conds = array( "id" => $id );
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this->allowed, $conds );
 
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
-      $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
-        $posts[] = $post;
-        foreach ( $post as $var => $val ) {
+      $messages = array();
+  while ( $message = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $messages['status'] = "success";
+        $messages[] = $message;
+        foreach ( $message as $var => $val ) {
           $this -> $var = $val;
         }
       }
 
-      return $posts[0];
+      return $messages[0];
     } else{
-      return array( "status" => "Request Failed", "error" => "Post Not Found" );
+      return array( "status" => "Request Failed", "error" => "Message Not Found" );
     }
     
   }
 
-  public function getPost( $slug ){
-
+  public function getMessage( $slug )
+  {
     $conds = array( "slug" => $slug );
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
-      $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
-        $posts[] = $post;
-        foreach ( $post as $var => $val ) {
+      $messages = array();
+  while ( $message = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $messages['status'] = "success";
+        $messages[] = $message;
+        foreach ( $message as $var => $val ) {
           $this -> $var = $val;
         }
       }
 
-      return $posts[0];
+      return $messages[0];
     } else{
-      return array( "status" => "Request Failed", "error" => "Post Not Found" );
+      return array( "status" => "Request Failed", "error" => "Message Not Found" );
     }
 
   }
 
-  public function getAuthor( $author ){
-
+  public function getAuthor( $author)
+  {
     $conds = array( "author" => $author );
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
-      $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
-        $posts[] = $post;
-      }
+      $messages = array();
+        while ( $message = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $messages['status'] = "success";
+        $messages[] = $message;
+      }     
 
-      return $posts;
+      return $messages;
     } else{
-      return array( "status" => "Request Failed", "error" => "Posts Not Found" );
+      return array( "status" => "Request Failed", "error" => "Messages Not Found" );
     }
   }
 
-  public function getCategories( $category, $type = "article" ){
-
+  public function getCategories( $category, $type = "message" )
+  {
     $conds = array( "template" => $skin, "ilk" => $type );
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
-      $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
-        $posts[] = $post;
-      }
+      $messages = array();
+        while ( $message = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $messages['status'] = "success";
+        $messages[] = $message;
+      }     
 
-      return $posts;
+      return $messages;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
-  public function getCompany( $company, $type = "article" ){
-
+  public function getCompany( $company, $type = "message" )
+  {
     $conds = array( "template" => $skin );
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
-      $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
-        $posts[] = $post;
-      }
+      $messages = array();
+        while ( $message = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $messages['status'] = "success";
+        $messages[] = $message;
+      }     
 
-      return $posts;
+      return $messages;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
-  public function getCreated( $date, $type = "article" ){
-
+  public function getCreated( $date, $type = "message" )
+  {
     $conds = array( "template" => $skin );
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
-      $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
-        $posts[] = $post;
-      }
+      $messages = array();
+        while ( $message = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $messages['status'] = "success";
+        $messages[] = $message;
+      }     
 
-      return $posts;
+      return $messages;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
-  public function getLevel( $level, $type = "article" ){
-
+  public function getLevel( $level, $type = "message" )
+  {
     $conds = array( "template" => $skin );
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
-      $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
-        $posts[] = $post;
-      }
+      $messages = array();
+        while ( $message = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $messages['status'] = "success";
+        $messages[] = $message;
+      }     
 
-      return $posts;
+      return $messages;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
-  public function getLocation( $location, $type = "article" ){
-
+  public function getLocation( $location, $type = "message" )
+  {
     $conds = array( "template" => $skin );
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
-      $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
-        $posts[] = $post;
-      }
+      $messages = array();
+        while ( $message = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $messages['status'] = "success";
+        $messages[] = $message;
+      }     
 
-      return $posts;
+      return $messages;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
-  public function getState( $status, $type = "article" ){
-
-    $conds = array( "template" => $skin );
+  public function getState( $status, $type = "message" )
+  {
+    $conds = array( "status" => $status, "ilk" => $type );
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
-      $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
-        $posts[] = $post;
-      }
+      $messages = array();
+        while ( $message = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $messages['status'] = "success";
+        $messages[] = $message;
+      }     
 
-      return $posts;
+      return $messages;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
-  public function getTypes( $type = "article", $limit = 10 ){
-
+  public function getTypes( $type = "message", $limit = 10 )
+  {
     $conds = array( "ilk" => $type );
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
-      $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
-        $posts[] = $post;
-      }
+      $messages = array();
+        while ( $message = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $messages['status'] = "success";
+        $messages[] = $message;
+      }     
 
-      return $posts;
+      return $messages;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
-  public function getUpdated( $date, $type = "article" ){
-
+  public function getUpdated( $date, $type = "message" )
+  {
     $conds = array( "updated" => $date );
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
-      $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
-        $posts[] = $post;
-      }
+      $messages = array();
+        while ( $message = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $messages['status'] = "success";
+        $messages[] = $message;
+      }     
 
-      return $posts;
+      return $messages;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -253,32 +245,33 @@ class Messages {
 
     $conds = array( "id" => $id );
     if( $GLOBALS['JBLDB'] -> delete( $this -> table, $conds ) ){
-      return array("success" => "Post deleted Successfully");
+      return array("success" => "Message deleted Successfully");
     } else {
-      return array("error" => "Post deletion Failed", "cause" => $GLOBALS['JBLDB'] -> error());
+      return array("error" => "Message deletion Failed", "cause" => $GLOBALS['JBLDB'] -> error());
     }
   }
 
-  public function sweep( $type = "article", $limit = 10 ){
-
+  public function sweep( $type = "message", $limit = 10 )
+  {
     $conds = array( "state" => "published", "ilk" => $type );
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
-      $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results ) ) {
-        $posts[] = $post;
+      $messages = array();
+      while ( $message = $GLOBALS['JBLDB'] -> fetchArray( $results ) ) {
+        $messages['status'] = "success";
+        $messages[] = $message;
       }
 
-      return $posts;
+      return $messages;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
-  public function sweepy( $type = "article"){
-
+  public function sweepy( $type = "message")
+  {
     $conds = array( "state" => "published", "ilk" => $type );
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
-    return new ResultSet( $posts );
+    return new ResultSet( $messages );
   }
 }

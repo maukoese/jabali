@@ -5,10 +5,10 @@ The plugin will create a dialog where you will be able to format your code as yo
 
 # Demos
 
-*  [Basic configuration](http://prbaron.github.com/pbckcode/basic.html)
-*  [Use options](http://prbaron.github.com/pbckcode/options.html)
-*  [Load ACE from custom directory](http://prbaron.github.com/pbckcode/custom-ace.html)
-*  [Full CKEditor](http://prbaron.github.com/pbckcode/full.html)
+*  [Basic configuration](https://prbaron.github.com/pbckcode/basic.html)
+*  [Use options](https://prbaron.github.com/pbckcode/options.html)
+*  [Load ACE from custom directory](https://prbaron.github.com/pbckcode/custom-ace.html)
+*  [Full CKEditor](https://prbaron.github.com/pbckcode/full.html)
 
 # Installation
 1. Download the plugin from the Github repository : [https://github.com/prbaron/pbckcode/tags](https://github.com/prbaron/pbckcode/tags)
@@ -23,7 +23,7 @@ CKEDITOR.editorConfig = function(config) {
   config.toolbarGroups = [
     {name: 'pbckcode'},
     // your other buttons here
-    // get information about available buttons here: bhttp://docs.ckeditor.com/?mobile=/guide/dev_toolbar
+    // get information about available buttons here: bhttps://docs.ckeditor.com/?mobile=/guide/dev_toolbar
   ];
 
   // CKEDITOR PLUGINS LOADING
@@ -66,10 +66,10 @@ And you are good to go! You will have the same configuration than the demo.
 Choose your synta highlighter output. Remove the option if you want to output a basic &lt;pre&gt; tag, otherwise, choose one of them.
 
 ```js
-'HIGHLIGHT' // http://highlightjs.org/
+'HIGHLIGHT' // https://highlightjs.org/
 'PRETTIFY' // https://code.google.com/p/google-code-prettify/
-'PRISM' // http://prismjs.com/
-'SYNTAX_HIGHLIGHTER' // http://alexgorbatchev.com/SyntaxHighlighter/
+'PRISM' // https://prismjs.com/
+'SYNTAX_HIGHLIGHTER' // https://alexgorbatchev.com/SyntaxHighlighter/
 ```
 
 ## modes
@@ -165,15 +165,15 @@ Choose your synta highlighter output. Remove the option if you want to output a 
 
 # Special Thanks
 
-  * CKEditor : [http://ckeditor.com/](http://ckeditor.com/)
-  * ACE : [http://ace.ajax.org/](http://ace.ajax.org/)
-  * Lea Verou : [http://prismjs.com/](http://prismjs.com/)
+  * CKEditor : [https://ckeditor.com/](https://ckeditor.com/)
+  * ACE : [https://ace.ajax.org/](https://ace.ajax.org/)
+  * Lea Verou : [https://prismjs.com/](https://prismjs.com/)
   * Google : [https://code.google.com/p/google-code-prettify/](https://code.google.com/p/google-code-prettify/)
-  * Ivan Sagalaev : [http://highlightjs.org/](http://highlightjs.org/)
-  * Alex Gorbatchev : [http://alexgorbatchev.com/SyntaxHighlighter/](http://alexgorbatchev.com/SyntaxHighlighter/)
+  * Ivan Sagalaev : [https://highlightjs.org/](https://highlightjs.org/)
+  * Alex Gorbatchev : [https://alexgorbatchev.com/SyntaxHighlighter/](https://alexgorbatchev.com/SyntaxHighlighter/)
 
 # Credits
 #### Pierre Baron
-*  Website : [http://www.pierrebaron.fr](http://www.pierrebaron.fr)
+*  Website : [https://www.pierrebaron.fr](https://www.pierrebaron.fr)
 *  Twitter : [@prbaron](https://twitter.com/prbaron)
 *  Contact : <prbaron22@gmail.com>

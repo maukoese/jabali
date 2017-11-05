@@ -1,6 +1,6 @@
 <?php
 /**
-* @package Jabali Framework
+* @package Jabali - The Plug-N-Play Framework
 * @subpackage Progressive Web App
 * @link https://docs.jabalicms.org/pwa/
 * @author Mauko Maunde

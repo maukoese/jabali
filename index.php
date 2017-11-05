@@ -1,24 +1,37 @@
 <?php 
 /**
-* @package Jabali Framework
+* @package Jabali - The Plug-N-Play Framework
 * @subpackage App Conroller
 * @link https://docs.jabalicms.org/controller/
 * @author Mauko Maunde
 * @since 0.17.04
 **/
 
+/**
+* Start user session
+* Destroy if user logs out*/
 session_start();
 if ( isset( $_GET['logout'] ) ) {
   session_destroy();
 }
 
+/**
+* Redirect to setup page if configuration has not beeen done yet
+**/
 if ( !file_exists( 'app/config.php' ) ) {
-  header( "Location: ./setup.php" );
+  header( "Location: setup.php" );
 }
 
+/**
+* Load the app initialization module
+* Check if app is being updated and display appropriate message
+**/
 require 'init.php';
 updatingJabali();
 
+/**
+* Create uploads directories by year/month/date
+**/
 $year = date( "Y" );
 $month = date( "m" );
 $day = date( "d" );
@@ -28,7 +41,10 @@ if ( !is_dir( $directory) ) {
   mkdir( $directory, 0775, true );
 }
 
-if ( isset( $_POST['login'] ) && $_POST['user'] != "" && $_POST['password'] != "" ) {
+/**
+* Handle form actions for login/register/reset/confirmation/email/comments
+**/
+if ( isset( $_POST['login'] ) && $_POST['user'] !== "" && $_POST['password'] !== "" ) {
   $USERS -> login();
 }
 
@@ -45,60 +61,22 @@ if ( isset( $_POST['forgot'] ) && $_POST['email'] !== "" ) {
 }
 
 if ( isset( $_POST['contact'] ) && $_POST['email'] !== "" ) {
-  	$MAILER -> setFrom( getOption( 'email' ), getOption( 'name' ));
-	$MAILER -> addAddress( $_POST['email'], $_POST['name'] );
-	$MAILER -> Subject  = 'Contact Message From '.getOption( 'name' );
-	$MAILER -> Body     = $_POST['message'];
-	if(!$MAILER -> send()) {
+	$recipients = $_POST['email'];
+	$subject = !empty( $_POST['subject']) ? $_POST['subject'] : "Contact Message From". getOption('name');
+	$message = "";
+	$cc = "";
+	$attachments = "";
+	$mail = eMail( $recipients, $subject, $message, $cc, $attachments );
+  	if( $mail['status'] == "fail" ) {
 	  echo '<div class="etoast">Sorry but we could not send your message at this time. Try again</div>';
-	  /*Mailer error: ' . $MAILER -> ErrorInfo.'*/
 	} else {
 	  echo '<div class="toast">Message successfully sent. Thank you.</div>';
 	}
-
-	// $mail->From = "from@yourdomain.com";
-	// $mail->FromName = "Full Name";
-
-	// $mail->addAddress("recipient1@example.com", "Recipient Name");
-
-	// //Provide file path and name of the attachments
-	// $mail->addAttachment("file.txt", "File.txt");        
-	// $mail->addAttachment("images/profile.png"); //Filename is optional
-
-	// $mail->isHTML(true);
-
-	// $mail->Subject = "Subject Text";
-	// $mail->Body = "<i>Mail body in HTML</i>";
-	// $mail->AltBody = "This is the plain text version of the email content";
-
-	//Enable SMTP debugging. 
-	// $mail->SMTPDebug = 3;                               
-	// //Set PHPMailer to use SMTP.
-	// $mail->isSMTP();            
-	// //Set SMTP host name                          
-	// $mail->Host = "smtp.gmail.com";
-	// //Set this to true if SMTP host requires authentication to send email
-	// $mail->SMTPAuth = true;                          
-	// //Provide username and password     
-	// $mail->Username = "name@gmail.com";                 
-	// $mail->Password = "super_secret_password";                           
-	// //If SMTP requires TLS encryption then set it
-	// $mail->SMTPSecure = "tls";                           
-	// //Set TCP port to connect to 
-	// $mail->Port = 587;                                   
-
-	// $mail->From = "name@gmail.com";
-	// $mail->FromName = "Full Name";
-
-	// $mail->addAddress("name@example.com", "Recepient Name");
-
-	// $mail->isHTML(true);
-
-	// $mail->Subject = "Subject Text";
-	// $mail->Body = "<i>Mail body in HTML</i>";
-	// $mail->AltBody = "This is the plain text version of the email content";
 }
 
+/**
+* Set site-wide app color theme for primary, accent, primary text and secondary text colors
+*/
 if ( isset( $_SESSION[JBLSALT.'Code' ] ) ) {
 	$GStyles = $GLOBALS['JBLDB'] -> query( "SELECT style FROM ". _DBPREFIX ."users  WHERE id='".$_SESSION[JBLSALT.'Code']."'" );
 	if ( $GLOBALS['JBLDB'] -> numRows( $GStyles ) > 0 ) {
@@ -124,6 +102,9 @@ $GLOBALS['GAccent'] = $GUSkin['accent'];
 $GLOBALS['GTextP'] = $GUSkin['textp'];
 $GLOBALS['GTextS'] = $GUSkin['texts'];
 
+/**
+* This is the Jabali controller. It routes all requests directed to it by the .htaccess file.
+**/
 if ( is_localhost() && ( $_SERVER['DOCUMENT_ROOT'] !== __DIR__ ) ) {
 	$dir = '/'.basename( __DIR__ ).'/';
 	$l = strlen( $dir );
@@ -132,7 +113,7 @@ if ( is_localhost() && ( $_SERVER['DOCUMENT_ROOT'] !== __DIR__ ) ) {
   $url = ltrim( '/', $_SERVER['REQUEST_URI'] );
 }
 
-$render = new Jabali\Classes\Renders;
+$render = new Jabali\Lib\Renders;
 $elements = explode('/', $url );
 $match = $elements[0];
 array_shift( $elements );

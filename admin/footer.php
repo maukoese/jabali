@@ -1,6 +1,6 @@
 <?php 
 /**
-* @package Jabali Framework
+* @package Jabali - The Plug-N-Play Framework
 * @subpackage Admin Footer
 * @link https://docs.jabalicms.org/dashboard/
 * @author Mauko Maunde

@@ -1,6 +1,6 @@
 <?php 
 /**
-* @package Jabali Framework
+* @package Jabali - The Plug-N-Play Framework
 * @subpackage Admin Options
 * @link https://docs.jabalicms.org/options/
 * @author Mauko Maunde
@@ -8,23 +8,22 @@
 **/
 session_start();
 require_once( '../init.php' );
-$hOpt = $GLOBALS['OPTIONS'];
 
-addSetting( "general", array(), array( $hOpt, "general" ) );
-addSetting( "types", array(), array( $hOpt, "types") );
-addSetting( "social", array(), array( $hOpt, "social" ) );
-addSetting( "color", array(), array( $hOpt, "colors" ) );
-addSetting( "editor", array(), array( $hOpt, "editor" ) );
-addSetting( "restful", array(), array( $hOpt, "rest" ) );
-addSetting( "misc", array(), array( $hOpt, "misc" ) );
+addSetting( "general", array(), array( $GLOBALS['OPTIONS'], "general" ) );
+addSetting( "types", array(), array( $GLOBALS['OPTIONS'], "types") );
+addSetting( "social", array(), array( $GLOBALS['OPTIONS'], "social" ) );
+addSetting( "color", array(), array( $GLOBALS['OPTIONS'], "colors" ) );
+addSetting( "editor", array(), array( $GLOBALS['OPTIONS'], "editor" ) );
+addSetting( "restful", array(), array( $GLOBALS['OPTIONS'], "rest" ) );
+addSetting( "misc", array(), array( $GLOBALS['OPTIONS'], "misc" ) );
 
 if ( isset( $_POST['settings'] ) ) {
     foreach ($GLOBALS['GSettingsField'][ $_POST['settings'] ] as $name => $value) {
         $date = date( "Y-m-d" );
         if ( !isOption( $name ) ) {
-            $hOpt -> create ( ucwords( $name ), $name, $_POST[$name], $date );
+            $GLOBALS['OPTIONS'] -> create ( ucwords( $name ), $name, $_POST[$name], $date );
         } else {
-            $hOpt -> update ( $name, $_POST[$name], $date );
+            $GLOBALS['OPTIONS'] -> update ( $name, $_POST[$name], $date );
         }
     }
 }
@@ -44,7 +43,7 @@ if ( isset( $_POST['preferences'] ) ) {
     $date = date('Y-m-d' );
     $uploaddir = _ABSUP_.date("Y/m/d/");
 
-    if ( $_FILES['newheaderlogo'] !== "" ) {
+    if ( is_uploaded_file($_FILES['newheaderlogo']["tmp_name"]) || file_exists($_FILES['newheaderlogo']["tmp_name"]) ) {
         $fheaderlogo = basename( $_FILES['newheaderlogo']['name'] );
         if ( !move_uploaded_file( $_FILES['newheaderlogo']["tmp_name"], $uploaddir.$fheaderlogo ) ) {
             echo "Sorry, there was an error uploading your file.";
@@ -54,7 +53,7 @@ if ( isset( $_POST['preferences'] ) ) {
         $headerlogo = $_POST['headerlogo'];
     }
 
-    if ( $_FILES['newhomelogo'] !== "" ) {
+    if ( is_uploaded_file($_FILES['newhomelogo']["tmp_name"]) || file_exists($_FILES['newhomelogo']["tmp_name"]) ) {
         $fhomelogo = basename( $_FILES['newhomelogo']['name'] );
         if ( !move_uploaded_file( $_FILES['newhomelogo']["tmp_name"], $uploaddir.$fhomelogo ) ) {
             echo "Sorry, there was an error uploading your file.";
@@ -65,7 +64,7 @@ if ( isset( $_POST['preferences'] ) ) {
         $homelogo = $_POST['homelogo'];
     }
 
-    if ( $_FILES['newfavicon'] !== "" ) {
+    if ( is_uploaded_file($_FILES['newfavicon']["tmp_name"]) || file_exists($_FILES['newfavicon']["tmp_name"]) ) {
         $ffavicon = basename( $_FILES['newfavicon']['name'] );
         if ( !move_uploaded_file( $_FILES['newfavicon']["tmp_name"], $uploaddir.$ffavicon ) ) {
             echo "Sorry, there was an error uploading your file.";
@@ -81,28 +80,27 @@ if ( isset( $_POST['preferences'] ) ) {
     //     _shout_( 'Sorry, could not update your settings', 'error');
     // }
 
-    $hOpt -> update ( 'name', $_POST['name'], $date );
-    $hOpt -> update ( 'description', $_POST['description'], $date );
-    $hOpt -> update ( 'language', $_POST['language'], $date );
-    $hOpt -> update ( 'charset', $_POST['charset'], $date );
-    $hOpt -> update ( 'email', $_POST['email'], $date );
-    $hOpt -> update ( 'phone', $_POST['phone'], $date );
-    $hOpt -> update ( 'copyright', $_POST['copyright'], $date );
-    $hOpt -> update ( 'attribution', $_POST['attribution'], $date );
-    $hOpt -> update ( 'attribution_link', $_POST['attribution_link'], $date );
-    $hOpt -> update ( 'headerlogo', $headerlogo, $date );
-    $hOpt -> update ( 'homelogo', $homelogo, $date );
-    $hOpt -> update ( 'favicon', $favicon, $date );
-    $hOpt -> update ( 'registration', $_POST['registration'], $date );
-    $hOpt -> update ( 'timezone', $_POST['timezone'], $date );
-    $hOpt -> update ( 'country', $_POST['country'], $date );
-    $hOpt -> update ( 'region', $_POST['region'], $date );
-    $hOpt -> update ( 'city', $_POST['city'], $date );
+    $GLOBALS['OPTIONS'] -> update ( 'name', $_POST['name'], $date );
+    $GLOBALS['OPTIONS'] -> update ( 'description', $_POST['description'], $date );
+    $GLOBALS['OPTIONS'] -> update ( 'language', $_POST['language'], $date );
+    $GLOBALS['OPTIONS'] -> update ( 'charset', $_POST['charset'], $date );
+    $GLOBALS['OPTIONS'] -> update ( 'email', $_POST['email'], $date );
+    $GLOBALS['OPTIONS'] -> update ( 'phone', $_POST['phone'], $date );
+    $GLOBALS['OPTIONS'] -> update ( 'copyright', $_POST['copyright'], $date );
+    $GLOBALS['OPTIONS'] -> update ( 'attribution', $_POST['attribution'], $date );
+    $GLOBALS['OPTIONS'] -> update ( 'attribution_link', $_POST['attribution_link'], $date );
+    $GLOBALS['OPTIONS'] -> update ( 'headerlogo', $headerlogo, $date );
+    $GLOBALS['OPTIONS'] -> update ( 'homelogo', $homelogo, $date );
+    $GLOBALS['OPTIONS'] -> update ( 'favicon', $favicon, $date );
+    $GLOBALS['OPTIONS'] -> update ( 'registration', $_POST['registration'], $date );
+    $GLOBALS['OPTIONS'] -> update ( 'timezone', $_POST['timezone'], $date );
+    $GLOBALS['OPTIONS'] -> update ( 'country', $_POST['country'], $date );
+    $GLOBALS['OPTIONS'] -> update ( 'region', $_POST['region'], $date );
+    $GLOBALS['OPTIONS'] -> update ( 'city', $_POST['city'], $date );
 }
 
 if ( isset( $_POST['utype'] ) ) {
     $date = date('Y-m-d' );
-    $hUserType = new Jabali\Classes\Options();
 
     $type = $_POST['utype'];
     $level = $_POST['ulevel'];
@@ -110,12 +108,11 @@ if ( isset( $_POST['utype'] ) ) {
     $utype = array_combine( $type, $level );
     $utype = json_encode( $utype );
 
-    $hUserType -> update ( 'usertypes', $utype, $date );
+    $GLOBALS['OPTIONS'] -> update ( 'usertypes', $utype, $date );
 }
 
 if ( isset( $_POST['ptype'] ) ) {
     $date = date('Y-m-d' );
-    $hUserType = new Jabali\Classes\Options();
 
     $type = $_POST['ptype'];
     $level = $_POST['plevel'];
@@ -123,7 +120,7 @@ if ( isset( $_POST['ptype'] ) ) {
     $utype = array_combine( $type, $level );
     $utype = json_encode( $utype );
 
-    $hUserType -> update ( 'posttypes', $utype, $date );
+    $GLOBALS['OPTIONS']-> update ( 'posttypes', $utype, $date );
 }
 
 if ( isset( $_POST['social'] ) ) {
@@ -133,8 +130,7 @@ if ( isset( $_POST['social'] ) ) {
     $social = array_combine( $name, $link );
     $social = json_encode( $social );
 
-    $hSocial = new Jabali\Classes\Options();
-    $hSocial -> update ( 'social', $social, date('Y-m-d') );
+    $GLOBALS['OPTIONS'] -> update ( 'social', $social, date('Y-m-d') );
 }
 
 require_once( 'header.php' ); ?>

@@ -1104,7 +1104,7 @@ class Uniform {
         break;
       
       default:
-        # code...
+        return $this -> keCounties();
         break;
     }
   }
@@ -1122,7 +1122,7 @@ class Uniform {
               }
                ?>
           </ul>
-          <label for="counties">Counties</label>
+          <label for="counties">County</label>
         </div><?php 
   }
 

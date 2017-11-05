@@ -1,20 +1,20 @@
 {
-	"name": "Mshindi",
+	"name": "Namlanda",
 	"slug": "jabali",
 	"version": "0.17.11",
 	"author": "Mauko Maunde",
 	"screenshot": "https://mauko.co.ke/app/assets/images/avatar.svg",
 	"description": "Opensource web application framework with material design components for quick deployment.",
 	"social": {
-		"facebook": "http://facebook.com/maukoese",
-		"twitter": "http://twitter.com/maukoese",
-		"github": "http://github.com/maukoese",
+		"facebook": "https://facebook.com/maukoese",
+		"twitter": "https://twitter.com/maukoese",
+		"github": "https://github.com/maukoese",
 		"email": "maukoese@gmail.com"
 	},
-	"website": "http://jabalicms.org/",
-	"support": "http://jabalicms.org/support",
-	"documentation": "http://docs.jabalicms.org",
-	"download": "http://jabalicms.org/dl/jabali/jabali_0.17.10.zip",
+	"website": "https://jabalicms.org/",
+	"support": "https://jabalicms.org/support",
+	"documentation": "https://docs.jabalicms.org",
+	"download": "https://jabalicms.org/dl/jabali/jabali_0.17.10.zip",
 	"licenses": {
 		"MIT": "https://opensource.org/licenses/MIT",
 		"GNU": "https://opensource.org/licenses/gpl-license",

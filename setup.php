@@ -1,6 +1,6 @@
 <?php 
 /**
-* @package Jabali Framework
+* @package Jabali - The Plug-N-Play Framework
 * @subpackage Setup
 * @link https://docs.jabalicms.org/setup/
 * @author Mauko Maunde
@@ -105,75 +105,49 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 	$dbport = $_POST['dbport'];
 	$dbip = $_POST['dbip'];
 
-	function conFigure( $dbhost, $dbname, $dbuser, $dbpass, $home, $dbprefix, $dbtype, $dbport, $dbip ) {
+	function conFigure( $dbhost, $dbname, $dbuser, $dbpass, $home, $dbprefix, $dbtype, $dbport, $dbip )
+	{
 		$dbfile = fopen( "app/config.php", "w" ) or die( "Unable to create configuration file!" );
-		$txt = '<?php 
-	/**
-	* @package Jabali Framework
-	* @subpackage App Configuration File
-	* @link https://docs.jabalicms.org/configuration/
-	* @author Mauko Maunde
-	* @since 0.17.04
-	*
-	* @param $server["dbhost"] The name of your host, usually localhost
-	* @param $server["dbuser"] Your server username
-	* @param $server["dbpass"] Your server password
-	* @param $server["dbname"] The name of the database to use
-	* @param $server["dbtype"] The type of database management system. Jabali supports
-	* @param $server["dbport"] Port through which to communicate with server
-	* @param $server["dbip"] IP address of the server
-	* 
-	* @param _ROOT The app\'s home/root url
-	* @param _DBPRFIX A prefix to be added before all database tables. Allows multiple Jabali installations on same database.
-	* @param JBLSALT A unique, app-specific string for authentication.
-	* @param JBLAUTH Used in conjuction with JBLSALT for authentication and prevention of Cross-site Request Forgery(CSRF). Also unique and app-specific
-	**/';
-		fwrite( $dbfile, $txt );
+		$salts = sha1( date('YmdHis') ).sha1( date('YmdHm') );
+		$salt = str_shuffle( md5($salts) );
+		$auth = str_shuffle( sha1( $salts ) );
+		$config = '<?php 
+/**
+* @package Jabali - The Plug-N-Play Framework
+* @subpackage App Configuration File
+* @link https://docs.jabalicms.org/configuration/
+* @author Mauko Maunde
+* @since 0.17.04
+*
+* @param $server["dbhost"] The name of your host, usually localhost
+* @param $server["dbuser"] Your server username
+* @param $server["dbpass"] Your server password
+* @param $server["dbname"] The name of the database to use
+* @param $server["dbtype"] The type of database management system. Jabali supports
+* @param $server["dbport"] Port through which to communicate with server
+* @param $server["dbip"] IP address of the server
+* 
+* @param _ROOT The app\'s home/root url
+* @param _DBPRFIX A prefix to be added before all database tables. 
+* Allows multiple Jabali installations on same database.
+* @param JBLSALT A unique, app-specific string for authentication.
+* @param JBLAUTH Used in conjuction with JBLSALT for authentication and 
+* prevention of Cross-site Request Forgery(CSRF). Also unique and app-specific
+**/
 
-		$text = '$server["dbhost"] = "'.$dbhost.'";';
-		fwrite( $dbfile, $text );
-		$txt = "\n";
-		fwrite( $dbfile, $txt );
-		$text = '$server["dbuser"] = "'.$dbuser.'";';
-		fwrite( $dbfile, $text );
-		$txt = "\n";
-		fwrite( $dbfile, $txt );
-		$text = '$server["dbpass"] = "'.$dbpass.'";';
-		fwrite( $dbfile, $text );
-		$txt = "\n";
-		fwrite( $dbfile, $txt );
-		$text = '$server["dbname"] = "'.$dbname.'";';
-		fwrite( $dbfile, $text );
-		$txt = "\n";
-		fwrite( $dbfile, $txt );
-		$text = '$server["dbtype"] = "'.$dbtype.'";';
-		fwrite( $dbfile, $text );
-		$txt = "\n";
-		fwrite( $dbfile, $txt );
-		$text = '$server["dbport"] = "'.$dbport.'";';
-		fwrite( $dbfile, $text );
-		$txt = "\n";
-		fwrite( $dbfile, $txt );
-		$text = '$server["dbip"] = "'.$dbip.'";';
-		fwrite( $dbfile, $text );
-		$txt = "\n\n";
-		fwrite( $dbfile, $txt );
-		$text = 'define( "_ROOT", "'.$home.'" );';
-		fwrite( $dbfile, $text );
-		$txt = "\n";
-		fwrite( $dbfile, $txt );
-		$text = 'define( "_DBPREFIX", "'.$dbprefix.'" );';
-		fwrite( $dbfile, $text );
-		$txt = "\n";
-		fwrite( $dbfile, $txt );
-		$salts = sha1(date('YmdHis')).sha1(date('YmdHm' ) );
-		$text = 'define( "JBLSALT", "'.str_shuffle( md5($salts) ).'" );';
-		fwrite( $dbfile, $text );
-		$txt = "\n";
-		fwrite( $dbfile, $txt );
-		$salts = sha1(date('YmdHs')).sha1(date('YmdHmis' ) );
-		$text = 'define( "JBLAUTH", "'.str_shuffle( sha1( $salts ) ).'" );';
-		fwrite( $dbfile, $text );
+$server["dbhost"] = "'.$dbhost.'";
+$server["dbuser"] = "'.$dbuser.'";
+$server["dbpass"] = "'.$dbpass.'";
+$server["dbname"] = "'.$dbname.'";
+$server["dbtype"] = "'.$dbtype.'";
+$server["dbport"] = "'.$dbport.'";
+$server["dbip"] = "'.$dbip.'";
+
+define( "_ROOT", "'.$home.'" );
+define( "_DBPREFIX", "'.$dbprefix.'" );
+define( "JBLSALT", "'.$salt.'" );
+define( "JBLAUTH", "'.$auth.'" );';		
+		fwrite( $dbfile, $config );
 		fclose( $dbfile );
 
 		return true;
@@ -185,12 +159,12 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 		_shout_( 'Could Not create configuration file <code>config.php</code><br>
 		<h4>Suggestions</h4><br>
 		1. Allow jabali <a href="https://stackoverflow.com/questions/2900690/how-do-i-give-php-write-access-to-a-directory">write permissions</a>.<br>
-		2. Manually edit the <code>config-sample.php</code>file appropriately and save as <code>config.php</code>, then point your browser to http://yoursite.com/install.php', 'error' );
+		2. Manually edit the <code>config-sample.php</code>file appropriately and save as <code>config.php</code>, then point your browser to https://yoursite.com/install.php', 'error' );
 	}
 } else {
 
     $protocol = ( ( !empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] != 'off' ) || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://"; ?>
-    <!doctype html>
+    <!DOCTYPE html>
 	<!--
 	  Jabali Framework
 	  © 2017 Mauko Maunde. All rights reserved.
@@ -199,7 +173,7 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 	  You may not use this file except in compliance with the License.
 	  You may obtain a copy of the License at https://opensource.org/licenses/MIT
 	-->
-	<html lang="en" xmlns="http://www.w3.org/1999/html">
+	<html lang="en" xmlns="https://www.w3.org/1999/html">
 		<head>
         	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		    <link rel="stylesheet" href="app/assets/css/materialize.css">
@@ -215,8 +189,8 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 			<body>
 				<main class="mdl-layout__content">
 					<div class="mdl-grid">
-						<div class="mdl-cell mdl-cell--2-col"></div>
-				        <form method="POST" action="" class="mdl-grid mdl-cell mdl-cell--8-col mdl-color--madge">
+						<div class="mdl-cell mdl-cell--3-col"></div>
+				        <form method="POST" action="" class="mdl-grid mdl-cell mdl-cell--6-col mdl-color--madge">
 					        <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
 						        <center>
 						        	<img src="app/assets/images/logo-w.png" width="200px;">
@@ -267,7 +241,7 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 							<li class="mdl-menu__item" data-val="MySQL">MySQL</li>
 							<li class="mdl-menu__item" data-val="SQLite">SQLite</li>
 							<li class="mdl-menu__item" data-val="PostgreSQL">PostgreSQL</li>
-							<!-- <li class="mdl-menu__item" data-val="SethDB">SethDB</li> -->
+							<!-- <li class="mdl-menu__item" data-val="MongoDB">MongoDB</li> -->
 							</ul>
 							</div>
 					        <input name="home" type="hidden" value="<?php 
@@ -281,7 +255,7 @@ if ( isset( $_POST['setup'] ) && $_POST['host'] != "" && $_POST['user'] != "" &&
 
 					        <button class="addfab mdl-button mdl-button--fab mdl-js-button mdl-button--raised mdl-button--colored alignright" type="submit" name="setup"><i class="material-icons">arrow_forward</i></button>
 				        </form>
-						<div class="mdl-cell mdl-cell--2-col"></div>
+						<div class="mdl-cell mdl-cell--3-col"></div>
 					</div>
 				</main>
 			</body>

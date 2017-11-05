@@ -6,7 +6,7 @@
 <!-- Header -->
 <center>
 	<header id="header">
-		<?php headerLogo(); ?>
+		<?php headerLogo(100); ?>
 		<h1><?php showOption( 'name' ); ?></h1>
 		<p><?php showOption( 'about' ); ?></span></p>
 	</header>

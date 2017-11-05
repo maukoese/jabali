@@ -1,6 +1,11 @@
-<?php 
-
-?>
+<?php
+/**
+* @package Jabali - The Plug-N-Play Framework
+* @subpackage Header page Layout
+* @link https://docs.jabalicms.org/views/signup
+* @author Mauko Maunde
+* @since 0.17.09
+**/ ?>
 <!doctype html>
 <!--
   Jabali Framework
@@ -10,7 +15,7 @@
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at https://opensource.org/licenses/MIT
 -->
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns="https://www.w3.org/1999/html">
 <head>
     <link rel="shortcut icon" href="<?php 
     if ( file_exists('./inc/config.php' ) ) {

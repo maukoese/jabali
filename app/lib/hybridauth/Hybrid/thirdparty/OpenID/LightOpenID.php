@@ -9,7 +9,7 @@
  * @link        https://github.com/iignatov/LightOpenID         GitHub Repo
  * @author      Mewp <mewp151 at gmail dot com>
  * @copyright   Copyright (c) 2013 Mewp
- * @license     http://opensource.org/licenses/mit-license.php  MIT License
+ * @license     https://opensource.org/licenses/mit-license.php  MIT License
  */
 class LightOpenID
 {
@@ -69,7 +69,7 @@ class LightOpenID
                 if (preg_match('#^xri:/*#i', $value, $m)) {
                     $value = substr($value, strlen($m[0]));
                 } elseif (!preg_match('/^(?:[=@+\$!\(]|https?:)/i', $value)) {
-                    $value = "http://$value";
+                    $value = "https://$value";
                 }
                 if (preg_match('#^https?://[^/]+$#i', $value, $m)) {
                     $value .= '/';
@@ -182,7 +182,7 @@ class LightOpenID
             $use_secure_protocol = false;
         }
 
-        return $use_secure_protocol ? 'https://' : 'http://';
+        return $use_secure_protocol ? 'https://' : 'https://';
     }
 
     protected function request_curl($url, $method='GET', $params=array(), $update_claimed_id)
@@ -494,7 +494,7 @@ class LightOpenID
                 $result = $this->proxy['user'] . ':' . $this->proxy['pass'] . '@' . $result;
             }
 
-            $result = 'http://' . $result;
+            $result = 'https://' . $result;
         }
 
         return $result;
@@ -580,7 +580,7 @@ class LightOpenID
                         $content = ' ' . $content; # The space is added, so that strpos doesn't return 0.
 
                         # OpenID 2
-                        $ns = preg_quote('http://specs.openid.net/auth/2.0/', '#');
+                        $ns = preg_quote('https://specs.openid.net/auth/2.0/', '#');
                         if(preg_match('#<Type>\s*'.$ns.'(server|signon)\s*</Type>#s', $content, $type)) {
                             if ($type[1] == 'server') $this->identifier_select = true;
 
@@ -590,9 +590,9 @@ class LightOpenID
                                 return false;
                             }
                             # Does the server advertise support for either AX or SREG?
-                            $this->ax   = (bool) strpos($content, '<Type>http://openid.net/srv/ax/1.0</Type>');
-                            $this->sreg = strpos($content, '<Type>http://openid.net/sreg/1.0</Type>')
-                                       || strpos($content, '<Type>http://openid.net/extensions/sreg/1.1</Type>');
+                            $this->ax   = (bool) strpos($content, '<Type>https://openid.net/srv/ax/1.0</Type>');
+                            $this->sreg = strpos($content, '<Type>https://openid.net/sreg/1.0</Type>')
+                                       || strpos($content, '<Type>https://openid.net/extensions/sreg/1.1</Type>');
 
                             $server = $server[1];
                             if (isset($delegate[2])) $this->identity = trim($delegate[2]);
@@ -603,7 +603,7 @@ class LightOpenID
                         }
 
                         # OpenID 1.1
-                        $ns = preg_quote('http://openid.net/signon/1.1', '#');
+                        $ns = preg_quote('https://openid.net/signon/1.1', '#');
                         if (preg_match('#<Type>\s*'.$ns.'\s*</Type>#s', $content)) {
 
                             preg_match('#<URI.*?>(.*)</URI>#', $content, $server);
@@ -612,8 +612,8 @@ class LightOpenID
                                 return false;
                             }
                             # AX can be used only with OpenID 2.0, so checking only SREG
-                            $this->sreg = strpos($content, '<Type>http://openid.net/sreg/1.0</Type>')
-                                       || strpos($content, '<Type>http://openid.net/extensions/sreg/1.1</Type>');
+                            $this->sreg = strpos($content, '<Type>https://openid.net/sreg/1.0</Type>')
+                                       || strpos($content, '<Type>https://openid.net/extensions/sreg/1.1</Type>');
 
                             $server = $server[1];
                             if (isset($delegate[1])) $this->identity = $delegate[1];
@@ -698,7 +698,7 @@ class LightOpenID
         # We always use SREG 1.1, even if the server is advertising only support for 1.0.
         # That's because it's fully backwards compatibile with 1.0, and some providers
         # advertise 1.0 even if they accept only 1.1. One such provider is myopenid.com
-        $params['openid.ns.sreg'] = 'http://openid.net/extensions/sreg/1.1';
+        $params['openid.ns.sreg'] = 'https://openid.net/extensions/sreg/1.1';
         if ($this->required) {
             $params['openid.sreg.required'] = array();
             foreach ($this->required as $required) {
@@ -723,7 +723,7 @@ class LightOpenID
     {
         $params = array();
         if ($this->required || $this->optional) {
-            $params['openid.ns.ax'] = 'http://openid.net/srv/ax/1.0';
+            $params['openid.ns.ax'] = 'https://openid.net/srv/ax/1.0';
             $params['openid.ax.mode'] = 'fetch_request';
             $this->aliases  = array();
             $counts   = array();
@@ -732,7 +732,7 @@ class LightOpenID
             foreach (array('required','optional') as $type) {
                 foreach ($this->$type as $alias => $field) {
                     if (is_int($alias)) $alias = strtr($field, '/', '_');
-                    $this->aliases[$alias] = 'http://axschema.org/' . $field;
+                    $this->aliases[$alias] = 'https://axschema.org/' . $field;
                     if (empty($counts[$alias])) $counts[$alias] = 0;
                     $counts[$alias] += 1;
                     ${$type}[] = $alias;
@@ -782,7 +782,7 @@ class LightOpenID
     protected function authUrl_v2($immediate)
     {
         $params = array(
-            'openid.ns'          => 'http://specs.openid.net/auth/2.0',
+            'openid.ns'          => 'https://specs.openid.net/auth/2.0',
             'openid.mode'        => $immediate ? 'checkid_immediate' : 'checkid_setup',
             'openid.return_to'   => $this->returnUrl,
             'openid.realm'       => $this->trustRoot,
@@ -803,14 +803,14 @@ class LightOpenID
         }
 
         if (!empty($this->oauth) && is_array($this->oauth)) {
-            $params['openid.ns.oauth'] = 'http://specs.openid.net/extensions/oauth/1.0';
-            $params['openid.oauth.consumer'] = str_replace(array('http://', 'https://'), '', $this->trustRoot);
+            $params['openid.ns.oauth'] = 'https://specs.openid.net/extensions/oauth/1.0';
+            $params['openid.oauth.consumer'] = str_replace(array('https://', 'https://'), '', $this->trustRoot);
             $params['openid.oauth.scope'] = implode(' ', $this->oauth);
         }
 
         if ($this->identifier_select) {
             $params['openid.identity'] = $params['openid.claimed_id']
-                 = 'http://specs.openid.net/auth/2.0/identifier_select';
+                 = 'https://specs.openid.net/auth/2.0/identifier_select';
         } else {
             $params['openid.identity'] = $this->identity;
             $params['openid.claimed_id'] = $this->claimed_id;
@@ -867,7 +867,7 @@ class LightOpenID
             # We're dealing with an OpenID 2.0 server, so let's set an ns
             # Even though we should know location of the endpoint,
             # we still need to verify it by discovery, so $server is not set here
-            $params['openid.ns'] = 'http://specs.openid.net/auth/2.0';
+            $params['openid.ns'] = 'https://specs.openid.net/auth/2.0';
         } elseif (isset($this->data['openid_claimed_id'])
             && $this->data['openid_claimed_id'] != $this->data['openid_identity']
         ) {
@@ -908,9 +908,9 @@ class LightOpenID
     {
         $result = array();
 
-        if ($alias = $this->getNamespaceAlias('http://openid.net/srv/ax/1.0', 'ax')) {
+        if ($alias = $this->getNamespaceAlias('https://openid.net/srv/ax/1.0', 'ax')) {
             $prefix = 'openid_' . $alias;
-            $length = strlen('http://axschema.org/');
+            $length = strlen('https://axschema.org/');
 
             foreach (explode(',', $this->data['openid_signed']) as $key) {
                 $keyMatch = $alias . '.type.';
@@ -976,12 +976,12 @@ class LightOpenID
      * In other words. OP may provide whatever information it wants to.
      *     * SREG names will be mapped to AX names.
      *     * @return Array Array of attributes with keys being the AX schema names, e.g. 'contact/email'
-     * @see http://www.axschema.org/types/
+     * @see https://www.axschema.org/types/
      */
     function getAttributes()
     {
         if (isset($this->data['openid_ns'])
-            && $this->data['openid_ns'] == 'http://specs.openid.net/auth/2.0'
+            && $this->data['openid_ns'] == 'https://specs.openid.net/auth/2.0'
         ) { # OpenID 2.0
             # We search for both AX and SREG attributes, with AX taking precedence.
             return $this->getAxAttributes() + $this->getSregAttributes();
@@ -1003,7 +1003,7 @@ class LightOpenID
      */
     function getOAuthRequestToken()
     {
-        $alias = $this->getNamespaceAlias('http://specs.openid.net/extensions/oauth/1.0');
+        $alias = $this->getNamespaceAlias('https://specs.openid.net/extensions/oauth/1.0');
 
         return !empty($alias) ? $this->data['openid_' . $alias . '_request_token'] : false;
     }

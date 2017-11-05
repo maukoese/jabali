@@ -1,8 +1,8 @@
 
 /*!
- * Propeller v1.1.0 (http://propeller.in): dropdown.js
+ * Propeller v1.1.0 (https://propeller.in): dropdown.js
  * Copyright 2016-2017 Digicorp, Inc.
- * Licensed under MIT (http://propeller.in/LICENSE)
+ * Licensed under MIT (https://propeller.in/LICENSE)
  */
 $( document ).ready(function() {
 	$('.pmd-dropdown .dropdown-menu').wrap( "<div class='pmd-dropdown-menu-container'></div>" );

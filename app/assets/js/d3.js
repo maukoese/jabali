@@ -620,13 +620,13 @@
       return d3_selectAll(selector, this);
     };
   }
-  var d3_nsXhtml = "http://www.w3.org/1999/xhtml";
+  var d3_nsXhtml = "https://www.w3.org/1999/xhtml";
   var d3_nsPrefix = {
-    svg: "http://www.w3.org/2000/svg",
+    svg: "https://www.w3.org/2000/svg",
     xhtml: d3_nsXhtml,
-    xlink: "http://www.w3.org/1999/xlink",
-    xml: "http://www.w3.org/XML/1998/namespace",
-    xmlns: "http://www.w3.org/2000/xmlns/"
+    xlink: "https://www.w3.org/1999/xlink",
+    xml: "https://www.w3.org/XML/1998/namespace",
+    xmlns: "https://www.w3.org/2000/xmlns/"
   };
   d3.ns = {
     prefix: d3_nsPrefix,

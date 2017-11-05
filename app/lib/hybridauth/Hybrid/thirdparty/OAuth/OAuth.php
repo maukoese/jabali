@@ -1,5 +1,5 @@
 <?php
-// http://oauth.googlecode.com/svn/code/php/OAuth.php
+// https://oauth.googlecode.com/svn/code/php/OAuth.php
 // rev 1276,	July 4, 2014
 
 // vim: foldmethod=marker
@@ -776,7 +776,7 @@ class OAuthUtil {
   // parameters, has to do some unescaping
   // Can filter out any non-oauth parameters if needed (default behaviour)
   // May 28th, 2010 - method updated to tjerk.meesters for a speed improvement.
-  //                  see http://code.google.com/p/oauth/issues/detail?id=163
+  //                  see https://code.google.com/p/oauth/issues/detail?id=163
   public static function split_header($header, $only_allow_oauth_parameters = true) {
     $params = array();
     if (preg_match_all('/('.($only_allow_oauth_parameters ? 'oauth_' : '').'[a-z_-]*)=(:?"([^"]*)"|([^,]*))/', $header, $matches)) {

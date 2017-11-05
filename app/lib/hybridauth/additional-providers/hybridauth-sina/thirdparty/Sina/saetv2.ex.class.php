@@ -18,7 +18,7 @@ if (!class_exists('OAuthException', false)) {
 /**
  * 新浪微博 OAuth 认证类(OAuth2)
  *
- * 授权机制说明请大家参考微博开放平台文档：{@link http://open.weibo.com/wiki/Oauth2}
+ * 授权机制说明请大家参考微博开放平台文档：{@link https://open.weibo.com/wiki/Oauth2}
  *
  * @package sae
  * @author Elmer Zhang
@@ -140,7 +140,7 @@ class SaeTOAuthV2 {
 	/**
 	 * authorize接口
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/Oauth2/authorize Oauth2/authorize}
+	 * 对应API：{@link https://open.weibo.com/wiki/Oauth2/authorize Oauth2/authorize}
 	 *
 	 * @param string $url 授权后的回调地址,站外应用需与回调地址一致,站内应用需要填写canvas page的地址
 	 * @param string $response_type 支持的值包括 code 和token 默认值为code
@@ -168,7 +168,7 @@ class SaeTOAuthV2 {
 	/**
 	 * access_token接口
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/OAuth2/access_token OAuth2/access_token}
+	 * 对应API：{@link https://open.weibo.com/wiki/OAuth2/access_token OAuth2/access_token}
 	 *
 	 * @param string $type 请求的类型,可以为:code, password, token
 	 * @param array $keys 其他参数：
@@ -487,7 +487,7 @@ class SaeTClientV2
 	/**
 	 * 获取最新的公共微博消息
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/public_timeline statuses/public_timeline}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/statuses/public_timeline statuses/public_timeline}
 	 *
 	 * @access public
 	 * @param int $count 单页返回的记录条数，默认为50。
@@ -507,8 +507,8 @@ class SaeTClientV2
 	/**
 	 * 获取当前登录用户及其所关注用户的最新微博消息。
 	 *
-	 * 获取当前登录用户及其所关注用户的最新微博消息。和用户登录 http://weibo.com 后在“我的首页”中看到的内容相同。同friends_timeline()
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/home_timeline statuses/home_timeline}
+	 * 获取当前登录用户及其所关注用户的最新微博消息。和用户登录 https://weibo.com 后在“我的首页”中看到的内容相同。同friends_timeline()
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/statuses/home_timeline statuses/home_timeline}
 	 * 
 	 * @access public
 	 * @param int $page 指定返回结果的页码。根据当前登录用户所关注的用户数及这些被关注用户发表的微博数，翻页功能最多能查看的总记录数会有所不同，通常最多能查看1000条左右。默认值1。可选。
@@ -541,8 +541,8 @@ class SaeTClientV2
 	/**
 	 * 获取当前登录用户及其所关注用户的最新微博消息。
 	 *
-	 * 获取当前登录用户及其所关注用户的最新微博消息。和用户登录 http://weibo.com 后在“我的首页”中看到的内容相同。同home_timeline()
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/friends_timeline statuses/friends_timeline}
+	 * 获取当前登录用户及其所关注用户的最新微博消息。和用户登录 https://weibo.com 后在“我的首页”中看到的内容相同。同home_timeline()
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/statuses/friends_timeline statuses/friends_timeline}
 	 * 
 	 * @access public
 	 * @param int $page 指定返回结果的页码。根据当前登录用户所关注的用户数及这些被关注用户发表的微博数，翻页功能最多能查看的总记录数会有所不同，通常最多能查看1000条左右。默认值1。可选。
@@ -562,7 +562,7 @@ class SaeTClientV2
 	 * 获取用户发布的微博信息列表
 	 *
 	 * 返回用户的发布的最近n条信息，和用户微博页面返回内容是一致的。此接口也可以请求其他用户的最新发表微博。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/user_timeline statuses/user_timeline}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/statuses/user_timeline statuses/user_timeline}
 	 * 
 	 * @access public
 	 * @param int $page 页码
@@ -601,7 +601,7 @@ class SaeTClientV2
 	 * 获取用户发布的微博信息列表
 	 *
 	 * 返回用户的发布的最近n条信息，和用户微博页面返回内容是一致的。此接口也可以请求其他用户的最新发表微博。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/user_timeline statuses/user_timeline}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/statuses/user_timeline statuses/user_timeline}
 	 * 
 	 * @access public
 	 * @param string $screen_name 微博昵称，主要是用来区分用户UID跟微博昵称，当二者一样而产生歧义的时候，建议使用该参数 
@@ -640,7 +640,7 @@ class SaeTClientV2
 	/**
 	 * 批量获取指定的一批用户的timeline
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/timeline_batch statuses/timeline_batch}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/statuses/timeline_batch statuses/timeline_batch}
 	 *
 	 * @param string $screen_name  需要查询的用户昵称，用半角逗号分隔，一次最多20个
 	 * @param int    $count        单页返回的记录条数，默认为50。
@@ -667,7 +667,7 @@ class SaeTClientV2
 	/**
 	 * 批量获取指定的一批用户的timeline
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/timeline_batch statuses/timeline_batch}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/statuses/timeline_batch statuses/timeline_batch}
 	 *
 	 * @param string $uids  需要查询的用户ID，用半角逗号分隔，一次最多20个。
 	 * @param int    $count        单页返回的记录条数，默认为50。
@@ -698,7 +698,7 @@ class SaeTClientV2
 	/**
 	 * 返回一条原创微博消息的最新n条转发微博消息。本接口无法对非原创微博进行查询。 
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/repost_timeline statuses/repost_timeline}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/statuses/repost_timeline statuses/repost_timeline}
 	 * 
 	 * @access public
 	 * @param int $sid 要获取转发微博列表的原创微博ID。
@@ -731,7 +731,7 @@ class SaeTClientV2
 	/**
 	 * 获取当前用户最新转发的n条微博消息
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/repost_by_me statuses/repost_by_me}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/statuses/repost_by_me statuses/repost_by_me}
 	 * 
 	 * @access public
 	 * @param int $page 返回结果的页码。 
@@ -759,7 +759,7 @@ class SaeTClientV2
 	 * 获取@当前用户的微博列表
 	 *
 	 * 返回最新n条提到登录用户的微博消息（即包含@username的微博消息）
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/mentions statuses/mentions}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/statuses/mentions statuses/mentions}
 	 * 
 	 * @access public
 	 * @param int $page 返回结果的页序号。
@@ -794,7 +794,7 @@ class SaeTClientV2
 	 * 根据ID获取单条微博信息内容
 	 *
 	 * 获取单条ID的微博信息，作者信息将同时返回。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/show statuses/show}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/statuses/show statuses/show}
 	 * 
 	 * @access public
 	 * @param int $id 要获取已发表的微博ID, 如ID不存在返回空
@@ -811,7 +811,7 @@ class SaeTClientV2
 	/**
 	 * 根据微博id号获取微博的信息
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/show_batch statuses/show_batch}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/statuses/show_batch statuses/show_batch}
 	 *
 	 * @param string $ids 需要查询的微博ID，用半角逗号分隔，最多不超过50个。
 	 * @return array
@@ -833,7 +833,7 @@ class SaeTClientV2
 	/**
 	 * 通过微博（评论、私信）ID获取其MID
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/querymid statuses/querymid}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/statuses/querymid statuses/querymid}
 	 *
 	 * @param int|string $id  需要查询的微博（评论、私信）ID，批量模式下，用半角逗号分隔，最多不超过20个。
 	 * @param int $type  获取类型，1：微博、2：评论、3：私信，默认为1。
@@ -852,7 +852,7 @@ class SaeTClientV2
 	/**
 	 * 通过微博（评论、私信）MID获取其ID
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/queryid statuses/queryid}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/statuses/queryid statuses/queryid}
 	 *
 	 * @param int|string $mid  需要查询的微博（评论、私信）MID，批量模式下，用半角逗号分隔，最多不超过20个。
 	 * @param int $type  获取类型，1：微博、2：评论、3：私信，默认为1。
@@ -875,7 +875,7 @@ class SaeTClientV2
 	/**
 	 * 按天返回热门微博转发榜的微博列表
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/hot/repost_daily statuses/hot/repost_daily}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/statuses/hot/repost_daily statuses/hot/repost_daily}
 	 *
 	 * @param int $count 返回的记录条数，最大不超过50，默认为20。
 	 * @param int $base_app 是否只获取当前应用的数据。0为否（所有数据），1为是（仅当前应用），默认为0。
@@ -892,7 +892,7 @@ class SaeTClientV2
 	/**
 	 * 按周返回热门微博转发榜的微博列表
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/hot/repost_weekly statuses/hot/repost_weekly}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/statuses/hot/repost_weekly statuses/hot/repost_weekly}
 	 *
 	 * @param int $count 返回的记录条数，最大不超过50，默认为20。
 	 * @param int $base_app 是否只获取当前应用的数据。0为否（所有数据），1为是（仅当前应用），默认为0。
@@ -909,7 +909,7 @@ class SaeTClientV2
 	/**
 	 * 按天返回热门微博评论榜的微博列表
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/hot/comments_daily statuses/hot/comments_daily}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/statuses/hot/comments_daily statuses/hot/comments_daily}
 	 *
 	 * @param int $count 返回的记录条数，最大不超过50，默认为20。
 	 * @param int $base_app 是否只获取当前应用的数据。0为否（所有数据），1为是（仅当前应用），默认为0。
@@ -926,7 +926,7 @@ class SaeTClientV2
 	/**
 	 * 按周返回热门微博评论榜的微博列表
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/hot/comments_weekly statuses/hot/comments_weekly}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/statuses/hot/comments_weekly statuses/hot/comments_weekly}
 	 *
 	 * @param int $count 返回的记录条数，最大不超过50，默认为20。
 	 * @param int $base_app 是否只获取当前应用的数据。0为否（所有数据），1为是（仅当前应用），默认为0。
@@ -945,7 +945,7 @@ class SaeTClientV2
 	 * 转发一条微博信息。
 	 *
 	 * 可加评论。为防止重复，发布的信息与最新信息一样话，将会被忽略。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/repost statuses/repost}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/statuses/repost statuses/repost}
 	 * 
 	 * @access public
 	 * @param int $sid 转发的微博ID
@@ -969,7 +969,7 @@ class SaeTClientV2
 	 * 删除一条微博
 	 * 
 	 * 根据ID删除微博消息。注意：只能删除自己发布的信息。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/destroy statuses/destroy}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/statuses/destroy statuses/destroy}
 	 * 
 	 * @access public
 	 * @param int $id 要删除的微博ID
@@ -984,7 +984,7 @@ class SaeTClientV2
 	 * 删除一条微博
 	 *
 	 * 删除微博。注意：只能删除自己发布的信息。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/destroy statuses/destroy}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/statuses/destroy statuses/destroy}
 	 * 
 	 * @access public
 	 * @param int $id 要删除的微博ID
@@ -1005,7 +1005,7 @@ class SaeTClientV2
 	 * 发布一条微博信息。
 	 * <br />注意：lat和long参数需配合使用，用于标记发表微博消息时所在的地理位置，只有用户设置中geo_enabled=true时候地理位置信息才有效。
 	 * <br />注意：为防止重复提交，当用户发布的微博消息与上次成功发布的微博消息内容一样时，将返回400错误，给出错误提示：“40025:Error: repeated weibo text!“。 
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/update statuses/update}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/statuses/update statuses/update}
 	 * 
 	 * @access public
 	 * @param string $status 要更新的微博信息。信息内容不超过140个汉字, 为空返回400错误。
@@ -1038,7 +1038,7 @@ class SaeTClientV2
 	 *
 	 * 发表图片微博消息。目前上传图片大小限制为<5M。 
 	 * <br />注意：lat和long参数需配合使用，用于标记发表微博消息时所在的地理位置，只有用户设置中geo_enabled=true时候地理位置信息才有效。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/upload statuses/upload}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/statuses/upload statuses/upload}
 	 * 
 	 * @access public
 	 * @param string $status 要更新的微博信息。信息内容不超过140个汉字, 为空返回400错误。
@@ -1066,7 +1066,7 @@ class SaeTClientV2
 	/**
 	 * 指定一个图片URL地址抓取后上传并同时发布一条新微博
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/statuses/upload_url_text statuses/upload_url_text}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/statuses/upload_url_text statuses/upload_url_text}
 	 *
 	 * @param string $status  要发布的微博文本内容，内容不超过140个汉字。
 	 * @param string $url    图片的URL地址，必须以http开头。
@@ -1085,7 +1085,7 @@ class SaeTClientV2
 	 * 获取表情列表
 	 *
 	 * 返回新浪微博官方所有表情、魔法表情的相关信息。包括短语、表情类型、表情分类，是否热门等。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/emotions emotions}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/emotions emotions}
 	 * 
 	 * @access public
 	 * @param string $type 表情类别。"face":普通表情，"ani"：魔法表情，"cartoon"：动漫表情。默认为"face"。可选。
@@ -1104,7 +1104,7 @@ class SaeTClientV2
 	/**
 	 * 根据微博ID返回某条微博的评论列表
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/comments/show comments/show}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/comments/show comments/show}
 	 *
 	 * @param int $sid 需要查询的微博ID。
 	 * @param int $page 返回结果的页码，默认为1。
@@ -1137,7 +1137,7 @@ class SaeTClientV2
 	/**
 	 * 获取当前登录用户所发出的评论列表
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/comments/by_me comments/by_me}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/comments/by_me comments/by_me}
 	 *
 	 * @param int $since_id 若指定此参数，则返回ID比since_id大的评论（即比since_id时间晚的评论），默认为0。
 	 * @param int $max_id 若指定此参数，则返回ID小于或等于max_id的评论，默认为0。
@@ -1166,7 +1166,7 @@ class SaeTClientV2
 	/**
 	 * 获取当前登录用户所接收到的评论列表
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/comments/to_me comments/to_me}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/comments/to_me comments/to_me}
 	 *
 	 * @param int $since_id 若指定此参数，则返回ID比since_id大的评论（即比since_id时间晚的评论），默认为0。
 	 * @param int $max_id  若指定此参数，则返回ID小于或等于max_id的评论，默认为0。
@@ -1198,7 +1198,7 @@ class SaeTClientV2
 	 * 最新评论(按时间)
 	 *
 	 * 返回最新n条发送及收到的评论。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/comments/timeline comments/timeline}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/comments/timeline comments/timeline}
 	 * 
 	 * @access public
 	 * @param int $page 页码
@@ -1226,7 +1226,7 @@ class SaeTClientV2
 	/**
 	 * 获取最新的提到当前登录用户的评论，即@我的评论
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/comments/mentions comments/mentions}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/comments/mentions comments/mentions}
 	 *
 	 * @param int $since_id 若指定此参数，则返回ID比since_id大的评论（即比since_id时间晚的评论），默认为0。
 	 * @param int $max_id  若指定此参数，则返回ID小于或等于max_id的评论，默认为0。
@@ -1252,7 +1252,7 @@ class SaeTClientV2
 	/**
 	 * 根据评论ID批量返回评论信息
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/comments/show_batch comments/show_batch}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/comments/show_batch comments/show_batch}
 	 *
 	 * @param string $cids 需要查询的批量评论ID，用半角逗号分隔，最大50
 	 * @return array
@@ -1275,7 +1275,7 @@ class SaeTClientV2
 	/**
 	 * 对一条微博进行评论
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/comments/create comments/create}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/comments/create comments/create}
 	 *
 	 * @param string $comment 评论内容，内容不超过140个汉字。
 	 * @param int $id 需要评论的微博ID。
@@ -1296,7 +1296,7 @@ class SaeTClientV2
 	 * 删除当前用户的微博评论信息。
 	 *
 	 * 注意：只能删除自己发布的评论，发部微博的用户不可以删除其他人的评论。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/statuses/comment_destroy statuses/comment_destroy}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/statuses/comment_destroy statuses/comment_destroy}
 	 * 
 	 * @access public
 	 * @param int $cid 要删除的评论id
@@ -1314,7 +1314,7 @@ class SaeTClientV2
 	 * 根据评论ID批量删除评论
 	 *
 	 * 注意：只能删除自己发布的评论，发部微博的用户不可以删除其他人的评论。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/comments/destroy_batch comments/destroy_batch}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/comments/destroy_batch comments/destroy_batch}
 	 *
 	 * @access public
 	 * @param string $ids 需要删除的评论ID，用半角逗号隔开，最多20个。
@@ -1339,7 +1339,7 @@ class SaeTClientV2
 	 * 回复一条评论
 	 *
 	 * 为防止重复，发布的信息与最后一条评论/回复信息一样话，将会被忽略。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/comments/reply comments/reply}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/comments/reply comments/reply}
 	 * 
 	 * @access public
 	 * @param int $sid 微博id
@@ -1367,7 +1367,7 @@ class SaeTClientV2
 	 * 根据用户UID或昵称获取用户资料
 	 *
 	 * 按用户UID或昵称返回用户资料，同时也将返回用户的最新发布的微博。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/users/show users/show}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/users/show users/show}
 	 * 
 	 * @access public
 	 * @param int  $uid 用户UID。
@@ -1388,7 +1388,7 @@ class SaeTClientV2
 	 * 根据用户UID或昵称获取用户资料
 	 *
 	 * 按用户UID或昵称返回用户资料，同时也将返回用户的最新发布的微博。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/users/show users/show}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/users/show users/show}
 	 * 
 	 * @access public
 	 * @param string  $screen_name 用户UID。
@@ -1405,10 +1405,10 @@ class SaeTClientV2
 	/**
 	 * 通过个性化域名获取用户资料以及用户最新的一条微博
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/users/domain_show users/domain_show}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/users/domain_show users/domain_show}
 	 * 
 	 * @access public
-	 * @param mixed $domain 用户个性域名。例如：lazypeople，而不是http://weibo.com/lazypeople
+	 * @param mixed $domain 用户个性域名。例如：lazypeople，而不是https://weibo.com/lazypeople
 	 * @return array
 	 */
 	function domain_show( $domain )
@@ -1421,7 +1421,7 @@ class SaeTClientV2
 	 /**
 	 * 批量获取用户信息按uids
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/users/show_batch users/show_batch}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/users/show_batch users/show_batch}
 	 *
 	 * @param string $uids 需要查询的用户ID，用半角逗号分隔，一次最多20个。
 	 * @return array
@@ -1443,7 +1443,7 @@ class SaeTClientV2
 	/**
 	 * 批量获取用户信息按screen_name
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/users/show_batch users/show_batch}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/users/show_batch users/show_batch}
 	 *
 	 * @param string  $screen_name 需要查询的用户昵称，用半角逗号分隔，一次最多20个。
 	 * @return array
@@ -1464,7 +1464,7 @@ class SaeTClientV2
 	 * 获取用户的关注列表
 	 *
 	 * 如果没有提供cursor参数，将只返回最前面的5000个关注id
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/friendships/friends friendships/friends}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/friendships/friends friendships/friends}
 	 * 
 	 * @access public
 	 * @param int $cursor 返回结果的游标，下一页用返回值里的next_cursor，上一页用previous_cursor，默认为0。
@@ -1487,7 +1487,7 @@ class SaeTClientV2
 	 * 获取用户的关注列表
 	 *
 	 * 如果没有提供cursor参数，将只返回最前面的5000个关注id
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/friendships/friends friendships/friends}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/friendships/friends friendships/friends}
 	 * 
 	 * @access public
 	 * @param int $cursor 返回结果的游标，下一页用返回值里的next_cursor，上一页用previous_cursor，默认为0。
@@ -1508,7 +1508,7 @@ class SaeTClientV2
 	/**
 	 * 获取两个用户之间的共同关注人列表
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/friendships/friends/in_common friendships/friends/in_common}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/friendships/friends/in_common friendships/friends/in_common}
 	 *
 	 * @param int $uid  需要获取共同关注关系的用户UID
 	 * @param int $suid  需要获取共同关注关系的用户UID，默认为当前登录用户。
@@ -1529,7 +1529,7 @@ class SaeTClientV2
 	/**
 	 * 获取用户的双向关注列表，即互粉列表
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/friendships/friends/bilateral friendships/friends/bilateral}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/friendships/friends/bilateral friendships/friends/bilateral}
 	 *
 	 * @param int $uid  需要获取双向关注列表的用户UID。
 	 * @param int $count  单页返回的记录条数，默认为50。
@@ -1550,7 +1550,7 @@ class SaeTClientV2
 	/**
 	 * 获取用户的双向关注uid列表
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/friendships/friends/bilateral/ids friendships/friends/bilateral/ids}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/friendships/friends/bilateral/ids friendships/friends/bilateral/ids}
 	 *
 	 * @param int $uid  需要获取双向关注列表的用户UID。
 	 * @param int $count 单页返回的记录条数，默认为50。
@@ -1572,7 +1572,7 @@ class SaeTClientV2
 	 * 获取用户的关注列表uid
 	 *
 	 * 如果没有提供cursor参数，将只返回最前面的5000个关注id
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/friendships/friends/ids friendships/friends/ids}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/friendships/friends/ids friendships/friends/ids}
 	 * 
 	 * @access public
 	 * @param int $cursor 返回结果的游标，下一页用返回值里的next_cursor，上一页用previous_cursor，默认为0。
@@ -1594,7 +1594,7 @@ class SaeTClientV2
 	 * 获取用户的关注列表uid
 	 *
 	 * 如果没有提供cursor参数，将只返回最前面的5000个关注id
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/friendships/friends/ids friendships/friends/ids}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/friendships/friends/ids friendships/friends/ids}
 	 * 
 	 * @access public
 	 * @param int $cursor 返回结果的游标，下一页用返回值里的next_cursor，上一页用previous_cursor，默认为0。
@@ -1615,7 +1615,7 @@ class SaeTClientV2
 	/**
 	 * 批量获取当前登录用户的关注人的备注信息
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/friendships/friends/remark_batch friendships/friends/remark_batch}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/friendships/friends/remark_batch friendships/friends/remark_batch}
 	 *
 	 * @param string $uids  需要获取备注的用户UID，用半角逗号分隔，最多不超过50个。
 	 * @return array
@@ -1637,7 +1637,7 @@ class SaeTClientV2
 	/**
 	 * 获取用户的粉丝列表
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/friendships/followers friendships/followers}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/friendships/followers friendships/followers}
 	 *
 	 * @param int $uid  需要查询的用户UID
 	 * @param int $count 单页返回的记录条数，默认为50，最大不超过200。
@@ -1657,7 +1657,7 @@ class SaeTClientV2
 	/**
 	 * 获取用户的粉丝列表
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/friendships/followers friendships/followers}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/friendships/followers friendships/followers}
 	 *
 	 * @param string $screen_name  需要查询的用户的昵称
 	 * @param int  $count 单页返回的记录条数，默认为50，最大不超过200。
@@ -1676,7 +1676,7 @@ class SaeTClientV2
 	/**
 	 * 获取用户的粉丝列表uid
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/friendships/followers friendships/followers}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/friendships/followers friendships/followers}
 	 *
 	 * @param int $uid 需要查询的用户UID
 	 * @param int $count 单页返回的记录条数，默认为50，最大不超过200。
@@ -1696,7 +1696,7 @@ class SaeTClientV2
 	/**
 	 * 获取用户的粉丝列表uid
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/friendships/followers friendships/followers}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/friendships/followers friendships/followers}
 	 *
 	 * @param string $screen_name 需要查询的用户screen_name
 	 * @param int $count 单页返回的记录条数，默认为50，最大不超过200。
@@ -1715,7 +1715,7 @@ class SaeTClientV2
 	/**
 	 * 获取优质粉丝
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/friendships/followers/active friendships/followers/active}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/friendships/followers/active friendships/followers/active}
 	 *
 	 * @param int $uid 需要查询的用户UID。
 	 * @param int $count 返回的记录条数，默认为20，最大不超过200。
@@ -1734,7 +1734,7 @@ class SaeTClientV2
 	/**
 	 * 获取当前登录用户的关注人中又关注了指定用户的用户列表
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/friendships/friends_chain/followers friendships/friends_chain/followers}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/friendships/friends_chain/followers friendships/friends_chain/followers}
 	 *
 	 * @param int $uid 指定的关注目标用户UID。
 	 * @param int $count 单页返回的记录条数，默认为50。
@@ -1755,7 +1755,7 @@ class SaeTClientV2
 	 * 返回两个用户关系的详细情况
 	 *
 	 * 如果源用户或目的用户不存在，将返回http的400错误
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/friendships/show friendships/show}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/friendships/show friendships/show}
 	 * 
 	 * @access public
 	 * @param mixed $target_id 目标用户UID
@@ -1780,7 +1780,7 @@ class SaeTClientV2
 	 * 返回两个用户关系的详细情况
 	 *
 	 * 如果源用户或目的用户不存在，将返回http的400错误
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/friendships/show friendships/show}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/friendships/show friendships/show}
 	 * 
 	 * @access public
 	 * @param mixed $target_name 目标用户的微博昵称
@@ -1803,7 +1803,7 @@ class SaeTClientV2
 	 * 关注一个用户。
 	 *
 	 * 成功则返回关注人的资料，目前最多关注2000人，失败则返回一条字符串的说明。如果已经关注了此人，则返回http 403的状态。关注不存在的ID将返回400。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/friendships/create friendships/create}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/friendships/create friendships/create}
 	 * 
 	 * @access public
 	 * @param int $uid 要关注的用户UID
@@ -1821,7 +1821,7 @@ class SaeTClientV2
 	 * 关注一个用户。
 	 *
 	 * 成功则返回关注人的资料，目前的最多关注2000人，失败则返回一条字符串的说明。如果已经关注了此人，则返回http 403的状态。关注不存在的ID将返回400。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/friendships/create friendships/create}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/friendships/create friendships/create}
 	 * 
 	 * @access public
 	 * @param string $screen_name 要关注的用户昵称
@@ -1838,7 +1838,7 @@ class SaeTClientV2
 	/**
 	 * 根据用户UID批量关注用户
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/friendships/create_batch friendships/create_batch}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/friendships/create_batch friendships/create_batch}
 	 *
 	 * @param string $uids 要关注的用户UID，用半角逗号分隔，最多不超过20个。
 	 * @return array
@@ -1861,7 +1861,7 @@ class SaeTClientV2
 	 * 取消关注某用户
 	 *
 	 * 取消关注某用户。成功则返回被取消关注人的资料，失败则返回一条字符串的说明。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/friendships/destroy friendships/destroy}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/friendships/destroy friendships/destroy}
 	 * 
 	 * @access public
 	 * @param int $uid 要取消关注的用户UID
@@ -1879,7 +1879,7 @@ class SaeTClientV2
 	 * 取消关注某用户
 	 *
 	 * 取消关注某用户。成功则返回被取消关注人的资料，失败则返回一条字符串的说明。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/friendships/destroy friendships/destroy}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/friendships/destroy friendships/destroy}
 	 * 
 	 * @access public
 	 * @param string $screen_name 要取消关注的用户昵称
@@ -1896,7 +1896,7 @@ class SaeTClientV2
 	 * 更新当前登录用户所关注的某个好友的备注信息
 	 *
 	 * 只能修改当前登录用户所关注的用户的备注信息。否则将给出400错误。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/friendships/remark/update friendships/remark/update}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/friendships/remark/update friendships/remark/update}
 	 * 
 	 * @access public
 	 * @param int $uid 需要修改备注信息的用户ID。
@@ -1916,7 +1916,7 @@ class SaeTClientV2
 	 * 获取当前用户最新私信列表
 	 *
 	 * 返回用户的最新n条私信，并包含发送者和接受者的详细资料。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/direct_messages direct_messages}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/direct_messages direct_messages}
 	 * 
 	 * @access public
 	 * @param int $page 页码
@@ -1944,7 +1944,7 @@ class SaeTClientV2
 	 * 获取当前用户发送的最新私信列表
 	 *
 	 * 返回登录用户已发送最新50条私信。包括发送者和接受者的详细资料。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/direct_messages/sent direct_messages/sent}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/direct_messages/sent direct_messages/sent}
 	 * 
 	 * @access public
 	 * @param int $page 页码
@@ -1972,7 +1972,7 @@ class SaeTClientV2
 	/**
 	 * 获取与当前登录用户有私信往来的用户列表，与该用户往来的最新私信
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/direct_messages/user_list direct_messages/user_list}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/direct_messages/user_list direct_messages/user_list}
 	 *
 	 * @param int $count  单页返回的记录条数，默认为20。
 	 * @param int $cursor 返回结果的游标，下一页用返回值里的next_cursor，上一页用previous_cursor，默认为0。
@@ -1989,7 +1989,7 @@ class SaeTClientV2
 	/**
 	 * 获取与指定用户的往来私信列表
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/direct_messages/conversation direct_messages/conversation}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/direct_messages/conversation direct_messages/conversation}
 	 *
 	 * @param int $uid 需要查询的用户的UID。
 	 * @param int $since_id 若指定此参数，则返回ID比since_id大的私信（即比since_id时间晚的私信），默认为0。
@@ -2019,7 +2019,7 @@ class SaeTClientV2
 	/**
 	 * 根据私信ID批量获取私信内容
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/direct_messages/show_batch direct_messages/show_batch}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/direct_messages/show_batch direct_messages/show_batch}
 	 *
 	 * @param string  $dmids 需要查询的私信ID，用半角逗号分隔，一次最多50个
 	 * @return array
@@ -2042,7 +2042,7 @@ class SaeTClientV2
 	 * 发送私信
 	 *
 	 * 发送一条私信。成功将返回完整的发送消息。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/direct_messages/new direct_messages/new}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/direct_messages/new direct_messages/new}
 	 * 
 	 * @access public
 	 * @param int $uid 用户UID
@@ -2067,7 +2067,7 @@ class SaeTClientV2
 	 * 发送私信
 	 *
 	 * 发送一条私信。成功将返回完整的发送消息。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/direct_messages/new direct_messages/new}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/direct_messages/new direct_messages/new}
 	 * 
 	 * @access public
 	 * @param string $screen_name 用户昵称
@@ -2091,7 +2091,7 @@ class SaeTClientV2
 	 * 删除一条私信
 	 *
 	 * 按ID删除私信。操作用户必须为私信的接收人。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/direct_messages/destroy direct_messages/destroy}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/direct_messages/destroy direct_messages/destroy}
 	 * 
 	 * @access public
 	 * @param int $did 要删除的私信主键ID
@@ -2109,7 +2109,7 @@ class SaeTClientV2
 	 * 批量删除私信
 	 *
 	 * 批量删除当前登录用户的私信。出现异常时，返回400错误。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/direct_messages/destroy_batch direct_messages/destroy_batch}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/direct_messages/destroy_batch direct_messages/destroy_batch}
 	 * 
 	 * @access public
 	 * @param mixed $dids 欲删除的一组私信ID，用半角逗号隔开，或者由一组评论ID组成的数组。最多20个。例如："4976494627, 4976262053"或array(4976494627,4976262053);
@@ -2135,7 +2135,7 @@ class SaeTClientV2
 	/**
 	 * 获取用户基本信息
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/account/profile/basic account/profile/basic}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/account/profile/basic account/profile/basic}
 	 *
 	 * @param int $uid  需要获取基本信息的用户UID，默认为当前登录用户。
 	 * @return array
@@ -2153,7 +2153,7 @@ class SaeTClientV2
 	/**
 	 * 获取用户的教育信息
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/account/profile/education account/profile/education}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/account/profile/education account/profile/education}
 	 *
 	 * @param int $uid  需要获取教育信息的用户UID，默认为当前登录用户。
 	 * @return array
@@ -2171,7 +2171,7 @@ class SaeTClientV2
 	/**
 	 * 批量获取用户的教育信息
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/account/profile/education_batch account/profile/education_batch}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/account/profile/education_batch account/profile/education_batch}
 	 *
 	 * @param string $uids 需要获取教育信息的用户UID，用半角逗号分隔，最多不超过20。
 	 * @return array
@@ -2195,7 +2195,7 @@ class SaeTClientV2
 	/**
 	 * 获取用户的职业信息
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/account/profile/career account/profile/career}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/account/profile/career account/profile/career}
 	 *
 	 * @param int $uid  需要获取教育信息的用户UID，默认为当前登录用户。
 	 * @return array
@@ -2213,7 +2213,7 @@ class SaeTClientV2
 	/**
 	 * 批量获取用户的职业信息
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/account/profile/career_batch account/profile/career_batch}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/account/profile/career_batch account/profile/career_batch}
 	 *
 	 * @param string $uids 需要获取教育信息的用户UID，用半角逗号分隔，最多不超过20。
 	 * @return array
@@ -2236,7 +2236,7 @@ class SaeTClientV2
 	/**
 	 * 获取隐私信息设置情况
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/account/get_privacy account/get_privacy}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/account/get_privacy account/get_privacy}
 	 * 
 	 * @access public
 	 * @return array
@@ -2249,7 +2249,7 @@ class SaeTClientV2
 	/**
 	 * 获取所有的学校列表
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/account/profile/school_list account/profile/school_list}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/account/profile/school_list account/profile/school_list}
 	 *
 	 * @param array $query 搜索选项。格式：array('key0'=>'value0', 'key1'=>'value1', ....)。支持的key:
 	 *  - province	int		省份范围，省份ID。
@@ -2273,7 +2273,7 @@ class SaeTClientV2
 	/**
 	 * 获取当前登录用户的API访问频率限制情况
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/account/rate_limit_status account/rate_limit_status}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/account/rate_limit_status account/rate_limit_status}
 	 * 
 	 * @access public
 	 * @return array
@@ -2286,7 +2286,7 @@ class SaeTClientV2
 	/**
 	 * OAuth授权之后，获取授权用户的UID
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/account/get_uid account/get_uid}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/account/get_uid account/get_uid}
 	 * 
 	 * @access public
 	 * @return array
@@ -2300,7 +2300,7 @@ class SaeTClientV2
 	/**
 	 * 更改用户资料
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/account/profile/basic_update account/profile/basic_update}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/account/profile/basic_update account/profile/basic_update}
 	 * 
 	 * @access public
 	 * @param array $profile 要修改的资料。格式：array('key1'=>'value1', 'key2'=>'value2', .....)。
@@ -2340,7 +2340,7 @@ class SaeTClientV2
 	/**
 	 * 设置教育信息
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/account/profile/edu_update account/profile/edu_update}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/account/profile/edu_update account/profile/edu_update}
 	 * 
 	 * @access public
 	 * @param array $edu_update 要修改的学校信息。格式：array('key1'=>'value1', 'key2'=>'value2', .....)。
@@ -2361,7 +2361,7 @@ class SaeTClientV2
 	/**
 	 * 根据学校ID删除用户的教育信息
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/account/profile/edu_destroy account/profile/edu_destroy}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/account/profile/edu_destroy account/profile/edu_destroy}
 	 * 
 	 * @param int $id 教育信息里的学校ID。
 	 * @return array
@@ -2377,7 +2377,7 @@ class SaeTClientV2
 	/**
 	 * 设置职业信息
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/account/profile/car_update account/profile/car_update}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/account/profile/car_update account/profile/car_update}
 	 * 
 	 * @param array $car_update 要修改的职业信息。格式：array('key1'=>'value1', 'key2'=>'value2', .....)。
 	 * 支持设置的项：
@@ -2401,7 +2401,7 @@ class SaeTClientV2
 	/**
 	 * 根据公司ID删除用户的职业信息
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/account/profile/car_destroy account/profile/car_destroy}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/account/profile/car_destroy account/profile/car_destroy}
 	 * 
 	 * @access public
 	 * @param int $id  职业信息里的公司ID
@@ -2418,7 +2418,7 @@ class SaeTClientV2
 	/**
 	 * 更改头像
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/account/avatar/upload account/avatar/upload}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/account/avatar/upload account/avatar/upload}
 	 *
 	 * @param string $image_path 要上传的头像路径, 支持url。[只支持png/jpg/gif三种格式, 增加格式请修改get_image_mime方法] 必须为小于700K的有效的GIF, JPG图片. 如果图片大于500像素将按比例缩放。
 	 * @return array
@@ -2434,7 +2434,7 @@ class SaeTClientV2
 	/**
 	 * 设置隐私信息
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/account/update_privacy account/update_privacy}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/account/update_privacy account/update_privacy}
 	 * 
 	 * @param array $privacy_settings 要修改的隐私设置。格式：array('key1'=>'value1', 'key2'=>'value2', .....)。
 	 * 支持设置的项：
@@ -2457,7 +2457,7 @@ class SaeTClientV2
 	 * 获取当前用户的收藏列表
 	 *
 	 * 返回用户的发布的最近20条收藏信息，和用户收藏页面返回内容是一致的。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/favorites favorites}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/favorites favorites}
 	 * 
 	 * @access public
 	 * @param  int $page 返回结果的页码，默认为1。
@@ -2478,7 +2478,7 @@ class SaeTClientV2
 	 * 根据收藏ID获取指定的收藏信息
 	 *
 	 * 根据收藏ID获取指定的收藏信息。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/favorites/show favorites/show}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/favorites/show favorites/show}
 	 * 
 	 * @access public
 	 * @param int $id 需要查询的收藏ID。
@@ -2496,7 +2496,7 @@ class SaeTClientV2
 	/**
 	 * 根据标签获取当前登录用户该标签下的收藏列表
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/favorites/by_tags favorites/by_tags}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/favorites/by_tags favorites/by_tags}
 	 *
 	 * 
 	 * @param int $tid  需要查询的标签ID。'
@@ -2517,7 +2517,7 @@ class SaeTClientV2
 	/**
 	 * 获取当前登录用户的收藏标签列表
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/favorites/tags favorites/tags}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/favorites/tags favorites/tags}
 	 * 
 	 * @access public
 	 * @param int $count 单页返回的记录条数，默认为50。
@@ -2536,7 +2536,7 @@ class SaeTClientV2
 	/**
 	 * 收藏一条微博信息
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/favorites/create favorites/create}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/favorites/create favorites/create}
 	 * 
 	 * @access public
 	 * @param int $sid 收藏的微博id
@@ -2554,7 +2554,7 @@ class SaeTClientV2
 	/**
 	 * 删除微博收藏。
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/favorites/destroy favorites/destroy}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/favorites/destroy favorites/destroy}
 	 * 
 	 * @access public
 	 * @param int $id 要删除的收藏微博信息ID.
@@ -2573,7 +2573,7 @@ class SaeTClientV2
 	 * 批量删除微博收藏。
 	 *
 	 * 批量删除当前登录用户的收藏。出现异常时，返回HTTP400错误。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/favorites/destroy_batch favorites/destroy_batch}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/favorites/destroy_batch favorites/destroy_batch}
 	 * 
 	 * @access public
 	 * @param mixed $fids 欲删除的一组私信ID，用半角逗号隔开，或者由一组评论ID组成的数组。最多20个。例如："231101027525486630,201100826122315375"或array(231101027525486630,201100826122315375);
@@ -2598,7 +2598,7 @@ class SaeTClientV2
 	/**
 	 * 更新一条收藏的收藏标签
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/favorites/tags/update favorites/tags/update}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/favorites/tags/update favorites/tags/update}
 	 * 
 	 * @access public
 	 * @param int $id 需要更新的收藏ID。
@@ -2623,7 +2623,7 @@ class SaeTClientV2
 	/**
 	 * 更新当前登录用户所有收藏下的指定标签
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/favorites/tags/update_batch favorites/tags/update_batch}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/favorites/tags/update_batch favorites/tags/update_batch}
 	 *
 	 * @param int $tid  需要更新的标签ID。必填
 	 * @param string $tag  需要更新的标签内容。必填
@@ -2641,7 +2641,7 @@ class SaeTClientV2
 	 * 删除当前登录用户所有收藏下的指定标签
 	 *
 	 * 删除标签后，该用户所有收藏中，添加了该标签的收藏均解除与该标签的关联关系
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/favorites/tags/destroy_batch favorites/tags/destroy_batch}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/favorites/tags/destroy_batch favorites/tags/destroy_batch}
 	 *
 	 * @param int $tid  需要更新的标签ID。必填
 	 * @return array
@@ -2656,7 +2656,7 @@ class SaeTClientV2
 	/**
 	 * 获取某用户的话题
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/trends trends}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/trends trends}
 	 * 
 	 * @param int $uid 查询用户的ID。默认为当前用户。可选。
 	 * @param int $page 指定返回结果的页码。可选。
@@ -2682,7 +2682,7 @@ class SaeTClientV2
 	/**
 	 * 判断当前用户是否关注某话题
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/trends/is_follow trends/is_follow}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/trends/is_follow trends/is_follow}
 	 * 
 	 * @access public
 	 * @param string $trend_name 话题关键字。
@@ -2698,7 +2698,7 @@ class SaeTClientV2
 	/**
 	 * 返回最近一小时内的热门话题
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/trends/hourly trends/hourly}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/trends/hourly trends/hourly}
 	 * 
 	 * @param  int $base_app 是否基于当前应用来获取数据。1表示基于当前应用来获取数据，默认为0。可选。
 	 * @return array
@@ -2714,7 +2714,7 @@ class SaeTClientV2
 	/**
 	 * 返回最近一天内的热门话题
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/trends/daily trends/daily}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/trends/daily trends/daily}
 	 * 
 	 * @param int $base_app 是否基于当前应用来获取数据。1表示基于当前应用来获取数据，默认为0。可选。
 	 * @return array
@@ -2730,7 +2730,7 @@ class SaeTClientV2
 	/**
 	 * 返回最近一周内的热门话题
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/trends/weekly trends/weekly}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/trends/weekly trends/weekly}
 	 * 
 	 * @access public
 	 * @param int $base_app 是否基于当前应用来获取数据。1表示基于当前应用来获取数据，默认为0。可选。
@@ -2747,7 +2747,7 @@ class SaeTClientV2
 	/**
 	 * 关注某话题
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/trends/follow trends/follow}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/trends/follow trends/follow}
 	 * 
 	 * @access public
 	 * @param string $trend_name 要关注的话题关键词。
@@ -2763,7 +2763,7 @@ class SaeTClientV2
 	/**
 	 * 取消对某话题的关注
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/trends/destroy trends/destroy}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/trends/destroy trends/destroy}
 	 * 
 	 * @access public
 	 * @param int $tid 要取消关注的话题ID。
@@ -2782,7 +2782,7 @@ class SaeTClientV2
 	/**
 	 * 返回指定用户的标签列表
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/tags tags}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/tags tags}
 	 * 
 	 * @param int $uid 查询用户的ID。默认为当前用户。可选。
 	 * @param int $page 指定返回结果的页码。可选。
@@ -2807,7 +2807,7 @@ class SaeTClientV2
 	/**
 	 * 批量获取用户的标签列表
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/tags/tags_batch tags/tags_batch}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/tags/tags_batch tags/tags_batch}
 	 * 
 	 * @param  string $uids 要获取标签的用户ID。最大20，逗号分隔。必填
 	 * @return array
@@ -2829,7 +2829,7 @@ class SaeTClientV2
 	/**
 	 * 返回用户感兴趣的标签
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/tags/suggestions tags/suggestions}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/tags/suggestions tags/suggestions}
 	 * 
 	 * @access public
 	 * @param int $count 单页大小。缺省值10，最大值10。可选。
@@ -2845,7 +2845,7 @@ class SaeTClientV2
 	/**
 	 * 为当前登录用户添加新的用户标签
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/tags/create tags/create}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/tags/create tags/create}
 	 * 
 	 * @access public
 	 * @param mixed $tags 要创建的一组标签，每个标签的长度不可超过7个汉字，14个半角字符。多个标签之间用逗号间隔，或由多个标签构成的数组。如："abc,drf,efgh,tt"或array("abc", "drf", "efgh", "tt")
@@ -2865,7 +2865,7 @@ class SaeTClientV2
 	/**
 	 * 删除标签
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/tags/destroy tags/destroy}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/tags/destroy tags/destroy}
 	 * 
 	 * @access public
 	 * @param int $tag_id 标签ID，必填参数
@@ -2881,7 +2881,7 @@ class SaeTClientV2
 	/**
 	 * 批量删除标签
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/tags/destroy_batch tags/destroy_batch}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/tags/destroy_batch tags/destroy_batch}
 	 * 
 	 * @access public
 	 * @param mixed $ids 必选参数，要删除的tag id，多个id用半角逗号分割，最多10个。或由多个tag id构成的数组。如：“553,554,555"或array(553, 554, 555)
@@ -2902,7 +2902,7 @@ class SaeTClientV2
 	/**
 	 * 验证昵称是否可用，并给予建议昵称
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/register/verify_nickname register/verify_nickname}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/register/verify_nickname register/verify_nickname}
 	 *
 	 * @param string $nickname 需要验证的昵称。4-20个字符，支持中英文、数字、"_"或减号。必填
 	 * @return array
@@ -2919,7 +2919,7 @@ class SaeTClientV2
 	/**
 	 * 搜索用户时的联想搜索建议
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/search/suggestions/users search/suggestions/users}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/search/suggestions/users search/suggestions/users}
 	 *
 	 * @param string $q 搜索的关键字，必须做URLencoding。必填,中间最好不要出现空格
 	 * @param int $count 返回的记录条数，默认为10。
@@ -2937,7 +2937,7 @@ class SaeTClientV2
 	/**
 	 * 搜索微博时的联想搜索建议
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/search/suggestions/statuses search/suggestions/statuses}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/search/suggestions/statuses search/suggestions/statuses}
 	 *
 	 * @param string $q 搜索的关键字，必须做URLencoding。必填
 	 * @param int $count 返回的记录条数，默认为10。
@@ -2955,7 +2955,7 @@ class SaeTClientV2
 	/**
 	 * 搜索学校时的联想搜索建议
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/search/suggestions/schools search/suggestions/schools}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/search/suggestions/schools search/suggestions/schools}
 	 *
 	 * @param string $q 搜索的关键字，必须做URLencoding。必填
 	 * @param int $count 返回的记录条数，默认为10。
@@ -2974,7 +2974,7 @@ class SaeTClientV2
 	/**
 	 * 搜索公司时的联想搜索建议
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/search/suggestions/companies search/suggestions/companies}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/search/suggestions/companies search/suggestions/companies}
 	 *
 	 * @param string $q 搜索的关键字，必须做URLencoding。必填
 	 * @param int $count 返回的记录条数，默认为10。
@@ -2992,7 +2992,7 @@ class SaeTClientV2
 	/**
 	 * ＠用户时的联想建议
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/search/suggestions/at_users search/suggestions/at_users}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/search/suggestions/at_users search/suggestions/at_users}
 	 *
 	 * @param string $q 搜索的关键字，必须做URLencoding。必填
 	 * @param int $count 返回的记录条数，默认为10。
@@ -3017,7 +3017,7 @@ class SaeTClientV2
 	/**
 	 * 搜索与指定的一个或多个条件相匹配的微博
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/search/statuses search/statuses}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/search/statuses search/statuses}
 	 *
 	 * @param array $query 搜索选项。格式：array('key0'=>'value0', 'key1'=>'value1', ....)。支持的key:
 	 *  - q				string	搜索的关键字，必须进行URLencode。
@@ -3046,7 +3046,7 @@ class SaeTClientV2
 	/**
 	 * 通过关键词搜索用户
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/search/users search/users}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/search/users search/users}
 	 *
 	 * @param array $query 搜索选项。格式：array('key0'=>'value0', 'key1'=>'value1', ....)。支持的key:
 	 *  - q			string	搜索的关键字，必须进行URLencode。
@@ -3076,7 +3076,7 @@ class SaeTClientV2
 	 * 获取系统推荐用户
 	 *
 	 * 返回系统推荐的用户列表。
-	 * <br />对应API：{@link http://open.weibo.com/wiki/2/suggestions/users/hot suggestions/users/hot}
+	 * <br />对应API：{@link https://open.weibo.com/wiki/2/suggestions/users/hot suggestions/users/hot}
 	 * 
 	 * @access public
 	 * @param string $category 分类，可选参数，返回某一类别的推荐用户，默认为 default。如果不在以下分类中，返回空列表：<br />
@@ -3106,7 +3106,7 @@ class SaeTClientV2
 	/**
 	 * 获取用户可能感兴趣的人
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/suggestions/users/may_interested suggestions/users/may_interested}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/suggestions/users/may_interested suggestions/users/may_interested}
 	 * 
 	 * @access public
 	 * @param int $page 返回结果的页码，默认为1。
@@ -3125,7 +3125,7 @@ class SaeTClientV2
 	/**
 	 * 根据一段微博正文推荐相关微博用户。 
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/suggestions/users/by_status suggestions/users/by_status}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/suggestions/users/by_status suggestions/users/by_status}
 	 * 
 	 * @access public
 	 * @param string $content 微博正文内容。
@@ -3143,7 +3143,7 @@ class SaeTClientV2
 	/**
 	 * 热门收藏
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/suggestions/favorites/hot suggestions/favorites/hot}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/suggestions/favorites/hot suggestions/favorites/hot}
 	 *
 	 * @param int $count 每页返回结果数，默认20。选填
 	 * @param int $page 返回页码，默认1。选填
@@ -3160,7 +3160,7 @@ class SaeTClientV2
 	/**
 	 * 把某人标识为不感兴趣的人
 	 *
-	 * 对应API：{@link http://open.weibo.com/wiki/2/suggestions/users/not_interested suggestions/users/not_interested}
+	 * 对应API：{@link https://open.weibo.com/wiki/2/suggestions/users/not_interested suggestions/users/not_interested}
 	 *
 	 * @param int $uid 不感兴趣的用户的UID。
 	 * @return array

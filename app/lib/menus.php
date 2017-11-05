@@ -1,6 +1,6 @@
 <?php 
 
-namespace Jabali\Classes;
+namespace Jabali\Lib;
 
 class Menus {
 

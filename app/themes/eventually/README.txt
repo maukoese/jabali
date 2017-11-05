@@ -44,7 +44,7 @@ Slideshow Background:
 
 			'url': 'alignment'
 
-		Where 'url' is the image (eg. 'images/foo.jpg', 'http://somewhere.else/foo.jpg'), and
+		Where 'url' is the image (eg. 'images/foo.jpg', 'https://somewhere.else/foo.jpg'), and
 		'alignment' is how the image should be vertically aligned ('top', 'center', or 'bottom').
 
 		Note: Browsers that don't support CSS transitions (like IE<=9) will only see the first image.

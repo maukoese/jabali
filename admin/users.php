@@ -1,6 +1,6 @@
 <?php 
 /**
-* @package Jabali Framework
+* @package Jabali - The Plug-N-Play Framework
 * @subpackage Admin Users
 * @link https://docs.jabalicms.org/users/
 * @author Mauko Maunde
@@ -21,7 +21,7 @@ if ( isset( $_POST['register'] ) ) {
     if ( empty( $_POST['created_t'] ) ) { $_POST['created_t'] = date( "H:i:s" ); }
     if ( empty( $_POST['custom'] ) ) { $_POST['custom'] = "{}"; }
     if ( empty( $_POST['details'] ) ) { $_POST['details'] = "User bio"; }
-    if ( empty( $_POST['email'] ) ) { $_POST['email'] = "user@jabali.co.ke"; }
+    if ( empty( $_POST['email'] ) ) { $_POST['email'] = "user@jabalicms.org"; }
     if ( empty( $_POST['excerpt'] ) ) { $_POST['excerpt'] = substr( $_POST['details'], 250 ); }
     if ( empty( $_POST['gender'] ) ) { $_POST['gender'] = "transgender"; }
     if ( empty( $_POST['level'] ) ) { $_POST['level'] = "public"; }
@@ -96,7 +96,7 @@ if ( isset( $_POST['update'] ) ) {
     if ( empty( $_POST['created_t'] ) ) { $_POST['created_t'] = date( "H:i:s" ); }
     if ( empty( $_POST['custom'] ) ) { $_POST['custom'] = "{}"; }
     if ( empty( $_POST['details'] ) ) { $_POST['details'] = "User bio"; }
-    if ( empty( $_POST['email'] ) ) { $_POST['email'] = "user@jabali.co.ke"; }
+    if ( empty( $_POST['email'] ) ) { $_POST['email'] = "user@jabalicms.org"; }
     if ( empty( $_POST['excerpt'] ) ) { $_POST['excerpt'] = substr( $_POST['details'], 250 ); }
     if ( empty( $_POST['gender'] ) ) { $_POST['gender'] = "transgender"; }
     if ( empty( $_POST['level'] ) ) { $_POST['level'] = "public"; }
@@ -121,6 +121,11 @@ if ( isset( $_POST['update'] ) ) {
     } else {
       $avatar = $_POST['the_avatar'];
     }
+
+    // $fields = array( "authkey", "author", "author_name", "avatar", "categories", "company", "created", "custom", "details", "email","excerpt", "gender", "level", "link", "location", "name", "phone", "social", "state", "style", "ilk", "updated", "username", "password" );
+    // foreach ($fields as $field ) {
+    //     $GLOBALS['USERS'] -> $field = $_POST[$field];
+    // }
 
     $GLOBALS['USERS'] -> authkey = $_POST['authkey'];
     $GLOBALS['USERS'] -> name = $_POST['name']; 
@@ -157,63 +162,50 @@ if ( isset( $_POST['update'] ) ) {
     }
 }
 
-require_once( 'header.php' ); ?>
+require_once( 'header.php' );
+showTitle('users'); ?>
 <div class="mdl-grid"><?php
 
-if ( isset( $_GET['activate'] ) ) {
-	$GLOBALS['JBLDB'] -> query( "UPDATE ". _DBPREFIX ."users SET state = 'active' WHERE id='".$_GET['activate']."'" );
-	echo "<script type = \"text/javascript\">
-              alert(\"User Activated Successfully!\" );
-          </script>";
-	$hUser -> getUsers();
-} elseif ( isset( $_GET['delete'] ) ) {
-	$GLOBALS['JBLDB'] -> query( "DELETE FROM ". _DBPREFIX ."users WHERE id='".$_GET['delete']."'" );
-	$hUser -> getUsers();
-} elseif ( isset( $_GET['create'] ) ) {
-	$hForm -> userForm();
+$collumns = array( 'id','username', 'email', 'phone', 'location', 'created', 'actions');
+$fields = array( 'id','username', 'email', 'phone', 'location', 'created');
+$rows = array( 'id','username', 'email', 'phone', 'location', 'created');
+$actions = array( 'edit' => ['id'], 'profile' => ['id'], 'email' => ['email'], 'call' => ['phone'] );
+
+if ( isset( $_GET['create'] ) ) {
+	renderView('forms/user' );
 } elseif ( isset( $_GET['edit'] ) ) {
-	$hForm -> editUserForm( $_GET['edit'] );
-} elseif ( isset( $_GET['fav'] ) ) {
-	$getRate = $GLOBALS['JBLDB'] -> query( "INSERT INTO hratings (author, for, ilk ) 
-		VALUES ('".$_SESSION[JBLSALT.'Code']."', '".$_GET['fav']."', 'user' )" );
+	renderView('forms/edit-user', $_GET['edit'] );
 } elseif ( isset( $_GET['author'] ) ) {
-	$hUser -> getUsersAuthor( $_GET['author'] );
-	if ( isCap( 'admin' ) ) {
-		newButton('users', 'doctor', 'create' );
-	}
+    tableHeader( $collumns );
+    tableBody( $GLOBALS['USERS']-> getAuthor( $_GET['author'] ), $fields, $rows, "No Users Found", $actions );
+    if ( isCap( 'admin' ) ) {
+        newButton('users', 'subscriber', 'create' );
+    }
 } elseif ( isset( $_GET['view'] )){
-	if ( $_GET['view'] == "list" ) {
-		if ( isset( $_GET['type'] ) ) {
-			if ( isset( $_GET['location'] ) ) {
-				$hUser -> getUsersLoc( $_GET['location'] );
-				if ( isCap( 'admin' ) ) {
-					newButton('users', 'author', 'create' );
-				}
-			} else {
-				$hUser -> getUsersType( $_GET['type'] );
-				if ( isCap( 'admin' ) ) {
-					newButton('users', $_GET['type'], 'create' );
-				}
-			}
-		} elseif ( isset( $_GET['location'] ) ) {
-			$hUser -> getUsersLoc( $_GET['location'] );
-			if ( isCap( 'admin' ) ) {
-				newButton('users', 'author', 'create' );
-			}
-		} else {
-			$hUser -> getUsers();
-			if ( isCap( 'admin' ) ) {
-				newButton('users', 'author', 'create' );
-			}
-		}
-	} elseif ( $_GET['view'] == "pending" ) {
-		$hUser -> getPendingUsers();
-		if ( isCap( 'admin' ) ) {
-			newButton('users', 'author', 'create' );
-		}
-	} else {
-		$hUser -> getUserCode( $_GET['view'] );
-	}
-}
-?></div><?php
+    renderView( 'users/profile', $_GET['view'] );
+} elseif ( isset( $_GET['profile'] ) ) {
+    renderView( 'users/profile', $_GET['profile'] );
+} elseif ( isset( $_GET['type'] ) ) {
+    tableHeader( $collumns );
+    tableBody( $GLOBALS['USERS']-> getTypes( $_GET['type'] ), $fields, $rows, "No ".ucwords( $_GET['type'] )."s Found", $actions );
+    tableFooter();
+    if ( isCap( 'admin' ) ) {
+        newButton('users', $_GET['type'], 'create' );
+    }
+} elseif ( isset( $_GET['location'] ) ) { ?>
+    <title>Users In <?php echo( ucwords( $_GET['location'] ) ); ?>s - <?php showOption( 'name' ); ?></title><?php
+    tableHeader( $collumns );
+    tableBody( $GLOBALS['USERS']-> getCity( $_GET['location'] ), $fields, $rows, "No Users Found", $actions );
+    tableFooter();
+    if ( isCap( 'admin' ) ) {
+        newButton('users', 'subscriber', 'create' );
+    }
+} elseif ( isset( $_GET['status'] ) ) {
+    tableHeader( $collumns );
+    tableBody( $GLOBALS['USERS']-> getState( $_GET['status'] ), $fields, $rows, "No ".ucwords($_GET['status'])." Users Found", $actions );
+    tableFooter();
+    if ( isCap( 'admin' ) ) {
+        newButton('users', 'subscriber', 'create' );
+    }
+} ?></div><?php
 require_once( 'footer.php' );

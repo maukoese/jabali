@@ -11,7 +11,7 @@
  * @copyright 2012 - 2017 Marcus Bointon
  * @copyright 2010 - 2012 Jim Jagielski
  * @copyright 2004 - 2009 Andy Prevost
- * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @license https://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  * @note This program is distributed in the hope that it will be useful - WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE.
@@ -34,7 +34,7 @@ namespace PHPMailer\PHPMailer;
  * Aliases for League Provider Classes
  * Make sure you have added these to your composer.json and run `composer install`
  * Plenty to choose from here:
- * @see http://oauth2-client.thephpleague.com/providers/thirdparty/
+ * @see https://oauth2-client.thephpleague.com/providers/thirdparty/
  */
 // @see https://github.com/thephpleague/oauth2-google
 use League\OAuth2\Client\Provider\Google;
@@ -78,7 +78,7 @@ $clientId = 'RANDOMCHARS-----duv1n2.apps.googleusercontent.com';
 $clientSecret = 'RANDOMCHARS-----lGyjPcRtvP';
 
 //If this automatic URL doesn't work, set it yourself manually to the URL of this script
-$redirectUri = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+$redirectUri = (isset($_SERVER['HTTPS']) ? 'https://' : 'https://') . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
 //$redirectUri = 'http://localhost/PHPMailer/redirect';
 
 $params = [

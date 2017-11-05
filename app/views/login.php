@@ -1,4 +1,11 @@
-
+<?php
+/**
+* @package Jabali - The Plug-N-Play Framework
+* @subpackage Login page Layout
+* @link https://docs.jabalicms.org/views/login/
+* @author Mauko Maunde
+* @since 0.17.09
+**/ ?>
 <div class="mdl-grid" >
 	<div class="mdl-cell mdl-cell--4-col"></div>
 	<div id="login_div" class="mdl-cell mdl-cell--4-col mdl-color--madge" style="border-radius: 2%">

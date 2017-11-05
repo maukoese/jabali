@@ -1,3 +1,11 @@
+<?php
+/**
+* @package Jabali - The Plug-N-Play Framework
+* @subpackage Signup page Layout
+* @link https://docs.jabalicms.org/views/signup
+* @author Mauko Maunde
+* @since 0.17.09
+**/ ?>
 <div style="padding-top:40px;" class="mdl-grid">
 	<div class="mdl-cell mdl-cell--4-col"></div>
 	<div id="login_div" class="mdl-cell mdl-cell--4-col mdl-color--<?php if ( isset( $_SESSION[JBLSALT.'Code'] ) ) { primaryColor(); } else { echo "madge"; } ?>">

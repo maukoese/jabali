@@ -13,8 +13,7 @@ require_once( 'header.php' );
 
 if ( isset( $_POST['activetheme'] ) ) {
     $activex = $_POST['activetheme'];
-    $Option = new Jabali\Classes\Options();
-    $Option -> update( 'activetheme', $activex, date('Y-m-d H:i:s') );
+    $GLOBALS['OPTIONS'] -> update( 'activetheme', $activex, date('Y-m-d H:i:s') );
 }
 
 if ( isset( $_POST['createtheme'] ) ) {
@@ -68,7 +67,7 @@ SOFTWARE.';
 
   $headertext = $comments." ?>
   <!DOCTYPE html>
-    <html lang=\"<?php showOption( 'language'); ?>\" xmlns=\"http://www.w3.org/1999/html\">
+    <html lang=\"<?php showOption( 'language'); ?>\" xmlns=\"https://www.w3.org/1999/html\">
       <head>
         <?php head();
         loadStyle( 'css/".$slug .".css', '".$slug ."'); ?>
@@ -147,10 +146,10 @@ SOFTWARE.';
     "github": "'.$github.'",
     "email": "'.$email.'"
   },
-  "link": "http://jabalicms.org/themes/'.$slug.'",
+  "link": "https://jabalicms.org/themes/'.$slug.'",
   "website": "'.$website.'",
   "support": "'.$support.'",
-  "download": "http://jabalicms.org/dl/themes/'.$slug.'.zip",
+  "download": "https://jabalicms.org/dl/themes/'.$slug.'.zip",
   "licences": {
     "'.$license.'": "'.$licenselink.'"
   }
@@ -331,7 +330,7 @@ if ( isset( $_GET['install'] ) ) {
   if ( isset( $_GET['download'] ) ) {
     $download = $_GET['download'];
   } else {
-    $download = 'http://jabalicms.org/dl/jabali/themes/'.$_GET['install'].'.zip';
+    $download = 'https://jabalicms.org/dl/jabali/themes/'.$_GET['install'].'.zip';
   }
 
   if ( !is_file(  _ABSTEMP_.'themes/'.$_GET['install'].'.zip' ) ) { ?>
@@ -345,7 +344,7 @@ if ( isset( $_GET['install'] ) ) {
 
       if ( !is_dir( $directory ) ) { mkdir( $directory, 0777, true ); }
 
-      file_put_contents( _ABSTEMP_.'themes/'.$_GET['install'].'.zip', fopen('http://jabalicms.org/dl/jabali/themes/'.$_GET['install'].'.zip', 'r') );
+      file_put_contents( _ABSTEMP_.'themes/'.$_GET['install'].'.zip', fopen('https://jabalicms.org/dl/jabali/themes/'.$_GET['install'].'.zip', 'r') );
       echo '<p>Theme Downloaded And Saved</p>Installing theme...';
       intallTheme( _ABSTEMP_.'themes/'.$_GET['install'].".zip" );
     } else {

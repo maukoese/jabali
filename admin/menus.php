@@ -1,6 +1,6 @@
 <?php
 /**
-* @package Jabali Framework
+* @package Jabali - The Plug-N-Play Framework
 * @subpackage Menu Settings
 * @link https://docs.jabalicms.org/menus/
 * @author Mauko Maunde

@@ -1,7 +1,7 @@
 <?php
 /*!
 * HybridAuth
-* http://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
 *  (c) 2009-2015 HybridAuth authors | hybridauth.sourceforge.net/licenses.html
 */
 
@@ -158,7 +158,7 @@ class Hybrid_Providers_Vkontakte extends Hybrid_Provider_Model_OAuth2 {
 		}
 
 		if (!empty($user->profileURL)) {
-			$user->profileURL = 'http://vk.com/' . $user->profileURL;
+			$user->profileURL = 'https://vk.com/' . $user->profileURL;
 		}
 
 		if (isset($user->gender)) {

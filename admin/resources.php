@@ -1,6 +1,6 @@
 <?php 
 /**
-* @package Jabali Framework
+* @package Jabali - The Plug-N-Play Framework
 * @subpackage Admin Resources
 * @link https://docs.jabalicms.org/resources/
 * @author Mauko Maunde

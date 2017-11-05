@@ -9,7 +9,7 @@
 
 namespace Jabali\Data\Access\Objects;
 /**
-* @link http://www.onlamp.com/pub/a/php/2004/08/05/dataobjects.html?page=1
+* @link https://www.onlamp.com/pub/a/php/2004/08/05/dataobjects.html?page=1
 **/
 
 class ResultSet {

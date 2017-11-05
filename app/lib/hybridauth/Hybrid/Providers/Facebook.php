@@ -5,14 +5,14 @@ use Facebook\Facebook as FacebookSDK;
 
 /* !
  * HybridAuth
- * http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
- * (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
+ * https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+ * (c) 2009-2012, HybridAuth authors | https://hybridauth.sourceforge.net/licenses.html
  */
 
 /**
  * Hybrid_Providers_Facebook provider adapter based on OAuth2 protocol
  * Hybrid_Providers_Facebook use the Facebook PHP SDK created by Facebook
- * http://hybridauth.sourceforge.net/userguide/IDProvider_info_Facebook.html
+ * https://hybridauth.sourceforge.net/userguide/IDProvider_info_Facebook.html
  */
 class Hybrid_Providers_Facebook extends Hybrid_Provider_Model {
 

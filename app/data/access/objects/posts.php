@@ -89,7 +89,7 @@ class Posts {
 
       return $posts[0];
     } else{
-      return array( "status" => "Request Failed", "error" => "Post Not Found" );
+      return array( "status" => "fail", "error" => "Post Not Found" );
     }
     
   }
@@ -109,7 +109,7 @@ class Posts {
 
       return $posts[0];
     } else{
-      return array( "status" => "Request Failed", "error" => "Post Not Found" );
+      return array( "status" => "fail", "error" => "Post Not Found" );
     }
 
   }
@@ -120,9 +120,10 @@ class Posts {
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+            while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $posts['status'] = "success";
         $posts[] = $post;
-      }
+      }     
 
       return $posts;
     } else{
@@ -136,13 +137,14 @@ class Posts {
     $results = $GLOBALS['JBLDB'] -> selectLike( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+            while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $posts['status'] = "success";
         $posts[] = $post;
-      }
+      }     
 
       return $posts;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -152,13 +154,14 @@ class Posts {
     $results = $GLOBALS['JBLDB'] -> selectLike( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+            while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $posts['status'] = "success";
         $posts[] = $post;
-      }
+      }     
 
       return $posts;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -168,13 +171,14 @@ class Posts {
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+            while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $posts['status'] = "success";
         $posts[] = $post;
-      }
+      }     
 
       return $posts;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -184,13 +188,14 @@ class Posts {
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+            while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $posts['status'] = "success";
         $posts[] = $post;
-      }
+      }     
 
       return $posts;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -200,13 +205,14 @@ class Posts {
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+            while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $posts['status'] = "success";
         $posts[] = $post;
-      }
+      }     
 
       return $posts;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -216,29 +222,31 @@ class Posts {
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+            while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $posts['status'] = "success";
         $posts[] = $post;
-      }
+      }     
 
       return $posts;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
   public function getState( $status, $type = "article" ){
 
-    $conds = array( "template" => $skin );
+    $conds = array( "state" => $status, "ilk" => $type );
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+            while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $posts['status'] = "success";
         $posts[] = $post;
-      }
+      }     
 
       return $posts;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -248,13 +256,14 @@ class Posts {
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+            while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $posts['status'] = "success";
         $posts[] = $post;
-      }
+      }     
 
       return $posts;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -264,13 +273,14 @@ class Posts {
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+            while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $posts['status'] = "success";
         $posts[] = $post;
-      }
+      }     
 
       return $posts;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -291,12 +301,13 @@ class Posts {
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
       while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results ) ) {
+        $posts['status'] = "success";
         $posts[] = $post;
       }
 
       return $posts;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 

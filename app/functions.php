@@ -1,6 +1,6 @@
 <?php 
 /**
-* @package Jabali Framework
+* @package Jabali - The Plug-N-Play Framework
 * @subpackage Common functions
 * @link https://docs.jabalicms.org/functions/
 * @author Mauko Maunde
@@ -84,9 +84,8 @@ SQL;
 		created DATETIME,
 		details TEXT,
 		email  VARCHAR(50),
-		for VARCHAR(20),
+		receipient VARCHAR(20),
 		level VARCHAR(12),
-		link VARCHAR(100),
 		phone VARCHAR(20),
 		state VARCHAR(20),
 		ilk VARCHAR(50),
@@ -274,6 +273,15 @@ function frontlogo( $width = "250px;", $class = "" )
 }
 
 /**
+* Display home logo
+**/
+function jblLogo( $width = "250px;", $class = "" )
+{
+	
+	echo ( '<a class = "'.$class.'" href="' ._ROOT. '"><img src="' . _IMAGES . 'logo.png" width="' . $width . '"></a>' );
+}
+
+/**
 * Display main logo
 **/
 function headerLogo( $width = "150px;", $class = "link"  )
@@ -388,9 +396,9 @@ function emailExists( $email )
 /**
 * Check if user is viewing own profile
 **/
-function isProfile( $cap )
+function isProfile( $profile )
 {
-	if ( $_SESSION[JBLSALT.'Code'] == $_GET['view'] ) {
+	if ( $_SESSION[JBLSALT.'Code'] == $profile ) {
 		return true;
 	} else {
 		return false;
@@ -623,7 +631,7 @@ function getFooter()
 /**
 * 
 **/
-function showTitle( $class )
+function showTitle( $class = "dashboard" )
 { ?>
     <title><?php
 
@@ -632,9 +640,14 @@ function showTitle( $class )
 	if ( isset( $_GET['view'] ) ) {
 		if ( $_GET['view'] == "list" ) {
 			if ( isset( $_GET['type'] ) ) {
-				echo $_GET['type']."s List";
+				echo ucwords($_GET['type'])."s List";
 			} else {
-				echo $class."s List";
+			if ( isset( $_GET['key'])) {
+				$key = $_GET['key'];
+			} elseif ( isset( $_GET['status'])) {
+				$key = $_GET['status'];
+			}
+		  		echo ucwords( $class .': '.$key." List" );
 			}
 		} elseif ( $_GET['view'] == "pending" ) {
 			echo "Pending ".$class;
@@ -645,7 +658,10 @@ function showTitle( $class )
 				echo $class;
 			}
 		} 
-
+	} elseif ( isset( $_GET['status'] ) ) {
+		echo ucwords($_GET['status']).' '.$class;
+	} elseif ( isset( $_GET['type'] ) ) {
+		echo ucwords($_GET['type'])."s List";
 	//Creating 
 	} elseif ( isset( $_GET['create'] ) ) {
 		if ( isset( $_GET['key'] ) ) {
@@ -690,26 +706,65 @@ function headTitle( $text )
 function tableHeader( $collums )
 { ?>
 	<div class="mdl-cell mdl-cell--12-col">
-		<table class="table pmd-table mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
-			<thead>
-				<tr><?php
-				foreach ($collums as $collum ) { ?>
-					<th class="mdl-data-table__cell--non-numeric"><?php echo( strtoupper( $collum ) ); ?></th><?php
-				} ?>
-				</tr>
-			</thead>
-			<tbody><?php
+		<div class="pmd-card pmd-z-depth pmd-card-custom-view">
+			<div class="pmd-table-card">
+				<table class="table pmd-table mdl-shadow--2dp <?php primaryColor(); ?>">
+					<thead>
+						<tr><?php
+						foreach ($collums as $collum ) { ?>
+							<th class="mdl-data-table__cell--non-numeric"><?php echo( strtoupper( $collum ) ); ?></th><?php
+						} ?>
+						</tr>
+					</thead>
+					<tbody><?php
 	}
 
 /**
 * 
 **/
-function tableBody( $results, $fields, $names, $error = "No Records Found")
+function tableBody( $results, $fields, $names, $error = "No Records Found", $actions = null )
 {
-	if ( $results !== null ) {
-		$data = array_combine( $fields, $names );
-		foreach ( $data as $field => $name ) {
-			echo '<td class="mdl-data-table__cell--non-numeric" data-title="' . $name . '">'. $results[$field] .'</td>';
+	if ( $results['status'] !== 'fail' ) {
+		array_shift( $results );
+		foreach ($results as $item ) {
+			echo( '<tr>' );
+			$data = array_combine( $fields, $names );
+			foreach ( $data as $field => $name ) {
+				echo '<td class="mdl-data-table__cell--non-numeric" data-title="' . strtoupper( $name ) . '">'. $item[$field] .'</td>';
+			}
+			if ( !is_null( $actions )) {
+				echo( '<td class="mdl-data-table__cell--non-numeric" data-title="Actions">');
+				foreach( $actions as $action => $link ) {
+					switch ( $action ) {
+						case 'edit':
+							$icon = 'edit';
+							break;
+
+						case 'view':
+							$icon = 'open_in_new';
+							break;
+
+						case 'email':
+							$icon = 'email';
+							break;
+
+						case 'call':
+							$icon = 'phone';
+							break;
+
+						case 'profile':
+							$icon = 'perm_identity';
+							break;
+						
+						default:
+							$icon = 'perm_identity';
+							break;
+					}
+					echo( '<a href="?'.$action.'='.$item[$link[0]].'&key='.$item['name'].'"><i class="material-icons">'.$icon.'</i></a>');
+				}
+				echo( '</td>');
+			}
+			echo( '</tr>' );
 		}
 	} else {
 		echo '<td class="mdl-data-table__cell--non-numeric" data-title="Error">'. $error .'</td>';
@@ -721,8 +776,10 @@ function tableBody( $results, $fields, $names, $error = "No Records Found")
 **/
 function tableFooter()
 { ?>
-			</tbody>
-		</table>
+					</tbody>
+				</table>
+			</div>
+		</div> 
 	</div><?php
 }
 
@@ -1139,6 +1196,7 @@ function rrmdir( $src )
 
 function renderView( $view, $data = "" )
 {
+	$data = $data;
 	require_once( _ABSVIEWS_.$view.'.php' );
 }
 
@@ -1402,7 +1460,7 @@ function theContent(){
 	echo $GLOBALS['gpost']['details'];
 }
 
-function theExcerpt( $length = "250"){
+function theExcerpt( $length = 250 ){
 	echo substr( $GLOBALS['gpost']['details'], 0, $length ).' ...';
 }
 
@@ -1467,7 +1525,7 @@ function postTags()
 
 function theImage( $width = 500, $height = "", $class = "" )
 {
-	echo ( '<img src = "'. $GLOBALS['gpost']['avatar'] .'" width = "'.$width.'" height ="'.$height.'" class="'.$class.'" >');
+	echo ( '<img src = "'. $GLOBALS['gpost']['avatar'] .'" width = "'.$width.'" height ="'.$height.'" alt="'.$GLOBALS['gpost']['name'].'" class="'.$class.'" >');
 }
 
 function theDate( $format = "M d, Y" )
@@ -1478,13 +1536,18 @@ function theDate( $format = "M d, Y" )
 	echo( $formatted );
 }
 
-function headerTitle( $table )
+function headerTitle( $table = "dashboard" )
 {
 	if ( isset( $_GET['type'] ) ) {
 		$text = ucwords( $table .': '.$_GET['type'].'s ');
 	} elseif ( isset( $_GET['view'] ) ) {
 		if ( $_GET['view'] == "list" ) {
-		  $text = ucwords( $table .': '.$_GET['key']." List" );
+			if ( isset( $_GET['key'])) {
+				$key = $_GET['key'];
+			} elseif ( isset( $_GET['status'])) {
+				$key = $_GET['status'];
+			}
+		  $text = ucwords( $table .': '.$key." List" );
 		} else {
 		  $text =  ucwords( $table );
 		}
@@ -1609,8 +1672,8 @@ function updatingJabali()
 		header("HTTP/1.1 503 Service Temporarily Unavailable");
 		header("Status: 503 Service Temporarily Unavailable");
 		header("Retry-After: 3600");
-		echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-			<html xml:lang=&quot;en&quot; lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;>
+		echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+			<html xml:lang=&quot;en&quot; lang=&quot;en&quot; xmlns=&quot;https://www.w3.org/1999/xhtml&quot;>
 				<head>
 					<meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; />
 					<title>Site upgrade in progress</title>
@@ -1732,27 +1795,27 @@ function feed( $type = "rss" )
 	$date = date( 'Y-m-d H:i:s');
 	$salt = JBLSALT;
 	$rssdata = <<<RSS
-<?xml version="1.0" encoding="UTF-8" ?>
-	<rss version="2.0">
-		<channel>
-			<title>{$title}</title>
-			<link>{$link}</link>
-			<description>{$description}</description>
-			<category>Web development</category>
-			<copyright>{$copyright}</copyright>
-			<language>en-us</language>
-			<docs>https://docs.jabalicms.org/api/feed</docs>
-			<webMaster>{$mail}</webMaster>
-			<pubDate>{$date}</pubDate>
+	<?xml version="1.0" encoding="UTF-8" ?>
+		<rss version="2.0">
+			<channel>
+				<title>{$title}</title>
+				<link>{$link}</link>
+				<description>{$description}</description>
+				<category>Web development</category>
+				<copyright>{$copyright}</copyright>
+				<language>en-us</language>
+				<docs>https://docs.jabalicms.org/api/feed</docs>
+				<webMaster>{$mail}</webMaster>
+				<pubDate>{$date}</pubDate>
 RSS;
 
 	$atomdata = <<<RSS
-<?xml version="1.0" encoding="utf-8"?>
-	<feed xmlns="http://www.w3.org/2005/Atom">
-		<title>{$title}</title> 
-		<link href="{$link}"/>
-		<updated>{$date}</updated>
-		<id>{$salt}</id>
+	<?xml version="1.0" encoding="utf-8"?>
+		<feed xmlns="https://www.w3.org/2005/Atom">
+			<title>{$title}</title> 
+			<link href="{$link}"/>
+			<updated>{$date}</updated>
+			<id>{$salt}</id>
 RSS;
 
 	$posts = $GLOBALS['POSTS'] -> sweep();
@@ -1779,7 +1842,7 @@ RSS;
 				<category>{$post['categories']}</category>
 			</item>
 RSS;
-}
+	}
 
 	$rssdata .= <<<RSS
 		</channel>

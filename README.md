@@ -17,7 +17,7 @@ Grab a copy of Jabali LTS from here(https://cdn.mauko.co.ke/jabali/jabali.zip) a
 
 ## Built With
 
-* [Material Design](http://material.io/) - Interactive UI
+* [Material Design](https://material.io/) - Interactive UI
 * [JQuery](https://code.google.com/jquery/) - UX
 
 ## Contributing
@@ -26,7 +26,7 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 
 ## Versioning
 
-We use [CalVer]( http://calver.org ) for versioning. For the versions available, see the [tags on this repository](https://github.com/maukoese/jabali/tags). 
+We use [CalVer]( https://calver.org ) for versioning. For the versions available, see the [tags on this repository](https://github.com/maukoese/jabali/tags). 
 
 ## Authors
 

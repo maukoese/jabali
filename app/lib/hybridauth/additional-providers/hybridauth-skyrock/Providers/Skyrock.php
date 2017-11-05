@@ -3,7 +3,7 @@
 * HybridAuth Skyrock Provider
 *
 *
-* http://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
 *  (c) 2009-2012 HybridAuth authors | hybridauth.sourceforge.net/licenses.html
 *
 *

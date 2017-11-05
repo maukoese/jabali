@@ -48,7 +48,7 @@ class Users {
     if ( $GLOBALS['JBLDB'] -> insert( $this -> table, $cols, $vals ) ) {
       return array( "success" => "User created successfully with id ". $GLOBALS['JBLDB'] -> insertId() );
     } else {
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -81,6 +81,7 @@ class Users {
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $users = array();
       while ( $user = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $users['status'] = "success";
         $users[] = $user;
         foreach ( $user as $var => $val ) {
           $this -> $var = $val;
@@ -99,6 +100,7 @@ class Users {
     if ( $GLOBALS['JBLDB'] -> affectedRows() > 0 ) {
       $users = array();
       while ( $user = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $users['status'] = "success";
         $users[] = $user;
         foreach ( $user as $var => $val ) {
           $this -> $var = $val;
@@ -107,7 +109,7 @@ class Users {
 
       return $users[0];
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -117,12 +119,13 @@ class Users {
     if ( $GLOBALS['JBLDB'] -> affectedRows() > 0 ) {
       $users = array();
       while ( $user = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $users['status'] = "success";
         $users[] = $user;
       }
 
       return $users;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -132,12 +135,13 @@ class Users {
     if ( $GLOBALS['JBLDB'] -> affectedRows() > 0 ) {
       $users = array();
       while ( $user = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $users['status'] = "success";
         $users[] = $user;
       }
 
       return $users;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -147,12 +151,13 @@ class Users {
     if ( $GLOBALS['JBLDB'] -> affectedRows() > 0 ) {
       $users = array();
       while ( $user = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $users['status'] = "success";
         $users[] = $user;
       }
 
       return $users;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -162,12 +167,13 @@ class Users {
     if ( $GLOBALS['JBLDB'] -> affectedRows() > 0 ) {
       $users = array();
       while ( $user = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $users['status'] = "success";
         $users[] = $user;
       }
 
       return $users;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -177,12 +183,13 @@ class Users {
     if ( $GLOBALS['JBLDB'] -> affectedRows() > 0 ) {
       $users = array();
       while ( $user = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $users['status'] = "success";
         $users[] = $user;
       }
 
       return $users;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -192,12 +199,13 @@ class Users {
     if ( $GLOBALS['JBLDB'] -> affectedRows() > 0 ) {
       $users = array();
       while ( $user = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $users['status'] = "success";
         $users[] = $user;
       }
 
       return $users;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -207,12 +215,13 @@ class Users {
     if ( $GLOBALS['JBLDB'] -> affectedRows() > 0 ) {
       $users = array();
       while ( $user = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $users['status'] = "success";
         $users[] = $user;
       }
 
       return $users;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -222,12 +231,13 @@ class Users {
     if ( $GLOBALS['JBLDB'] -> affectedRows() > 0 ) {
       $users = array();
       while ( $user = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $users['status'] = "success";
         $users[] = $user;
       }
 
       return $users;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -237,12 +247,13 @@ class Users {
     if ( $GLOBALS['JBLDB'] -> affectedRows() > 0 ) {
       $users = array();
       while ( $user = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $users['status'] = "success";
         $users[] = $user;
       }
 
       return $users;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -252,12 +263,13 @@ class Users {
     if ( $GLOBALS['JBLDB'] -> affectedRows() > 0 ) {
       $users = array();
       while ( $user = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $users['status'] = "success";
         $users[] = $user;
       }
 
       return $users;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -267,12 +279,13 @@ class Users {
     if ( $GLOBALS['JBLDB'] -> affectedRows() > 0 ) {
       $users = array();
       while ( $user = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $users['status'] = "success";
         $users[] = $user;
       }
 
       return $users;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -282,12 +295,13 @@ class Users {
     if ( $GLOBALS['JBLDB'] -> affectedRows() > 0 ) {
       $users = array();
       while ( $user = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $users['status'] = "success";
         $users[] = $user;
       }
 
       return $users;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -297,12 +311,13 @@ class Users {
     if ( $GLOBALS['JBLDB'] -> affectedRows() > 0 ) {
       $users = array();
       while ( $user = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $users['status'] = "success";
         $users[] = $user;
       }
 
       return $users;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -321,12 +336,13 @@ class Users {
     if ( $GLOBALS['JBLDB'] -> affectedRows() > 0 ) {
       $users = array();
       while ( $user = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+        $users['status'] = "success";
         $users[] = $user;
       }
 
       return $users;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
     
   }

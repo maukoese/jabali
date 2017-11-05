@@ -1,3 +1,11 @@
+<?php
+/**
+* @package Jabali - The Plug-N-Play Framework
+* @subpackage Forgot password page Layout
+* @link https://docs.jabalicms.org/views/forgot/
+* @author Mauko Maunde
+* @since 0.17.09
+**/ ?>
 <div style="padding-top:40px;" class="mdl-grid">
 	<div class="mdl-cell mdl-cell--2-col"></div>
 	<div id="login_div" class="mdl-cell mdl-cell--8-col mdl-color--<?php if ( isset( $_SESSION[JBLSALT.'Code'] ) ) { primaryColor(); } else { echo "madge"; } ?>">

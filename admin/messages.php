@@ -1,6 +1,6 @@
 <?php 
 /**
-* @package Jabali Framework
+* @package Jabali - The Plug-N-Play Framework
 * @subpackage Admin Messages
 * @link https://docs.jabalicms.org/messages/
 * @author Mauko Maunde
@@ -8,59 +8,85 @@
 **/
 session_start();
 require_once( '../init.php' );
-require_once( 'header.php' );
-
-if ( isset( $_GET['delete'] ) ) {
-  $GLOBALS['JBLDB'] -> query( "DELETE FROM ". _DBPREFIX ."messages WHERE id='".$_GET['delete']."'" );
-  $hMessage -> getMessages();
-}
 
 if ( isset( $_POST['create'] ) ) {
-    $authkey = generateCode();
-    $name = $GLOBALS['JBLDB'] -> clean( $_POST['name'] );
-    $author = $GLOBALS['JBLDB'] -> clean( $_POST['author'] );
-    $by = $GLOBALS['JBLDB'] -> clean( $_POST['by'] );
-    $avatar = $GLOBALS['JBLDB'] -> clean( $_POST['avatar'] );
-    $id = substr( $authkey, rand(0, 15), 12 );
-    $created = date( 'Y-m-d' );
-    $details = $GLOBALS['JBLDB'] -> clean( $_POST['details'] );
-    $email  = $GLOBALS['JBLDB'] -> clean( $_POST['email'] );
-    $ilk = $GLOBALS['JBLDB'] -> clean( $_POST['ilk'] );
-    $for = $GLOBALS['JBLDB'] -> clean( $_POST['for'] );
-    $link = $GLOBALS['JBLDB'] -> clean( $_POST['link'] );
-    $location = $GLOBALS['JBLDB'] -> clean( $_POST['location'] );
-    $location = strtolower( $location );
-    $level = $GLOBALS['JBLDB'] -> clean( $_POST['level'] ); 
-    $link = _ADMIN."message?view=".$id;
-    $phone = $GLOBALS['JBLDB'] -> clean( $_POST['phone'] );
-    $state = "unread";
 
-    $hMessage -> create ($name, $author, $by, $id, $created, $details, $email , $for, $authkey, $level, $link, $phone, $state, $ilk);
+    if ( empty( $_POST['name'] ) ) { $_POST['name'] = 'name'; }
+    if ( empty( $_POST['author'] ) ) { $_POST['author'] = $_SESSION[JBLSALT.'Code']; }
+    if ( empty( $_POST['author_name'] ) ) { $_POST['author_name'] = $_SESSION[JBLSALT.'Name']; }
+    if ( empty( $_POST['created_d'] ) ) { $_POST['created_d'] = date( "Y-m-d" ); }
+    if ( empty( $_POST['created_t'] ) ) { $_POST['created_t'] = date( "H:i:s" ); }
+    if ( empty( $_POST['details'] ) ) { $_POST['details'] = "Message details"; }
+    if ( empty( $_POST['email'] ) ) { $_POST['email'] = $_SESSION[JBLSALT.'Email']; }
+    if ( empty( $_POST['authkey'] ) ) { $_POST['authkey'] = str_shuffle( generateCode() ); }
+    if ( empty( $_POST['level'] ) ) { $_POST['level'] = "public"; }
+    if ( empty( $_POST['phone'] ) ) { $_POST['email'] = $_SESSION[JBLSALT.'Phone']; }
+    if ( empty( $_POST['state'] ) ) { $_POST['state'] = "unread"; }
+    if ( empty( $_POST['receipient'] ) ) { $_POST['receipient'] = 1; }
+    if ( empty( $_POST['ilk'] ) ) { $_POST['ilk'] = "message"; }
 
-  } ?>
-  <div class="mdl-grid"><?php
-    if ( isset( $_GET['create'] ) ) {
-      $hForm -> messageForm( $_GET['create'] );
-    } elseif ( isset( $_GET['view'] ) ) {
-        if ( $_GET['view'] == "unread" ) {
-          $hMessage -> getUnreadMessages();
-        } else if ( $_GET['view'] == "outbox" ) {
-          $hMessage -> getSentMessages();
-        } else if ( $_GET['view'] == "flagged" ) {
-          $hMessage -> getSentMessages();
-        } else if ( $_GET['view'] == "drafts" ) {
-          $hMessage -> getSentMessages();
-        } else if ( $_GET['view'] == "sent" ) {
-          $hMessage -> getSentMessages(); 
-        } else if ( $_GET['view'] == "list" ) {
-          if ( isset( $_GET['type'] ) ) {
-            $hMessage -> getType( $_GET['type'] );
-          } else {
-            $hMessage -> getMessages();
-          }
-        } else {
-          $hMessage -> getMessageCode( $_GET['view'] );
-        }
-    } ?>
-  </div><?php
-include './footer.php';
+
+     // $fields = array( "name", "author", "author_name", "id", "created", "details", "email", "receipient", "authkey", "level", "phone", "state", "ilk" );
+    // foreach ($fields as $field ) {
+    //     $GLOBALS['MESSAGES'] -> $field = $_POST[$field];
+    // }
+
+    $GLOBALS['MESSAGES'] -> name = $_POST['name'];
+    $GLOBALS['MESSAGES'] -> author = $_POST['author'];
+    $GLOBALS['MESSAGES'] -> author_name = $_POST['author_name'];
+    $created = $_POST['created_d'];
+    $created_t = $_POST['created_t'];
+    $GLOBALS['MESSAGES'] -> created = $created.' '.$created_t;
+    $GLOBALS['MESSAGES'] -> details = $_POST['details'];
+    $GLOBALS['MESSAGES'] -> email = $_POST['email'];
+    $GLOBALS['MESSAGES'] -> authkey = $_POST['authkey'];
+    $GLOBALS['MESSAGES'] -> level = $_POST['level'];
+    $GLOBALS['MESSAGES'] -> phone = $_POST['phone'];
+    $GLOBALS['MESSAGES'] -> state = $_POST['state'];
+    $GLOBALS['MESSAGES'] -> ilk = $_POST['ilk'];
+    $GLOBALS['MESSAGES'] -> receipient = $_POST['receipient'];
+    $create = $GLOBALS['MESSAGES'] -> create();
+    if ( isset( $create['error'] ) ) {
+      _shout_( "Status: ".$create['status']."<br>Error: ".$create['error'], "error" );
+    } else {
+      _shout_( "Status: ".$create['status'] );
+      header( "Location: ?edit=".$GLOBALS['JBLDB'] -> insertId() ."&key=".$_POST['ilk']);
+      exit();
+    }
+
+  }
+
+require_once( 'header.php' );
+showTitle('messages'); ?>
+
+<div class="mdl-grid"><?php
+
+$collumns = array( 'id', 'author', 'categories', 'tags', 'created', 'actions');
+$fields = array( 'id', 'author_name', 'categories', 'tags', 'created' );
+$rows = array( 'id', 'author', 'categories', 'tags', 'created' );
+$actions = array( 'reply' => ['id'], 'view' => ['id'] );
+
+
+if ( isset( $_GET['create'] ) ) {
+	renderView('forms/message');
+}
+
+if ( isset( $_GET['view'] ) ){
+  renderView( 'messages/single', $_GET['view'] );
+} elseif ( isset( $_GET['type'] ) ) {
+  tableHeader( $collumns );
+  tableBody( $GLOBALS['MESSAGES']-> getTypes( $_GET['type'] ), $fields, $rows, "No ".ucwords( $_GET['type'] )."s Found", $actions );
+  tableFooter();
+  if ( isCap( 'admin' ) ) {
+    newButton('messages', $_GET['type'], 'create' );
+  }
+} elseif ( isset( $_GET['status'] ) ) {
+  tableHeader( $collumns );
+  tableBody( $GLOBALS['MESSAGES']-> getState( $_GET['status'] ), $fields, $rows, "No ".ucwords( $_GET['status'] )." Messages Found", $actions );
+  tableFooter();
+  if ( isCap( 'admin' ) ) {
+    newButton('messages', 'message', 'create' );
+  }
+} ?>
+</div><?php
+require_once( 'footer.php' );

@@ -1,8 +1,8 @@
 <?php
 /*!
 * HybridAuth
-* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html 
+* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+* (c) 2009-2012, HybridAuth authors | https://hybridauth.sourceforge.net/licenses.html 
 */
 
 /** 
@@ -15,9 +15,9 @@
  */ 
 /**
  *  Xuite API
- *  http://api.xuite.net/document/bin/xuite_dev/public/
+ *  https://api.xuite.net/document/bin/xuite_dev/public/
  *  取得 API
- *  http://my.xuite.net/service/token/my/apiKeyAdd.php
+ *  https://my.xuite.net/service/token/my/apiKeyAdd.php
  */
 
 class Hybrid_Providers_Xuite extends Hybrid_Provider_Model_OAuth2
@@ -101,7 +101,7 @@ class Hybrid_Providers_Xuite extends Hybrid_Provider_Model_OAuth2
 
 	/**
 	 * getUserProfile 
-	 * 參考: http://api.xuite.net/document/bin/xuite_dev/public/front/index/id/47
+	 * 參考: https://api.xuite.net/document/bin/xuite_dev/public/front/index/id/47
 	 * @param mixed $config 
 	 * @access public
 	 * @return void

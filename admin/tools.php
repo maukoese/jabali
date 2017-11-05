@@ -1,6 +1,6 @@
 <?php 
 /**
-* @package Jabali Framework
+* @package Jabali - The Plug-N-Play Framework
 * @subpackage Admin Transfer Tools
 * @link https://docs.jabalicms.org/transfer/
 * @author Mauko Maunde

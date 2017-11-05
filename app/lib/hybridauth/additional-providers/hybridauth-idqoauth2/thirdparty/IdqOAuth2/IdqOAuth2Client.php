@@ -1,8 +1,8 @@
 <?php
 /**
 * HybridAuth
-* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
-* (c) 2009-2015, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
+* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+* (c) 2009-2015, HybridAuth authors | https://hybridauth.sourceforge.net/licenses.html
 * idQ OAuth 2 Authentication
 * (c) 2017 inBay Technologies Inc.
 */
@@ -33,7 +33,7 @@ class IdqOAuth2Client
 	public $curl_ssl_verifypeer      = false;
 	public $curl_ssl_verifyhost      = false;
 	public $curl_header              = array();
-	public $curl_useragent           = "OAuth/2 Simple PHP Client v0.1.1; HybridAuth http://hybridauth.sourceforge.net/";
+	public $curl_useragent           = "OAuth/2 Simple PHP Client v0.1.1; HybridAuth https://hybridauth.sourceforge.net/";
 	public $curl_authenticate_method = "POST";
 	public $curl_proxy               = null;
 
@@ -137,7 +137,7 @@ class IdqOAuth2Client
 	*/
 	public function api( $url, $method = "GET", $parameters = array() )
 	{
-		if ( strrpos($url, 'http://') !== 0 && strrpos($url, 'https://') !== 0 ) {
+		if ( strrpos($url, 'https://') !== 0 && strrpos($url, 'https://') !== 0 ) {
 			$url = $this->api_base_url . $url;
 		}
 

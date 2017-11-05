@@ -1,8 +1,8 @@
 <?php
 /*!
 * HybridAuth
-* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html 
+* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+* (c) 2009-2012, HybridAuth authors | https://hybridauth.sourceforge.net/licenses.html 
 */
 
 // A service client for the OAuth 2 flow.
@@ -13,7 +13,7 @@ class PaypalOAuth2Client extends OAuth2Client
         'Accept: application/json',
         'Accept-Language: en_US',
     );
-	public $curl_useragent           = "OAuth/2 Simple PHP Client v0.1; HybridAuth http://hybridauth.sourceforge.net/";
+	public $curl_useragent           = "OAuth/2 Simple PHP Client v0.1; HybridAuth https://hybridauth.sourceforge.net/";
     public $curl_log;
 
 	public function authenticate( $code )

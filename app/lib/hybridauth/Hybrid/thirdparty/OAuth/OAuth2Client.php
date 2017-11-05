@@ -1,8 +1,8 @@
 <?php
 /**
 * HybridAuth
-* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
-* (c) 2009-2015, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
+* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+* (c) 2009-2015, HybridAuth authors | https://hybridauth.sourceforge.net/licenses.html
 */
 
 // A service client for the OAuth 2 flow.
@@ -31,7 +31,7 @@ class OAuth2Client
   public $curl_ssl_verifypeer      = false;
   public $curl_ssl_verifyhost      = false;
   public $curl_header              = array();
-  public $curl_useragent           = "OAuth/2 Simple PHP Client v0.1.1; HybridAuth http://hybridauth.sourceforge.net/";
+  public $curl_useragent           = "OAuth/2 Simple PHP Client v0.1.1; HybridAuth https://hybridauth.sourceforge.net/";
   public $curl_authenticate_method = "POST";
   public $curl_proxy               = null;
   public $curl_compressed          = false;
@@ -128,7 +128,7 @@ class OAuth2Client
   */
   public function api( $url, $method = "GET", $parameters = array(), $decode_json = true )
   {
-    if ( strrpos($url, 'http://') !== 0 && strrpos($url, 'https://') !== 0 ) {
+    if ( strrpos($url, 'https://') !== 0 && strrpos($url, 'https://') !== 0 ) {
       $url = $this->api_base_url . $url;
     }
 
@@ -242,7 +242,7 @@ class OAuth2Client
       }
 
       // Using URL encoded params here instead of a more convenient array
-      // cURL will set a wrong HTTP Content-Type header if using an array (cf. http://www.php.net/manual/en/function.curl-setopt.php, Notes section for "CURLOPT_POSTFIELDS")
+      // cURL will set a wrong HTTP Content-Type header if using an array (cf. https://www.php.net/manual/en/function.curl-setopt.php, Notes section for "CURLOPT_POSTFIELDS")
       // OAuth requires application/x-www-form-urlencoded Content-Type (cf. https://tools.ietf.org/html/rfc6749#section-2.3.1)
       if ($params) {
         curl_setopt($ch, CURLOPT_POSTFIELDS, $urlEncodedParams);

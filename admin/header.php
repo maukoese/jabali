@@ -1,6 +1,6 @@
 <?php
 /**
-* @package Jabali Framework
+* @package Jabali - The Plug-N-Play Framework
 * @subpackage Admin Header
 * @link https://docs.jabalicms.org/dashboard/
 * @author Mauko Maunde
@@ -44,14 +44,10 @@ $GLOBALS['GTextS'] = $GUSkin['texts']; ?>
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at https://opensource.org/licenses/MIT
 -->
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns="https://www.w3.org/1999/html">
   <head>
     <?php head();
-    loadStyles( [ _STYLES."lib/getmdl-select.min.css", _STYLES."lib/nv.d3.css"] ); ?>
-
-    <link rel="stylesheet" href='<?php echo _STYLES; ?>lib/getmdl-select.min.css'>
-    <link rel="stylesheet" href="<?php echo _STYLES; ?>lib/nv.d3.css">
-    <link rel="stylesheet" href="<?php echo _STYLES; ?>jquery-ui.css">
+    loadStyles( [ _STYLES."lib/getmdl-select.min.css", _STYLES."lib/nv.d3.css", _STYLES."jquery-ui.css", _STYLES."materialdesignicons.min.css", _STYLES."jabali.css", _STYLES."colors.css", _STYLES."pmd/table/table.css", _STYLES."pmd/table/card.css"] ); ?>
     <?php if ( isLocalhost() ){ ?>
     <link rel="stylesheet" href="<?php echo _STYLES; ?>material-icons.css">
     <link rel="stylesheet" href="<?php echo _STYLES; ?>font-awesome.css">
@@ -59,12 +55,6 @@ $GLOBALS['GTextS'] = $GUSkin['texts']; ?>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <?php } ?>
-    <link rel="stylesheet" href="<?php echo _STYLES; ?>materialdesignicons.css">
-    <link rel="stylesheet" href="<?php echo _STYLES; ?>jabali.css">
-    <link rel="stylesheet" href="<?php echo _STYLES; ?>colors.css">
-    <link rel="stylesheet" href="<?php echo _STYLES; ?>pmd/table/table.css">
-    <link rel="stylesheet" href="<?php echo _STYLES; ?>pmd/table/card.css">
-
     <style type="text/css">
       .mdl-menu__outline {
           background-color: <?php primaryColor(); ?>;
@@ -115,11 +105,17 @@ $GLOBALS['GTextS'] = $GUSkin['texts']; ?>
           if ( isset( $_GET['type'] ) ) {
             echo ucwords( $_GET['type'].'s ' );
           } elseif ( isset( $_GET['view'] ) ) {
-            if ( $_GET['view'] == "list" ) {
-              echo ucwords( $_GET['key']." List" );
-            } else {
-              echo ucwords( $_GET['key'] );
-            }
+              if ( isset( $_GET['key'] )) {
+                echo ucwords( $_GET['key'] );
+              } else {
+                echo ucwords( $_GET['key'] ); echo ucwords( $_GET['status'] );
+              }
+          } elseif ( isset( $_GET['status'] )) {
+                if ( isset( $_GET['key'] ) ) {
+                  echo ucwords( $_GET['key'] );
+                } else {
+                  echo ucwords( $_GET['status'] );
+                }
           } elseif ( isset( $_GET['x'] ) && isset( $_GET['key'] ) ) {
             if ( isset( $_GET['create'] ) ) {
               echo "Add New " . ucwords( $_GET['create'] );
@@ -136,12 +132,6 @@ $GLOBALS['GTextS'] = $GUSkin['texts']; ?>
             echo "Add New ".ucwords( $_GET['create'].' ' );
           } elseif ( isset( $_GET['add'] ) ) {
             echo "Add New ".ucwords( $_GET['add'].' ' );
-          } elseif ( isset( $_GET['chat'] ) ) {
-            if ( $_GET['chat'] == "list" ) {
-              echo "Chats List";
-            } else {
-              echo "Chat ".ucwords( $_GET['chat'] );
-            }
           } elseif ( isset( $_GET['page'] ) ) {
             echo ucwords( $_GET['page'] );
           } elseif ( isset( $_GET['settings'] ) ) {
@@ -161,7 +151,7 @@ $GLOBALS['GTextS'] = $GUSkin['texts']; ?>
           </a>
           <div class="mdl-tooltip" for="h_notifications"><?php getNoteCount() ?> Notifications</div>
 
-          <a href="messages?view=unread&key=unread%20messages#" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon" id="h_messages" data-badge="<?php getMsgCount() ?>">mail_outline
+          <a href="messages?status=unread&key=inbox" class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon" id="h_messages" data-badge="<?php getMsgCount() ?>">mail_outline
             </a><div class="mdl-tooltip" for="h_messages"><?php getMsgCount(); ?> Messages</div>
 
          <!--  <a href="#" class="material-icons mdl-js-button mdl-badge mdl-badge--overlap mdl-button--icon notification" id="hvdrbtn">apps</a>

@@ -2,8 +2,8 @@
 
 /**
  * HybridAuth
- * http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
- * (c) 2009-2015, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
+ * https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+ * (c) 2009-2015, HybridAuth authors | https://hybridauth.sourceforge.net/licenses.html
  */
 
 /**
@@ -164,7 +164,7 @@ class Hybrid_Provider_Adapter {
 		}
 
 		# workaround to solve windows live authentication since microsoft disallowed redirect urls to contain any parameters
-		# http://mywebsite.com/path_to_hybridauth/?hauth.done=Live will not work
+		# https://mywebsite.com/path_to_hybridauth/?hauth.done=Live will not work
 		if ($this->id=="Live") { 
 			$this->params["login_done"] = $HYBRID_AUTH_URL_BASE."live.php"; 
 		}

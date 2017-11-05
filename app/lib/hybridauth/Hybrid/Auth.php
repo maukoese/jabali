@@ -2,8 +2,8 @@
 
 /**
  * HybridAuth
- * http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
- * (c) 2009-2015, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
+ * https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+ * (c) 2009-2015, HybridAuth authors | https://hybridauth.sourceforge.net/licenses.html
  */
 
 /**
@@ -47,7 +47,7 @@ class Hybrid_Auth {
 	 * Hybrid_Auth constructor will require either a valid config array or
 	 * a path for a configuration file as parameter. To know more please
 	 * refer to the Configuration section:
-	 * http://hybridauth.sourceforge.net/userguide/Configuration.html
+	 * https://hybridauth.sourceforge.net/userguide/Configuration.html
 	 *
 	 * @param array $config Configuration array or path to a configratuion file
 	 */
@@ -121,13 +121,13 @@ class Hybrid_Auth {
 		Hybrid_Logger::info("Hybrid_Auth::initialize(). Hybrid_Auth version: " . Hybrid_Auth::$version);
 		Hybrid_Logger::info("Hybrid_Auth::initialize(). Hybrid_Auth called from: " . Hybrid_Auth::getCurrentUrl());
 
-		// PHP Curl extension [http://www.php.net/manual/en/intro.curl.php]
+		// PHP Curl extension [https://www.php.net/manual/en/intro.curl.php]
 		if (!function_exists('curl_init')) {
 			Hybrid_Logger::error('Hybridauth Library needs the CURL PHP extension.');
 			throw new Exception('Hybridauth Library needs the CURL PHP extension.');
 		}
 
-		// PHP JSON extension [http://php.net/manual/en/book.json.php]
+		// PHP JSON extension [https://php.net/manual/en/book.json.php]
 		if (!function_exists('json_decode')) {
 			Hybrid_Logger::error('Hybridauth Library needs the JSON PHP extension.');
 			throw new Exception('Hybridauth Library needs the JSON PHP extension.');
@@ -135,17 +135,17 @@ class Hybrid_Auth {
 
 		// session.name
 		if (session_name() != "PHPSESSID") {
-			Hybrid_Logger::info('PHP session.name diff from default PHPSESSID. http://php.net/manual/en/session.configuration.php#ini.session.name.');
+			Hybrid_Logger::info('PHP session.name diff from default PHPSESSID. https://php.net/manual/en/session.configuration.php#ini.session.name.');
 		}
 
 		// safe_mode is on
 		if (ini_get('safe_mode')) {
-			Hybrid_Logger::info('PHP safe_mode is on. http://php.net/safe-mode.');
+			Hybrid_Logger::info('PHP safe_mode is on. https://php.net/safe-mode.');
 		}
 
 		// open basedir is on
 		if (ini_get('open_basedir')) {
-			Hybrid_Logger::info('PHP open_basedir is on. http://php.net/open-basedir.');
+			Hybrid_Logger::info('PHP open_basedir is on. https://php.net/open-basedir.');
 		}
 
 		Hybrid_Logger::debug("Hybrid_Auth initialize. dump used config: ", serialize($config));
@@ -162,7 +162,7 @@ class Hybrid_Auth {
 			Hybrid_Error::clearError();
 
 			// try to provide the previous if any
-			// Exception::getPrevious (PHP 5 >= 5.3.0) http://php.net/manual/en/exception.getprevious.php
+			// Exception::getPrevious (PHP 5 >= 5.3.0) https://php.net/manual/en/exception.getprevious.php
 			if (version_compare(PHP_VERSION, '5.3.0', '>=') && ($p instanceof Exception)) {
 				throw new Exception($m, $c, $p);
 			} else {
@@ -391,7 +391,7 @@ class Hybrid_Auth {
 			return '';
 		}
 
-		$protocol = 'http://';
+		$protocol = 'https://';
 
 		if ((isset($_SERVER['HTTPS']) && ( $_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1 ))
 				|| (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https'))

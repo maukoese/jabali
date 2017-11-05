@@ -1,6 +1,6 @@
 <?php 
 /**
-* @package Jabali Framework
+* @package Jabali - The Plug-N-Play Framework
 * @subpackage App Instalation
 * @link https://docs.jabalicms.org/installation/
 * @author Mauko Maunde
@@ -12,7 +12,6 @@ if ( !file_exists( 'app/config.php' ) ) {
 }
 
 require 'init.php';
-installSQLDB();
 
 if (isset($_POST['register']) ) {
 	$date = date( "YmdHms" );
@@ -119,7 +118,7 @@ if (isset($_POST['register']) ) {
 	$hOpt -> install ( 'Copyright', 'copyright', '© '. $site_name .' 2017', $created );
     $hOpt -> install ( 'Admin Footer', 'adfooter', 'The Jabali Framework', $created );
     $hOpt -> install ( 'Attribution', 'attribution', 'Mauko by Design', $created );
-	$hOpt -> install ( 'Attribution Link', 'attribution_link', 'http://mauko.co.ke', $created );
+	$hOpt -> install ( 'Attribution Link', 'attribution_link', 'https://mauko.co.ke', $created );
 	$hOpt -> install ( 'Header Logo', 'headerlogo', _IMAGES."logo.png", $created );
 	$hOpt -> install ( 'Home Logo', 'homelogo', _IMAGES."logo-w.png", $created );
 	$hOpt -> install ( 'Favicon', 'favicon', _IMAGES."marker.png", $created );
@@ -156,26 +155,26 @@ if (isset($_POST['register']) ) {
 	//Posts Menu
 	$hMenu -> install ( 'Posts', 'jabali', 'description', 'posts', '', '#', 'drawer', 'visible', 'drop' );
 		//Posts SubMenus
-        $hMenu -> install ( 'Drafts', 'jabali', 'insert_drive_file', 'draftarticles', 'posts', _ADMIN.'posts?view=list&status=draft', 'drawer', 'visible', 'null' );
-        $hMenu -> install ( 'Scheduled', 'jabali', 'schedule', 'scheduled', 'posts', _ADMIN.'posts?view=list&status=scheduled', 'drawer', 'visible', 'null' );
-		$hMenu -> install ( 'Articles', 'jabali', 'description', 'allarticles', 'posts', _ADMIN.'posts?view=list&type=article', 'drawer', 'visible', 'null' );
-        $hMenu -> install ( 'Pages', 'jabali', 'description', 'allpages', 'posts', _ADMIN.'posts?view=list&type=page', 'drawer', 'visible', 'null' );
-        $hMenu -> install ( 'Projects', 'jabali', 'description', 'allprojects', 'posts', _ADMIN.'posts?view=list&type=project', 'drawer', 'visible', 'null' );
+        $hMenu -> install ( 'Drafts', 'jabali', 'insert_drive_file', 'draftarticles', 'posts', _ADMIN.'posts?status=draft', 'drawer', 'visible', 'null' );
+        $hMenu -> install ( 'Scheduled', 'jabali', 'schedule', 'scheduled', 'posts', _ADMIN.'posts?status=scheduled', 'drawer', 'visible', 'null' );
+		$hMenu -> install ( 'Articles', 'jabali', 'description', 'allarticles', 'posts', _ADMIN.'posts?type=article', 'drawer', 'visible', 'null' );
+        $hMenu -> install ( 'Pages', 'jabali', 'description', 'allpages', 'posts', _ADMIN.'posts?type=page', 'drawer', 'visible', 'null' );
+        $hMenu -> install ( 'Projects', 'jabali', 'description', 'allprojects', 'posts', _ADMIN.'posts?type=project', 'drawer', 'visible', 'null' );
 
 	//Users Menu
 	$hMenu -> install ( 'Users', 'jabali', 'group', 'users', '', '#', 'drawer', 'visible', 'drop' );
 		//Users SubMenus
-        $hMenu -> install ( 'Pending Users', 'jabali', 'done', 'draftusers', 'users', _ADMIN.'users?view=pending&key=users', 'drawer', 'visible', 'null' );
-        $hMenu -> install ( 'Adminstrators', 'jabali', 'description', 'alladmins', 'users', _ADMIN.'users?view=list&type=admin', 'drawer', 'visible', 'null' );
-        $hMenu -> install ( 'Editors', 'jabali', 'group', 'alleditors', 'users', _ADMIN.'users?view=list&type=editor', 'drawer', 'visible', 'null' );
-        $hMenu -> install ( 'Authors', 'jabali', 'group', 'allauthors', 'users', _ADMIN.'users?view=list&type=author', 'drawer', 'visible', 'null' );
-        $hMenu -> install ( 'Clients', 'jabali', 'group', 'allclients', 'users', _ADMIN.'users?view=list&type=client', 'drawer', 'visible', 'null' );
-        $hMenu -> install ( 'Subscribers', 'jabali', 'group', 'allsubscribers', 'users', _ADMIN.'users?view=list&type=subscriber', 'drawer', 'visible', 'null' );
+        $hMenu -> install ( 'Pending Users', 'jabali', 'done', 'draftusers', 'users', _ADMIN.'users?status=pending&key=users', 'drawer', 'visible', 'null' );
+        $hMenu -> install ( 'Adminstrators', 'jabali', 'description', 'alladmins', 'users', _ADMIN.'users?type=admin', 'drawer', 'visible', 'null' );
+        $hMenu -> install ( 'Editors', 'jabali', 'group', 'alleditors', 'users', _ADMIN.'users?type=editor', 'drawer', 'visible', 'null' );
+        $hMenu -> install ( 'Authors', 'jabali', 'group', 'allauthors', 'users', _ADMIN.'users?type=author', 'drawer', 'visible', 'null' );
+        $hMenu -> install ( 'Clients', 'jabali', 'group', 'allclients', 'users', _ADMIN.'users?type=client', 'drawer', 'visible', 'null' );
+        $hMenu -> install ( 'Subscribers', 'jabali', 'group', 'allsubscribers', 'users', _ADMIN.'users?type=subscriber', 'drawer', 'visible', 'null' );
 
     //Resources Menu
     $hMenu -> install ( 'Resources', 'jabali', 'business', 'resources', '', '#', 'drawer', 'invisible', 'drop' );
         //Resources SubMenus
-        $hMenu -> install ( 'Drafts', 'jabali', 'insert_drive_file', 'draftresources', 'resources', _ADMIN.'resources?view=list&status=draft', 'drawer', 'visible', 'null' );
+        $hMenu -> install ( 'Drafts', 'jabali', 'insert_drive_file', 'draftresources', 'resources', _ADMIN.'resources?status=draft', 'drawer', 'visible', 'null' );
 
 	$hMenu -> install ( 'Comments', 'jabali', 'comment', 'comments', '', '#', 'drawer', 'visible', 'drop' );
         //Comments SubMenus
@@ -193,7 +192,7 @@ if (isset($_POST['register']) ) {
     VALUES ('Home', '1', '', '"._IMAGES."404.jpg"."', 'uncategorized', '".$created."', 'This is a sample page. Edit it or delete it alltogether.', '', '".md5( $created )."', 'public', '', '', '', 'published', 'Home', 'home', '', 'page', 'page', '".$created."')" );
 
         $GLOBALS['JBLDB'] -> query( "INSERT INTO ". _DBPREFIX ."posts (name, author, author_name, avatar, categories, created, details, gallery, authkey, level, link, excerpt, readings, state, subtitle, slug, tags, template, ilk, updated) 
-    VALUES ('Hello World!', '1', '', '"._IMAGES."404.jpg"."', 'Uncategorized', '".$created."', 'This is a sample article. Edit it or delete it alltogether.', '', '".md5( $created )."', 'public', 'hello-world', '', '', 'published', 'Hello', 'hello-world', '', 'post', 'article', '".$created."')" );
+    VALUES ('Hello World!', '1', 'Admin User', '"._IMAGES."404.jpg"."', 'uncategorized', '".$created."', 'This is a sample article. Edit it or delete it alltogether.', '', '".md5( $created )."', 'public', 'hello-world', '', '', 'published', 'Hello', 'hello-world', '', 'post', 'article', '".$created."')" );
 
 		header("Location: "._ROOT."/login/jabali/" );
 
@@ -220,11 +219,11 @@ if (isset($_POST['register']) ) {
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
     	<body>
     		<main class="mdl-layout__content mdl-grid">
-    			<div class="mdl-cell mdl-cell--2-col"></div>
-    			<div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-color--madge">
+    			<div class="mdl-cell mdl-cell--4-col"></div>
+    			<div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-color--madge">
     			    <div id="login_div" class="mdl-grid">
     			    <div class="mdl-cell mdl-cell--12-col">
-    			    <center><?php frontlogo(); ?>
+    			    <center><?php jblLogo(); ?>
                     <div id="success" class="alert mdl-color--green">
                         <span>Jabali Succesfully Installed<br>Set up your admin account</span>
                     </div>
@@ -267,7 +266,7 @@ if (isset($_POST['register']) ) {
     		          </form>
     			    </div>
     		    </div>
-    			<div class="mdl-cell mdl-cell--2-col"></div>
+    			<div class="mdl-cell mdl-cell--4-col"></div>
     	    </main>
     	</body>
     </div>

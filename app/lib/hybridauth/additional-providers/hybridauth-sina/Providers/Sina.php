@@ -1,7 +1,7 @@
 <?php
 /*!
 * HybridAuth
-* http://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
 *  (c) 2009-2011 HybridAuth authors | hybridauth.sourceforge.net/licenses.html
 */
 
@@ -17,7 +17,7 @@
 /**
  * Sina provider adapter based on OAuth1 protocol
  * 
- * http://hybridauth.sourceforge.net/userguide/IDProvider_info_Sina.html
+ * https://hybridauth.sourceforge.net/userguide/IDProvider_info_Sina.html
  */
 class Hybrid_Providers_Sina extends Hybrid_Provider_Model
 { 
@@ -105,7 +105,7 @@ class Hybrid_Providers_Sina extends Hybrid_Provider_Model
 		$this->user->profile->identifier    = @ $response['id'];
 		$this->user->profile->displayName  	= @ $response['screen_name'];
 		$this->user->profile->address 		= @ $response['location'];
-		$this->user->profile->profileURL 	= @ 'http://www.weibo.com/u/' . $response['id'];
+		$this->user->profile->profileURL 	= @ 'https://www.weibo.com/u/' . $response['id'];
 		$this->user->profile->photoURL 		= @ $response['profile_image_url'];
 		$this->user->profile->webSiteURL 	= @ $response['url'];
 		switch ( $response['gender'] ) {
@@ -207,7 +207,7 @@ class Hybrid_Providers_Sina extends Hybrid_Provider_Model
 			$ua->text               = @ $item['text'];
 			$ua->user->identifier   = @ $item['user']['id'];
 			$ua->user->displayName  = @ $item['user']['screen_name'];
-			$ua->user->profileURL   = 'http://www.weibo.com/u/' . $item['user']['id'];
+			$ua->user->profileURL   = 'https://www.weibo.com/u/' . $item['user']['id'];
 			$ua->user->photoURL     = $item['user']['profile_image_url'];
 			
 			$activities[] = $ua;

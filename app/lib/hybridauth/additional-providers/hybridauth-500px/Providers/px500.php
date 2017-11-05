@@ -1,8 +1,8 @@
 <?php
 /*!
 * HybridAuth
-* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html 
+* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+* (c) 2009-2012, HybridAuth authors | https://hybridauth.sourceforge.net/licenses.html 
 */
 
 /**
@@ -43,7 +43,7 @@ class Hybrid_Providers_px500 extends Hybrid_Provider_Model_OAuth1
 			$this->user->profile->firstName     = (property_exists($response->user,'firstname'))?$response->user->firstname:"";
 			$this->user->profile->lastName      = (property_exists($response->user,'lastname'))?$response->user->lastname:"";  
 			$this->user->profile->photoURL      = (property_exists($response->user,'userpic_url'))?$response->user->userpic_url:"";
-			$this->user->profile->profileURL    = (property_exists($response->user,'domain'))?("http://".$response->user->domain):"";
+			$this->user->profile->profileURL    = (property_exists($response->user,'domain'))?("https://".$response->user->domain):"";
 			$this->user->profile->webSiteURL    = (property_exists($response->user->contacts,'website'))?$response->user->contacts->website:""; 
 			$this->user->profile->city          = (property_exists($response->user,'city'))?$response->user->city:"";
 			$this->user->profile->region        = (property_exists($response->user,'state'))?$response->user->state:"";
@@ -95,7 +95,7 @@ class Hybrid_Providers_px500 extends Hybrid_Provider_Model_OAuth1
 		// this function is for 'plain' blog posting only :
 		// we will commit photo upload soon in an extra function, called setUpload -
 		// because 500px users can also get an additional Upload Key to upload pictures
-		// refer to  http://developers.500px.com/docs/upload-post  for now
+		// refer to  https://developers.500px.com/docs/upload-post  for now
                 
                 return $response;
 	}

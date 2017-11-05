@@ -2,8 +2,8 @@
 
 /**
  * HybridAuth
- * http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
- * (c) 2009-2015, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
+ * https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+ * (c) 2009-2015, HybridAuth authors | https://hybridauth.sourceforge.net/licenses.html
  * idQ OAuth 2 Authentication
  * (c) 2017 inBay Technologies Inc.
  */

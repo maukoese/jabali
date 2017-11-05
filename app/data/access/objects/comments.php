@@ -1,10 +1,10 @@
 <?php
 /**
 * @package Jabali
-* @subpackage Options Data Access Object
+* @subpackage Comments Data Access Object
 * @author Mauko Maunde
-* @link https://docs.jabalicms.org/data/access/obects/options
-* @since 0.17.09
+* @link https://docs.jabalicms.org/data/access/objects/comments/
+* @since 0.17.11
 **/
 
 namespace Jabali\Data\Access\Objects;
@@ -111,9 +111,10 @@ class Comments {
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+            while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
         $posts[] = $post;
-      }
+        $posts['status'] = "success";
+      }     
 
       return $posts;
     } else{
@@ -127,13 +128,14 @@ class Comments {
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+            while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
         $posts[] = $post;
-      }
+        $posts['status'] = "success";
+      }     
 
       return $posts;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -143,13 +145,14 @@ class Comments {
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+            while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
         $posts[] = $post;
-      }
+        $posts['status'] = "success";
+      }     
 
       return $posts;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -159,13 +162,14 @@ class Comments {
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+            while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
         $posts[] = $post;
-      }
+        $posts['status'] = "success";
+      }     
 
       return $posts;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -175,13 +179,14 @@ class Comments {
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+            while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
         $posts[] = $post;
-      }
+        $posts['status'] = "success";
+      }     
 
       return $posts;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -191,13 +196,14 @@ class Comments {
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+            while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
         $posts[] = $post;
-      }
+        $posts['status'] = "success";
+      }     
 
       return $posts;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -207,13 +213,14 @@ class Comments {
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+            while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
         $posts[] = $post;
-      }
+        $posts['status'] = "success";
+      }     
 
       return $posts;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -223,13 +230,14 @@ class Comments {
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+            while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
         $posts[] = $post;
-      }
+        $posts['status'] = "success";
+      }     
 
       return $posts;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -239,13 +247,14 @@ class Comments {
     $results = $GLOBALS['JBLDB'] -> select( $this -> table, $this -> allowed, $conds );
     if ( $GLOBALS['JBLDB'] -> numRows( $results ) > 0 ) {
       $posts = array();
-      while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
+            while ( $post = $GLOBALS['JBLDB'] -> fetchArray( $results )) {
         $posts[] = $post;
-      }
+        $posts['status'] = "success";
+      }     
 
       return $posts;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -271,7 +280,7 @@ class Comments {
 
       return $posts;
     } else{
-      return array( "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 

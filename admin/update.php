@@ -1,6 +1,6 @@
 <?php 
 /**
-* @package Jabali Framework
+* @package Jabali - The Plug-N-Play Framework
 * @subpackage App Update
 * @link https://docs.jabalicms.org/update/
 * @author Mauko Maunde
@@ -58,6 +58,9 @@ ini_set('max_execution_time',60); ?>
 					}
 
 					if ( isset( $_GET['do'] ) ) {
+
+						$maint = fopen( _ABS_.'.jbl', 'r');
+						fclose($maint)
 						//Open The File And Do Stuff
 						$zipHandle = zip_open(_ABSTEMP_.'/update/jabali-'.$new_version.'.zip');
 						echo '<ul>';
@@ -105,6 +108,7 @@ ini_set('max_execution_time',60); ?>
 						}
 						echo '</ul>';
 						$updated = TRUE;
+						unlink( _ABS_.'.jbl' );
 					} else { ?>
 						<div class="mdl-card__supporting-text">
 						<h3>Jabali <?php echo( $new_version ); ?> is Ready!</h3>

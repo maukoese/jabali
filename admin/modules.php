@@ -1,6 +1,6 @@
 <?php
 /**
-* @package Jabali Framework
+* @package Jabali - The Plug-N-Play Framework
 * @subpackage Extension Modules
 * @link https://docs.jabalicms.org/extend/
 * @author Mauko Maunde
@@ -33,7 +33,7 @@ if ( isset( $_GET['install'] ) ) {
     }
 	}
 
-  intallX( $_GET['install'], "http://jabalicms.org/dl/extensions/".$_GET['install'].".zip" );
+  intallX( $_GET['install'], "https://jabalicms.org/dl/extensions/".$_GET['install'].".zip" );
 
 } elseif ( isset( $_GET['activate'] ) ) {
 	function activateX( $x) {

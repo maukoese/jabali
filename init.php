@@ -1,6 +1,6 @@
 <?php
 /**
-* @package Jabali Framework
+* @package Jabali - The Plug-N-Play Framework
 * @subpackage Initialization
 * @link https://docs.jabalicms.org/init/
 * @author Mauko Maunde
@@ -96,7 +96,8 @@ switch ( $server["dbtype"] ) {
 }
 
 /**
-* Flush $server variable so configuration details are not available beyond this point
+* For security, we flush the $server variable here so 
+* configuration details are not available beyond this point
 **/
 unset( $server );
 
@@ -115,10 +116,11 @@ if ( isOption ( 'timezone' ) ) {
 
 $GLOBALS['USERS'] = new Jabali\Data\Access\Objects\Users;
 $GLOBALS['POSTS'] = new Jabali\Data\Access\Objects\Posts;
-//$GLOBALS['RESOURCES'] = new Jabali\Data\Access\Objects\Resources;
-//$GLOBALS['COMMENTS'] = new Jabali\Data\Access\Objects\Comments;
-//$GLOBALS['MESSAGES'] = new Jabali\Data\Access\Objects\Messages;
+$GLOBALS['RESOURCES'] = new Jabali\Data\Access\Objects\Resources;
+$GLOBALS['COMMENTS'] = new Jabali\Data\Access\Objects\Comments;
+$GLOBALS['MESSAGES'] = new Jabali\Data\Access\Objects\Messages;
 $GLOBALS['OPTIONS'] = new Jabali\Data\Access\Objects\Options;
+$GLOBALS['MENUS'] = new Jabali\Data\Access\Objects\Menus;
 $GLOBALS['GUZZLE'] = new \GuzzleHttp\Client;
 $GLOBALS['MAILER'] = new \PHPMailer\PHPMailer\PHPMailer;
 
@@ -128,19 +130,10 @@ $GLOBALS['gpost_count'] = 0;
 $GLOBALS['gpost_index'] = 0;
 
 $hGlobal = new Jabali\Lib\Uniform();
-$hOpt = new Jabali\Classes\Options();
-$hMenu = new Jabali\Classes\Menus();
-$hForm = new Jabali\Classes\Forms();
-$hUser = new Jabali\Classes\Users();
-$hPost = new Jabali\Classes\Posts();
-$hResource = new Jabali\Classes\Resources();
-$hMessage = new Jabali\Classes\Messages();
-$hComment = new Jabali\Classes\Comments();
-$hWidget = new Jabali\Classes\Widgets();
-$hSocial = new Jabali\Classes\Social();
+$hMenu = new Jabali\Lib\Menus();
 
 /**
-* Create directories if the don't exist
+* Define global variables
 **/
 $GLOBALS['GRules'] = array();
 $GLOBALS['GActions'] = array();
@@ -162,15 +155,8 @@ if ( isOption ( 'usertypes' ) ) {
 $GLOBALS['SKINS'] = loadSkins();
 
 /**
-* Load Theme Functions
+* Set the Cros-Site Request Forgery variable
 **/
-$GLOBALS['GThemePage'] = array();
-
-/**
-* Load Extensions Functions
-**/
-$GLOBALS['GExtPage'] = array();
-
 if ( !isset( $_SESSION['CSRF'] ) ) {
 	$_SESSION['CSRF'] = md5( date("Y-m-d") );
 }
@@ -184,6 +170,9 @@ if ( $_SERVER['REQUEST_METHOD'] !== "GET" ) {
 	}
 }
 
+/**
+* Load Active Extension Modules first so they are accessible by themes.
+**/
 if ( isOption ( 'modules' ) ) {
 	$exts = getOption( 'modules' );
 	foreach ( $exts as $ext ) {
@@ -191,6 +180,9 @@ if ( isOption ( 'modules' ) ) {
 	}
 }
 
+/**
+* Load Theme Functions, if any
+**/
 if ( isOption ( 'activetheme' ) ) {
 	$GLOBALS['GTheme'] = getOption( 'activetheme' );
 	$themefile = _ABSTHEMES_ . $GLOBALS['GTheme'] . '/' . $GLOBALS['GTheme'] . '.php';

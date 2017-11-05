@@ -2,8 +2,8 @@
 
 /**
  * HybridAuth
- * http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
- * (c) 2009-2015, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
+ * https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+ * (c) 2009-2015, HybridAuth authors | https://hybridauth.sourceforge.net/licenses.html
  */
 
 /**
@@ -13,7 +13,7 @@
  * The Hybrid_User_Profile object is populated with as much information about the user as
  * HybridAuth was able to pull from the given API or authentication provider.
  *
- * http://hybridauth.sourceforge.net/userguide/Profile_Data_User_Profile.html
+ * https://hybridauth.sourceforge.net/userguide/Profile_Data_User_Profile.html
  */
 class Hybrid_User_Profile {
 

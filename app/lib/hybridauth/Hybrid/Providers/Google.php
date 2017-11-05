@@ -2,20 +2,20 @@
 
 /* !
  * HybridAuth
- * http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
- * (c) 2009-2015, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
+ * https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+ * (c) 2009-2015, HybridAuth authors | https://hybridauth.sourceforge.net/licenses.html
  */
 
 /**
  * Hybrid_Providers_Google provider adapter based on OAuth2 protocol
  *
- * http://hybridauth.sourceforge.net/userguide/IDProvider_info_Google.html
+ * https://hybridauth.sourceforge.net/userguide/IDProvider_info_Google.html
  */
 class Hybrid_Providers_Google extends Hybrid_Provider_Model_OAuth2 {
 
 	/**
-	 * > more infos on google APIs: http://developer.google.com (official site)
-	 * or here: http://discovery-check.appspot.com/ (unofficial but up to date)
+	 * > more infos on google APIs: https://developer.google.com (official site)
+	 * or here: https://discovery-check.appspot.com/ (unofficial but up to date)
 	 * default permissions
 	 * {@inheritdoc}
 	 */
@@ -149,7 +149,7 @@ class Hybrid_Providers_Google extends Hybrid_Provider_Model_OAuth2 {
 		}
 
 		// google API returns multiple urls, but a "website" only if it is verified
-		// see http://support.google.com/plus/answer/1713826?hl=en
+		// see https://support.google.com/plus/answer/1713826?hl=en
 		if (property_exists($response, 'urls')) {
 			foreach ($response->urls as $u) {
 				if (property_exists($u, 'primary') && $u->primary == true)

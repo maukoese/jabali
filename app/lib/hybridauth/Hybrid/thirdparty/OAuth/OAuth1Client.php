@@ -1,8 +1,8 @@
 <?php
 /**
 * HybridAuth
-* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
-* (c) 2009-2014, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
+* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+* (c) 2009-2014, HybridAuth authors | https://hybridauth.sourceforge.net/licenses.html
 */
 
 // A service client for the OAuth 1/1.0a flow.
@@ -24,7 +24,7 @@ class OAuth1Client{
 	public $curl_connect_time_out = 30;
 	public $curl_ssl_verifypeer   = false;
 	public $curl_auth_header      = true;
-	public $curl_useragent        = "OAuth/1 Simple PHP Client v0.1; HybridAuth http://hybridauth.sourceforge.net/";
+	public $curl_useragent        = "OAuth/1 Simple PHP Client v0.1; HybridAuth https://hybridauth.sourceforge.net/";
 	public $curl_proxy            = null;
 
 	//--
@@ -129,7 +129,7 @@ class OAuth1Client{
 	*/
 	function api( $url, $method = 'GET', $parameters = array(), $body = null, $content_type = null, $multipart = false )
 	{
-		if ( strrpos($url, 'http://') !== 0 && strrpos($url, 'https://') !== 0 ) {
+		if ( strrpos($url, 'https://') !== 0 && strrpos($url, 'https://') !== 0 ) {
 			$url = $this->api_base_url . $url;
 		}
 

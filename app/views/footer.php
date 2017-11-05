@@ -1,5 +1,11 @@
-<?php 
-if ( !isset($_SESSION) ) { session_start(); } ?>
+<?php
+/**
+* @package Jabali - The Plug-N-Play Framework
+* @subpackage Footer Layout
+* @link https://docs.jabalicms.org/views/footer/
+* @author Mauko Maunde
+* @since 0.17.09
+*/ ?>
 </main>
 <script type="text/javascript">
 	$('#alert_close').click(function(){

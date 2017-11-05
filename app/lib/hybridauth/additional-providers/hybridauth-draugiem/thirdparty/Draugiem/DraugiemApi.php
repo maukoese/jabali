@@ -17,7 +17,7 @@
  * 		'place' => 'Rīga',
  * 		'age' => 26,
  * 		'adult' => true,
- * 		'img' => 'http://i2.ifrype.com/91/171/491171/sm_2008100616435822749.jpg',
+ * 		'img' => 'https://i2.ifrype.com/91/171/491171/sm_2008100616435822749.jpg',
  * 		'sex' => 'M',
  * 	)
  * If data of multiple users is returned, multiple user data items are placed in array
@@ -57,15 +57,15 @@ class DraugiemApi {
 	/**
 	 * Draugiem.lv API URL
 	 */
-	const API_URL = 'http://api.draugiem.lv/php/';
+	const API_URL = 'https://api.draugiem.lv/php/';
 	/**
 	 * Draugiem.lv passport login URL
 	 */
-	const LOGIN_URL = 'http://api.draugiem.lv/authorize/';
+	const LOGIN_URL = 'https://api.draugiem.lv/authorize/';
 	/**
 	 * Iframe scripts URL
 	 */
-	const JS_URL = 'http://ifrype.com/applications/external/draugiem.js';
+	const JS_URL = 'https://ifrype.com/applications/external/draugiem.js';
 
 	/**
 	 * Timeout in seconds for session_check requests
@@ -444,7 +444,7 @@ class DraugiemApi {
 		} else {
 			$onclick = '';
 		}
-		return '<a href="'.$url.'"'.$onclick.'><img border="0" src="http://api.draugiem.lv/authorize/login_button.png" alt="draugiem.lv" /></a>';
+		return '<a href="'.$url.'"'.$onclick.'><img border="0" src="https://api.draugiem.lv/authorize/login_button.png" alt="draugiem.lv" /></a>';
 	}
 
 	############################################
@@ -484,8 +484,8 @@ class DraugiemApi {
 	  * in $resize_container parameter.
 	  *
 	  * Function also enables Javascript callback values if $callback_html argument is passed. It has to contain full
-	  * address of the copy of callback.html on the application server (e.g. http://example.com/callback.html).
-	  * Original can be found at http://www.draugiem.lv/applications/external/callback.html
+	  * address of the copy of callback.html on the application server (e.g. https://example.com/callback.html).
+	  * Original can be found at https://www.draugiem.lv/applications/external/callback.html
 	  *
 	  * This function has to be called after getSession().
 	  *

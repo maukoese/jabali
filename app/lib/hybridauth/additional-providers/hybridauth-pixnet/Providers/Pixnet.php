@@ -1,7 +1,7 @@
 <?php
 /*!
 * HybridAuth
-* http://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
 *  (c) 2009-2011 HybridAuth authors | hybridauth.sourceforge.net/licenses.html
 */
 
@@ -17,7 +17,7 @@
 /**
  * Pixnet provider adapter based on OAuth1 protocol
  *
- * http://hybridauth.sourceforge.net/userguide/IDProvider_info_Pixnet.html
+ * https://hybridauth.sourceforge.net/userguide/IDProvider_info_Pixnet.html
  */
 class Hybrid_Providers_Pixnet extends Hybrid_Provider_Model_OAuth1
 {
@@ -26,10 +26,10 @@ class Hybrid_Providers_Pixnet extends Hybrid_Provider_Model_OAuth1
 		parent::initialize();
 
 		// Provider api end-points
-		$this->api->api_base_url      = 'http://emma.pixnet.cc/';
-		$this->api->authorize_url     = 'http://emma.pixnet.cc/oauth/authorize';
-		$this->api->request_token_url = 'http://emma.pixnet.cc/oauth/request_token';
-		$this->api->access_token_url  = 'http://emma.pixnet.cc/oauth/access_token';
+		$this->api->api_base_url      = 'https://emma.pixnet.cc/';
+		$this->api->authorize_url     = 'https://emma.pixnet.cc/oauth/authorize';
+		$this->api->request_token_url = 'https://emma.pixnet.cc/oauth/request_token';
+		$this->api->access_token_url  = 'https://emma.pixnet.cc/oauth/access_token';
 		
 		// for access_token need to POST data instead of using GET
 		$this->api->access_token_method  = 'POST';
@@ -95,7 +95,7 @@ class Hybrid_Providers_Pixnet extends Hybrid_Provider_Model_OAuth1
 
 			$uc->identifier   = @ $item->id;
 			$uc->displayName  = @ $item->display_name;
-			$uc->profileURL   = 'http://' . strtolower( $item->user_name ) . '.pixnet.net/blog';
+			$uc->profileURL   = 'https://' . strtolower( $item->user_name ) . '.pixnet.net/blog';
 
 			$contacts[] = $uc;
 		}

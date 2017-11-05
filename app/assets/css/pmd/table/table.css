@@ -1,8 +1,8 @@
 
 /*!
- * Propeller v1.1.0 (http://propeller.in): table.css
+ * Propeller v1.1.0 (https://propeller.in): table.css
  * Copyright 2016-2017 Digicorp, Inc.
- * Licensed under MIT (http://propeller.in/LICENSE)
+ * Licensed under MIT (https://propeller.in/LICENSE)
  */
 
 .table { width: 100%; max-width: 100%; margin-bottom: 1rem;}
@@ -179,8 +179,8 @@ Table Card
 .pmd-table-card .table.pmd-table tfoot { display: none;}
 .pmd-table-card .table.pmd-table tbody {display: block;}
 .pmd-table-card .table.pmd-table tbody tr { display: block; border-radius: 2px; margin-bottom:1.25rem; box-shadow:0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)}
-.pmd-table-card .table.pmd-table tbody tr td { background-color: #ffffff; display: block; vertical-align: middle; text-align: right;}
-.pmd-table-card .table.pmd-table tbody tr td[data-title]:before { content: attr(data-title); float: left; font-size: inherit; font-weight: 400; color: #757575;}
+.pmd-table-card .table.pmd-table tbody tr td { display: block; vertical-align: middle; text-align: right;}
+.pmd-table-card .table.pmd-table tbody tr td[data-title]:before { content: attr(data-title); float: left; font-size: inherit; font-weight: 400; }
 
 .pmd-table-card.shadow-z-1 { box-shadow: none;}
 .pmd-table-card.shadow-z-1 .table tbody tr {border: none; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);}

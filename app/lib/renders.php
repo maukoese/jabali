@@ -3,7 +3,7 @@
 * Front Actions
 */
 
-namespace Jabali\Classes;
+namespace Jabali\Lib;
 
 class Renders 
 {
@@ -158,7 +158,7 @@ class Renders
 
 	function fetchPosts( $slug ) {
 		if ( getOption( 'postspage' ) == $slug ) {
-			$this -> blog();
+			$this -> blog( $slug );
 		} else {
 
 			if ( is_numeric( $slug ) ) {
@@ -182,16 +182,13 @@ class Renders
 		}
 	}
 
-	function blog() {
-		$postsy = $GLOBALS['POSTS'] -> sweep();
-		$posts = array();
-		foreach ($postsy as $post) {
-			array_push( $posts, (object)$post );
-		}
-		if ( !isset( $posts['error'] ) ) {
+	function blog( $title = "Blog" ) {
+		$posts = $GLOBALS['POSTS'] -> sweep();
+		if ( $posts['status'] !== "fail" ) {?>
+		<title><?php echo( ucwords($title) ); ?> - <?php showOption( 'name' ); ?></title><?php
 			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
 		} else {
-			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' );
+			error404();
 		}
 	}
 

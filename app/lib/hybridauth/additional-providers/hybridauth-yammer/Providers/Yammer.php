@@ -1,8 +1,8 @@
 <?php
 /*!
 * HybridAuth
-* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
+* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+* (c) 2009-2012, HybridAuth authors | https://hybridauth.sourceforge.net/licenses.html
 */
 
 /**
@@ -17,7 +17,7 @@
 /**
  * Hybrid_Providers_Yammer adapter based on OAuth2 protocol
  *
- * http://hybridauth.sourceforge.net/userguide/IDProvider_info_Yammer.html
+ * https://hybridauth.sourceforge.net/userguide/IDProvider_info_Yammer.html
  */
 
 class Hybrid_Providers_Yammer extends Hybrid_Provider_Model

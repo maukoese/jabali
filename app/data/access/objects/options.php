@@ -3,13 +3,21 @@
 * @package Jabali
 * @subpackage Options Data Access Object
 * @author Mauko Maunde
-* @link https://docs.jabalicms.org/data/access/obects/options
+* @link https://docs.jabalicms.org/data/access/objects/options/
 * @since 0.17.09
 **/
 
 namespace Jabali\Data\Access\Objects;
 
 class Options {
+
+  public $id;
+  public $author;
+  public $created;
+  public $details;
+  public $name;
+  public $updated;
+  public $allowed = array( "id", "author", "created", "details", "name", "updated" );
 
 	/**
 	* Create option
@@ -45,6 +53,40 @@ class Options {
             $this -> update( $setting[0], $setting[1], $setting[2] );
         }
     }
+
+    /**
+    * 
+    **/
+    function getOption( $code )
+    {
+        $option = "";
+        $getOptions = $GLOBALS['JBLDB'] -> select('options', $this -> allowed, ['code' => $code]);
+        if ( $GLOBALS['JBLDB'] -> numRows($getOptions) > 0 ) {
+            while ( $siteOption = $GLOBALS['JBLDB'] -> fetchArray($getOptions) ) { 
+                if ( substr( $siteOption['details'], 0,1 ) == "[" || substr( $siteOption['details'], 0,1 ) == "{" ) {
+                    $option = json_decode( $siteOption['details'], true );
+                } else {
+                    $option = $siteOption['details'];
+                }
+            }
+        }
+        
+        return $option;
+    }
+
+    /**
+    * Check if option exists
+    **/
+    function optionExists( $code )
+    {
+        $getOptions = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."options WHERE code='".$code."'" );
+        if ( $getOptions && $GLOBALS['JBLDB'] -> numRows($getOptions) > 0 ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     function general(){ ?>
         <title>General Site Options - <?php showOption( 'name' ); ?></title>
@@ -209,7 +251,7 @@ class Options {
                     <div style="height:0px;overflow:hidden">
                         <input id="my_favicon" type="file" name="newfavicon">
                     </div>
-                    <?php if ( !is_file( getOption( 'favicon' ) ) ) { $favicon = _IMAGES.'marker.png'; } else { $favicon = getOption( 'favicon' ); } ?>
+                    <?php if ( !getimagesize( getOption( 'favicon' ) ) ) { $favicon = _IMAGES.'marker.png'; } else { $favicon = getOption( 'favicon' ); } ?>
                     <img id="myfavicon" src="<?php echo $favicon; ?>" width="50%" onclick="chooseFavicon();">
                 </div>
             </div>
@@ -225,7 +267,7 @@ class Options {
                     <div style="height:0px;overflow:hidden">
                         <input id="header_logo" type="file" name="newheaderlogo">
                     </div>
-                    <?php $hl = getOption( 'headerlogo' );  if ( !file_exists( $hl ) ) { $headerlogo = _IMAGES.'logo.png'; } else { $headerlogo = getOption( 'headerlogo' ); } ?>
+                    <?php $hl = getOption( 'headerlogo' );  if ( !getimagesize( $hl ) ) { $headerlogo = _IMAGES.'logo.png'; } else { $headerlogo = getOption( 'headerlogo' ); } ?>
                     <img id="myheaderlogo" src="<?php echo $headerlogo; ?>" width="100%" onclick="chooseHeader();">
                 </div>
             </div>
@@ -239,9 +281,9 @@ class Options {
                 <div class="mdl-card__image">
                     <input type="hidden" name="homelogo" value="<?php getOption( "homelogo" ); ?>">
                     <div style="height:0px;overflow:hidden">
-                    <input id="home_logo" type="file" name="newhomelogo">
+                        <input id="home_logo" type="file" name="newhomelogo">
                     </div>
-                    <?php $hl = getOption( 'homelogo' );  if ( is_file( $hl ) ) { $homelogo = _IMAGES.'logo-w.png'; } else { $homelogo = getOption( 'homelogo' ); } ?>
+                    <?php $hl = getOption( 'homelogo' );  if ( !getimagesize( $hl ) ) { $homelogo = _IMAGES.'logo-w.png'; } else { $homelogo = getOption( 'homelogo' ); } ?>
                     <img id="myhomelogo" src="<?php echo $homelogo ?>" width="100%" onclick="chooseHome();">
                 </div>
             </div>
@@ -307,15 +349,14 @@ class Options {
                     global $hMenu;
                     $types = $hMenu -> allTypes( $_GET['table'] );
                     foreach ( $types as $type ) {
-                         echo '<a href="'. _ADMIN.'/'.$_GET['table'].'?view=list&type='. $type .'" class="mdl-list__item"><i class="material-icons mdl-list__item-icon">bubble_chart</i><span style="padding-left: 20px">'. ucwords( $type ) .'</span></a>';
+                         echo '<a href="'. _ADMIN.'/'.$_GET['table'].'?type='. $type .'" class="mdl-list__item"><i class="material-icons mdl-list__item-icon">bubble_chart</i><span style="padding-left: 20px">'. ucwords( $type ) .'</span></a>';
                      } ?>
                     </div>
                     <div class="mdl-cell mdl-cell--6-col" >
                     <h6>User Defined Types</h6><?php
                         $data = getOption( substr( $_GET['table'] , 0, -1).'types' );
-                        $datatypes = json_decode( $data, true );
-                        foreach ($datatypes as $type => $level ) {
-                            echo '<a href="./users?view=list&type='.strtolower( $type ).'" class="mdl-list__item"><i class="material-icons mdl-list__item-icon">people</i><span style="padding-left: 20px">'.$type.' -</span> '.$level.'</a>';
+                        foreach ($data as $type => $level ) {
+                            echo '<a href="./'.$_GET['table'].'?type='.strtolower( $type ).'" class="mdl-list__item"><i class="material-icons mdl-list__item-icon">people</i><span style="padding-left: 20px">'.$type.' -</span> '.$level.'</a>';
                          } ?>
                     </div>
                 </div>
@@ -331,9 +372,6 @@ class Options {
                         <div class="input-field mdl-cell mdl-js-textfield getmdl-select">
                         <i class="material-icons prefix">lock</i>
                          <input class="mdl-textfield__input" id="ilk" name="ulevel[]" type="text" readonly tabIndex="-1" placeholder="Select Level" >
-                          <label for="ilk">
-                              <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
-                          </label>
                            <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="ilk"><?php
                                 global $hMenu;
                                 $types = $hMenu -> allTypes( $_GET['table'] );
@@ -343,14 +381,12 @@ class Options {
                            </ul>
                         </div><?php
                         $users = getOption( substr( $_GET['table'] , 0, -1).'types' );
-                        $usertypes = json_decode( $users, true );
-                        foreach ($usertypes as $type => $level ) {
+                        foreach ($users as $type => $level ) {
                             echo '<input type="hidden" name="utype[]'.$type.'" value=" '.$type.'" />';
                             echo '<input type="hidden" name="ulevel[]'.$type.'" value=" '.$level.'" />';
                          } ?>
                         <div class="input-field mdl-cell">
                             <?php csrf(); ?>
-                            <button class="mdl-button mdl-button--fab mdl-button--colored alignright" type="submit"><i class="material-icons">save</i></button>
                         </div>
                 </form>
                 </div>
@@ -408,6 +444,7 @@ class Options {
                           </ul>
                             </div>
                         </div>
+                            <button class="addfab mdl-button mdl-button--fab mdl-button--colored alignright" type="submit"><i class="material-icons">save</i></button>
             </div><?php
     	} else { ?>
     	   <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">

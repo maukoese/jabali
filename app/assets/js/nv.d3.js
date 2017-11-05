@@ -18,7 +18,7 @@ nv.dispatch = d3.dispatch('render_start', 'render_end');
 // Function bind polyfill
 // Needed ONLY for phantomJS as it's missing until version 2.0 which is unreleased as of this comment
 // https://github.com/ariya/phantomjs/issues/10522
-// http://kangax.github.io/compat-table/es5/#Function.prototype.bind
+// https://kangax.github.io/compat-table/es5/#Function.prototype.bind
 // phantomJS is used for running the test suite
 if (!Function.prototype.bind) {
     Function.prototype.bind = function (oThis) {
@@ -2479,7 +2479,7 @@ nv.models.boxPlotChart = function() {
 
 // Chart design based on the recommendations of Stephen Few. Implementation
 // based on the work of Clint Ivy, Jamie Love, and Jason Davies.
-// http://projects.instantcognition.com/protovis/bulletchart/
+// https://projects.instantcognition.com/protovis/bulletchart/
 
 nv.models.bullet = function() {
     "use strict";
@@ -2717,7 +2717,7 @@ nv.models.bullet = function() {
 
 // Chart design based on the recommendations of Stephen Few. Implementation
 // based on the work of Clint Ivy, Jamie Love, and Jason Davies.
-// http://projects.instantcognition.com/protovis/bulletchart/
+// https://projects.instantcognition.com/protovis/bulletchart/
 nv.models.bulletChart = function() {
     "use strict";
 
@@ -6550,7 +6550,7 @@ nv.models.lineChart = function() {
             // Functions
             //------------------------------------------------------------
     
-            // Taken from crossfilter (http://square.github.com/crossfilter/)
+            // Taken from crossfilter (https://square.github.com/crossfilter/)
             function resizePath(d) {
                 var e = +(d == 'e'),
                     x = e ? 1 : -1,
@@ -7120,7 +7120,7 @@ nv.models.linePlusBarChart = function() {
             // Functions
             //------------------------------------------------------------
 
-            // Taken from crossfilter (http://square.github.com/crossfilter/)
+            // Taken from crossfilter (https://square.github.com/crossfilter/)
             function resizePath(d) {
                 var e = +(d == 'e'),
                     x = e ? 1 : -1,
@@ -9824,7 +9824,7 @@ nv.models.ohlcBar = function() {
     return chart;
 };
 // Code adapted from Jason Davies' "Parallel Coordinates"
-// http://bl.ocks.org/jasondavies/1341281
+// https://bl.ocks.org/jasondavies/1341281
 nv.models.parallelCoordinates = function() {
     "use strict";
 
@@ -13414,7 +13414,7 @@ nv.models.stackedAreaChart = function() {
 
     return chart;
 };
-// based on http://bl.ocks.org/kerryrodden/477c1bfb081b783f80ad
+// based on https://bl.ocks.org/kerryrodden/477c1bfb081b783f80ad
 nv.models.sunburst = function() {
     "use strict";
 

@@ -1,6 +1,6 @@
 <?php 
 /**
-* @package Jabali Framework
+* @package Jabali - The Plug-N-Play Framework
 * @subpackage Admin Posts
 * @link https://docs.jabalicms.org/posts/
 * @author Mauko Maunde
@@ -46,6 +46,11 @@ if ( isset( $_POST['create'] ) ) {
     } else {
       $avatar = $_POST['the_avatar'];
     }
+
+     // $fields = array( "name", "author", "author_name", "avatar", "categories", "created", "details", "gallery", "authkey", "level", "link", "excerpt", "readings", "state", "subtitle", "slug", "tags", "updated", "template", "ilk" );
+    // foreach ($fields as $field ) {
+    //     $GLOBALS['USERS'] -> $field = $_POST[$field];
+    // }
 
     $GLOBALS['POSTS'] -> name = $_POST['name'];
     $GLOBALS['POSTS'] -> author = $_POST['author'];
@@ -150,45 +155,41 @@ if ( isset( $_POST['create'] ) ) {
     }
   }
 
-require_once( 'header.php' ); ?>
+require_once( 'header.php' );
+showTitle('posts'); ?>
 
 <div class="mdl-grid"><?php
 
+$collumns = array( 'id', 'title', 'author', 'categories', 'tags', 'published', 'actions');
+$fields = array( 'id', 'name', 'author_name', 'categories', 'tags', 'created' );
+$rows = array( 'id', 'name', 'author', 'categories', 'tags', 'created' );
+$actions = array( 'edit' => ['id'], 'view' => ['id'] );
+
+
 if ( isset( $_GET['create'] ) ) {
-	$hForm -> postForm();
+	renderView('forms/post');
 }
 
 if ( isset( $_GET['edit'] ) ) {
-	$hForm -> editPostForm( $_GET['edit'] );
+	renderView('forms/edit-post', $_GET['edit'] );
 }
 
-if ( isset( $_GET['delete'] ) ) {
-  $hPost -> delete( $_GET['delete'] );
-	$hPost -> getPosts( 'created' );
+if ( isset( $_GET['view'] ) ){
+  renderView( 'posts/single', $_GET['view'] );
+} elseif ( isset( $_GET['type'] ) ) {
+  tableHeader( $collumns );
+  tableBody( $GLOBALS['POSTS']-> getTypes( $_GET['type'] ), $fields, $rows, "No ".ucwords( $_GET['type'] )."s Found", $actions );
+  tableFooter();
+  if ( isCap( 'admin' ) ) {
+    newButton('posts', $_GET['type'], 'create' );
+  }
+} elseif ( isset( $_GET['status'] ) ) {
+  tableHeader( $collumns );
+  tableBody( $GLOBALS['POSTS']-> getState( $_GET['status'] ), $fields, $rows, "No ".ucwords( $_GET['status'] )." Posts Found", $actions );
+  tableFooter();
   if ( isCap( 'admin' ) ) {
     newButton('posts', 'article', 'create' );
   }
-}
-
-if ( isset( $_GET['view'] )){
-	if ( $_GET['view'] == "list" ) {
-		if ( isset( $_GET['type'] ) ) {
-			$hPost -> getPostsType( $_GET['type'] );
-      if ( isCap( 'admin' ) ) {
-        newButton('posts', $_GET['type'], 'create' );
-      }
-		} else {
-			$hPost -> getPosts();
-      if ( isCap( 'admin' ) ) {
-        newButton('posts', 'article', 'create' );
-      }
-		}
-	} elseif ( $_GET['view'] == "drafts" ) {
-    $hPost -> getDrafts ();
-  } else {
-		$hPost -> getPost( $_GET['view'] );
-	}
-
 } ?>
 </div><?php
 require_once( 'footer.php' );
