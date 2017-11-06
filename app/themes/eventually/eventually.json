@@ -5,7 +5,7 @@
 	"author": "HTML5",
 	"modified": "Mauko Maunde",
 	"category": "e-commerce",
-	"screenshot": "http://localhost/jabali/assets/images/avatar.svg",
+	"screenshot": "http://localhost/jabali/assets/images/avatar.png",
 	"description": "Remember, whenever you query a table looking for equality on a primary key, you'll only receive one record back. This works well for our simple DataObject, but we'll discuss retrieving multiple rows a little later.",
 	"social": {
 		"facebook": "https://facebook.com/maukoese",

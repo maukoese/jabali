@@ -48,7 +48,8 @@ if ( $GLOBALS['JBLDB'] -> numRows( $getUserCode ) > 0) {
                       </div>
                       <div class="mdl-cell mdl-cell--5-col-desktop mdl-cell--5-col-tablet mdl-cell--12-col-phone mdl-grid">
                       <div class="mdl-cell mdl-cell--12-col">
-                        <img src="<?php echo( $userDetails['avatar'] ); ?>" width="100%">
+                        <?php $avatar = getimagesize( $userDetails['avatar'] ) ? $userDetails['avatar'] : _IMAGES.'avatar.png'; ?>
+                        <img src="<?php echo( $avatar ); ?>" width="100%">
                       </div>
                       <div class="mdl-cell mdl-cell--12-col">
                       <center><?php

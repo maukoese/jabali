@@ -619,6 +619,7 @@ class Options {
                                 <h4>Using Ace Editor</h4>
                                 <textarea data-editor="html" data-gutter="1" data-theme="chrome" style="height: 300px;"><?php echo "\n\n//Add the following code to where you want the editor to show \n\n<textarea data-editor=\"html\" style=\"height: 100px\" ><//textarea>"; ?></textarea>
                             </div>
+                            <?php submitButton('editor'); ?>
                     </form>
                 </div>
             </div>

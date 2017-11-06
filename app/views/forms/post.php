@@ -55,9 +55,9 @@
     <div class="mdl-card__image">
       <div style="height:0px;overflow:hidden">
         <input type="file" id="avatar" name="new_avatar" />
-        <input type="hidden" id="avatar" name="the_avatar" value="<?php echo( _IMAGES.'placeholder.svg' ); ?>" />
+        <input type="hidden" id="avatar" name="the_avatar" value="<?php echo( _IMAGES.'placeholder.png' ); ?>" />
       </div>
-      <img id="havatar" onclick="chooseFile();" src="<?php echo( _IMAGES.'placeholder.svg' ); ?>" width="100%">
+      <img id="havatar" onclick="chooseFile();" src="<?php echo( _IMAGES.'placeholder.png' ); ?>" width="100%">
       <script>
         $(function () {
           $( ":file" ).change(function () {
@@ -138,7 +138,7 @@
       <button class="mdl-button mdl-button--fab addfab alignright mdl-button--colored" type="submit" name="create"><i class="material-icons">save</i></button>
     </div>
     <div class="mdl-card__menu">
-      <a href="?view=list&type=article">
+      <a href="?type=article">
         <i class="material-icons">clear</i>
       </a>
     </div>

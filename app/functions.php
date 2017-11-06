@@ -172,23 +172,6 @@ SQL;
 		$GLOBALS['JBLDB'] -> execute( $table );
 	}
 } 
- 
-
-function is_localhost()
-{
-	$whitelist = array( '127.0.0.1', '::1' );
-	if ( in_array( $_SERVER['REMOTE_ADDR'], $whitelist ) )
-	    return true;
-}
-
-/**
-* Include Function
-**/
-function getFile( $path, $file )
-{
-
-	include $path.$file.'.php';
-}
 
 /**
 * Load stylesheets
@@ -232,7 +215,7 @@ function loadImage( $link, $theme = false, $width = 250, $alt = "Image", $class 
 	<img src="<?php echo $themes.$link; ?>" width="<?php echo( $width ); ?>" alt="<?php echo( $alt )?>" class="<?php echo $class; ?>" /><?php 
 }
 /**
-* Load stylesheets
+* Load multiple stylesheets
 **/
 function loadStyles( $links, $theme = false )
 {
@@ -282,7 +265,7 @@ function jblLogo( $width = "250px;", $class = "" )
 }
 
 /**
-* Display main logo
+* Display logo in the header
 **/
 function headerLogo( $width = "150px;", $class = "link"  )
 {
@@ -385,8 +368,9 @@ function isAuthor( $author )
 
 function emailExists( $email )
 {
+	//select('users', 'email', ['email' => 'mail']);
 	$theEmail = $GLOBALS['JBLDB'] -> query( "SELECT email  FROM ". _DBPREFIX ."users WHERE email  ='".$email."'" );
-	if ( $theEmail -> num_rows > 0 ) {
+	if ( $GLOBALS['JBLDB'] -> numRows( $theEmail ) > 0 ) {
 		return true;
 	} else {
 		return false;
@@ -405,26 +389,23 @@ function isProfile( $profile )
 	}
 }
 
-
 /**
-* 
+* Uploading files. TODO: Add accepted types.
 **/
 function uploadFile( $file )
 {
-	$year = date('Y' );
-	$month = date('m' );
-	$day = date('d' );
-	$uploads = _UPLOADS . "$year/$month/$day/";
-	$upload = $uploads . basename( $file );
-	$uploadOk = 1;
+	$upload = _UPLOADS . date('Y/m/d/') . basename( $file );
 
 	if ( file_exists( $upload) ) {
-    echo "Sorry, file already exists.";
-    $uploadOk = 0;
+    	return array( "status" => "fail", "message" => "Sorry, file already exists." );
+	} else {
+
+		if( move_uploaded_file( $file, $upload) ){
+			return array( "status" => "success", "message" => "File successfully uploaded" );
+		} else {
+			return array( "status" => "fail", "message" => "File upload failed" );
+		}
 	}
-
-	move_uploaded_file( $file, $upload);
-
 }
 
 /**
@@ -432,6 +413,7 @@ function uploadFile( $file )
 **/
 function getMsgCount()
 {
+	//select('messages', '*', ['state' => 'unread', 'for' => $_SESSION[JBLSALT.'Code']])
     $getMessages = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."messages WHERE (state = 'unread' AND for = '".$_SESSION[JBLSALT.'Code']."' )" );
     if ( $getMessages ){
 	    if ( $GLOBALS['JBLDB'] -> numRows( $getMessages ) > 0 ) {
@@ -554,6 +536,8 @@ function getOption( $code )
 			}
         }
     }
+
+    //return $GLOBALS['OPTIONS'] -> getOption( $code );
     
     return $option;
 }
@@ -582,16 +566,26 @@ function isOption( $code )
     } else {
     	return false;
     }
+
+    //return $GLOBALS['OPTIONS'] -> optionExists( $code );
 }
 
 function theHeader()
 {
 	require_once( _ABSRES_ . 'views/header.php' );
-	echo( 
-		'<style>
+	echo( '
+		<style>
 			.toast{
 				bottom: 5px;
 				right: 5px;
+				position: absolute;
+				color: green;
+			}
+			.etoast{
+				bottom: 5px;
+				right: 5px;
+				position: absolute;
+				color: red;
 			}
 		</style>' );
 }
@@ -601,11 +595,21 @@ function theFooter()
 	require_once( _ABSRES_ . 'views/footer.php' );
 }
 
+function theAttribution( $class = "attribution")
+{
+    echo( '<a href="'.$GLOBALS['gattributionlink'].'" class="'.$class.'">'.$GLOBALS['gattribution'].'</a>');
+}
+
+function theCopyright()
+{
+    echo( $GLOBALS['copyright'] );
+}
+
 function getHeader()
 {
 	require_once( _ABSTHEMES_ . getOption( 'activetheme' ) . '/header.php' );
-	echo( 
-		'<style>
+	echo( '
+		<style>
 			.toast{
 				bottom: 5px;
 				right: 5px;
@@ -787,7 +791,7 @@ function tableFooter()
 //$fields = $field1, $field2;
 //form( $name, , , ,, array( $fields ) );
 //
-function form( $name, $enctype = 'multipart/form-data', $method = 'POST', $action = '', $class = null, $fields = null )
+function form( $name, $enctype = 'multipart/form-data', $method = 'POST', $action = '', $class = null, $fields = array() )
 { ?>
 	<form enctype="<?php echo( $enctype ); ?>" name="<?php echo( $name ); ?>" method="<?php echo( $method ); ?>" action="<?php echo( $action ); ?>" class="<?php echo( $class ); ?>">
 	<?php foreach ($fields as $field ) { ?>
@@ -812,7 +816,7 @@ function isEmail( $data )
 }
 
 /**
-* 
+* Add Floating Action Button
 **/
 function newButton( $class, $type, $icon )
 {
@@ -820,22 +824,15 @@ function newButton( $class, $type, $icon )
   <i class="material-icons">'.$icon.'</i></a>' );
 }
 
+/**
+* Generate Random Code
+**/
 function generateCode() {
 	$code = md5(date('l jS \of F Y h:i:s A').rand(10,1000) );
 	return $code;
 }
 
-function recordExists( $record )
-{
-	$link = $GLOBALS['JBLDB'] -> query( "SELECT slug FROM ". _DBPREFIX ."posts WHERE slug = '".$record."'" );
-	if ( $link -> num_rows > 0 ) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
-function error404( $id = "error-404", $code = "404", $message = 'The page you are looking for can\'t be found. Go home by <a href=".">Clicking here.</a>', $class = "error-container" ) 
+function error404( $id = "error-404", $code = "404", $message = 'The page you are looking for might have been removed, had its name changed, or is temporarily unavailable. Go home by <a href=".">Clicking here.</a>', $class = "error-container" ) 
 { ?>
 	<title>Error 404 - <?php showOption( 'name' ); ?></title>
 	<?php if ( file_exists( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' ) ):
@@ -862,14 +859,14 @@ function snuffle()
 
 function isActiveX( $ext )
 {
-	if ( getOption( 'modules' ) !== "" ) {
+	if ( isOption( 'modules' ) ) {
 		$exts = getOption( 'modules' );
 	} else {
-		$exts = "{'zahra':'zahra'}";
+		$exts = array();
 	}
 	if ( in_array( $ext, $exts ) ) {
-	return true;
-  }
+		return true;
+	}
 }
 
 function activeTheme( $theme )
@@ -879,11 +876,6 @@ function activeTheme( $theme )
 	} else {
 		return false;
 	}
-}
-
-function LoadActiveX( $ext )
-{
-    require_once _ABSX_.$ext.'/'.$ext.'.php';
 }
 
 function timeZones()
@@ -980,8 +972,11 @@ function addRule( $rule, $callback )
 function rewriteRules( $rule, $args )
 {
 	$callback = $GLOBALS['GRules'][$rule];
+	if ( !is_array( $args ) ) {
+		$args = array( $args );
+	}
 
-	if ( isset( $callback ) ) {
+	if ( isset( $callback ) && is_callable( $callback ) ) {
 		call_user_func_array($callback, $args );
 	}
 }
@@ -1438,11 +1433,13 @@ function thePost()
 	return $GLOBALS['gpost'];
 }
 
-function resetLoop( $callback = "sweep", $args = [] )
+function resetLoop( $callback = "sweep", $args = [], $table = "posts" )
 {	if ( !is_array( $args ) ) {
 		$args = array( $args );
 	}
-	$GLOBALS['gposts'] = call_user_func_array( array($GLOBALS['POSTS'], $callback ), $args );
+	$table = strtoupper( $table );
+	$GLOBALS['gposts'] = call_user_func_array( array($GLOBALS[$table], $callback ), $args );
+	array_shift( $GLOBALS['gposts']);
 	$GLOBALS['gpost'] = null;
 	$GLOBALS['gpost_count'] = 0;
 	$GLOBALS['gpost_index'] = 0;
@@ -1523,9 +1520,9 @@ function postTags()
 	echo $tags;
 }
 
-function theImage( $width = 500, $height = "", $class = "" )
+function theImage( $width = 500, $height = "", $class = "featured-image" )
 {
-	echo ( '<img src = "'. $GLOBALS['gpost']['avatar'] .'" width = "'.$width.'" height ="'.$height.'" alt="'.$GLOBALS['gpost']['name'].'" class="'.$class.'" >');
+	echo ( '<img src = "'. $GLOBALS['gpost']['avatar'] .'" width = "'.$width.'" height ="'.$height.'" alt="Image for '.$GLOBALS['gpost']['name'].'" class="'.$class.'" >');
 }
 
 function theDate( $format = "M d, Y" )
@@ -1676,12 +1673,12 @@ function updatingJabali()
 			<html xml:lang=&quot;en&quot; lang=&quot;en&quot; xmlns=&quot;https://www.w3.org/1999/xhtml&quot;>
 				<head>
 					<meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; />
-					<title>Site upgrade in progress</title>
+					<title>'.getOption('name').' App Upgrade In Progress</title>
 					<meta name=&quot;robots&quot; content=&quot;none&quot; />
 				</head>
 				<body>
-					<h1>Site upgrade in progress</h1>
-					<p>This site is being upgraded, and can\'t currently be accessed.</p>
+					<h1>'.getOption('name').' app upgrade in progress</h1>
+					<p>This app is being upgraded, and cannot currently be accessed.</p>
 					<p>It should be back up and running very soon. Please check back in a bit!</p>
 					<hr />
 				</body>
@@ -1746,11 +1743,11 @@ function eMail($receipients, $subject, $message, $cc = null, $attachments = null
 
 	if(!$GLOBALS['MAILER'] -> send()) 
 	{
-	    return array( "status" => "Failed", "error" => $GLOBALS['MAILER'] -> ErrorInfo );
+	    return array( "status" => "fail", "message" => $GLOBALS['MAILER'] -> ErrorInfo );
 	} 
 	else 
 	{
-	    return array( "status", "Message has been sent successfully" );
+	    return array( "status" => "success", "message" => "Message has been sent successfully" );
 	}
 }
 
@@ -1795,40 +1792,41 @@ function feed( $type = "rss" )
 	$date = date( 'Y-m-d H:i:s');
 	$salt = JBLSALT;
 	$rssdata = <<<RSS
-	<?xml version="1.0" encoding="UTF-8" ?>
-		<rss version="2.0">
-			<channel>
-				<title>{$title}</title>
-				<link>{$link}</link>
-				<description>{$description}</description>
-				<category>Web development</category>
-				<copyright>{$copyright}</copyright>
-				<language>en-us</language>
-				<docs>https://docs.jabalicms.org/api/feed</docs>
-				<webMaster>{$mail}</webMaster>
-				<pubDate>{$date}</pubDate>
+<?xml version="1.0" encoding="UTF-8" ?>
+	<rss version="2.0">
+		<channel>
+			<title>{$title}</title>
+			<link>{$link}</link>
+			<description>{$description}</description>
+			<category>Web development</category>
+			<copyright>{$copyright}</copyright>
+			<language>en-us</language>
+			<docs>https://docs.jabalicms.org/api/feed</docs>
+			<webMaster>{$mail}</webMaster>
+			<pubDate>{$date}</pubDate>
 RSS;
 
 	$atomdata = <<<RSS
-	<?xml version="1.0" encoding="utf-8"?>
-		<feed xmlns="https://www.w3.org/2005/Atom">
-			<title>{$title}</title> 
-			<link href="{$link}"/>
-			<updated>{$date}</updated>
-			<id>{$salt}</id>
+<?xml version="1.0" encoding="utf-8"?>
+	<feed xmlns="https://www.w3.org/2005/Atom">
+		<title>{$title}</title> 
+		<link href="{$link}"/>
+		<updated>{$date}</updated>
+		<id>{$salt}</id>
 RSS;
 
-	$posts = $GLOBALS['POSTS'] -> sweep();
+		$posts = $GLOBALS['POSTS'] -> sweep();
+		array_shift( $posts );
 	foreach ( $posts as $post ) {
 		$details = htmlspecialchars( $post['details']);
 		$atomdata .= <<<RSS
-			<entry>
-				<title>{$post['name']}</title>
-				<link href="{$post['link']}"/>
-				<id>{$post['id']}</id>
-				<updated>{$post['created']}</updated>
-				<summary>{$details}</summary>
-			</entry>
+		<entry>
+			<title>{$post['name']}</title>
+			<link href="{$post['link']}"/>
+			<id>{$post['id']}</id>
+			<updated>{$post['created']}</updated>
+			<summary>{$details}</summary>
+		</entry>
 RSS;
 
 		$rssdata .= <<<RSS
@@ -1871,5 +1869,279 @@ RSS;
 		header('Cache-control: private');
 		header('Expires: -1');
 		echo( $rssdata );
+	}
+}
+//Users
+function login( $provider ) {
+	$theme = getOption( 'activetheme' );
+	if ( file_exists( _ABSTHEMES_ . $theme . '/templates/login.php') ) {
+		$themefile = _ABSTHEMES_ . $theme . '/templates/login.php';
+	} elseif ( file_exists( _ABSTHEMES_ . $theme . '/templates/signin.php') ) {
+		$themefile = _ABSTHEMES_ . $theme . '/templates/signin.php';
+	} else {
+		$themefile = "";
+	}
+
+	if ( $themefile !== "" ) {
+		getHeader();
+		require_once ( $themefile );
+		getFooter();
+	} else {
+		theHeader();
+		if ( $provider == "jabali" || empty( $provider ) ) { ?>
+			  	<title>Sign In <?php if( isset( $_GET['alert'] )){ echo( ucfirst( $_GET['alert'] ) ); } ?> - <?php showOption( 'name' ); ?></title><?php
+			  	renderView( 'login' );
+		} elseif ( $provider == "facebook" || $provider == "twitter" || $provider == "github" || $provider == "google" ) { ?>
+		  	<title>Sign In - <?php showOption( 'name' ); ?></title><?php
+		  	include 'app/lib/hybridauth/config.php';
+		  	require_once( 'app/lib/hybridauth/Hybrid/Auth.php' );
+			try {
+		    $hybridauth = new \Hybrid_Auth( $config );
+		    $authProvider = $hybridauth -> authenticate( $provider );
+		    $user_profile = $authProvider -> getUserProfile();
+			    if ( $user_profile && isset( $user_profile->identifier ) ) {
+			        echo "<b>Name</b> :".$user_profile->displayName."<br>";
+			        echo "<b>Profile URL</b> :".$user_profile->profileURL."<br>";
+			        echo "<b>Image</b> :".$user_profile->photoURL."<br> ";
+			        echo "<img src='".$user_profile->photoURL."'/><br>";
+			        echo "<b>Email</b> :".$user_profile->email."<br>";
+			        echo "<br> <a href='logout.php'>Logout</a>";
+			    }
+		    }
+
+		    catch( Exception $e ) {
+		        switch( $e->getCode() )
+		        {
+		                case 0 : echo "Unspecified error."; break;
+		                case 1 : echo "Hybridauth configuration error."; break;
+		                case 2 : echo "Provider not properly configured."; break;
+		                case 3 : echo "Unknown or disabled provider."; break;
+		                case 4 : echo "Missing provider application credentials."; break;
+		                case 5 : echo "Authentication failed The user has canceled the authentication or the provider refused the connection.";
+		                         break;
+		                case 6 : echo "User profile request failed. Most likely the user is not connected to the provider and he should to authenticate again.";
+		                         $authProvider->logout();
+		                         break;
+		                case 7 : echo "User not connected to the provider.";
+		                         $authProvider->logout();
+		                         break;
+		                case 8 : echo "Provider does not support this feature."; break;
+		        }
+
+		        echo "<br /><br /><b>Original error message:</b> " . $e->getMessage();
+
+		        echo "<hr /><h3>Trace</h3> <pre>" . $e->getTraceAsString() . "</pre>";
+		    }
+		} else { ?>
+			<title>Sign In <?php if( isset( $_GET['alert'] )){ echo( ucfirst( $_GET['alert'] ) ); } ?> - <?php showOption( 'name' ); ?></title><?php
+				renderView( 'login' );
+			  }
+		theFooter();
+	}
+}
+
+function register( $type ){ ?>
+	<title><?php echo( ucwords( $type ) ); ?> Sign Up - <?php showOption( 'name' ); ?></title><?php
+
+	$theme = getOption( 'activetheme' );
+	if ( file_exists( _ABSTHEMES_ . $theme . '/templates/signup.php') ) {
+		$themefile = _ABSTHEMES_ . $theme . '/templates/signup.php';
+	} elseif ( file_exists( _ABSTHEMES_ . $theme . '/templates/register.php') ) {
+		$themefile = _ABSTHEMES_ . $theme . '/templates/register.php';
+	} else {
+		$themefile = "";
+	}
+
+	if ( $themefile !== "" ) {
+		getHeader();
+		require_once ( $themefile );
+		getFooter();
+	} else {
+		theHeader();
+		if ( isset( $_GET['register'] ) && $_GET['email'] !== "") {
+			if ( emailExists( $_GET['email'] ) ) {
+				header("Location: ./register?create=exists");
+			} else {
+				renderView( 'signup' );
+			}
+		} elseif (isset( $_GET['confirm'] ) && $_GET['key'] !== "" ) {
+			$USERS -> confirmUser( $_GET['confirm'], $_GET['key'] );
+		} else {
+			renderView( 'checkmail' );
+		}
+		theFooter();
+	}
+}
+
+function forgot() { ?>
+  	<title>Forgot Password - <?php showOption( 'name' ); ?></title>
+	<?php
+	$theme = getOption( 'activetheme' );
+	if ( file_exists( _ABSTHEMES_ . $theme . '/templates/forgot.php') ) {
+		getHeader();
+		require_once( _ABSTHEMES_ . $theme . '/templates/forgot.php' );
+		getFooter();
+	} else {
+		theHeader();
+		renderView( 'forgot' );
+		theFooter();
+	}
+}
+
+function resetPass( $id, $key ){
+    $theUser = $GLOBALS['JBLDB'] -> select( 'users', array( 'id', 'authkey' ), array( 'id' => $id ));
+    if ( !isset( $theUser['error'] ) ) {
+      while ( $thisuser = $GLOBALS['JBLDB'] -> fetchArray( $theUser) ) {
+        $user[] = $thisuser;
+      }
+
+    if ( !empty( $user) && $user[0]['authkey'] = $_GET['key'] ) { ?>
+      	<title>Reset Password - <?php showOption( 'name' ); ?></title><?php
+    	$theme = getOption( 'activetheme' );
+		if ( file_exists( _ABSTHEMES_ . $theme . '/templates/reset.php') ) {
+			getHeader();
+			require_once( _ABSTHEMES_ . $theme . '/templates/reset.php' );
+			getFooter();
+		} else {
+			theHeader();
+			renderView( 'forgot' );
+			theFooter();
+		}
+    }
+  }
+}
+
+//Posts
+
+function postTypes() {
+	$getTypes = $GLOBALS['JBLDB'] -> query( "SELECT DISTINCT ilk FROM ". _DBPREFIX ."posts");
+	$types = $GLOBALS['JBLDB'] -> fetchArray( $getTypes );
+	return $types;
+}
+
+function fetchPosts( $slug ) {
+	if ( getOption( 'postspage' ) == $slug ) {
+		blog( $slug );
+	} else {
+
+		if ( is_numeric( $slug ) ) {
+			$posty = $GLOBALS['POSTS'] -> getId( $slug );
+		} else {
+			$posty = $GLOBALS['POSTS'] -> getPost( $slug );
+		}
+		$GLOBALS['gpost'] = $posty;
+		//resetLoop( 'getSingle', $slug );
+		$post = (object)$posty;
+
+		if ( !isset( $posty['error'] ) ) {
+			if ( file_exists( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/'.$post -> template .'.php' ) ) {
+				require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/'.$post -> template .'.php' );
+			} else {
+				require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/post.php' );
+			}
+		} else {
+			error404();
+		}
+	}
+}
+
+function blog( $title = "Blog" ) {
+	$posts = $GLOBALS['POSTS'] -> sweep();
+	if ( $posts['status'] !== "fail" ) {?>
+	<title><?php echo( ucwords($title) ); ?> - <?php showOption( 'name' ); ?></title><?php
+		require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
+	} else {
+		error404();
+	}
+}
+
+function authors( $author ) { ?>
+	<title>Author : @<?php echo( $author ); ?> - <?php showOption( 'name' ); ?></title><?php
+	$posts = $GLOBALS['JBLDB'] -> select( 'posts', '*', array( 'state' => 'published', 'ilk' => 'article', 'author' => $author ), array( 'created', 'DESC') );
+	if ( !isset( $post['error'] ) ) {
+		require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
+	} else {
+		require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' );
+	}
+}
+
+function category( $category ) { ?>
+	<title>Category : <?php echo( ucwords( $category ) ); ?> - <?php showOption( 'name' ); ?></title><?php
+	resetLoop( 'getCategories', $category );
+	require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
+}
+
+function portfolio( $elements ) {
+
+	if ( empty( $elements[0] )) { ?>
+		<title>Portfolio - <?php showOption( 'name' ); ?></title><?php
+		$posts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE ( state = 'published' AND ilk = 'project' ) ORDER BY created DESC" );
+		if ( count( $posts ) > 0) {
+			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
+		} else {
+			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' );
+		}
+	} elseif ( $elements[0] == "categories" ) { ?>
+		<title>Category : <?php echo( ucwords( $elements[1] ) ); ?> - <?php showOption( 'name' ); ?></title><?php
+		$posts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE ( state = 'published' AND ilk = 'project' AND category LIKE '%".$elements[1]."%' ) ORDER BY created DESC" );
+		if ( count( $posts ) > 0) {
+			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
+		} else {
+			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' );
+		}
+	} elseif ( $elements[0] == "clients" ) { ?>
+		<title>Category : <?php echo( ucwords( $elements[1] ) ); ?> - <?php showOption( 'name' ); ?></title><?php
+		$posts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."users WHERE ( state = 'published' AND ilk = 'client' AND username LIKE '".$elements[1]."' ) ORDER BY created DESC" );
+		if ( count( $posts ) > 0) {
+			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
+		} else {
+			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' );
+		}
+	} elseif ( $elements[0] == "projects" ) {
+		$posts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE ( state = 'published' AND ilk = 'project' AND slug LIKE '".$elements[1]."' ) ORDER BY created DESC" );
+		if ( count( $posts ) > 0) {
+			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/post.php' );
+		} else {
+			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' );
+		}
+	} else { ?>
+		<title>Portfolio Project - <?php showOption( 'name' ); ?></title><?php
+		$posts = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."posts WHERE ( state = 'published' AND ilk = 'project' ) ORDER BY created DESC" );
+		if ( count( $posts ) > 0 ) {
+			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
+		} else {
+			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' );
+		}
+	}
+}
+
+function tag( $tag ) { ?>
+	<title>Tag : <?php echo( ucwords( $tag ) ); ?> - <?php showOption( 'name' ); ?></title><?php
+	resetLoop( 'getTags', $tag );
+	require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
+}
+
+function users( $profile ) {
+	if ( $profile == 'all' || $profile == "" ) { ?>
+		<title>All Users - <?php showOption( 'name' ); ?></title><?php
+		resetLoop( 'getState', 'active', 'users' );
+		if( file_exists( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/users.php' ) ){
+			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/users.php' );
+		} else {
+			require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
+		}
+	} else {
+		$user = $GLOBALS['USERS'] -> getSingle ( $profile );
+
+		if ( !isset( $user['status'] ) ) {
+			$GLOBALS['gpost'] = $user;
+			if( file_exists( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/profile.php' ) ){
+				require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/profile.php' );
+			} else {
+				require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/post.php' );
+			}
+		} else {
+			error404();
+		}
 	}
 }

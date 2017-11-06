@@ -11,7 +11,7 @@
 <html>
 	<head>
 		<?php head();
-		serviceWorker(); ?>
+		//serviceWorker(); ?>
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="<?php echo _THEMES; ?>eventually/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->

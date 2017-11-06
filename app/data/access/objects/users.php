@@ -90,7 +90,7 @@ class Users {
 
       return $users[0];
     } else {
-      return array( "error" => "User Not Found" );
+      return array( "status" => "fail", "message" => "User Not Found" );
     }
   }
 
@@ -109,7 +109,7 @@ class Users {
 
       return $users[0];
     } else{
-      return array( "status" => "fail", "error" => $GLOBALS['JBLDB'] -> error() );
+      return array( "status" => "fail", "message" => $GLOBALS['JBLDB'] -> error() );
     }
   }
 
@@ -414,7 +414,7 @@ class Users {
         $name = $_POST['fname'].' '.$_POST['lname'];
         $author = substr( $hash, 20 );
         
-        $avatar = _IMAGES.'avatar.svg';
+        $avatar = _IMAGES.'avatar.png';
         $company = mysqli_real_escape_string( $conn, $_POST['company'] );
         $id = md5(date('l jS \of F Y h:i:s A').rand(10,1000) );
         $details = "";

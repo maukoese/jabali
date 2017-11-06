@@ -48,10 +48,9 @@ if ( $GLOBALS['JBLDB'] -> numRows( $getPostCode ) > 0 ) {
             </div>
           </div>
 
-          <div class="mdl-card__menu mdl-button mdl-button--icon">
-            <a href="<?php echo( $post -> link ); ?>" target="_blank" >
-            <i class="material-icons">open_in_new</i>
-            </a>
+          <div class="mdl-card__menu">
+            <span class="alignright"><a href="<?php echo( $post -> link ); ?>"<button class="mdl-button mdl-button--icon mdl-button--colored" value="<?php echo( $post -> id ); ?>"><i class="material-icons">open_in_new</i></button></a></span>
+            <span class="alignright"><button class="mdl-button mdl-button--icon mdl-button--colored" type="submit" name="deletefile" value="<?php echo( $post -> id ); ?>"><i class="material-icons">delete</i></button></span>
           </div>
         </div>
       <?php if ( !isset( $_GET['x']) ) { ?>
@@ -60,7 +59,7 @@ if ( $GLOBALS['JBLDB'] -> numRows( $getPostCode ) > 0 ) {
           <div style="height:0px;overflow:hidden">
             <input type="file" id="avatar" name="new_avatar" />
             <input type="hidden" id="avatar" name="the_avatar" value="<?php echo( $post -> avatar ); ?>" />
-          </div><?php if (!file_get_contents( $post -> avatar )): $savatar = _IMAGES.'placeholder.svg'; else: $savatar = $post -> avatar; endif; ?>
+          </div><?php if (!file_get_contents( $post -> avatar )): $savatar = _IMAGES.'placeholder.png'; else: $savatar = $post -> avatar; endif; ?>
           <img id="havatar" onclick="chooseFile();" src="<?php echo( $savatar ); ?>" width="100%">
           <script>
             $(function () {
@@ -141,12 +140,6 @@ if ( $GLOBALS['JBLDB'] -> numRows( $getPostCode ) > 0 ) {
 
           <?php hiddenFields( ['author' => $post -> author, 'author_name' => $post -> author_name, 'level' => $post -> level, 'authkey' => $post -> authkey, 'id' => $post -> id, 'state' => $post -> state, 'ilk' => $post -> ilk, 'updated' => date( 'Y-m-d H:i:s') ] ); 
           submitButton( 'update', 'addfab' ); ?>
-        </div>
-
-        <div class="mdl-card__menu">
-          <a href="?delete=<?php echo( $post -> id ); ?>">
-          <i class="material-icons">delete</i>
-          </a>
         </div>
       </div>
     </form><?php

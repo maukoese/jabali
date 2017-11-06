@@ -124,9 +124,9 @@
         <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
           <div style="height:0px; overflow:hidden">
             <input type="file" id="avatar" name="new_avatar" />
-            <input type="hidden" name="the_avatar" value="<?php echo( _IMAGES.'avatar.svg' ); ?>" />
+            <input type="hidden" name="the_avatar" value="<?php echo( _IMAGES.'avatar.png' ); ?>" />
           </div>
-          <img id="havatar" onclick="chooseFile();" src="<?php echo( _IMAGES.'avatar.svg' ); ?>" width="100%">
+          <img id="havatar" onclick="chooseFile();" src="<?php echo( _IMAGES.'avatar.png' ); ?>" width="100%">
 
           <script>
           $(function () {

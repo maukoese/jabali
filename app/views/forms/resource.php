@@ -100,9 +100,9 @@
               </script>
               <div class="input-field inline">
                 <div style="height:0px;overflow:hidden">
-                  <input id="avatar" type="file" name="avatar" value="<?php echo( _IMAGES.'placeholder.svg' ); ?>">
+                  <input id="avatar" type="file" name="avatar" value="<?php echo( _IMAGES.'placeholder.png' ); ?>">
                 </div>
-                <img id="havatar" onclick="chooseFile();" src="../assets/images/placeholder.svg" width="100%"></i>
+                <img id="havatar" onclick="chooseFile();" src="../assets/images/placeholder.png" width="100%"></i>
                 </div>
                 <script>
                      function chooseFile() {

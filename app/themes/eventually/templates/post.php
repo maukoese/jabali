@@ -2,12 +2,13 @@
 /**
 * @package Eventually 
 **/ ?>
-<title><?php echo( $post -> name ).' - '; showOption( 'name' ); ?></title>
+<title><?php theTitle(); ?> - <?php showOption( 'name' ); ?></title>
 <!-- Header -->
 	<header id="header">
 		<?php headerLogo(); ?>
 		<hr>
 		<h1><?php theTitle(); ?></h1>
+		<?php theImage(); ?>
 		<p><?php theContent(); ?></p>
 		<span><?php theCategories(); ?></span>
 	</header>

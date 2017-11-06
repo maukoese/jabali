@@ -23,7 +23,7 @@ if (isset($_POST['register']) ) {
 
     $name = "Admin User";
     $author = 1;
-    $avatar = _IMAGES.'avatar.svg';
+    $avatar = _IMAGES.'avatar.png';
     $company = "Jabali CMS";
     $id = $author;
     $created = date( 'Y-m-d H:i:s' );

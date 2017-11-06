@@ -55,74 +55,73 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.';
 
   $comments = "<?php
-  /**
-  * @package Jabali 
-  * @subpackage ". $name ."
-  * @author ". $author ."
-  * @link ". $website ."
-  * @since ". $version ."
-  **/";
+/**
+* @package Jabali - The Plug-N-Play Framework
+* @subpackage ". $name ."
+* @author ". $author ."
+* @link ". $website ."
+* @since ". $version ."
+**/";
   $tag = "$";
   $thdi = "<?php echo( _THEMES ); ?>". $slug;
 
   $headertext = $comments." ?>
-  <!DOCTYPE html>
-    <html lang=\"<?php showOption( 'language'); ?>\" xmlns=\"https://www.w3.org/1999/html\">
-      <head>
-        <?php head();
-        loadStyle( 'css/".$slug .".css', '".$slug ."'); ?>
-      </head>
-      <body class=\"\" >
-      <?php headerLogo(); ?>";
+<!DOCTYPE html>
+  <html lang=\"<?php showOption( 'language'); ?>\" xmlns=\"https://www.w3.org/1999/html\">
+    <head>
+      <?php head();
+      loadStyle( 'css/".$slug .".css', '".$slug ."'); ?>
+    </head>
+    <body class=\"\" >
+    <?php headerLogo(); ?>";
 
   $atemplatetext = $comments." ?>
-    <?php if( hasPosts() ): ?>
-      <?php while( hasPosts() ): ?>
-        <?php thePost(); ?>
-        <title><?php theTitle(); ?> - <?php showOption( 'name' ); ?></title>
-        <h1><?php theTitle(); ?></h1>
-        <?php theImage(); ?>
-        <p><?php theDate(); ?></p>
-        <p><?php theCategories(); ?></p>
-        <p><?php theTags(); ?></p>
-        <article><?php theContent(); ?></article>
-      <?php endwhile; ?>
-    <?php endif; ?>";
-
-  $templatetext = $comments." ?>
-    <title><?php theTitle(); ?> - <?php showOption( 'name' ); ?></title>
+<?php if( hasPosts() ): ?>
+  <?php while( hasPosts() ): ?>
+    <?php thePost(); ?>
+    <?php theImage('100%'); ?>
     <h1><?php theTitle(); ?></h1>
-    <?php theImage(); ?>
     <p><?php theDate(); ?></p>
     <p><?php theCategories(); ?></p>
     <p><?php theTags(); ?></p>
-    <article><?php theContent(); ?></article>";
+    <article><?php theContent(); ?></article>
+  <?php endwhile; ?>
+<?php endif; ?>";
+
+  $templatetext = $comments." ?>
+<title><?php theTitle(); ?> - <?php showOption( 'name' ); ?></title>
+<h1><?php theTitle(); ?></h1>
+<?php theImage(); ?>
+<p><?php theDate(); ?></p>
+<p><?php theCategories(); ?></p>
+<p><?php theTags(); ?></p>
+<article><?php theContent(); ?></article>";
 
   $footerertext = $comments." ?>
-        <footer>
-          <?php showOption( 'copyright' ); ?> - <a class=\"\" href=\"<?php showOption( 'attribution_link' ); ?>\"><?php showOption( 'attribution' ); ?></a>
-        </footer>
-        <?php 
-        if ( isLocalhost() ):
-          loadScript( 'js/jquery.min.js', '".$slug ."');
-        else:
-          loadScript( 'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js');
-        endif;
-        loadScript( 'js/".$slug .".js', '".$slug ."'); ?>
-      <body>
-    </html>";
+    <footer>
+      <?php showOption( 'copyright' ); ?> - <a class=\"\" href=\"<?php showOption( 'attribution_link' ); ?>\"><?php showOption( 'attribution' ); ?></a>
+    </footer>
+    <?php 
+    if ( isLocalhost() ):
+      loadScript( 'js/jquery.min.js', '".$slug ."');
+    else:
+      loadScript( 'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js');
+    endif;
+    loadScript( 'js/".$slug .".js', '".$slug ."'); ?>
+  <body>
+</html>";
 
     $themeclass = $comments."
 
-    namespace Themes\\".ucwords( $slug ).";
+namespace Themes\\".ucwords( $slug )."\Classes;
 
-    class ".ucwords( $slug )."
-    {
-      public function __construct( \$args = \"\" )
-      {
-        //body
-      }
-    }";
+class ".ucwords( $slug )."
+{
+  public function __construct( \$args = \"\" )
+  {
+    //body
+  }
+}";
 
   $themedir = _ABSTHEMES_ . $slug.'/';
   $templates = _ABSTHEMES_ . $slug.'/templates/';
@@ -138,7 +137,7 @@ SOFTWARE.';
   "author": "'.$author.'",
   "modified": "'.$author.'",
   "category": "'.$category.'",
-  "screenshot": "app/assets/images/avatar.svg",
+  "screenshot": "app/assets/images/avatar.png",
   "description": "'.$description.'",
   "social": {
     "facebook": "'.$facebook.'",
@@ -325,7 +324,22 @@ if ( isset( $_POST['uploadtheme'] ) ) {
     $message = "There was a problem with the upload. Please try again.";
   }
 }
+if ( isset( $_GET['themeimage'] ) ) {
+  $my_img = imagecreate( 300, 300 );
+  $background = imagecolorallocate( $my_img, 0, 0, 255 );
+  $text_colour = imagecolorallocate( $my_img, 255, 255, 0 );
+  $line_colour = imagecolorallocate( $my_img, 128, 255, 0 );
+  imagestring( $my_img, 4, 30, 25, $_GET['themeimage'], $text_colour );
+  imagesetthickness ( $my_img, 5 );
+  imageline( $my_img, 30, 45, 165, 45, $line_colour );
 
+  header( "Content-type: image/png" );
+  imagepng( $my_img );
+  imagecolordeallocate( $line_color );
+  imagecolordeallocate( $text_color );
+  imagecolordeallocate( $background );
+  imagedestroy( $my_img );
+}
 if ( isset( $_GET['install'] ) ) {
   if ( isset( $_GET['download'] ) ) {
     $download = $_GET['download'];
@@ -468,7 +482,7 @@ if ( isset( $_GET['install'] ) ) {
       </div>
       <div class="mdl-cell mdl-cell--4-col mdl-color--<?php primaryColor(); ?> mdl-card">
         <div class="mdl_card__image">
-          <img src="<?php echo _IMAGES . 'placeholder.svg'; ?>">
+          <img src="<?php echo _IMAGES . 'placeholder.png'; ?>">
         </div>
         <div class="mdl-card__supporting-text">
           <h3>Theme Social</h3>
@@ -560,7 +574,7 @@ if ( isset( $_GET['install'] ) ) {
       </div>
       <div class="mdl-cell mdl-cell--4-col mdl-color--<?php primaryColor(); ?> mdl-card">
         <div class="mdl_card__image">
-          <img src="<?php echo _IMAGES . 'placeholder.svg'; ?>">
+          <img src="<?php echo _IMAGES . 'placeholder.png'; ?>">
         </div>
         <div class="mdl-card__supporting-text">
           <h3>Theme Social</h3>
@@ -946,7 +960,7 @@ if ( isset( $_GET['install'] ) ) {
   <div class="mdl-grid">
   <form method="POST" action="" class="mdl-cell mdl-cell--8-col mdl-shadow--2dp mdl-color--<?php primaryColor(); ?> mdl-card">
             <div class="mdl-card-media">
-          <img src="<?php echo _IMAGES . 'placeholder.svg'; ?>" width="100%" style="overflow: hidden;" >
+          <img src="<?php echo _IMAGES . 'placeholder.png'; ?>" width="100%" style="overflow: hidden;" >
         </div>
               <div class="mdl-card__supporting-text">
                 <?php echo $xD[ 'description' ] ; ?>
@@ -1050,7 +1064,7 @@ if ( isset( $_GET['install'] ) ) {
           </div>
           </div>
           <div class="mdl-card-media">
-            <img src="<?php echo _IMAGES . 'placeholder.svg'; ?>" width="100%" style="overflow: hidden;" >
+            <img src="<?php echo _IMAGES . 'placeholder.png'; ?>" width="100%" style="overflow: hidden;" >
           </div>
           <div class="mdl-card__actions mdl-card--border">
             <?php $path = _ABSTHEMES_;
@@ -1129,7 +1143,7 @@ if ( isset( $_GET['install'] ) ) {
               </div>
               </div>
             <div class="mdl-card-media">
-          <img src="<?php echo _IMAGES . 'placeholder.svg'; ?>" width="100%" style="overflow: hidden;" >
+          <img src="imagen.php?s=008080_F_500_500&t=<?php echo $xD[ 'slug' ] ; ?>" width="100%" style="overflow: hidden;" >
         </div>
               <div class="mdl-card__actions mdl-card--border">
                     <div class="input-field">

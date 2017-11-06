@@ -125,6 +125,7 @@ $GLOBALS['GUZZLE'] = new \GuzzleHttp\Client;
 $GLOBALS['MAILER'] = new \PHPMailer\PHPMailer\PHPMailer;
 
 $GLOBALS['gposts'] = $GLOBALS['POSTS'] -> sweep();
+array_shift( $GLOBALS['gposts']);
 $GLOBALS['gpost'] = null;
 $GLOBALS['gpost_count'] = 0;
 $GLOBALS['gpost_index'] = 0;
@@ -187,7 +188,7 @@ if ( isOption ( 'activetheme' ) ) {
 	$GLOBALS['GTheme'] = getOption( 'activetheme' );
 	$themefile = _ABSTHEMES_ . $GLOBALS['GTheme'] . '/' . $GLOBALS['GTheme'] . '.php';
 } else {
-	$themefile = _ABSTHEMES_ . '/eventually/eventually.php';
+	$themefile = _ABSTHEMES_ . 'eventually/eventually.php';
 }
 
 if ( file_exists( $themefile ) ){

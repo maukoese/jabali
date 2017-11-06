@@ -102,6 +102,10 @@ if ( !isset($user['error']) ) {
               </textarea>
               <script>CKEDITOR.replace( 'details' );</script>
             </div>
+          </div><div class="mdl-card__menu mdl-button mdl-button--icon">
+            <a href="<?php echo( $userDetails['link'] ); ?>" target="_blank" >
+            <i class="material-icons">open_in_new</i>
+            </a>
           </div>
         </div>
 
@@ -110,7 +114,7 @@ if ( !isset($user['error']) ) {
           <div style="height:0px;overflow:hidden">
              <input type="file" id="avatar" name="new_avatar" />
              <input type="hidden" id="the_avatar" name="the_avatar" value="<?php echo( $userDetails['avatar'] ); ?>" />
-          </div><?php $savatar = file_exists( $userDetails['avatar'] ) ?: _IMAGES.'avatar.svg'; ?>
+          </div><?php $savatar = getimagesize( $userDetails['avatar'] ) ? $userDetails['avatar'] : _IMAGES.'avatar.png'; ?>
           <img id="havatar" onclick="chooseFile();" src="<?php echo( $savatar ); ?>" width="100%">
 
            <script>

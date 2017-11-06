@@ -105,7 +105,7 @@ $GLOBALS['GTextS'] = $GUSkin['texts'];
 /**
 * This is the Jabali controller. It routes all requests directed to it by the .htaccess file.
 **/
-if ( is_localhost() && ( $_SERVER['DOCUMENT_ROOT'] !== __DIR__ ) ) {
+if ( isLocalhost() && ( $_SERVER['DOCUMENT_ROOT'] !== __DIR__ ) ) {
 	$dir = '/'.basename( __DIR__ ).'/';
 	$l = strlen( $dir );
 	$url = substr($_SERVER['REQUEST_URI'], $l );
@@ -113,7 +113,6 @@ if ( is_localhost() && ( $_SERVER['DOCUMENT_ROOT'] !== __DIR__ ) ) {
   $url = ltrim( '/', $_SERVER['REQUEST_URI'] );
 }
 
-$render = new Jabali\Lib\Renders;
 $elements = explode('/', $url );
 $match = $elements[0];
 array_shift( $elements );
@@ -122,24 +121,26 @@ if( empty( $match ) || $match == "?logout" ) {
 	getHeader();
 	if ( getOption( 'homepage' ) == "posts" ) {
 		echo( '<title> Home [ '. getOption( 'name' ) .' ]</title>' );
-		$render -> blog();
+		blog();
 	} else {
-		$render -> fetchPosts( getOption( 'homepage' ) );
+		fetchPosts( getOption( 'homepage' ) );
 	}
 	getFooter();
-} elseif ( in_array( $match, $GLOBALS['GRules'])) {
+} elseif ( isset( $GLOBALS['GRules'][$match] ) ) {
+	getHeader();
 	rewriteRules( $match, $elements );
+	getFooter();
 } else switch ( $match ) {
 	case "login":
 		if ( isset( $_SESSION[JBLSALT.'Code'] ) ) {
 			header( 'Location: '. _ROOT .'/admin/index?page=my dashboard' );
 			exit();
 		} else {
-			$render -> login( $elements[0] );
+			login( $elements[0] );
 		}
 		break;
 	case "register":
-		$render -> register( $elements[0] );
+		register( $elements[0] );
 		break;
 	case "keygen":
 		keyGen( $elements[0] );
@@ -152,40 +153,40 @@ if( empty( $match ) || $match == "?logout" ) {
 		break;
 	case "reset":
 		theHeader();
-		$render -> reset( $elements[0], $elements[1] );
+		reset( $elements[0], $elements[1] );
 		theFooter();
 		break;
 	case "forgot":
-		$render -> forgot();
+		forgot();
 		break;
 	case 'portfolio':
 		getHeader();
-		$render -> portfolio( $elements );
+		portfolio( $elements );
 		getFooter();
 		break;
 	case "authors":
 		getHeader();
-		$render -> authors( $elements[0] );
+		authors( $elements[0] );
 		getFooter();
 		break;
 	case "categories":
 		getHeader();
-		$render -> category( $elements[0] );
+		category( $elements[0] );
 		getFooter();
 		break;
 	case "comments":
 		getHeader();
-		$render -> comments( $elements );
+		comments( $elements );
 		getFooter();
 		break;
 	case "tags":
 		getHeader();
-		$render -> tag( $elements[0] );
+		tag( $elements[0] );
 		getFooter();
 		break;
 	case "users":
 		getHeader();
-		$render -> users( $elements[0] );
+		users( $elements[0] );
 		getFooter();
 		break;
 	case "api":
@@ -195,12 +196,12 @@ if( empty( $match ) || $match == "?logout" ) {
 		feed( $elements[0] );
 		break;
 	case 'manifest':
-		header('Content-Type:Application/json' );
+		header('Content-Type:Application/manifest+json' );
 		$manifest = manifest();
 		echo json_encode( $manifest );
 		break;
 	default:
 		getHeader();
-		$render -> fetchPosts( $match );
+		fetchPosts( $match );
 		getFooter();
 }

@@ -52,7 +52,7 @@ if ( isset( $_POST['register'] ) ) {
     $GLOBALS['USERS'] -> author = $_POST['author'];
     $GLOBALS['USERS'] -> author_name = $_POST['author_name'];
     $GLOBALS['USERS'] -> avatar = $avatar;
-    $GLOBALS['USERS'] -> categories = $_POST['categories'];
+    $GLOBALS['USERS'] -> categories = strtolower( $_POST['categories'] );
     $created = $_POST['created_d'];
     $created_t = $_POST['created_t'];
     $GLOBALS['USERS'] -> created = $created.' '.$created_t;
