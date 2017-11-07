@@ -893,12 +893,12 @@ function timeZones()
 function add_shortcode($tag, $callback)
 {
 
-    return Classes\Shortcodes::instance()->register($tag, $callback);
+    return Lib\Shortcodes::instance()->register($tag, $callback);
 }
 
 function do_shortcode($str) 
 {
-    return Classes\Shortcodes::instance()->doShortcode($str);
+    return Lib\Shortcodes::instance()->doShortcode($str);
 }
 
 function addMeta( $name, $content )
@@ -915,12 +915,12 @@ function csrf()
 	echo '<input type="hidden" name="csrf_token" value="' . CSRF . '" />';
 }
 
-function serviceWorker()
+function serviceWorker( $path = "./sw.js")
 { ?>
 	<script>
 		if ('serviceWorker' in navigator) {
 			navigator.serviceWorker
-			         .register('./worker.js')
+			         .register('<?php echo( $path ); ?>')
 			         .then(function() { console.log('Service Worker Registered'); });
 		}
 	</script><?php
