@@ -25,7 +25,7 @@ class WeiboOAuth {
      * 
      * @ignore 
      */ 
-    public $host = "https://api.t.sina.com.cn/"; 
+    public $host = "http://api.t.sina.com.cn/"; 
     /** 
      * Set timeout default. 
      * 
@@ -70,15 +70,15 @@ class WeiboOAuth {
     /** 
      * @ignore 
      */ 
-    function accessTokenURL()  { return 'https://api.t.sina.com.cn/oauth/access_token'; } 
+    function accessTokenURL()  { return 'http://api.t.sina.com.cn/oauth/access_token'; } 
 	/** 
      * @ignore 
      */ 
-    function authenticateURL() { return 'https://api.t.sina.com.cn/oauth/authenticate'; } 
+    function authenticateURL() { return 'http://api.t.sina.com.cn/oauth/authenticate'; } 
     /** 
      * @ignore 
      */ 
-    function requestTokenURL() { return 'https://api.t.sina.com.cn/oauth/request_token'; } 
+    function requestTokenURL() { return 'http://api.t.sina.com.cn/oauth/request_token'; } 
 
 
     /** 
@@ -214,7 +214,7 @@ class WeiboOAuth {
      */ 
     function oAuthRequest($url, $method, $parameters , $multi = false) { 
 
-        if (strrpos($url, 'https://') !== 0) { 
+        if (strrpos($url, 'http://') !== 0) { 
             $url = "{$this->host}{$url}.{$this->format}"; 
         } 
 

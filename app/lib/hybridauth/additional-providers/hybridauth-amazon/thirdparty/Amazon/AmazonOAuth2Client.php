@@ -1,8 +1,8 @@
 <?php
 /**
 * HybridAuth
-* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
-* (c) 2009-2015, HybridAuth authors | https://hybridauth.sourceforge.net/licenses.html
+* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
+* (c) 2009-2015, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
 */
 
 /**
@@ -18,7 +18,7 @@
  * from Oauth2Client. They are copied here because private scope does not allow calling them
  * from subclass.
  *
- * @link https://stackoverflow.com/questions/5224790/curl-post-format-for-curlopt-postfields
+ * @link http://stackoverflow.com/questions/5224790/curl-post-format-for-curlopt-postfields
  *
  */
 class AmazonOAuth2Client extends OAuth2Client {

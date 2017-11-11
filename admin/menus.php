@@ -2,9 +2,9 @@
 /**
 * @package Jabali - The Plug-N-Play Framework
 * @subpackage Menu Settings
-* @link https://docs.jabalicms.org/menus/
 * @author Mauko Maunde
 * @since 0.17.09
+* @link https://docs.jabalicms.org/menus/
 **/
 
 session_start();
@@ -30,7 +30,7 @@ if ( isset( $_POST['create'] ) ) {
      $location = strtolower( $location );
      $state = $_POST['state'];
 
-     $hMenu -> create ( $name, $author, $avatar, $id, $for, $link, $location, $state, $ilk );
+     $GLOBALS['MENUS'] -> create ( $name, $author, $avatar, $id, $for, $link, $location, $state, $ilk );
   }
 }
 
@@ -51,10 +51,10 @@ if ( isset( $_POST['update'] ) ) {
      $location = strtolower( $location );
      $state = $_POST['state'];
 
-     $hMenu -> update ( $name, $author, $avatar, $id, $for, $link, $location, $state, $ilk );
+     $GLOBALS['MENUS'] -> update ( $name, $author, $avatar, $id, $for, $link, $location, $state, $ilk );
 } ?>
 <div class="mdl-grid">
-<div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><?php
+<div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp <?php primaryColor(); ?>"><?php
 if (isset( $_GET['add'] )) { ?>
           <title>Add New Menu - <?php showOption( 'name' ); ?></title>
          <div class="mdl-card__supporting-text">
@@ -73,7 +73,7 @@ if (isset( $_GET['add'] )) { ?>
             <label for="link">Link</label>
             </div>
 
-             <?php $hMenu -> materialIcons( '' ); ?>
+             <?php $GLOBALS['MENUS'] -> materialIcons( '' ); ?>
 
              <input type="hidden" name="author" value="<?php echo( $_SESSION[JBLSALT.'Code'] ); ?>">
 
@@ -82,7 +82,7 @@ if (isset( $_GET['add'] )) { ?>
               <input class="mdl-textfield__input" id="location" name="location" type="text" tabIndex="-1" placeholder="<?php echo( 'Location' ); ?>" value="<?php if ( !empty( $_GET['add'] )) {
                 echo ucwords( $_GET['add'] );
               } else {  } ?>" >
-                <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="location">
+                <ul class="mdl-menu mdl-menu--top-left mdl-js-menu <?php primaryColor(); ?>" for="location">
                   <li class="mdl-menu__item" data-val="drawer">Drawer</li>
                   <li class="mdl-menu__item" data-val="header">Header</li>
                   <li class="mdl-menu__item" data-val="main">Main</li>
@@ -93,9 +93,9 @@ if (isset( $_GET['add'] )) { ?>
               <div class="input-field inline mdl-js-textfield mdl-textfield--floating-label getmdl-select">
                <i class="material-icons prefix">label_outline</i>
               <input class="mdl-textfield__input" id="for" name="for" type="text" readonly tabIndex="-1"  placeholder="For..." >
-                <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="for" style="max-height: 300px !important; overflow-y: auto;"><?php
+                <ul class="mdl-menu mdl-menu--top-left mdl-js-menu <?php primaryColor(); ?>" for="for" style="max-height: 300px !important; overflow-y: auto;"><?php
                $getMenu = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."menus WHERE ilk = 'drop'");
-               if ( $getMenu -> num_rows > 0 ) {
+               if ( $GLOBALS['JBLDB'] -> numRows( $getMenu ) > ) {
                     while ($menu = mysqli_fetch_assoc( $getMenu )) {
                          echo '<li class="mdl-menu__item" data-val="'.$menu['name'].'">'.ucwords( $menu['name'] ).'</i></li>'; 
                     }
@@ -123,7 +123,7 @@ if (isset( $_GET['add'] )) { ?>
          </div><?php 
 } elseif ( isset( $_GET['edit'] ) ) { 
           $getMenu = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."menus WHERE code = '".$_GET['edit']."'");
-           if ( $getMenu -> num_rows > 0 ) {
+           if ( $GLOBALS['JBLDB'] -> numRows( $getMenu ) > ) {
                 while ($menus = mysqli_fetch_assoc( $getMenu )) {
                      $menu[] = $menus; 
                 }
@@ -148,13 +148,13 @@ if (isset( $_GET['add'] )) { ?>
         <input id="link" name="link" type="text" value="<?php echo( $menu[0]['link'] ); ?>">
         </div><?php
 
-        $hMenu -> materialIcons( $menu[0]['avatar'] ); ?>
+        $GLOBALS['MENUS'] -> materialIcons( $menu[0]['avatar'] ); ?>
 
         <div class="input-field inline mdl-js-textfield getmdl-select">
           <label for="location">Location</label>
           <i class="material-icons prefix">room</i>
          <input class="mdl-textfield__input" id="location" name="location" type="text" tabIndex="-1" value="<?php echo( ucwords( $menu[0]['location'] ) ); ?>">
-           <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="location">
+           <ul class="mdl-menu mdl-menu--top-left mdl-js-menu <?php primaryColor(); ?>" for="location">
              <li class="mdl-menu__item" data-val="drawer">Drawer</li>
              <li class="mdl-menu__item" data-val="header">Header</li>
              <li class="mdl-menu__item" data-val="main">Main</li>
@@ -166,9 +166,9 @@ if (isset( $_GET['add'] )) { ?>
           <label for="for">Parent</label>
           <i class="material-icons prefix">label_outline</i>
          <input class="mdl-textfield__input" id="for" name="parent" type="text" readonly tabIndex="-1"  value="<?php echo( ucwords( $menu[0]['parent'] ) ); ?>" >
-           <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="for" style="max-height: 300px !important; overflow-y: auto;"><?php
+           <ul class="mdl-menu mdl-menu--top-left mdl-js-menu <?php primaryColor(); ?>" for="for" style="max-height: 300px !important; overflow-y: auto;"><?php
           $getMenu = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."menus WHERE ilk = 'drop'");
-          if ( $getMenu -> num_rows > 0 ) {
+          if ( $GLOBALS['JBLDB'] -> numRows( $getMenu ) > ) {
                while ($tmenu = mysqli_fetch_assoc( $getMenu )) {
                     echo '<li class="mdl-menu__item" data-val="'.$tmenu['name'].'">'.ucwords( $tmenu['name'] ).'</i></li>'; 
                }
@@ -202,7 +202,7 @@ if (isset( $_GET['add'] )) { ?>
       </form>
     </div><?php 
 } elseif ( isset( $_GET['delete'] ) ) {
-     $hMenu -> delete( $_GET['delete'] ); ?>
+     $GLOBALS['MENUS'] -> delete( $_GET['delete'] ); ?>
      <center>
         <h3>The Menu has been deleted</h3>
         <div class="mdl-grid">
@@ -227,7 +227,7 @@ if (isset( $_GET['add'] )) { ?>
         </ul>
         <div id="drawer" class="mdl-tabs vertical-mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
             <div class="mdl-grid mdl-card">
-            <div class="mdl-cell mdl-cell--3-col mdl-color--<?php primaryColor(); ?>">
+            <div class="mdl-cell mdl-cell--3-col <?php primaryColor(); ?>">
                 <div class="mdl-tabs__tab-bar ">
 
                      <a href="#dashboard" class="mdl-tabs__tab is-active">Dashboard
@@ -244,33 +244,33 @@ if (isset( $_GET['add'] )) { ?>
                   </a>
                 </div>
            </div>
-           <div class="mdl-cell mdl-cell--9-col mdl-color--<?php primaryColor(); ?>">
+           <div class="mdl-cell mdl-cell--9-col <?php primaryColor(); ?>">
                 <div class="mdl-tabs__panel is-active" id="dashboard"><?php
-                    $hMenu -> theMenu( 'dashboard' );
-                    $hMenu -> subMenu( 'dashboard' ); ?>
+                    $GLOBALS['MENUS'] -> theMenu( 'dashboard' );
+                    $GLOBALS['MENUS'] -> subMenu( 'dashboard' ); ?>
                 </div>
                 <div class="mdl-tabs__panel" id="posts"><?php
-                    $hMenu -> theMenu( 'posts' );
-                    $hMenu -> subMenu( 'posts' ); ?>
+                    $GLOBALS['MENUS'] -> theMenu( 'posts' );
+                    $GLOBALS['MENUS'] -> subMenu( 'posts' ); ?>
                 </div>
 
                 <div class="mdl-tabs__panel" id="resources"><?php
-                    $hMenu -> theMenu( 'resources' );
-                    $hMenu -> subMenu( 'resources' ); ?>
+                    $GLOBALS['MENUS'] -> theMenu( 'resources' );
+                    $GLOBALS['MENUS'] -> subMenu( 'resources' ); ?>
                 </div>
 
                 <div class="mdl-tabs__panel" id="users"><?php
-                    $hMenu -> theMenu( 'users' );
-                    $hMenu -> subMenu( 'users' ); ?>
+                    $GLOBALS['MENUS'] -> theMenu( 'users' );
+                    $GLOBALS['MENUS'] -> subMenu( 'users' ); ?>
                 </div>
 
                 <div class="mdl-tabs__panel" id="comments"><?php
-                    $hMenu -> theMenu( 'comments' );
-                    $hMenu -> subMenu( 'comments' ); ?>
+                    $GLOBALS['MENUS'] -> theMenu( 'comments' );
+                    $GLOBALS['MENUS'] -> subMenu( 'comments' ); ?>
                 </div>
 
                 <div class="mdl-tabs__panel" id="udef"><?php
-                    $hMenu -> uMenu(); ?>
+                    $GLOBALS['MENUS'] -> uMenu(); ?>
 
                 </div>
             </div>
@@ -278,13 +278,13 @@ if (isset( $_GET['add'] )) { ?>
           </div>
         </div>
         <div id="header"><?php
-          $hMenu -> headMenu(); ?>
+          $GLOBALS['MENUS'] -> headMenu(); ?>
         </div>
         <div id="main"><?php
-          $hMenu -> subMenu( 'articles' ); ?>
+          $GLOBALS['MENUS'] -> subMenu( 'articles' ); ?>
         </div>
         <div id="footer"><?php
-          $hMenu -> subMenu( 'articles' ); ?>
+          $GLOBALS['MENUS'] -> subMenu( 'articles' ); ?>
         </div>
     </div><?php } ?>
   </div>

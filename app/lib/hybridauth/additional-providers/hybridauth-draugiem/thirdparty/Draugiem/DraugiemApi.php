@@ -17,7 +17,7 @@
  * 		'place' => 'Rīga',
  * 		'age' => 26,
  * 		'adult' => true,
- * 		'img' => 'https://i2.ifrype.com/91/171/491171/sm_2008100616435822749.jpg',
+ * 		'img' => 'http://i2.ifrype.com/91/171/491171/sm_2008100616435822749.jpg',
  * 		'sex' => 'M',
  * 	)
  * If data of multiple users is returned, multiple user data items are placed in array
@@ -57,15 +57,15 @@ class DraugiemApi {
 	/**
 	 * Draugiem.lv API URL
 	 */
-	const API_URL = 'https://api.draugiem.lv/php/';
+	const API_URL = 'http://api.draugiem.lv/php/';
 	/**
 	 * Draugiem.lv passport login URL
 	 */
-	const LOGIN_URL = 'https://api.draugiem.lv/authorize/';
+	const LOGIN_URL = 'http://api.draugiem.lv/authorize/';
 	/**
 	 * Iframe scripts URL
 	 */
-	const JS_URL = 'https://ifrype.com/applications/external/draugiem.js';
+	const JS_URL = 'http://ifrype.com/applications/external/draugiem.js';
 
 	/**
 	 * Timeout in seconds for session_check requests
@@ -98,15 +98,15 @@ class DraugiemApi {
 		if(session_id()==''){//If no session exists, start new
 			session_start();
 		}
-		if(isset($_GET['dr_autstate']) && $_GET['dr_autstate']!='ok'){
+		if(isset($_GET['dr_auth_status']) && $_GET['dr_auth_status']!='ok'){
 			$this->clearSession();
-		} elseif(isset($_GET['dr_autid']) && (empty($_SESSION['draugiem_autid']) ||
-			$_GET['dr_autid'] != $_SESSION['draugiem_autid'])){// New session authorization
+		} elseif(isset($_GET['dr_auth_code']) && (empty($_SESSION['draugiem_auth_code']) ||
+			$_GET['dr_auth_code'] != $_SESSION['draugiem_auth_code'])){// New session authorization
 
 			$this->clearSession(); //Delete current session data to prevent overwriting of existing session
 
 			//Get authorization data
-			$response = $this->apiCall('authorize', array('code'=>$_GET['dr_autid']));
+			$response = $this->apiCall('authorize', array('code'=>$_GET['dr_auth_code']));
 
 			if($response && isset($response['apikey'])){//API key received
 				//User profile info
@@ -127,7 +127,7 @@ class DraugiemApi {
 						}
 					}
 
-					$_SESSION['draugiem_autid'] = $_GET['dr_autid'];
+					$_SESSION['draugiem_auth_code'] = $_GET['dr_auth_code'];
 
 					//User API key
 					$this->user_key = $_SESSION['draugiem_userkey'] = $response['apikey'];
@@ -149,7 +149,7 @@ class DraugiemApi {
 
 			if(isset($_SESSION['draugiem_lastcheck'], $_SESSION['draugiem_session'])){ //Iframe app session
 
-				if(isset($_GET['dr_autid'], $_GET['domain'])){//Fix session domain if changed
+				if(isset($_GET['dr_auth_code'], $_GET['domain'])){//Fix session domain if changed
 					$_SESSION['draugiem_domain'] = preg_replace('/[^a-z0-9\.]/','',$_GET['domain']);
 				}
 
@@ -444,7 +444,7 @@ class DraugiemApi {
 		} else {
 			$onclick = '';
 		}
-		return '<a href="'.$url.'"'.$onclick.'><img border="0" src="https://api.draugiem.lv/authorize/login_button.png" alt="draugiem.lv" /></a>';
+		return '<a href="'.$url.'"'.$onclick.'><img border="0" src="http://api.draugiem.lv/authorize/login_button.png" alt="draugiem.lv" /></a>';
 	}
 
 	############################################
@@ -484,8 +484,8 @@ class DraugiemApi {
 	  * in $resize_container parameter.
 	  *
 	  * Function also enables Javascript callback values if $callback_html argument is passed. It has to contain full
-	  * address of the copy of callback.html on the application server (e.g. https://example.com/callback.html).
-	  * Original can be found at https://www.draugiem.lv/applications/external/callback.html
+	  * address of the copy of callback.html on the application server (e.g. http://example.com/callback.html).
+	  * Original can be found at http://www.draugiem.lv/applications/external/callback.html
 	  *
 	  * This function has to be called after getSession().
 	  *
@@ -524,7 +524,7 @@ class DraugiemApi {
 		}
 
 		//Workaround for Safari - post a form with Javascript to create session cookie
-		if(empty($_COOKIE[session_name()]) && strpos($user_agent,'Safari') && isset($_GET['dr_autid']) && !isset($_GET['dr_cookie_fix'])){
+		if(empty($_COOKIE[session_name()]) && strpos($user_agent,'Safari') && isset($_GET['dr_auth_code']) && !isset($_GET['dr_cookie_fix'])){
 	?>
 		<html><head><title>Iframe Cookie fix</title></head>
 		<body>
@@ -687,7 +687,7 @@ class DraugiemApi {
 
 	private function clearSession(){
 			unset(
-				$_SESSION['draugiem_autid'],
+				$_SESSION['draugiem_auth_code'],
 				$_SESSION['draugiem_session'],
 				$_SESSION['draugiem_userkey'],
 				$_SESSION['draugiem_user'],

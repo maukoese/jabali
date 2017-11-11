@@ -5,6 +5,7 @@
 * @link https://docs.jabalicms.org/views/reset
 * @author Mauko Maunde
 * @since 0.17.09
+* @license MIT - https://opensource.org/licenses/MIT
 **/ ?>
 <div style="padding-top:40px;" >
   <div id="login_div">

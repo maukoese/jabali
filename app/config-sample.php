@@ -5,6 +5,7 @@
 * @link https://docs.jabalicms.org/configuration/
 * @author Mauko Maunde
 * @since 0.17.04
+* @license MIT - https://opensource.org/licenses/MIT
 *
 * @param $server["dbhost"] The name of your host, usually localhost
 * @param $server["dbuser"] Your server username

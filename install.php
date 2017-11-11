@@ -5,6 +5,7 @@
 * @link https://docs.jabalicms.org/installation/
 * @author Mauko Maunde
 * @since 0.17.04
+* @license MIT - https://opensource.org/licenses/MIT
 **/
 
 if ( !file_exists( 'app/config.php' ) ) {
@@ -110,39 +111,39 @@ if (isset($_POST['register']) ) {
 	/*
 	*Set Initial Settings So They Are Editable
 	*/
-	$hOpt -> install ( 'Site Name', 'name', $site_name, $created );
-    $hOpt -> install ( 'About', 'about', 'Coming Soon', $created );
-    $hOpt -> install ( 'Description', 'description', 'Built With Jabali', $created );
-	$hOpt -> install ( 'Admin Email', 'email', $email , $created );
-	$hOpt -> install ( 'Admin Phone', 'phone', '+2547204404993', $created );
-	$hOpt -> install ( 'Copyright', 'copyright', '© '. $site_name .' 2017', $created );
-    $hOpt -> install ( 'Admin Footer', 'adfooter', 'The Jabali Framework', $created );
-    $hOpt -> install ( 'Attribution', 'attribution', 'Mauko by Design', $created );
-	$hOpt -> install ( 'Attribution Link', 'attribution_link', 'https://mauko.co.ke', $created );
-	$hOpt -> install ( 'Header Logo', 'headerlogo', _IMAGES."logo.png", $created );
-	$hOpt -> install ( 'Home Logo', 'homelogo', _IMAGES."logo-w.png", $created );
-	$hOpt -> install ( 'Favicon', 'favicon', _IMAGES."marker.png", $created );
-	$hOpt -> install ( 'Terms Of Service', 'tos', $tos, $created );
-	$hOpt -> install ( 'Site Social', 'social', $social, $created );
-	$hOpt -> install ( 'Allow Registration', 'registration', 'checked', $created );
-    $hOpt -> install ( 'User Types', 'usertypes', '{}', $created );
-    $hOpt -> install ( 'Post Types', 'posttypes', '{}', $created );
-    $hOpt -> install ( 'Resource Types', 'resourcetypes', '{}', $created );
-    $hOpt -> install ( 'Comment Types', 'commenttypes', '{}', $created );
-    $hOpt -> install ( 'Message Types', 'messagetypes', '{}', $created );
-    $hOpt -> install ( 'Active Modules', 'modules', '[]', $created );
-    $hOpt -> install ( 'Active Theme', 'activetheme', 'eventually', $created );
-    $hOpt -> install ( 'Timezone', 'timezone', 'Africa/Nairobi', $created );
-    $hOpt -> install ( 'Country', 'country', 'Kenya', $created );
-    $hOpt -> install ( 'Region', 'region', 'Nairobi', $created );
-    $hOpt -> install ( 'City/Town', 'city', 'Nairobi', $created );
-    $hOpt -> install ( 'Language', 'language', 'en', $created );
-    $hOpt -> install ( 'Charset', 'charset', 'utf-8', $created );
-    $hOpt -> install ( 'Home Page', 'homepage', 'home', $created );
-    $hOpt -> install ( 'Posts Page', 'postspage', 'blog', $created );
-    $hOpt -> install ( 'Ace Editor Theme', 'acetheme', 'chrome', $created );
-    $hOpt -> install ( 'Show Ace Editor Gutter', 'acegutter', 'true', $created );
-    $hOpt -> install ( 'Show Ace Editor Lines', 'acelines', 'true', $created );
+	$GLOBALS['OPTIONS'] -> install ( 'Site Name', 'name', $site_name, $created );
+    $GLOBALS['OPTIONS'] -> install ( 'About', 'about', 'Coming Soon', $created );
+    $GLOBALS['OPTIONS'] -> install ( 'Description', 'description', 'Built With Jabali', $created );
+	$GLOBALS['OPTIONS'] -> install ( 'Admin Email', 'email', $email , $created );
+	$GLOBALS['OPTIONS'] -> install ( 'Admin Phone', 'phone', '+2547204404993', $created );
+	$GLOBALS['OPTIONS'] -> install ( 'Copyright', 'copyright', '© '. $site_name .' 2017', $created );
+    $GLOBALS['OPTIONS'] -> install ( 'Admin Footer', 'adfooter', 'The Jabali Framework', $created );
+    $GLOBALS['OPTIONS'] -> install ( 'Attribution', 'attribution', 'Mauko by Design', $created );
+	$GLOBALS['OPTIONS'] -> install ( 'Attribution Link', 'attribution_link', 'https://mauko.co.ke', $created );
+	$GLOBALS['OPTIONS'] -> install ( 'Header Logo', 'headerlogo', _IMAGES."logo.png", $created );
+	$GLOBALS['OPTIONS'] -> install ( 'Home Logo', 'homelogo', _IMAGES."logo-w.png", $created );
+	$GLOBALS['OPTIONS'] -> install ( 'Favicon', 'favicon', _IMAGES."marker.png", $created );
+	$GLOBALS['OPTIONS'] -> install ( 'Terms Of Service', 'tos', $tos, $created );
+	$GLOBALS['OPTIONS'] -> install ( 'Site Social', 'social', $social, $created );
+	$GLOBALS['OPTIONS'] -> install ( 'Allow Registration', 'registration', 'checked', $created );
+    $GLOBALS['OPTIONS'] -> install ( 'User Types', 'usertypes', '{}', $created );
+    $GLOBALS['OPTIONS'] -> install ( 'Post Types', 'posttypes', '{}', $created );
+    $GLOBALS['OPTIONS'] -> install ( 'Resource Types', 'resourcetypes', '{}', $created );
+    $GLOBALS['OPTIONS'] -> install ( 'Comment Types', 'commenttypes', '{}', $created );
+    $GLOBALS['OPTIONS'] -> install ( 'Message Types', 'messagetypes', '{}', $created );
+    $GLOBALS['OPTIONS'] -> install ( 'Active Modules', 'modules', '[]', $created );
+    $GLOBALS['OPTIONS'] -> install ( 'Active Theme', 'activetheme', 'eventually', $created );
+    $GLOBALS['OPTIONS'] -> install ( 'Timezone', 'timezone', 'Africa/Nairobi', $created );
+    $GLOBALS['OPTIONS'] -> install ( 'Country', 'country', 'Kenya', $created );
+    $GLOBALS['OPTIONS'] -> install ( 'Region', 'region', 'Nairobi', $created );
+    $GLOBALS['OPTIONS'] -> install ( 'City/Town', 'city', 'Nairobi', $created );
+    $GLOBALS['OPTIONS'] -> install ( 'Language', 'language', 'en', $created );
+    $GLOBALS['OPTIONS'] -> install ( 'Charset', 'charset', 'utf-8', $created );
+    $GLOBALS['OPTIONS'] -> install ( 'Home Page', 'homepage', 'home', $created );
+    $GLOBALS['OPTIONS'] -> install ( 'Posts Page', 'postspage', 'blog', $created );
+    $GLOBALS['OPTIONS'] -> install ( 'Ace Editor Theme', 'acetheme', 'chrome', $created );
+    $GLOBALS['OPTIONS'] -> install ( 'Show Ace Editor Gutter', 'acegutter', 'true', $created );
+    $GLOBALS['OPTIONS'] -> install ( 'Show Ace Editor Lines', 'acelines', 'true', $created );
 
 
 	/*

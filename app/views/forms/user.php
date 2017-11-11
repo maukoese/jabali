@@ -5,9 +5,10 @@
 * @link https://docs.jabalicms.org/classes/forms/
 * @author Mauko Maunde
 * @version 0.17.06
+* @license MIT - https://opensource.org/licenses/MIT
 **/ ?>
 <title>Add New <?php echo( ucfirst( $_GET['create'] ) ); ?> - <?php showOption( 'name' ); ?></title>
-    <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-color--<?php primaryColor(); ?> mdl-card">
+    <div class="mdl-cell mdl-cell--12-col mdl-grid <?php primaryColor(); ?> mdl-card">
       <form enctype="multipart/form-data" name="registerUser" method="POST" action="" class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card__supporting-text">
           <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-grid">
             <div class="mdl-cell mdl-cell--12-col mdl-grid">
@@ -30,7 +31,7 @@
                 echo( ucwords( $_GET['create'] ) );
               } ?>" >
               <label for="ilk"><i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i></label>
-              <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="ilk"><?php
+              <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?>" for="ilk"><?php
               if ( isCap( 'admin' )  ) {
                 echo( '<li class="mdl-menu__item" data-val="admin">Admin<i class="mdl-color-text--white mdi mdi-lock alignright" role="presentation"></i></li>' );
               } ?>
@@ -48,7 +49,7 @@
                 <label for="gender">
                 <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
                 </label>
-                <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="gender">
+                <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?>" for="gender">
                 <li class="mdl-menu__item" data-val="male">Male</li>
                 <li class="mdl-menu__item" data-val="female">Female</li>
                 <li class="mdl-menu__item" data-val="other">Other</li>
@@ -62,7 +63,7 @@
               <label for="counties">
               <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
               </label>
-              <ul for="counties" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
+              <ul for="counties" class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
               <?php
               $county_list = "baringo, bomet, bungoma, busia, elgeyo-marakwet, embu, garissa, homa bay, isiolo, kakamega, kajiado, kapenguria, kericho, kiambu, kilifi, kirinyanga, kisii, kisumu, kitui, kwale, laikipia, lamu, machakos, makueni, mandera, marsabit, meru, migori, mombasa, muranga, nairobi, nakuru, nandi, narok, nyamira, nyandarua, nyeri, ol kalou, samburu, siaya, taita-taveta, tana river, tharaka-nithi, trans-nzoia, turkana, uasin-gishu, vihiga, wajir, west pokot";
               $counties = explode( ", ", $county_list );
@@ -84,7 +85,7 @@
               <div class="input-field mdl-cell--6-col mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
                 <i class="material-icons prefix">business</i>
                 <input class="mdl-textfield__input" type="text" id="centers" name="company" readonly tabIndex="-1" placeholder="Organization ( Optional )">
-                <ul for="centers" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
+                <ul for="centers" class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
                 <?php
                 $centers = $GLOBALS['JBLDB'] -> query( "SELECT name, id FROM ". _DBPREFIX ."users WHERe ilk = 'center' ORDER BY name" );
                 if ( $GLOBALS['JBLDB'] -> numRows( $centers ) > 0 ) {

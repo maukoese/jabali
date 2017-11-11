@@ -1,7 +1,7 @@
 <?php
 /*!
 * HybridAuth
-* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+* http://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
 *  (c) 2009-2011 HybridAuth authors | hybridauth.sourceforge.net/licenses.html
 */
 
@@ -48,7 +48,7 @@ class Hybrid_Providers_Identica extends Hybrid_Provider_Model_OAuth1
 		$this->user->profile->description  	= @ $response->description;
 		$this->user->profile->firstName  	= @ $response->name; 
 		$this->user->profile->photoURL   	= @ $response->profile_image_url;
-		$this->user->profile->profileURL 	= @ 'https://identi.ca/' . $response->screen_name;
+		$this->user->profile->profileURL 	= @ 'http://identi.ca/' . $response->screen_name;
 		$this->user->profile->webSiteURL 	= @ $response->url; 
 		$this->user->profile->address 		= @ $response->location;
 

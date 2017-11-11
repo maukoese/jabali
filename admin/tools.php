@@ -2,9 +2,9 @@
 /**
 * @package Jabali - The Plug-N-Play Framework
 * @subpackage Admin Transfer Tools
-* @link https://docs.jabalicms.org/transfer/
 * @author Mauko Maunde
 * @since 0.17.04
+* @link https://docs.jabalicms.org/transfer/
 **/
 session_start();
 require_once( '../init.php' );
@@ -30,7 +30,7 @@ if ( isset( $_GET['page'] ) ) {
 } else { ?>
 	<title>Site Tools - <?php showOption( 'name' ); ?></title>
     	<div class="mdl-grid">
-    		<div class="mdl-cell mdl-cell--12-col mdl-color--<?php primaryColor(); ?> mdl-grid">
+    		<div class="mdl-cell mdl-cell--12-col <?php primaryColor(); ?> mdl-grid">
     			<form action="" style="padding: 15%;">
 				    <div class="file-field input-field">
 				      <div class="btn">

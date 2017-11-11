@@ -5,6 +5,7 @@
 * @link https://docs.jabalicms.org/views/footer/
 * @author Mauko Maunde
 * @since 0.17.09
+* @license MIT - https://opensource.org/licenses/MIT
 */ ?>
 </main>
 <script type="text/javascript">
@@ -19,9 +20,7 @@
 <script src="<?php echo _SCRIPTS ?>material.js"></script>
 <script src="<?php echo _SCRIPTS ?>materialize.js"></script>
 <script src="<?php echo _SCRIPTS ?>nv.d3.js"></script>
-<script src="<?php echo _SCRIPTS ?>widgets/employer-form/employer-form.js"></script>
 <script src="<?php echo _SCRIPTS ?>widgets/line-chart/line-chart-nvd3.js"></script>
-<script src="<?php echo _SCRIPTS ?>list.js"></script>
 <script src="<?php echo _SCRIPTS ?>widgets/pie-chart/pie-chart-nvd3.js"></script>
 <script src="<?php echo _SCRIPTS ?>widgets/table/table.js"></script>
 <script src="<?php echo _SCRIPTS ?>widgets/todo/todo.js"></script>

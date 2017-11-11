@@ -2,9 +2,9 @@
 /**
 * @package Jabali - The Plug-N-Play Framework
 * @subpackage Admin Users
-* @link https://docs.jabalicms.org/users/
 * @author Mauko Maunde
 * @since 0.17.04
+* @link https://docs.jabalicms.org/users/
 **/
 session_start();
 require_once( '../init.php' );

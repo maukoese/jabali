@@ -5,17 +5,25 @@
 * @return mixed JSON string of requested resource
 * @since 17.10
 * @author Mauko Maunde
+* @license MIT - https://opensource.org/licenses/MIT
 */
 
 namespace Jabali\Lib;
 
 class REST
 {
+  public $request;
+  public $retval;
+
+  public function __construct( $request = null )
+  {
+    $this -> request = $request;
+  }
 
   public function render()
   {
     header('Content-Type:Application/json' );
-    echo( json_encode( $this -> process() ) );
+    echo( json_encode( $this -> retval ) );
   }
 
   public function process( $elements )
@@ -24,12 +32,12 @@ class REST
     $table = $GLOBALS[$table];
     $data = file_get_contents("php://input");
     if ( empty( $elements[0] ) ) {
-        return $this -> api();
+        $this -> retval = $this -> api();
     } elseif ( $elements[0] == "themes") {
-        return $this -> themes();
+        $this -> retval = $this -> themes();
     } else {
       if ( empty( $elements[1] ) ) {
-        return $table -> sweep();
+        $this -> retval = $table -> sweep();
       } else switch ( $elements[1] ) {
         case 'create':
           $details = json_decode( $data, true );
@@ -37,7 +45,7 @@ class REST
             $table -> $field = $value;
           }
           
-          return $table -> create();
+          $this -> retval = $table -> create();
           break;
 
         case 'update':
@@ -46,7 +54,7 @@ class REST
             $table -> $field = $value;
           }
           
-          return $table -> update();
+          $this -> retval = $table -> update();
           break;
         
         case 'delete':
@@ -56,17 +64,17 @@ class REST
 
         default:
           if ( empty( $elements[2] ) ) {
-             return $table -> sweep();
+             $this -> retval = $table -> sweep();
           } elseif ( is_numeric( $elements[2] ) ) {
             echo json_encode( $table -> getId( $elements[2] ) );
           } else {
             if ( empty( $elements[3] ) ) {
               $type = substr( $elements[2], 0,-1);
-              echo json_encode( $table -> getTypes( $type ) );
+              $this -> retval = $table -> getTypes( $type );
             } else {
               if ( empty( $elements[4] ) ) {
                 if ( is_numeric( $elements[3] ) ) {
-                  echo json_encode( $table -> getYear( $elements[3] ) );
+                  $this -> retval = $table -> getYear( $elements[3] );
                 } elseif ( $elements[3] == "writers") {
                   echo json_encode( listWriters() );
                 } elseif ( $elements[3] == "categories") {
@@ -119,7 +127,7 @@ class REST
       "date" => date( 'Y-m-d H:i:s'), 
       "generator" => "Jabali v.17.10" 
     );
-    return $response;
+    $this -> retval = $response;
   }
 
   public function themes()

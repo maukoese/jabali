@@ -11,7 +11,7 @@ class Uniform {
     <div class="input-field mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
       <i class="material-icons prefix">schedule</i>
       <input class="mdl-textfield__input" type="text" id="timezones" name="timezone" readonly tabIndex="-1" value="<?php showOption( 'timezone' )?>">
-       <ul for="timezones" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;"><?php foreach (timeZones() as $t ) { ?>
+       <ul for="timezones" class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;"><?php foreach (timeZones() as $t ) { ?>
           
         <li class="mdl-menu__item" data-val="<?php echo( $t['zone'] ); ?>"><?php print /* $t['diff_from_GMT'] . ' - ' . */ $t['zone'] ?></li>
       <?php } ?>
@@ -565,7 +565,7 @@ class Uniform {
     <div class="input-field mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
       <i class="material-icons prefix">room</i>
       <input class="mdl-textfield__input" type="text" id="countries" name="country" readonly tabIndex="-1" placeholder="Select Country" value="<?php showOption( 'country' ); ?>">
-      <ul for="countries" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?> option-drop" style="max-height: 300px !important; overflow-y: auto;"><?php foreach ($countries as $key => $value) { ?>
+      <ul for="countries" class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?> option-drop" style="max-height: 300px !important; overflow-y: auto;"><?php foreach ($countries as $key => $value) { ?>
         <li class="mdl-menu__item" data-val="<?php echo( $key ); ?>"><?php echo( $value ); ?></li>
       <?php } ?>
       </ul>
@@ -739,7 +739,7 @@ class Uniform {
     <div class="input-field mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
       <i class="fa fa-money prefix"></i>
       <input class="mdl-textfield__input" type="text" id="currencies" name="currency" readonly tabIndex="-1" placeholder="Select Currency (Code)">
-       <ul for="currencies" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;"><?php foreach ($currency as $key => $value) { ?>
+       <ul for="currencies" class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;"><?php foreach ($currency as $key => $value) { ?>
         <li class="mdl-menu__item" data-val="<?php echo( $key ); ?>"><?php echo( $value ); ?></li>
       <?php } ?>
       </ul>
@@ -910,7 +910,7 @@ class Uniform {
         <div class="input-field mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
         <i class="fa fa-money prefix"></i>
         <input class="mdl-textfield__input" type="text" id="scurrencies" name="currency" readonly tabIndex="-1" placeholder="Select Currency (Symbol)">
-        <ul for="scurrencies" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;"><?php foreach ($currency as $key => $value) { ?>
+        <ul for="scurrencies" class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;"><?php foreach ($currency as $key => $value) { ?>
           <li class="mdl-menu__item" data-val="<?php echo( $key ); ?>"><?php echo( $value ); ?></li>
         <?php } ?>
         </ul>
@@ -1113,7 +1113,7 @@ class Uniform {
         <div class="input-field mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
             <i class="material-icons prefix">room</i>
           <input class="mdl-textfield__input" type="text" id="counties" name="region" readonly tabIndex="-1" placeholder="Location (Optional )" value="<?php showOption( 'region' ); ?>">
-          <ul for="counties" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;"><?php 
+          <ul for="counties" class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;"><?php 
               $county_list = "baringo, bomet, bungoma, busia, elgeyo-marakwet, embu, garissa, homa bay, isiolo, kakamega, kajiado, kapenguria, kericho, kiambu, kilifi, kirinyanga, kisii, kisumu, kitui, kwale, laikipia, lamu, machakos, makueni, mandera, marsabit, meru, migori, mombasa, muranga, nairobi, nakuru, nandi, narok, nyamira, nyandarua, nyeri, ol kalou, samburu, siaya, taita-taveta, tana river, tharaka-nithi, trans-nzoia, turkana, uasin-gishu, vihiga, wajir, west pokot";
               $counties = explode( ", ", $county_list );
               for ( $c=0; $c < count( $counties ); $c++ ) {
@@ -1186,7 +1186,7 @@ class Uniform {
         <div class="input-field mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
         <i class="material-icons prefix">room</i>
         <input class="mdl-textfield__input" type="text" id="states" name="region" readonly tabIndex="-1" placeholder="Country (Optional )" value="<?php showOption( 'region' ); ?>">
-        <ul for="states" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;"><?php foreach ($states as $key => $value) { ?>
+        <ul for="states" class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;"><?php foreach ($states as $key => $value) { ?>
           <li class="mdl-menu__item" data-val="<?php echo( $key ); ?>"><?php echo( $value ); ?></li>
         <?php } ?>
         </ul>

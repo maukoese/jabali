@@ -1,9 +1,15 @@
-<?php 
+<?php
+/**
+* @package Jabali
+* @subpackage Jabali SQLite Data Access Layer
+* @author Mauko Maunde
+* @link https://docs.jabalicms.org/data/access/layers/sqlite/
+* @license MIT - https://opensource.org/licenses/MIT
+* @since 0.17.09
+**/
+
 namespace Jabali\Data\Access\Layers;
 
-/**
-* Jabali SQLite Data Access Layer
-*/
 class SQLiteDB {
 
 	private $host;

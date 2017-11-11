@@ -1,4 +1,6 @@
 .htaccess
 app/config.php
 uploads/2017/
+app/themes/
+app/modules/
 admin/sql.php

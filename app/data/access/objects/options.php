@@ -5,6 +5,7 @@
 * @author Mauko Maunde
 * @link https://docs.jabalicms.org/data/access/objects/options/
 * @since 0.17.09
+* @license MIT - https://opensource.org/licenses/MIT
 **/
 
 namespace Jabali\Data\Access\Objects;
@@ -90,7 +91,7 @@ class Options {
 
     function general(){ ?>
         <title>General Site Options - <?php showOption( 'name' ); ?></title>
-        <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+        <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
             <div class=" mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
             <form enctype="multipart/form-data" name="optionForm" method="POST" action="">
 
@@ -240,7 +241,7 @@ class Options {
                       $( "#my_favicon" ).click();
                    }
                 </script>
-            <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+            <div class="mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
                 <div class="mdl-card__title">
                     <div class="mdl-card__title--text">
                         Favicon
@@ -256,7 +257,7 @@ class Options {
                 </div>
             </div>
             <br>
-            <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+            <div class="mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
                 <div class="mdl-card__title">
                     <div class="mdl-card__title--text">
                         Header Logo
@@ -272,7 +273,7 @@ class Options {
                 </div>
             </div>
             <br>
-            <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+            <div class="mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
                 <div class="mdl-card__title">
                     <div class="mdl-card__title--text">
                         Home Logo
@@ -295,7 +296,7 @@ class Options {
 
     function misc(){ ?>
         <title>Misc. Site Options - <?php showOption( 'name' ); ?></title>
-        <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+        <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
             <div class=" mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
             <form enctype="multipart/form-data" name="optionForm" method="POST" action="">
 
@@ -328,7 +329,7 @@ class Options {
             </div>
         </div>
 
-        <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+        <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
             <div class=" mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
 
                 <button class="mdl-button mdl-button--fab mdl-button--colored addfab" type="submit" name="preferences"><i class="material-icons">save</i></button>
@@ -341,7 +342,7 @@ class Options {
 		if ( isset( $_GET['table'] ) ) { ?>
             <title><?php echo ucwords( $_GET['table'] ); ?> Options - <?php showOption( 'name' ); ?></title>
             <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
-                <div class="mdl-card mdl-color--<?php primaryColor(); ?>">
+                <div class="mdl-card <?php primaryColor(); ?>">
                 <div class="mdl-card__supporting-text mdl-card--expand">
                 <div class="mdl-grid mdl-card">
                     <div class="mdl-cell mdl-cell--6-col" >
@@ -372,7 +373,7 @@ class Options {
                         <div class="input-field mdl-cell mdl-js-textfield getmdl-select">
                         <i class="material-icons prefix">lock</i>
                          <input class="mdl-textfield__input" id="ilk" name="ulevel[]" type="text" readonly tabIndex="-1" placeholder="Select Level" >
-                           <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="ilk"><?php
+                           <ul class="mdl-menu mdl-menu--top-left mdl-js-menu <?php primaryColor(); ?>" for="ilk"><?php
                                 global $hMenu;
                                 $types = $hMenu -> allTypes( $_GET['table'] );
                                 foreach ( $types as $type ) { ?>
@@ -393,7 +394,7 @@ class Options {
                 </div>
             </div>
             <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
-                        <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+                        <div class="mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
                             <div class="mdl-card__title">
                             <i class="material-icons">group</i>
                               <span class="mdl-button">User Types & Permisions</span>
@@ -448,7 +449,7 @@ class Options {
             </div><?php
     	} else { ?>
     	   <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
-    			        <div class="mdl-card mdl-color--<?php primaryColor(); ?>">
+    			        <div class="mdl-card <?php primaryColor(); ?>">
     			        <div class="mdl-card__supporting-text mdl-card--expand">
     			        	<h1>The Jabali Types API</h1>
     			        	<article>
@@ -526,7 +527,7 @@ class Options {
 
 	function social(){ ?>
         <title>Site Social Settings - <?php showOption( 'name' ); ?></title>
-            <div class="mdl-cell mdl-cell--9-col-desktop mdl-cell--9-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+            <div class="mdl-cell mdl-cell--9-col-desktop mdl-cell--9-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
                 <div class="mdl-card__title">
                     <div class="mdl-card__title-text">
                         Social Networks
@@ -565,7 +566,7 @@ class Options {
                     </form>
                 </div>
             </div>
-            <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--3-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+            <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--3-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
                 <div class="mdl-card__title">
                         <div class="mdl-card__title-text">
                             Mauko by Design
@@ -587,14 +588,14 @@ class Options {
 
     function editor(){ ?>
         <title>Ace Editor Settings - <?php showOption( 'name' ); ?></title>
-            <div class="mdl-cell mdl-cell--7-col-desktop mdl-cell--7-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+            <div class="mdl-cell mdl-cell--7-col-desktop mdl-cell--7-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
                 <div class="mdl-card_supporting-text" style="padding: 20px;">
                      <form enctype="multipart/form-data" name="optionForm" method="POST" action="" >
                           <div class="input-field mdl-cell mdl-js-textfield getmdl-select  mdl-cell--6-col">
                             <i class="material-icons prefix">palette</i>
                              <input class="mdl-textfield__input" id="ilk" name="acetheme" type="text" readonly tabIndex="-1" placeholder="Select Theme" >
                               <label for="ilk">Ace Editor Theme</label>
-                               <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="ilk"><?php 
+                               <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?>" for="ilk"><?php 
                                     $themes = array( "chrome", "crimson", "kuroir", "iplastic", "github", "monokai", "ambiance", "terminal", "twilight", "chaos" );
                                     foreach ( $themes as $theme ): ?>
                                         <div class="mdl-cell mdl-cell--6-col">
@@ -624,7 +625,7 @@ class Options {
                 </div>
             </div>
             <div class="mdl-cell mdl-cell--5-col-desktop mdl-cell--5-col-tablet mdl-cell--12-col-phone">
-            <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+            <div class="mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
                 <div class="mdl-card__title">
                         <div class="mdl-card__title-text">
                             Ace Editor Themes
@@ -647,7 +648,7 @@ class Options {
 	function colors(){ ?>
 		<title>Skin Color Options - <?php showOption( 'name' ); ?></title>
 	        <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--9-col-tablet mdl-cell--12-col-phone">
-	        	<div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+	        	<div class="mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
 	        		<style type="text/css">
 	                    .cholder {
 	                        display: inline-flex;
@@ -695,7 +696,7 @@ class Options {
 	                </form>
 	                </div>
 	        	</div><br>
-	            <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+	            <div class="mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
 	                <div class="mdl-card__title">
 	                    <div class="mdl-card__title-text">
 	                        Custom Skin
@@ -746,7 +747,7 @@ class Options {
 	            </div>
 	        </div>
 
-	        <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--3-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+	        <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--3-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
 	                <div class="mdl-card__title">
 	                    <div class="mdl-card__title-text">
 	                        Color Palette
@@ -821,13 +822,13 @@ class Options {
 
     function rest(){ ?>
         <title>REST API Options - <?php showOption( 'name' ); ?></title>
-        <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+        <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
             <div class="mdl-card__title">
             <span class="mdl-card__title-text">API Clients</span>
               <div class="mdl-layout-spacer"></div>
             </div>
             <div class="mdl-card__supporting-text">
-              <table class="table pmd-table mdl-color--<?php primaryColor(); ?> mdl-color-text--white">
+              <table class="table pmd-table <?php primaryColor(); ?> mdl-color-text--white">
                     <tr>
                         <thead>
                             <th>Client</th>
@@ -871,7 +872,7 @@ class Options {
             </div>
         </div>
 
-        <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+        <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
           
           <div class="mdl-card__title">
                 <span class="mdl-card__title-text">The Jabali REST-API</span>

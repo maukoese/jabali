@@ -5,6 +5,7 @@
 * @link https://docs.jabalicms.org/init/
 * @author Mauko Maunde
 * @since 0.17.09
+* @license MIT - https://opensource.org/licenses/MIT
 **/
 
 /**
@@ -44,14 +45,14 @@ define( '_IMAGES', _ASSETS.'images/' );
 define( '_FONTS', _ASSETS.'fonts/' );
 
 /**
-*
+* Endpoints
 **/
-define( '_LOGIN', _ROOT.'/signin/' );
+define( '_LOGIN', _ROOT.'/login/' );
 define( '_REGISTER', _ROOT.'/register/' );
 define( '_API', _ROOT.'/api/' );
 
 /**
-*
+* Default contacts
 **/
 define( '_EMAIL', 'jabali@mauko.co.ke' );
 define( '_PHONE', '+254 20 440 4993' );
@@ -124,14 +125,13 @@ $GLOBALS['MENUS'] = new Jabali\Data\Access\Objects\Menus;
 $GLOBALS['GUZZLE'] = new \GuzzleHttp\Client;
 $GLOBALS['MAILER'] = new \PHPMailer\PHPMailer\PHPMailer;
 
-$GLOBALS['gposts'] = $GLOBALS['POSTS'] -> sweep();
-array_shift( $GLOBALS['gposts']);
-$GLOBALS['gpost'] = null;
-$GLOBALS['gpost_count'] = 0;
-$GLOBALS['gpost_index'] = 0;
+$GLOBALS['grecords'] = $GLOBALS['POSTS'] -> sweep();
+array_shift( $GLOBALS['grecords']);
+$GLOBALS['grecord'] = null;
+$GLOBALS['grecord_count'] = 0;
+$GLOBALS['grecord_index'] = 0;
 
 $hGlobal = new Jabali\Lib\Uniform();
-$hMenu = new Jabali\Lib\Menus();
 
 /**
 * Define global variables

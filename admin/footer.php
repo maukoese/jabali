@@ -2,13 +2,13 @@
 /**
 * @package Jabali - The Plug-N-Play Framework
 * @subpackage Admin Footer
-* @link https://docs.jabalicms.org/dashboard/
 * @author Mauko Maunde
 * @since 0.17.04
+* @link https://docs.jabalicms.org/dashboard/
 **/
 if ( !isset($_SESSION) ) { session_start(); } ?>
 </main>
-<footer class="mdl-footer mdl-color--<?php primaryColor(); ?>">
+<footer class="mdl-footer <?php primaryColor(); ?>">
 	<div style="float:left;padding-left:20px;"><?php showOption( 'adfooter' ); ?></div>
 	<span style="float:right;padding-right:20px;"><a href="<?php showOption( 'attribution_link' ); ?>"><?php showOption( 'attribution' ); ?></a></span>
 </footer>

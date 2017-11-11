@@ -5,9 +5,10 @@
 * @link https://docs.jabalicms.org/classes/forms/
 * @author Mauko Maunde
 * @version 0.17.06
+* @license MIT - https://opensource.org/licenses/MIT
 **/ ?>
 <title><?php echo( $resourceDetails['name'] ); ?> Create <?php echo( ucfirst( $_GET['create'] ) ); ?> - <?php showOption( 'name' ); ?></title>
-        <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-color--<?php primaryColor(); ?>">
+        <div class="mdl-cell mdl-cell--12-col mdl-grid <?php primaryColor(); ?>">
         <form enctype="multipart/form-data" name="registerResource" method="POST" action="<?php echo( _ADMIN."resource?create=organization" ); ?>" class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-grid">
             <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
 
@@ -20,7 +21,7 @@
               <div class="input-field mdl-js-textfield mdl-textfield--floating-label getmdl-select">
                 <i class="material-icons prefix">donut_large</i>
                  <input class="mdl-textfield__input" id="ilk" name="ilk" type="text" readonly tabIndex="-1" placeholder="Type" >
-                   <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="ilk">
+                   <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?>" for="ilk">
                      <li class="mdl-menu__item" data-val="ambulance">Ambulance</li>
                      <li class="mdl-menu__item" data-val="lab">Lab</li>
                      <li class="mdl-menu__item" data-val="ward">Ward</li>
@@ -31,7 +32,7 @@
               <div class="input-field mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
                 <i class="material-icons prefix">room</i>
               <input class="mdl-textfield__input" type="text" id="counties" name="location" readonly tabIndex="-1" value="<?php echo( ucwords( $_SESSION[JBLSALT.'Location'] ) ); ?>">
-              <ul for="counties" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
+              <ul for="counties" class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
                   <?php
                   $county_list = "baringo, bomet, bungoma, busia, elgeyo-marakwet, embu, garissa, homa bay, isiolo, kakamega, kajiado, kapenguria, kericho, kiambu, kilifi, kirinyanga, kisii, kisumu, kitui, kwale, laikipia, lamu, machakos, makueni, mandera, marsabit, meru, migori, mombasa, muranga, nairobi, nakuru, nandi, narok, nyamira, nyandarua, nyeri, ol kalou, samburu, siaya, taita-taveta, tana river, tharaka-nithi, trans-nzoia, turkana, uasin-gishu, vihiga, wajir, west pokot";
                   $counties = explode( ", ", $county_list );
@@ -46,7 +47,7 @@
               <div class="input-field mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
                 <i class="material-icons prefix">business</i>
               <input class="mdl-textfield__input" type="text" id="centers" name="company" readonly tabIndex="-1" placeholder="Organization">
-              <ul for="centers" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
+              <ul for="centers" class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
                   <?php
                   $centers = $GLOBALS['JBLDB'] -> query( "SELECT name, id FROM ". _DBPREFIX ."users WHERe ilk = 'center' ORDER BY name" );
                   if ( $GLOBALS['JBLDB'] -> numRows( $centers ) > 0 );
@@ -72,7 +73,7 @@
               <div class="input-field mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
                 <i class="material-icons prefix">face</i>
               <input class="mdl-textfield__input" type="text" id="doctors" name="by" readonly tabIndex="-1" placeholder="Doctor In Charge">
-              <ul for="doctors" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
+              <ul for="doctors" class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
                   <?php
                   $centers = $GLOBALS['JBLDB'] -> query( "SELECT name, id FROM ". _DBPREFIX ."users WHERe ilk = 'doctor' ORDER BY name" );
                   if ( $GLOBALS['JBLDB'] -> numRows( $centers ) > 0 );

@@ -1,9 +1,15 @@
-<?php 
+<?php
+/**
+* @package Jabali
+* @subpackage Jabali MySQL Data Access Layer
+* @author Mauko Maunde
+* @link https://docs.jabalicms.org/data/access/layers/mysql/
+* @license MIT - https://opensource.org/licenses/MIT
+* @since 0.17.09
+**/
+
 namespace Jabali\Data\Access\Layers;
 
-/**
-* Jabali MySQL Data Access Layer
-*/
 class MySQLDB
 {
 

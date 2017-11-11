@@ -2,9 +2,9 @@
 /**
 * @package Jabali - The Plug-N-Play Framework
 * @subpackage Admin Header
-* @link https://docs.jabalicms.org/dashboard/
 * @author Mauko Maunde
 * @since 0.17.09
+* @link https://docs.jabalicms.org/dashboard/
 **/
 
 if ( !isset( $_SESSION[JBLSALT.'Code'] ) ) {
@@ -99,7 +99,7 @@ $GLOBALS['GTextS'] = $GUSkin['texts']; ?>
   </head>
   <body>
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-      <header class="demo-header mdl-layout__header mdl-color-text--grey-600 mdl-color--<?php primaryColor(); ?>">
+      <header class="demo-header mdl-layout__header mdl-color-text--grey-600 <?php primaryColor(); ?>">
         <div class="mdl-layout__header-row">
           <span class="mdl-layout-title"><?php
           if ( isset( $_GET['type'] ) ) {
@@ -155,14 +155,14 @@ $GLOBALS['GTextS'] = $GUSkin['texts']; ?>
             </a><div class="mdl-tooltip" for="h_messages"><?php getMsgCount(); ?> Messages</div>
 
          <!--  <a href="#" class="material-icons mdl-js-button mdl-badge mdl-badge--overlap mdl-button--icon notification" id="hvdrbtn">apps</a>
-          <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop mdl-color--<?php primaryColor(); ?>" for="hvdrbtn">
+          <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right option-drop <?php primaryColor(); ?>" for="hvdrbtn">
           <a id="profile" href="users?view=<?php echo( $_SESSION[JBLSALT.'Code'] ); ?>&key=<?php echo( $_SESSION[JBLSALT.'Alias'] ); ?>" class="mdl-list__item"><i class="mdi mdi-account mdl-list__item-icon alignright"></i><span style="padding-left: 20px"><?php echo( $_SESSION[JBLSALT.'Alias'] ); ?></span></a>
           <a id="profedit" href="./users?edit=<?php echo( $_SESSION[JBLSALT.'Code'] ); ?>&key=<?php echo( $_SESSION[JBLSALT.'Alias'] ); ?>" class="mdl-list__item"><i class="mdi mdi-account-edit mdl-list__item-icon"></i><span style="padding-left: 20px">Edit Account</span></a>
           <a id="hdrbtn" href="<?php echo( _ROOT . '?logout' ); ?>" class="mdl-list__item"><i class="mdi mdi-exit-to-app mdl-list__item-icon"></i><span style="padding-left: 20px">Logout</span></a>
           </ul> -->
 
           <a href="#" class="material-icons mdl-js-button mdl-badge mdl-badge--overlap mdl-button--icon" id="dvdrbtn">more_vert</a>
-          <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right mdl-color--<?php primaryColor(); ?>" for="dvdrbtn">
+          <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right <?php primaryColor(); ?>" for="dvdrbtn">
             <?php
             $default = array( 'general', 'color', 'misc', 'types', 'restful', 'social', 'editor' ); foreach( $GLOBALS['GSettings'] as $setting => $vals ): ?>
               <?php if ( !in_array( $setting, $default ) ): ?>
@@ -173,7 +173,7 @@ $GLOBALS['GTextS'] = $GUSkin['texts']; ?>
           </ul>
         </div>
       </header>
-      <div class="mdl-layout__drawer mdl-color--<?php primaryColor(); ?> mdl-color-text--blue-grey-50">
+      <div class="mdl-layout__drawer <?php primaryColor(); ?> mdl-color-text--blue-grey-50">
         <header class="demo-drawer-header">
           <a href="./users?view=<?php echo( $_SESSION[JBLSALT.'Code'] ); ?>&key=<?php echo( $_SESSION[JBLSALT.'Alias'] ); ?>">
           <?php $avatar = getimagesize( $_SESSION[JBLSALT.'Avatar'] ) ? $_SESSION[JBLSALT.'Avatar'] : _IMAGES.'avatar.png' ?>
@@ -186,26 +186,25 @@ $GLOBALS['GTextS'] = $GUSkin['texts']; ?>
               <i class="mdi mdi-account-edit" role="presentation"></i></button></a>
           </div>
         </header>
-        <nav class="demo-navigation mdl-navigation mdl-color--<?php primaryColor(); ?>"><?php
-          global $hMenu;
-          $hMenu -> drawerdef( 'dashboard' );
-          $hMenu -> drawerdef( 'posts' );
-          $hMenu -> drawerdef( 'users' );
-          $hMenu -> drawerdef( 'comments' );
+        <nav class="demo-navigation mdl-navigation <?php primaryColor(); ?>"><?php
+          $GLOBALS['MENUS'] -> drawerdef( 'dashboard' );
+          $GLOBALS['MENUS'] -> drawerdef( 'posts' );
+          $GLOBALS['MENUS'] -> drawerdef( 'users' );
+          $GLOBALS['MENUS'] -> drawerdef( 'comments' );
           /*
           * User Defined Menus
           */
-          $hMenu -> drawer(); ?><?php
+          $GLOBALS['MENUS'] -> drawer(); ?><?php
           if ( isCap( 'admin' ) ) { ?>
           <a id="themes" class="mdl-navigation__link" href="#"><i class="mdl-color-text--white material-icons" role="presentation">palette</i>Themes</a>
-          <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor(); ?>" for="themes">
+          <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left <?php primaryColor(); ?>" for="themes">
           <a class="mdl-navigation__link" href="themes?page=themes"><i class="mdl-color-text--white material-icons" role="presentation">arrow_downward</i><span>Installed</span></a>
           <a class="mdl-navigation__link" href="themes?showcase=all&page=themes%20showcase"><i class="mdl-color-text--white material-icons" role="presentation">arrow_upward</i><span>Add New</span></a>
           <a class="mdl-navigation__link" href="themes?page=widgets"><i class="mdl-color-text--white material-icons" role="presentation">widgets</i><span>Widgets</span></a>
             </ul>
           <a id="extensions" class="mdl-navigation__link" href="modules?page=extension modules"><i class="mdl-color-text--white material-icons" role="presentation">power</i>Modules</a><?php } ?>
           <a id="htools" class="mdl-navigation__link" href="#"><i class="mdl-color-text--white material-icons" role="presentation">import_export</i>Transfer</a>
-          <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor(); ?>" for="htools"><?php
+          <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left <?php primaryColor(); ?>" for="htools"><?php
           if ( isCap( 'admin' ) ) { ?>
           <a class="mdl-navigation__link" href="tools?page=import"><i class="mdl-color-text--white material-icons" role="presentation">arrow_downward</i><span>Import Data</span></a>
           <a class="mdl-navigation__link" href="tools?page=export"><i class="mdl-color-text--white material-icons" role="presentation">arrow_upward</i><span>Export Data</span></a>
@@ -214,7 +213,7 @@ $GLOBALS['GTextS'] = $GUSkin['texts']; ?>
 
           <div class="mdl-layout-spacer"></div>
           <a id="hpref" class="mdl-navigation__link" href="#"><i class="mdl-color-text--white material-icons" role="presentation">settings</i>Preferences</a>
-            <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left mdl-color--<?php primaryColor(); ?>" for="hpref">
+            <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-left <?php primaryColor(); ?>" for="hpref">
             <a class="mdl-navigation__link" href="options?settings=color"><i class="mdl-color-text--white material-icons" role="presentation">color_lens</i><span>Color Options</span></a><?php
           if ( isCap( 'admin' ) ) { ?>
           <a class="mdl-navigation__link" href="pwa?settings=progressive app"><i class="mdl-color-text--white material-icons" role="presentation">touch_app</i><span>Progressive App</span></a>

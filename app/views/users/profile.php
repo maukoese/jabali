@@ -5,6 +5,7 @@
 * @link https://docs.jabalicms.org/views/
 * @author Mauko Maunde
 * @since 0.17.10
+* @license MIT - https://opensource.org/licenses/MIT
 **/
 
 $getUserCode = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."users WHERE id = '".$data."'" );
@@ -19,7 +20,7 @@ if ( $GLOBALS['JBLDB'] -> numRows( $getUserCode ) > 0) {
     }
     ?><title><?php echo( $userDetails['name'] ); ?> - <?php showOption( 'name' ); ?></title>
           <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
-                <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+                <div class="mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
                     <div class="mdl-card__supporting-text mdl-card--expand mdl-grid">
                       <div class="mdl-cell mdl-cell--7-col-desktop mdl-cell--7-col-tablet mdl-cell--12-col-phone">
                         <h5><i class="mdi mdi-<?php 
@@ -77,7 +78,7 @@ if ( $GLOBALS['JBLDB'] -> numRows( $getUserCode ) > 0) {
             </div>
 
             <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
-                <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><?php 
+                <div class="mdl-card mdl-shadow--2dp <?php primaryColor(); ?>"><?php 
                       $getNotes = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."comments WHERE author = '".$userDetails['id']."'" );
                       if ( $getNotes && $GLOBALS['JBLDB'] -> numRows( $getNotes ) > 0) { ?>
                         <div class="mdl-card__title">

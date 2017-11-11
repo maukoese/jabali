@@ -2,9 +2,9 @@
 /**
 * @package Jabali - The Plug-N-Play Framework
 * @subpackage Progressive Web App
-* @link https://docs.jabalicms.org/pwa/
 * @author Mauko Maunde
 * @since 0.17.09
+* @link https://docs.jabalicms.org/pwa/
 **/
 session_start();
 require_once( '../init.php' );
@@ -29,7 +29,7 @@ if ( isset( $_GET['add'] ) ) { ?>
 	<title><?php showOption( 'name' ); ?> Progressive Web App</title>
     	<form class="mdl-grid" name=" action" method="">
     		
-          <div class="mdl-cell mdl-cell--8-col mdl-color--<?php primaryColor(); ?> mdl-card">
+          <div class="mdl-cell mdl-cell--8-col <?php primaryColor(); ?> mdl-card">
           <div class="mdl-card__supporting-text">
             <div class="input-field">
             <i class="material-icons prefix">label</i>
@@ -61,7 +61,7 @@ if ( isset( $_GET['add'] ) ) { ?>
           <div class="mdl-card__menu"></div>
           </div>
 
-          <div class="mdl-cell mdl-cell--4-col mdl-color--<?php primaryColor(); ?> mdl-card">
+          <div class="mdl-cell mdl-cell--4-col <?php primaryColor(); ?> mdl-card">
           <div class="mdl-card__supporting-text">
             <div class="input-field">
             <i class="material-icons prefix">developer_mode</i>

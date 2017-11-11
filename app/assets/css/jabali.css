@@ -21225,28 +21225,6 @@ a {
 
 .submenu {
     z-index: 1;
-    background-color: cyan;
-}
-
-#wrapper
-{
- margin:0 auto;
- padding:0px;
- text-align:center;
- width:50%;
-}
-
-#login_div #register
-{
- margin-top:20px;
- padding-left:20px;
- float:left;
-}
-#login_div #forgot
-{
- margin-top:20px;
- padding-right: 50px;
- float:right;
 }
 
 .wrapper {
@@ -21552,7 +21530,7 @@ a {
   width: 100%;
   height: 100%;
   z-index: 9999;
-  background: url('../../assets/images/loader.gif') 50% 50% no-repeat rgb(249,249,249);
+  background: url('../images/loader.gif') 50% 50% no-repeat rgb(249,249,249);
 }
 
 #myBtn {

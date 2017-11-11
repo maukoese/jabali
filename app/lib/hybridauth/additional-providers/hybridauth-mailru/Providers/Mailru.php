@@ -1,8 +1,8 @@
 <?php
 /*!
 * HybridAuth
-* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | https://hybridauth.sourceforge.net/licenses.html 
+* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
+* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html 
 * 
 * Provider writed by xbreaker | https://github.com/xbreaker/hybridauth
 */
@@ -21,7 +21,7 @@ class Hybrid_Providers_Mailru extends Hybrid_Provider_Model_OAuth2
 		parent::initialize();
 
 		// Provider apis end-points
-		$this->api->api_base_url  = "https://www.appsmail.ru/platform/api";
+		$this->api->api_base_url  = "http://www.appsmail.ru/platform/api";
 		$this->api->authorize_url = "https://connect.mail.ru/oauth/authorize";
 		$this->api->token_url     = "https://connect.mail.ru/oauth/token"; 
 		$this->api->sign_token_name = "session_key";

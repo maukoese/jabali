@@ -4,7 +4,7 @@
 * https://github.com/elhardoum/simple-shortcodes
 */
 
-namespace App;
+namespace Lib;
 
 class Shortcodes
 {

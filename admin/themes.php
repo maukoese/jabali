@@ -3,8 +3,8 @@
 * @package Jabali
 * @subpackage Themes Creation Client
 * @author Mauko Maunde
-* @link https://docs.jabalicms.org/api/themes/
 * @since 0.17.06
+* @link https://docs.jabalicms.org/api/themes/
 **/
 
 session_start();
@@ -59,18 +59,19 @@ SOFTWARE.';
 * @package Jabali - The Plug-N-Play Framework
 * @subpackage ". $name ."
 * @author ". $author ."
-* @link ". $website ."
 * @since ". $version ."
+* @link ". $website ."
+* @license ". $license ." - ". $licenselink  ."
 **/";
   $tag = "$";
   $thdi = "<?php echo( _THEMES ); ?>". $slug;
 
   $headertext = $comments." ?>
 <!DOCTYPE html>
-  <html lang=\"<?php showOption( 'language'); ?>\" xmlns=\"https://www.w3.org/1999/html\">
+  <html lang=\"<?php showOption( 'language' ); ?>\" xmlns=\"https://www.w3.org/1999/html\">
     <head>
       <?php head();
-      loadStyle( 'css/".$slug .".css', '".$slug ."'); ?>
+      loadStyle( 'css/".$slug .".css', '".$slug ."' ); ?>
     </head>
     <body class=\"\" >
     <?php headerLogo(); ?>";
@@ -90,8 +91,8 @@ SOFTWARE.';
 
   $templatetext = $comments." ?>
 <title><?php theTitle(); ?> - <?php showOption( 'name' ); ?></title>
+<?php theImage('100%'); ?>
 <h1><?php theTitle(); ?></h1>
-<?php theImage(); ?>
 <p><?php theDate(); ?></p>
 <p><?php theCategories(); ?></p>
 <p><?php theTags(); ?></p>
@@ -370,7 +371,7 @@ if ( isset( $_GET['install'] ) ) {
   <title>Add <?php echo( ucwords( $create ) ); ?> - <?php showOption( 'name' ); ?></title>
   <?php if ( $create == "upload" ) { ?>
     <div class="mdl-grid">
-    <form method="POST" action="" class="mdl-cell mdl-cell--8-col mdl-grid mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>" style="padding: 15%" >
+    <form method="POST" action="" class="mdl-cell mdl-cell--8-col mdl-grid mdl-shadow--2dp <?php primaryColor(); ?>" style="padding: 15%" >
       <div class="mdl-cell mdl-cell--8-col file-field input-field">
         <div class="btn">
           <span class="material-icons">attach_file</span>
@@ -385,7 +386,7 @@ if ( isset( $_GET['install'] ) ) {
         <button class="mdl-button mdl-button--fab mdl-button--colored alignright" type="submit" name="uploadtheme"><i class="material-icons">forward</i></button>
       </div>
     </form>
-    <div class="mdl-cell mdl-cell--4-col file-field input-field mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+    <div class="mdl-cell mdl-cell--4-col file-field input-field mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
       
        <a class="mdl-button mdl-button--fab mdl-button--colored addfab" href="?create=theme"><i class ="material-icons">create</i></a>
       <div><?php
@@ -401,17 +402,17 @@ if ( isset( $_GET['install'] ) ) {
         } ?>
       </div>
     </div>
-    <div class="mdl-cell mdl-cell--12-col mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+    <div class="mdl-cell mdl-cell--12-col mdl-shadow--2dp <?php primaryColor(); ?>">
     </div>
     </div><?php
   } elseif ( $create == "copy" ) { ?>
     <form method="POST" action="" class="mdl-grid">
-      <div class="mdl-cell mdl-cell--8-col mdl-color--<?php primaryColor(); ?> mdl-card">
+      <div class="mdl-cell mdl-cell--8-col <?php primaryColor(); ?> mdl-card">
       <div class="mdl-card__supporting-text">
         <div class="input-field getmdl-select">
         <i class="material-icons prefix">content_copy</i>
          <input class="mdl-textfield__input" id="ilk" name="source" type="text" readonly tabIndex="-1" value="<?php if (isset( $_GET['source'] ) ){ echo $_GET['source']; } else{ echo 'Select Source'; } ?>" >
-           <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?> option-drop" for="ilk" style="max-height: 500px !important; overflow-y: auto;"><?php
+           <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?> option-drop" for="ilk" style="max-height: 500px !important; overflow-y: auto;"><?php
                     $path = _ABSTHEMES_;
                     $dir = new DirectoryIterator($path);
                     foreach ($dir as $fileinfo) {
@@ -480,7 +481,7 @@ if ( isset( $_GET['install'] ) ) {
 
       </div>
       </div>
-      <div class="mdl-cell mdl-cell--4-col mdl-color--<?php primaryColor(); ?> mdl-card">
+      <div class="mdl-cell mdl-cell--4-col <?php primaryColor(); ?> mdl-card">
         <div class="mdl_card__image">
           <img src="<?php echo _IMAGES . 'placeholder.png'; ?>">
         </div>
@@ -513,7 +514,7 @@ if ( isset( $_GET['install'] ) ) {
     </form><?php 
   } else { ?>
     <form method="POST" action="" class="mdl-grid">
-      <div class="mdl-cell mdl-cell--8-col mdl-color--<?php primaryColor(); ?> mdl-card">
+      <div class="mdl-cell mdl-cell--8-col <?php primaryColor(); ?> mdl-card">
       <div class="mdl-card__supporting-text">
         <div class="input-field">
           <i class="material-icons prefix">label</i>
@@ -572,9 +573,9 @@ if ( isset( $_GET['install'] ) ) {
 
       </div>
       </div>
-      <div class="mdl-cell mdl-cell--4-col mdl-color--<?php primaryColor(); ?> mdl-card">
+      <div class="mdl-cell mdl-cell--4-col <?php primaryColor(); ?> mdl-card">
         <div class="mdl_card__image">
-          <img src="<?php echo _IMAGES . 'placeholder.png'; ?>">
+          <img src="<?php echo _IMAGES . 'placeholder.png'; ?>" width="100%">
         </div>
         <div class="mdl-card__supporting-text">
           <h3>Theme Social</h3>
@@ -616,7 +617,7 @@ if ( isset( $_GET['install'] ) ) {
   <title>Editing <?php echo( $_GET['key'] ); ?> - <?php showOption( 'name' ); ?></title>
   <form class="mdl-grid" method="POST" action="">
     <div class="mdl-cell mdl-cell--8-col mdl-card">
-      <div class="mdl-card__supporting-text mdl-color--<?php primaryColor(); ?>">
+      <div class="mdl-card__supporting-text <?php primaryColor(); ?>">
       <p><?php echo '<code>themes/' . $theme . '/' . $file . '</code>'; ?><span class="alignright"><button class="mdl-button mdl-button--icon mdl-button--colored" type="submit" name="deletefile" value="<?php echo $file; ?>"><i class="material-icons">delete</i></button></span></p>
       <div class="input-field">
       <i class="material-icons prefix">label</i>
@@ -637,7 +638,7 @@ if ( isset( $_GET['install'] ) ) {
       </div>
     </div>
     <div class="mdl-cell mdl-cell--4-col">
-      <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+      <div class="mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
         <div class="mdl-card__title">
                   <span class="mdl-card__title-text">Other Files</span>
                 <div class="mdl-layout-spacer"></div>
@@ -659,7 +660,7 @@ if ( isset( $_GET['install'] ) ) {
               </div>
       </div>
       <br>
-      <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+      <div class="mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
         <div class="mdl-card__title">
                   <span class="mdl-card__title-text">Templates</span>
                 <div class="mdl-layout-spacer"></div>
@@ -683,7 +684,7 @@ if ( isset( $_GET['install'] ) ) {
               </div>
       </div>
       <br>
-      <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+      <div class="mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
         <div class="mdl-card__title">
                   <span class="mdl-card__title-text">Stylesheets</span>
                 <div class="mdl-layout-spacer"></div>
@@ -707,7 +708,7 @@ if ( isset( $_GET['install'] ) ) {
               </div>
       </div>
       <br>
-      <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+      <div class="mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
         <div class="mdl-card__title">
                   <span class="mdl-card__title-text">Scripts</span>
                 <div class="mdl-layout-spacer"></div>
@@ -731,7 +732,7 @@ if ( isset( $_GET['install'] ) ) {
               </div>
       </div>
       <br>
-      <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+      <div class="mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
         <div class="mdl-card__title">
                   <span class="mdl-card__title-text">Classes</span>
                 <div class="mdl-layout-spacer"></div>
@@ -783,7 +784,7 @@ if ( isset( $_GET['install'] ) ) {
   <title>Adding File To <?php echo( ucwords( $_GET['key'] ) ); ?> Theme - <?php showOption( 'name' ); ?></title>
   <form class="mdl-grid" method="POST" action="">
         <div class="mdl-cell mdl-cell--8-col mdl-card">
-          <div class="mdl-card__supporting-text mdl-color--<?php primaryColor(); ?>">
+          <div class="mdl-card__supporting-text <?php primaryColor(); ?>">
           <p><?php echo '<code>themes/' . $file . '/~.'. $theme .'</code>'; ?></p>
             <div class="input-field">
             <i class="material-icons prefix">label</i>
@@ -819,7 +820,7 @@ if ( isset( $_GET['install'] ) ) {
         </div>
           <div class="mdl-cell mdl-cell--4-col">
 
-          <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+          <div class="mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
             <div class="mdl-card__title">
                       <span class="mdl-card__title-text">Other Files</span>
                     <div class="mdl-layout-spacer"></div>
@@ -841,7 +842,7 @@ if ( isset( $_GET['install'] ) ) {
                   </div>
           </div>
           <br>
-          <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+          <div class="mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
             <div class="mdl-card__title">
                       <span class="mdl-card__title-text">Templates</span>
                     <div class="mdl-layout-spacer"></div>
@@ -867,7 +868,7 @@ if ( isset( $_GET['install'] ) ) {
 
 
           <br>
-          <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+          <div class="mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
             <div class="mdl-card__title">
                       <span class="mdl-card__title-text">Stylesheets</span>
                     <div class="mdl-layout-spacer"></div>
@@ -891,7 +892,7 @@ if ( isset( $_GET['install'] ) ) {
                   </div>
           </div>
           <br>
-          <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+          <div class="mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
             <div class="mdl-card__title">
                       <span class="mdl-card__title-text">Scripts</span>
                     <div class="mdl-layout-spacer"></div>
@@ -916,7 +917,7 @@ if ( isset( $_GET['install'] ) ) {
           </div>
 
           <br>
-          <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+          <div class="mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
             <div class="mdl-card__title">
                       <span class="mdl-card__title-text">Classes</span>
                     <div class="mdl-layout-spacer"></div>
@@ -958,7 +959,7 @@ if ( isset( $_GET['install'] ) ) {
   } ?>
   <title>Theme - <?php echo( $_GET['key'] ); ?> - <?php showOption( 'name' ); ?></title>
   <div class="mdl-grid">
-  <form method="POST" action="" class="mdl-cell mdl-cell--8-col mdl-shadow--2dp mdl-color--<?php primaryColor(); ?> mdl-card">
+  <form method="POST" action="" class="mdl-cell mdl-cell--8-col mdl-shadow--2dp <?php primaryColor(); ?> mdl-card">
             <div class="mdl-card-media">
           <img src="<?php echo _IMAGES . 'placeholder.png'; ?>" width="100%" style="overflow: hidden;" >
         </div>
@@ -1004,7 +1005,7 @@ if ( isset( $_GET['install'] ) ) {
       <button type="submit" class="mdl-button mdl-button--fab addfab mdl-button--colored right"><i class="material-icons">create</i></button>
     </form>
 
-  <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--2dp  mdl-color--<?php primaryColor(); ?>">
+  <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--2dp  <?php primaryColor(); ?>">
     <div class="mdl-card__title">
     <i class="material-icons">help</i>
       <span class="mdl-button">Tips on extending Jabali</span>
@@ -1052,7 +1053,7 @@ if ( isset( $_GET['install'] ) ) {
     if ( $themes !== false ){
       $showcase = json_decode( $themes, true );
       foreach ($showcase as $theme => $xD ) { ?>
-        <div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+        <div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
           <div class="mdl-card__title mdl-card--expand">
             <h5 class="mdl-card__title-text"><?php echo $xD[ 'name' ] ; ?></h5>
           <div class="mdl-layout-spacer"></div>
@@ -1094,7 +1095,7 @@ if ( isset( $_GET['install'] ) ) {
               } ?>
               <div class="mdl-layout-spacer"></div>
               <a id = "<?php echo $xD[ 'slug' ] ; ?>author" href="#" class="material-icons alignright">more_vert</a>
-              <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-right mdl-color--<?php primaryColor(); ?> option-drop" for="<?php echo $xD[ 'slug' ] ; ?>author" style="overflow-y: auto;">
+              <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-right <?php primaryColor(); ?> option-drop" for="<?php echo $xD[ 'slug' ] ; ?>author" style="overflow-y: auto;">
               <a href="?view=<?php echo $xD[ 'slug' ] ; ?>&key=<?php echo $xD[ 'name'] ; ?>" class="mdl-list__item"><i class="mdi mdi-details mdl-list__item-icon"></i><span style="padding-left: 20px">Full Details</span></a>
               <a href="<?php echo $xD[ 'website'] ; ?>" class="mdl-list__item"><i class="mdi mdi-account mdl-list__item-icon"></i><span style="padding-left: 20px">Author: <?php echo $xD[ 'author' ] ; ?></span></a>
               <div class="mdl-layout-spacer"></div>
@@ -1131,7 +1132,7 @@ if ( isset( $_GET['install'] ) ) {
               if( file_exists( _ABSTHEMES_.$theme."/".$theme.".json" ) ) {
               $xJson = file_get_contents( _ABSTHEMES_.$theme."/".$theme.".json" );
               $xD = json_decode( $xJson, true ); ?>
-            <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--3-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+            <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--3-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
               <div class="mdl-card__title mdl-card--expand">
                 <h5 class="mdl-card__title-text"><?php echo $xD[ 'name' ] ; ?></h5>
               <div class="mdl-layout-spacer"></div>
@@ -1160,7 +1161,7 @@ if ( isset( $_GET['install'] ) ) {
               <div class="mdl-layout-spacer"></div>
                     <a href="?edit=<?php echo $xD[ 'slug' ] ; ?>&key=<?php echo $xD[ 'slug' ] ; ?>.php" class="material-icons">create</a>
                     <a id = "<?php echo $xD[ 'slug' ] ; ?>author" href="#" class="material-icons alignright">more_vert</a>
-                    <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-right mdl-color--<?php primaryColor(); ?> option-drop" for="<?php echo $xD[ 'slug' ] ; ?>author" style="overflow-y: auto;">
+                    <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--top-right <?php primaryColor(); ?> option-drop" for="<?php echo $xD[ 'slug' ] ; ?>author" style="overflow-y: auto;">
                     <a href="?view=<?php echo $xD[ 'slug' ] ; ?>&key=<?php echo $xD[ 'name'] ; ?>" class="mdl-list__item"><i class="mdi mdi-details mdl-list__item-icon"></i><span style="padding-left: 20px">Full Details</span></a>
                     <a href="<?php echo $xD[ 'website'] ; ?>" class="mdl-list__item"><i class="mdi mdi-account mdl-list__item-icon"></i><span style="padding-left: 20px">Author: <?php echo $xD[ 'author' ] ; ?></span></a>
                     <div class="mdl-layout-spacer"></div>

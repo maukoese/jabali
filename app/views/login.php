@@ -5,6 +5,7 @@
 * @link https://docs.jabalicms.org/views/login/
 * @author Mauko Maunde
 * @since 0.17.09
+* @license MIT - https://opensource.org/licenses/MIT
 **/ ?>
 <div class="mdl-grid" >
 	<div class="mdl-cell mdl-cell--4-col"></div>
@@ -20,21 +21,19 @@
 			} ?>
 			<div class="mdl-grid">
 			<div class="mdl-cell mdl-cell--12-col mdl-grid">
-				<div class="mdl-cell">
-					<a class="mdl-button mdl-button--fab mdl-color--indigo" href="<?php echo _ROOT; ?>signin/facebook">
-						<i class="fa fa-facebook fa-2x mdl-color-text--white"></i>
+				<div class="mdl-cell mdl-cell--3-col"></div>
+				<div class="mdl-cell mdl-cell--6-col">
+					<a class="mdl-button mdl-button--icon mdl-color--indigo" href="<?php echo _ROOT; ?>/signin/facebook">
+						<i class="fa fa-facebook mdl-color-text--white"></i>
+					</a>
+					<a class="mdl-button mdl-button--icon mdl-color--light-blue" href="<?php echo _ROOT; ?>/signin/twitter">
+						<i class="fa fa-twitter mdl-color-text--white"></i>
+					</a>
+					<a class="mdl-button mdl-button--icon red" href="<?php echo _ROOT; ?>/signin/google">
+						<i class="fa fa-google mdl-color-text--white"></i>
 					</a>
 				</div>
-				<div class="mdl-cell">
-					<a class="mdl-button mdl-button--fab mdl-color--light-blue" href="<?php echo _ROOT; ?>signin/twitter">
-						<i class="fa fa-twitter fa-2x mdl-color-text--white"></i>
-					</a>
-				</div>
-				<div class="mdl-cell">
-					<a class="mdl-button mdl-button--fab mdl-color--red" href="<?php echo _ROOT; ?>signin/google">
-						<i class="fa fa-google fa-2x mdl-color-text--white"></i>
-					</a>
-				</div>
+				<div class="mdl-cell mdl-cell--3-col"></div>
 			</div>
 			<div class="mdl-cell mdl-cell--12-col">
 				<form enctype="multipart/form-data" method="POST" action="" class="mdl-grid">

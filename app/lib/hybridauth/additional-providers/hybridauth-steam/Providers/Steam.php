@@ -1,26 +1,26 @@
 <?php
 /*!
 * HybridAuth
-* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | https://hybridauth.sourceforge.net/licenses.html
+* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
+* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
 */
 
 /**
  * Hybrid_Providers_Steam provider adapter based on OpenID protocol
  *
- * https://hybridauth.sourceforge.net/userguide/IDProvider_info_Steam.html
+ * http://hybridauth.sourceforge.net/userguide/IDProvider_info_Steam.html
  *
- * This class has been entirely reworked for the new Steam API (https://steamcommunity.com/dev)
+ * This class has been entirely reworked for the new Steam API (http://steamcommunity.com/dev)
  */
 class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 {
-    var $openidIdentifier = "https://steamcommunity.com/openid";
+    var $openidIdentifier = "http://steamcommunity.com/openid";
 
     function loginFinish()
     {
         parent::loginFinish();
 
-        $this->user->profile->identifier = str_ireplace("https://steamcommunity.com/openid/id/",
+        $this->user->profile->identifier = str_ireplace("http://steamcommunity.com/openid/id/",
             "", $this->user->profile->identifier);
 
         if (!$this->user->profile->identifier) {
@@ -39,7 +39,7 @@ class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 
     function getUserProfileWebAPI($apiKey)
     {
-        $apiUrl = 'https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key='
+        $apiUrl = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key='
             . $apiKey . '&steamids=' . $this->user->profile->identifier;
 
         $data = @file_get_contents($apiUrl);
@@ -61,7 +61,7 @@ class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 
     function getUserProfileLegacyAPI()
     {
-        $apiUrl = 'https://steamcommunity.com/profiles/' . $this->user->profile->identifier . '/?xml=1';
+        $apiUrl = 'http://steamcommunity.com/profiles/' . $this->user->profile->identifier . '/?xml=1';
 
 	try {
             $data = @file_get_contents($apiUrl);
@@ -78,10 +78,10 @@ class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 		# store the user profile.  
 		//$this->user->profile->identifier		=	"";
 		if (property_exists($data, 'customURL') && (string) $data->customURL != '') {
-      			$this->user->profile->profileURL = 'https://steamcommunity.com/id/' . (string) $data->customURL . '/';
+      			$this->user->profile->profileURL = 'http://steamcommunity.com/id/' . (string) $data->customURL . '/';
     		}
     		else {
-            $this->user->profile->profileURL = "https://steamcommunity.com/profiles/{$this->user->profile->identifier}/";
+            $this->user->profile->profileURL = "http://steamcommunity.com/profiles/{$this->user->profile->identifier}/";
     		}
 		
 		$this->user->profile->webSiteURL		=	"";

@@ -5,16 +5,9 @@
 * @link https://docs.jabalicms.org/views/signup
 * @author Mauko Maunde
 * @since 0.17.09
+* @license MIT - https://opensource.org/licenses/MIT
 **/ ?>
 <!doctype html>
-<!--
-  Jabali Framework
-  © 2017 Mauko Maunde. All rights reserved.
-
-  Licensed under the MIT license (the "License" );
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at https://opensource.org/licenses/MIT
--->
 <html lang="en" xmlns="https://www.w3.org/1999/html">
 <head>
     <link rel="shortcut icon" href="<?php 
@@ -47,9 +40,8 @@
     <link rel="stylesheet" href='<?php echo _STYLES; ?>lib/getmdl-select.min.css'>
     <link rel="stylesheet" href="<?php echo _STYLES; ?>lib/nv.d3.css">
     <link rel="stylesheet" href="<?php echo _STYLES; ?>jquery-ui.css">
-    <link rel="stylesheet" href="<?php echo _STYLES; ?>materialize.css">
     <link rel="stylesheet" href="<?php echo _STYLES; ?>material-icons.css">
-    <link rel="stylesheet" href="<?php echo _STYLES; ?>materialdesignicons.css">
+    <link rel="stylesheet" href="<?php echo _STYLES; ?>materialdesignicons.min.css">
     <link rel="stylesheet" href="<?php echo _STYLES; ?>font-awesome.css">
     <link rel="stylesheet" href="<?php echo _STYLES; ?>jabali.css">
     <!-- <link rel="stylesheet" href="app/styles.php"> -->
@@ -84,7 +76,6 @@
     </style>
 
     <script src="<?php echo _SCRIPTS; ?>jquery-3.2.1.min.js"></script>
-    <script src="<?php echo _SCRIPTS; ?>jquery-ui.min.js"></script>
+    <script src="<?php echo _SCRIPTS; ?>jquery-ui.js"></script>
     <script src="<?php echo _ASSETS; ?>js/ckeditor/ckeditor.js"></script>
-    <script src="<?php echo _ASSETS; ?>js/list.js"></script>
 </head>

@@ -5,6 +5,7 @@
 * @link https://docs.jabalicms.org/classes/forms/
 * @author Mauko Maunde
 * @version 0.17.06
+* @license MIT - https://opensource.org/licenses/MIT
 **/
 $user = $GLOBALS['USERS'] -> getId($data);
 if ( !isset($user['error']) ) {
@@ -30,7 +31,7 @@ if ( !isset($user['error']) ) {
             <div class="input-field mdl-cell mdl-cell--6-col mdl-js-textfield mdl-textfield--floating-label getmdl-select">
               <i class="material-icons prefix">donut_large</i>
                <input class="mdl-textfield__input" id="ilk" name="ilk" type="text" readonly tabIndex="-1" placeholder="<?php echo( ucfirst( $userDetails['ilk'] ) ); ?>" value="<?php echo( ucwords( $userDetails['ilk'] ) ); ?>">
-                 <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="ilk"><?php
+                 <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?>" for="ilk"><?php
                    if ( $_SESSION[JBLSALT.'Cap'] == "admin"  ) {
                     echo( '<li class="mdl-menu__item" data-val="admin">Admin</li>' );
                    } ?>
@@ -45,7 +46,7 @@ if ( !isset($user['error']) ) {
               <div class="input-field mdl-js-textfield mdl-textfield--floating-label getmdl-select">
                 <i class="mdi mdi-gender-<?php echo( strtolower( $userDetails['gender'] ) ); ?> prefix"></i>
                  <input class="mdl-textfield__input" id="gender" name="gender" type="text" readonly tabIndex="-1" placeholder="<?php echo( strtolower( $userDetails['gender'] ) ); ?>" value="<?php echo( ucwords( $userDetails['gender'] ) ); ?>">
-                   <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="gender">
+                   <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?>" for="gender">
                      <li class="mdl-menu__item" data-val="male">Male</li>
                      <li class="mdl-menu__item" data-val="female">Female</li>
                      <li class="mdl-menu__item" data-val="other">Other</li>
@@ -56,7 +57,7 @@ if ( !isset($user['error']) ) {
             <div class="input-field  mdl-cell mdl-cell--6-col mdl-js-textfield getmdl-select getmdl-select__fix-height">
               <i class="material-icons prefix">room</i>
               <input class="mdl-textfield__input" type="text" id="counties" name="location" readonly tabIndex="-1" placeholder="<?php echo( ucwords( $userDetails['location'] ) ); ?>" value="<?php echo( ucwords( $userDetails['location'] ) ); ?>">
-              <ul for="counties" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
+              <ul for="counties" class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
                   <?php
                   $county_list = "baringo, bomet, bungoma, busia, elgeyo-marakwet, embu, garissa, homa bay, isiolo, kakamega, kajiado, kapenguria, kericho, kiambu, kilifi, kirinyanga, kisii, kisumu, kitui, kwale, laikipia, lamu, machakos, makueni, mandera, marsabit, meru, migori, mombasa, muranga, nairobi, nakuru, nandi, narok, nyamira, nyandarua, nyeri, ol kalou, samburu, siaya, taita-taveta, tana river, tharaka-nithi, trans-nzoia, turkana, uasin-gishu, vihiga, wajir, west pokot";
                   $counties = explode( ", ", $county_list );
@@ -71,7 +72,7 @@ if ( !isset($user['error']) ) {
             <div class="input-field mdl-cell mdl-cell--6-col mdl-js-textfield getmdl-select getmdl-select__fix-height">
               <i class="material-icons prefix">room</i>
               <input class="mdl-textfield__input" type="text" id="cities" name="location" readonly tabIndex="-1" placeholder="<?php echo( ucwords( $userDetails['location'] ) ); ?>" value="<?php echo( ucwords( $userDetails['location'] ) ); ?>">
-              <ul for="cities" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
+              <ul for="cities" class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
                   <?php
                   $county_list = "baringo, bomet, bungoma, busia, elgeyo-marakwet, embu, garissa, homa bay, isiolo, kakamega, kajiado, kapenguria, kericho, kiambu, kilifi, kirinyanga, kisii, kisumu, kitui, kwale, laikipia, lamu, machakos, makueni, mandera, marsabit, meru, migori, mombasa, muranga, nairobi, nakuru, nandi, narok, nyamira, nyandarua, nyeri, ol kalou, samburu, siaya, taita-taveta, tana river, tharaka-nithi, trans-nzoia, turkana, uasin-gishu, vihiga, wajir, west pokot";
                   $counties = explode( ", ", $county_list );

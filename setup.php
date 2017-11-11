@@ -5,6 +5,7 @@
 * @link https://docs.jabalicms.org/setup/
 * @author Mauko Maunde
 * @since 0.17.05
+* @license MIT - https://opensource.org/licenses/MIT
 **/
 
 
@@ -54,7 +55,7 @@ if ( !file_exists( '.htaccess' ) ) {
 	$txt = "\n";
 	fwrite( $rewrite,  $txt );
 
-	$text = 'RewriteRule ^([^\.]+)$ $1.php [NC]'; //RewriteRule ^(.+)$ $1.php [L,QSA]
+	$text = 'RewriteRule ^([^\.]+)$ $1.php [NC]';
 	fwrite( $rewrite,  $text );
 
 	$txt = "\n";

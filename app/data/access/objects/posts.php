@@ -5,6 +5,7 @@
 * @author Mauko Maunde
 * @link https://docs.jabalicms.org/data/access/obects/options
 * @since 0.17.09
+* @license MIT - https://opensource.org/licenses/MIT
 **/
 
 namespace Jabali\Data\Access\Objects;
@@ -288,9 +289,9 @@ class Posts {
 
     $conds = array( "id" => $id );
     if( $GLOBALS['JBLDB'] -> delete( $this -> table, $conds ) ){
-      return array("success" => "Post deleted Successfully");
+      return array("status" => "success", "message" => "Post deleted Successfully");
     } else {
-      return array("error" => "Post deletion Failed", "cause" => $GLOBALS['JBLDB'] -> error());
+      return array( "status" => "fail", "error" => "Post deletion Failed", "cause" => $GLOBALS['JBLDB'] -> error());
     }
   }
 

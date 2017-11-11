@@ -1,7 +1,7 @@
 <?php
 /*!
 * HybridAuth
-* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+* http://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
 *  (c) 2009-2015 HybridAuth authors | hybridauth.sourceforge.net/licenses.html
 */
 
@@ -10,7 +10,7 @@
  */
 class Hybrid_Providers_WarGaming extends Hybrid_Provider_Model_OpenID
 {
-  var $openidIdentifier = "https://ru.wargaming.net/id/";
+  var $openidIdentifier = "http://ru.wargaming.net/id/";
 
   /**
    * finish login step

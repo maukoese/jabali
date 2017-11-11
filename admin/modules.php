@@ -2,9 +2,9 @@
 /**
 * @package Jabali - The Plug-N-Play Framework
 * @subpackage Extension Modules
-* @link https://docs.jabalicms.org/extend/
 * @author Mauko Maunde
 * @since 0.17.09
+* @link https://docs.jabalicms.org/extend/
 **/
 session_start();
 require_once( '../init.php' );
@@ -12,8 +12,7 @@ require_once( 'header.php' );
 
 if ( isset( $_POST['save']) && !empty( $_POST['ext'] ) ) {
     $activex = json_encode( $_POST['ext'] );
-    $hOption = new Jabali\Classes\Options();
-    $hOption -> update( 'modules', $activex, date('Y-m-d H:i:s') );
+    $GLOBALS['OPTIONS'] -> update( 'modules', $activex, date('Y-m-d H:i:s') );
 }
 
 if ( isset( $_GET['install'] ) ) {
@@ -47,7 +46,7 @@ if ( isset( $_GET['install'] ) ) {
 	?>
 <title>Extension: <?php echo $_GET['key']; ?> - <?php showOption( 'name' ); ?></title>
   <div class="mdl-grid">
-  <form method="POST" action="" class="mdl-grid mdl-cell mdl-cell--8-col mdl-shadow--2dp mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><?php
+  <form method="POST" action="" class="mdl-grid mdl-cell mdl-cell--8-col mdl-shadow--2dp mdl-card mdl-shadow--2dp <?php primaryColor(); ?>"><?php
         $extension = $_GET['view'];
         $xJson = file_get_contents( _ABSX_.$extension."/".$extension.".json" );
         $xD = json_decode( $xJson, true ); ?>
@@ -77,7 +76,7 @@ if ( isset( $_GET['install'] ) ) {
               </div>
         <div class="mdl-layout-spacer"></div>
               <a id = "<?php echo $xD[ 'slug' ] ; ?>author" href="#" class="material-icons alignright">perm_identity</a>
-              <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right mdl-color--<?php primaryColor(); ?>" for="<?php echo $xD[ 'slug' ] ; ?>author" style="overflow-y: auto;">
+              <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right <?php primaryColor(); ?>" for="<?php echo $xD[ 'slug' ] ; ?>author" style="overflow-y: auto;">
               <a href="<?php echo $xD[ 'social' ]['facebook'] ; ?>" class="mdl-list__item"><i class="mdi mdi-facebook mdl-list__item-icon"></i><span style="padding-left: 20px">Facebook</span></a>
               <a href="<?php echo $xD[ 'social' ]['twitter'] ; ?>" class="mdl-list__item"><i class="mdi mdi-twitter mdl-list__item-icon"></i><span style="padding-left: 20px">Twitter</span></a>
               <a href="<?php echo $xD[ 'social' ]['github'] ; ?>" class="mdl-list__item"><i class="mdi mdi-github-circle mdl-list__item-icon"></i><span style="padding-left: 20px">Github</span></a>
@@ -88,7 +87,7 @@ if ( isset( $_GET['install'] ) ) {
       <button type="submit" name="save" class="mdl-button mdl-button--fab addfab mdl-button--colored right"><i class="material-icons">save</i></button>
     </form>
 
-  <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--2dp  mdl-color--<?php primaryColor(); ?>">
+  <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--2dp  <?php primaryColor(); ?>">
     <div class="mdl-card__title">
     <i class="material-icons">help</i>
       <span class="mdl-button">Tips on Extending Jabali</span>
@@ -139,7 +138,7 @@ if ( isset( $_GET['install'] ) ) {
               $extension = $fileinfo->getFilename();
               $xJson = file_get_contents( _ABSX_.$extension."/".$extension.".json" );
               $xD = json_decode( $xJson, true ); ?>
-            <div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+            <div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
               <div class="mdl-card__title mdl-card--expand">
                 <h2 class="mdl-card__title-text"><?php echo $xD[ 'name' ] ; ?></h2>
               <div class="mdl-layout-spacer"></div>
@@ -166,7 +165,7 @@ if ( isset( $_GET['install'] ) ) {
               <div class="mdl-layout-spacer"></div>
                     <a id = "" href="?view=<?php echo $xD[ 'slug' ] ; ?>&key=<?php echo $xD[ 'name' ] ; ?>" class="material-icons alignright">open_in_new</a>
                     <a id = "<?php echo $xD[ 'slug' ] ; ?>author" href="#" class="material-icons alignright">perm_identity</a>
-                    <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right mdl-color--<?php primaryColor(); ?>" for="<?php echo $xD[ 'slug' ] ; ?>author" style="overflow-y: auto;">
+                    <ul class="mdl-menu mdl-list mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right <?php primaryColor(); ?>" for="<?php echo $xD[ 'slug' ] ; ?>author" style="overflow-y: auto;">
                     <a href="<?php echo $xD[ 'social' ]['facebook'] ; ?>" class="mdl-list__item"><i class="mdi mdi-facebook mdl-list__item-icon"></i><span style="padding-left: 20px">Facebook</span></a>
                     <a href="<?php echo $xD[ 'social' ]['twitter'] ; ?>" class="mdl-list__item"><i class="mdi mdi-twitter mdl-list__item-icon"></i><span style="padding-left: 20px">Twitter</span></a>
                     <a href="<?php echo $xD[ 'social' ]['github'] ; ?>" class="mdl-list__item"><i class="mdi mdi-github-circle mdl-list__item-icon"></i><span style="padding-left: 20px">Github</span></a>

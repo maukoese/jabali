@@ -1,7 +1,7 @@
 <?php
 /**
  * HybridAuth
- * https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+ * http://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
  * (c) 2009-2015 HybridAuth authors | hybridauth.sourceforge.net/licenses.html
  */
 

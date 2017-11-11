@@ -1,7 +1,7 @@
 <?php
 /*!
 * HybridAuth
-* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+* http://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
 *  (c) 2009-2011 HybridAuth authors | hybridauth.sourceforge.net/licenses.html
 */
 
@@ -18,7 +18,7 @@
   Draugiem.lv is the most popular social network in Latvia with 1200 000+ registered users and 650 000 unique hits per month.
 
   Draugiem.lv Passport documentation at:
-  https://www.frype.com/applications/dev/docs/passport_en/
+  http://www.frype.com/applications/dev/docs/passport_en/
 */
 class Hybrid_Providers_Draugiem extends Hybrid_Provider_Model
 { 
@@ -68,12 +68,12 @@ class Hybrid_Providers_Draugiem extends Hybrid_Provider_Model
 	function loginFinish()
 	{ 
 
-		if ( ! $_REQUEST['dr_autid'] )
+		if ( ! $_REQUEST['dr_auth_code'] )
 		{
 			throw new Exception( 'Authentication failed! ' . $this->providerId . ' returned an invalid Token and Verifier.', 5 );
 		}
 		
-		$this->token( 'access_token',	$_REQUEST['dr_autid']); 
+		$this->token( 'access_token',	$_REQUEST['dr_auth_code']); 
 		
 		// set user as logged in
 		$this->setUserConnected();
@@ -113,7 +113,7 @@ class Hybrid_Providers_Draugiem extends Hybrid_Provider_Model
 		$this->user->profile->birthMonth  	= @ $month;
 		$this->user->profile->birthYear  		= @ $year;
 		$this->user->profile->address 			= @ $response['place'];
-		$this->user->profile->profileURL 		= @ 'https://www.draugiem.lv/user/' . $response['uid'];
+		$this->user->profile->profileURL 		= @ 'http://www.draugiem.lv/user/' . $response['uid'];
 		$this->user->profile->photoURL 			= @ $response['img'];
 		$this->user->profile->webSiteURL 		= @ '';
 		switch ( $response['sex'] ) {

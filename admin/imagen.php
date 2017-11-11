@@ -1,4 +1,11 @@
 <?php
+/**
+* @package Jabali - The Plug-N-Play Framework
+* @subpackage Image Generation
+* @author Mauko Maunde
+* @since 0.17.09
+* @link https://docs.jabalicms.org/dashboard/
+**/
 $setting = isset($_GET['s']) ? $_GET['s'] : "FFF_111_100_100";
 $setting = explode("_",$setting );
 $img = array();

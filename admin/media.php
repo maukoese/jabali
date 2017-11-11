@@ -2,9 +2,9 @@
 /**
 * @package Jabali - The Plug-N-Play Framework
 * @subpackage Admin Media
-* @link https://docs.jabalicms.org/media/
 * @author Mauko Maunde
 * @since 0.17.04
+* @link https://docs.jabalicms.org/media/
 **/
 session_start();
 require_once( '../init.php' );
@@ -13,13 +13,13 @@ require_once( 'header.php' ); ?>
 <title><?php if ( isset( $_GET['sort'] ) ) { echo( ' Viewing ' . ucfirst( $_GET['sort']. ' [ ' ) ); } else {
 echo( 'All Media [ ' ); } showOption( 'name' ); ?> ]</title>
 <div class="mdl-grid "><br>
-<div class="mdl-cell mdl-cell--12-col mdl-grid mdl-color--<?php primaryColor(); ?>" >
+<div class="mdl-cell mdl-cell--12-col mdl-grid <?php primaryColor(); ?>" >
 	<div class="mdl-cell mdl-cell--3-col" >
 		<form>
 		  	<div class="input-field mdl-js-textfield getmdl-select">
 			    <i class="material-icons prefix">sort</i>
 			     <input class="mdl-textfield__input" id="ilk" name="ilk" type="text" readonly tabIndex="-1" placeholder="<?php if ( isset( $_GET['sort'] ) ) { echo( 'Sort By ' . ucfirst( $_GET['sort'] ) ); } else { echo( 'Click to Sort' ); } ?>" >
-			   <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="ilk">
+			   <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?>" for="ilk">
 			     <a href="?sort=images" class="mdl-menu__item mdl-list__item"><i class="material-icons mdl-list__item-icon">image</i><span style="padding-left: 20px">Images</span></a>
 			     <a href="?sort=video" class="mdl-menu__item mdl-list__item"><i class="material-icons mdl-list__item-icon">send</i><span style="padding-left: 20px">Video</span></a>
 			     <a href="?sort=files" class="mdl-menu__item mdl-list__item"><i class="material-icons mdl-list__item-icon">attach_file</i><span style="padding-left: 20px">Files</span></a>
@@ -27,17 +27,17 @@ echo( 'All Media [ ' ); } showOption( 'name' ); ?> ]</title>
 			</div>
 		</form>
 	</div>
-	<div class="mdl-cell mdl-cell--8-col mdl-color--<?php primaryColor(); ?>" >
+	<div class="mdl-cell mdl-cell--8-col <?php primaryColor(); ?>" >
 		<form>
 		  <div class="input-field">
 		  <input type="text" placeholder="Type Media Name To Search">
 		  </div>
 	</div>
-	<div class="mdl-cell mdl-cell--1-col mdl-color--<?php primaryColor(); ?>" >
+	<div class="mdl-cell mdl-cell--1-col <?php primaryColor(); ?>" >
 		<button type="submit" name="search" class="mdl-button mdl-button--fab alignright"><i class="material-icons ">search</i></button>
 		</form>
 	</div>
-	<div class="mdl-cell mdl-cell--12-col mdl-grid  mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+	<div class="mdl-cell mdl-cell--12-col mdl-grid  mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
 		<div class="mdl-cell mdl-cell--3-col mdl-card mdl-shadow--2dp">
 		<img src="<?php echo( _IMAGES . '404.jpg'); ?>" width="100%" >
 

@@ -5,6 +5,7 @@
 * @author Mauko Maunde
 * @link https://docs.jabalicms.org/data/access/objects/messages/
 * @since 0.17.11
+* @license MIT - https://opensource.org/licenses/MIT
 **/
 
 namespace Jabali\Data\Access\Objects;

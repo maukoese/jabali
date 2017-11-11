@@ -2,8 +2,8 @@
 /**
 * Searching
 * TO-DO: Move to individual files
-* @link https://tutorialrepublic.com/php-tutorial/php-mysql-ajax-livesearch.php
 * @return Requested data from parent
+* @link https://tutorialrepublic.com/php-tutorial/php-mysql-ajax-livesearch.php
 **/
 session_start();
 require_once( '../init.php' );

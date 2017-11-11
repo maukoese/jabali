@@ -5,6 +5,7 @@
 * @link https://docs.jabalicms.org/controller/
 * @author Mauko Maunde
 * @since 0.17.04
+* @license MIT - https://opensource.org/licenses/MIT
 **/
 
 /**
@@ -123,7 +124,7 @@ if( empty( $match ) || $match == "?logout" ) {
 		echo( '<title> Home [ '. getOption( 'name' ) .' ]</title>' );
 		blog();
 	} else {
-		fetchPosts( getOption( 'homepage' ) );
+		fetchPost( getOption( 'homepage' ) );
 	}
 	getFooter();
 } elseif ( isset( $GLOBALS['GRules'][$match] ) ) {
@@ -202,6 +203,6 @@ if( empty( $match ) || $match == "?logout" ) {
 		break;
 	default:
 		getHeader();
-		fetchPosts( $match );
+		fetchPost( $match );
 		getFooter();
 }

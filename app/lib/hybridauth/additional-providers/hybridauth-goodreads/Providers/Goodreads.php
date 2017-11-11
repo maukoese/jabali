@@ -1,7 +1,7 @@
 <?php
 /*!
 * HybridAuth
-* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+* http://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
 *  (c) 2009-2011 HybridAuth authors | hybridauth.sourceforge.net/licenses.html
 */
 
@@ -18,10 +18,10 @@ class Hybrid_Providers_Goodreads extends Hybrid_Provider_Model_OAuth1
 		parent::initialize();
 
 		// provider api end-points
-		$this->api->api_base_url      = "https://www.goodreads.com/";
-		$this->api->authorize_url     = "https://www.goodreads.com/oauth/authorize";
-		$this->api->request_token_url = "https://www.goodreads.com/oauth/request_token";
-		$this->api->access_token_url  = "https://www.goodreads.com/oauth/access_token";
+		$this->api->api_base_url      = "http://www.goodreads.com/";
+		$this->api->authorize_url     = "http://www.goodreads.com/oauth/authorize";
+		$this->api->request_token_url = "http://www.goodreads.com/oauth/request_token";
+		$this->api->access_token_url  = "http://www.goodreads.com/oauth/access_token";
 
 		// turn off json parsing!
 		$this->api->decode_json = false;
@@ -76,7 +76,7 @@ class Hybrid_Providers_Goodreads extends Hybrid_Provider_Model_OAuth1
 	*/
 	function getUserProfile()
 	{
-		$response = $this->api->get( 'https://www.goodreads.com/api/auth_user' );
+		$response = $this->api->get( 'http://www.goodreads.com/api/auth_user' );
 
 		// check the last HTTP status code returned
 		if ( $this->api->http_code != 200 )
@@ -92,7 +92,7 @@ class Hybrid_Providers_Goodreads extends Hybrid_Provider_Model_OAuth1
 		$this->user->profile->profileURL  = (string) $response->user->link; 
 
 		// try to grab more information about the user if possible
-		$response = $this->api->get( 'https://www.goodreads.com/user/show/' . $this->user->profile->identifier . '.xml' );
+		$response = $this->api->get( 'http://www.goodreads.com/user/show/' . $this->user->profile->identifier . '.xml' );
 
 		// check the last HTTP status code returned
 		if ( $this->api->http_code != 200 )

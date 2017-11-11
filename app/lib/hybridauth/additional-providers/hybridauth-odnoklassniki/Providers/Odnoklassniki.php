@@ -1,8 +1,8 @@
 <?php
 /*!
 * HybridAuth
-* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
-* (c) 2009-2015, HybridAuth authors | https://hybridauth.sourceforge.net/licenses.html
+* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
+* (c) 2009-2015, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
 */
 
 /**
@@ -17,9 +17,9 @@ class Hybrid_Providers_Odnoklassniki extends Hybrid_Provider_Model_OAuth2
 	{
 		parent::initialize();
 		// Provider apis end-points
-		$this->api->api_base_url    = "https://api.ok.ru/fb.do";
-		$this->api->authorize_url   = "https://connect.ok.ru/oauth/authorize";
-		$this->api->token_url       = "https://api.odnoklassniki.ru/oauth/token.do";
+		$this->api->api_base_url    = "http://api.ok.ru/fb.do";
+		$this->api->authorize_url   = "http://connect.ok.ru/oauth/authorize";
+		$this->api->token_url       = "http://api.odnoklassniki.ru/oauth/token.do";
 		$this->api->sign_token_name = "access_token";
 	}
 
@@ -88,7 +88,7 @@ class Hybrid_Providers_Odnoklassniki extends Hybrid_Provider_Model_OAuth2
 
 		// Calculate when the access token expire.
 		// At this moment Odnoklassniki does not return expire time in response.
-		// 30 minutes expire time staten in dev docs https://apiok.ru/wiki/pages/viewpage.action?pageId=42476652
+		// 30 minutes expire time staten in dev docs http://apiok.ru/wiki/pages/viewpage.action?pageId=42476652
 		if (isset($response->expires_in)) {
 			$this->api->access_token_expires_at = time() + $response->expires_in;
 		}

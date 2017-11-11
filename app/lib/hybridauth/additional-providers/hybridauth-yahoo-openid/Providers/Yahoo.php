@@ -1,8 +1,8 @@
 <?php
 /*!
 * HybridAuth
-* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | https://hybridauth.sourceforge.net/licenses.html 
+* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
+* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html 
 */
 
 /**
@@ -10,7 +10,7 @@
  * 
  * Provided as a way to keep backward compatibility for Yahoo OpenID based on HybridAuth <= 2.1.0
  * 
- * https://hybridauth.sourceforge.net/userguide/IDProvider_info_Yahoo.html
+ * http://hybridauth.sourceforge.net/userguide/IDProvider_info_Yahoo.html
  */
 class Hybrid_Providers_Yahoo extends Hybrid_Provider_Model_OpenID
 {

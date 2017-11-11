@@ -5,13 +5,14 @@
 * @link https://docs.jabalicms.org/views/
 * @author Mauko Maunde
 * @since 0.17.10
+* @license MIT - https://opensource.org/licenses/MIT
 **/
 $post = $GLOBALS['POSTS'] -> getId( $data );
 if ( !isset( $post['error'] ) ) {
   $post = (object)$post; ?>
     <title><?php echo( ucwords( $post -> name ) ); ?> - <?php showOption( 'name' ); ?></title>
     <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
-      <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+      <div class="mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
         <div class="mdl-card__supporting-text mdl-card--expand mdl-grid">
           <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone">
             <h4><?php echo( $post -> subtitle ); ?></h4>
@@ -29,26 +30,27 @@ if ( !isset( $post['error'] ) ) {
           <span><?php echo( $post -> details ); ?></span>
         </div>
         <div class="mdl-card__menu">
-          <button id="demo_menu-top-right" class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-color--accent">
-          <i class="material-icons mdl-color-text--white">more_vert</i>
-          </button>
-          <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect mdl-color--<?php primaryColor(); ?>"
-          for="demo_menu-top-right">
-          <a href="./posts?view=<?php echo( $post -> id ); ?>&fav=<?php echo( $post -> id ); ?>&key=<?php echo( ucwords( $post -> name ) ); ?>" class="mdl-list__item"><i class="mdi mdi-heart mdl-list__item-icon"></i><span style="padding-left: 20px">Favorite</span></a>
-          <a href="./note?post=<?php echo( $post -> id ); ?>&author=<?php echo( $_SESSION[JBLSALT.'Code'] ); ?>" class="mdl-list__item"><i class="mdi mdi-note-multiple mdl-list__item-icon"></i><span style="padding-left: 20px">Notes</span></a><?php if ( isCap( 'admin' ) || isAuthor( $post -> author ) ) { ?>
-          <a href="./posts?edit=<?php echo( $post -> id ); ?>&key=<?php echo( ucwords( $post -> name ) ); ?>" class="mdl-list__item"><i class="mdi mdi-pencil mdl-list__item-icon"></i><span style="padding-left: 20px">Edit</span></a><?php } ?>
-          </ul>
+          <a href="<?php echo( $post -> link ); ?>" class="mdl-button mdl-button--icon"><i class="material-icons red-text">open_in_new</i></a>
+          <?php if ( isCap( 'admin' ) || isAuthor( $post -> author ) ) { ?>
+          <a href="./posts?edit=<?php echo( $post -> id ); ?>&key=<?php echo( ucwords( $post -> name ) ); ?>" class="mdl-button mdl-button--icon"><i class="material-icons red-text">edit</i></a>
+
+          <button type="submit" name="delete" value="<?php echo( $post -> id ); ?>" class="mdl-button mdl-button--icon"><i class="material-icons red-text">delete</i></button>
+          <?php } ?>
         </div>
       </div>
     </div>
     <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
-      <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><?php
+      <div class="mdl-card mdl-shadow--2dp <?php primaryColor(); ?>"><?php
         $getNotes = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."comments LIMIT 5" );
           if ( $getNotes && $GLOBALS['JBLDB'] -> numRows( $getNotes ) > 0) { ?>
             <div class="mdl-card__title">
-              <i class="material-icons">comment</i>
-              <span class="mdl-button">Comments</span>
+              <div class="mdl-card__title-text">
+              <span class="">Comments</span>
+              </div>
               <div class="mdl-layout-spacer"></div>
+              <div class="mdl-card__subtitle-text">
+              <i class="material-icons">comment</i>
+              </div>
             </div>
             <div class="mdl-card__supporting-text mdl-card--expand">
               <ul class="collapsible popout" data-collapsible="accordion"><?php
@@ -72,9 +74,13 @@ if ( !isset( $post['error'] ) ) {
               </ul><?php
           } else {
           echo '<div class="mdl-card__title">
-              <i class="material-icons">comments</i>
-              <span class="mdl-card__title-text">No Comments</span>
+              <div class="mdl-card__title-text">
+              <span class="">No Comments</span>
+              </div>
               <div class="mdl-layout-spacer"></div>
+              <div class="mdl-card__subtitle-text">
+              <i class="material-icons">comment</i>
+              </div>
             </div>';
           } ?>
         <div class="mdl-card__supporting-text mdl-card--expand">

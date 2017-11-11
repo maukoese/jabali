@@ -1,8 +1,8 @@
 <?php
 /*!
 * HybridAuth
-* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | https://hybridauth.sourceforge.net/licenses.html
+* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
+* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
 */
 
 // A service client for the OAuth 2 flow.
@@ -65,7 +65,7 @@ class OAuth2Client
 	public $curl_connect_time_out    = 30;
 	public $curl_ssl_verifypeer      = false;
 	public $curl_header              = array();
-	public $curl_useragent           = "OAuth/2 Simple PHP Client v0.1; HybridAuth https://hybridauth.sourceforge.net/";
+	public $curl_useragent           = "OAuth/2 Simple PHP Client v0.1; HybridAuth http://hybridauth.sourceforge.net/";
 	public $curl_authenticate_method = "POST";
 	public $curl_proxy               = null;
 
@@ -160,7 +160,7 @@ class OAuth2Client
 	*/
 	public function api( $url, $method = "GET", $parameters = array() )
 	{
-		if ( strrpos($url, 'https://') !== 0 && strrpos($url, 'https://') !== 0 ) {
+		if ( strrpos($url, 'http://') !== 0 && strrpos($url, 'https://') !== 0 ) {
 			$url = $this->api_base_url . $url;
 		}
 		$parameters[$this->sign_token_name] = $this->access_token;

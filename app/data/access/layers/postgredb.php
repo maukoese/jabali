@@ -1,9 +1,15 @@
-<?php 
+<?php
+/**
+* @package Jabali
+* @subpackage Jabali PostgreSQL Data Access Layer
+* @author Mauko Maunde
+* @link https://docs.jabalicms.org/data/access/layers/postgre/
+* @license MIT - https://opensource.org/licenses/MIT
+* @since 0.17.09
+**/
+ 
 namespace Jabali\Data\Access\Layers;
 
-/**
-* Jabali PostgreSQL Data Access Layer
-*/
 class PostgreDB {
 
 	private $host;

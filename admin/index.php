@@ -2,9 +2,9 @@
 /**
 * @package Jabali - The Plug-N-Play Framework
 * @subpackage App Admin Dashboard
-* @link https://docs.jabalicms.org/dashboard/
 * @author Mauko Maunde
 * @since 0.17.04
+* @link https://docs.jabalicms.org/dashboard/
 **/
 session_start();
 require_once( '../init.php' );

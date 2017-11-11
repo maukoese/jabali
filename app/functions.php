@@ -5,6 +5,8 @@
 * @link https://docs.jabalicms.org/functions/
 * @author Mauko Maunde
 * @since 0.17.09
+* @license MIT - https://opensource.org/licenses/MIT
+*
 **/
 
 /**
@@ -204,7 +206,7 @@ function loadScript( $link, $theme = false )
 /**
 * Load Javascript
 **/
-function loadImage( $link, $theme = false, $width = 250, $alt = "Image", $class = "" )
+function loadImage( $link, $theme = false, $width = 250, $height ="",	 $alt = "Image", $class = "" )
 {
 	if ( $theme !== false ) {
 	 	$themes = _THEMES.$theme.'/assets/';
@@ -409,7 +411,7 @@ function uploadFile( $file )
 }
 
 /**
-* 
+* Get the number of unread messages for currently logged in users
 **/
 function getMsgCount()
 {
@@ -427,7 +429,7 @@ function getMsgCount()
 }
 
 /**
-* 
+* Get number of unread notifications for logged in user
 **/
 function getNoteCount()
 {
@@ -443,6 +445,10 @@ function getNoteCount()
 	}
 }
 
+/**
+* Load color skins
+* @return array of skins
+**/
 function loadSkins()
 {
 	$skins = array();
@@ -543,7 +549,7 @@ function getOption( $code )
 }
 
 /**
-* 
+* Echo out option
 **/
 function showOption( $code )
 {
@@ -556,7 +562,7 @@ function showOption( $code )
 }
 
 /**
-* 
+* Check if option exists in databases
 **/
 function isOption( $code )
 {
@@ -764,8 +770,12 @@ function tableBody( $results, $fields, $names, $error = "No Records Found", $act
 							$icon = 'perm_identity';
 							break;
 					}
-					echo( '<a href="?'.$action.'='.$item[$link[0]].'&key='.$item['name'].'"><i class="material-icons">'.$icon.'</i></a>');
+					echo( '<a class="mdl-button mdl-button--icon" href="?'.$action.'='.$item[$link[0]].'&key='.$item['name'].'"><i class="material-icons">'.$icon.'</i></a>');
 				}
+				echo( '<form action="" method="POST" style="display: inline;" >');
+				csrf();
+				echo ( '<button class="mdl-button mdl-button--icon" type="submit" name="delete" value='.$item['id'].'"><i class="material-icons">delete</i></button>
+					</form>');
 				echo( '</td>');
 			}
 			echo( '</tr>' );
@@ -838,7 +848,7 @@ function error404( $id = "error-404", $code = "404", $message = 'The page you ar
 	<?php if ( file_exists( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' ) ):
 		require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/404.php' );
 	else:
-		$code = <<<HTML
+		$scode = <<<HTML
 		<center>
 			<div class="{$class}">
 				<h1>{$code}</h1>
@@ -848,7 +858,7 @@ function error404( $id = "error-404", $code = "404", $message = 'The page you ar
 			</div>
 		</center>
 HTML;
-		echo( $code);
+		echo( $scode );
 	endif;
 }
 
@@ -866,6 +876,8 @@ function isActiveX( $ext )
 	}
 	if ( in_array( $ext, $exts ) ) {
 		return true;
+	} else {
+		return false;
 	}
 }
 
@@ -878,6 +890,9 @@ function activeTheme( $theme )
 	}
 }
 
+/**
+* @return timezones an array
+**/ 
 function timeZones()
 {
   $zones_array = array();
@@ -890,20 +905,20 @@ function timeZones()
   return $zones_array;
 }
 
-function add_shortcode($tag, $callback)
+function addShortCode( $tag, $callback, $args = [] )
 {
 
     return Lib\Shortcodes::instance()->register($tag, $callback);
 }
 
-function do_shortcode($str) 
+function doShortCodes( $str ) 
 {
-    return Lib\Shortcodes::instance()->doShortcode($str);
+    return Lib\Shortcodes::instance()->doShortcode( $str );
 }
 
 function addMeta( $name, $content )
 {
-	echo '<link name="' . $name . '" content="' . $content . '" >';
+	echo '<meta name="' . $name . '" content="' . $content . '" >';
 }
 
 
@@ -1027,7 +1042,7 @@ function renderSettingsForm( $page )
 	echo '<form class="mdl-cell mdl-cell--8-col '.$GLOBALS['GPrimary'].' mdl-card" name="'.$page.'" method="POST" action"" >
 		<div class="mdl-card__supporting-text">';
 	foreach ($GLOBALS['GSettingsField'][$page] as $name => $field ) {
-		doSettingFields( $name, $field );
+		doSettingField( $name, $field );
 	}
 	csrf();
 	echo '<input type="hidden" name="settings" value="'. $page .'">';
@@ -1043,8 +1058,8 @@ function renderSettingsForm( $page )
 	</form>';
 }
 
-function doSettingFields( $name, $field )
-{
+function doSettingField( $name, $field ){
+
 		$type = $field[0];
 		$label = $field[1];
 		$icon = $field[2];
@@ -1412,25 +1427,25 @@ function fileContents( $type, $package = null, $class = null )
 
 function hasPosts()
 {
-	if ( $GLOBALS['gpost_index'] <= $GLOBALS['gpost_count'] ) {
-		$GLOBALS['gpost_count'] = count( $GLOBALS['gposts'] )-1;
+	if ( $GLOBALS['grecord_index'] <= $GLOBALS['grecord_count'] ) {
+		$GLOBALS['grecord_count'] = count( $GLOBALS['grecords'] )-1;
 		return true;
 	} else {
-		$GLOBALS['gpost_count'] = 0;
+		$GLOBALS['grecord_count'] = 0;
 		return false;
 	}
 }
 
 function thePost()
 {
-	if ( $GLOBALS['gpost_index'] > $GLOBALS['gpost_count'] ) {
+	if ( $GLOBALS['grecord_index'] > $GLOBALS['grecord_count'] ) {
 		return false;
 	}
 
-	$GLOBALS['gpost'] = $GLOBALS['gposts'][ $GLOBALS['gpost_index'] ];
-	$GLOBALS['gpost_index']++;
+	$GLOBALS['grecord'] = $GLOBALS['grecords'][ $GLOBALS['grecord_index'] ];
+	$GLOBALS['grecord_index']++;
 	
-	return $GLOBALS['gpost'];
+	return $GLOBALS['grecord'];
 }
 
 function resetLoop( $callback = "sweep", $args = [], $table = "posts" )
@@ -1438,39 +1453,51 @@ function resetLoop( $callback = "sweep", $args = [], $table = "posts" )
 		$args = array( $args );
 	}
 	$table = strtoupper( $table );
-	$GLOBALS['gposts'] = call_user_func_array( array($GLOBALS[$table], $callback ), $args );
-	array_shift( $GLOBALS['gposts']);
-	$GLOBALS['gpost'] = null;
-	$GLOBALS['gpost_count'] = 0;
-	$GLOBALS['gpost_index'] = 0;
+	$GLOBALS['grecords'] = call_user_func_array( array($GLOBALS[$table], $callback ), $args );
+	array_shift( $GLOBALS['grecords']);
+	$GLOBALS['grecord'] = null;
+	$GLOBALS['grecord_count'] = 0;
+	$GLOBALS['grecord_index'] = 0;
 }
 
-function theTitle(){
-	echo $GLOBALS['gpost']['name'];
+function theTitle()
+{
+	echo $GLOBALS['grecord']['name'];
 }
 
-function theLink( $text = "read more", $class = "" ){
-	echo ( '<a href="'.$GLOBALS['gpost']['link'].'" class = "'.$class.'" >'. $text . '</a>');
+function theLink( $text = "read more", $class = "" )
+{
+	echo ( '<a href="'.$GLOBALS['grecord']['link'].'" class = "'.$class.'" >'. $text . '</a>');
 }
 
-function theContent(){
-	echo $GLOBALS['gpost']['details'];
+function theContent()
+{
+	echo doShortCodes( $GLOBALS['grecord']['details'] );
 }
 
-function theExcerpt( $length = 250 ){
-	echo substr( $GLOBALS['gpost']['details'], 0, $length ).' ...';
+function theExcerpt( $length = 250 )
+{
+	echo substr( $GLOBALS['grecord']['details'], 0, $length ).' ...';
 }
 
-function theId(){
-	echo $GLOBALS['gpost']['id'];
+function theId()
+{
+	echo $GLOBALS['grecord']['id'];
 }
 
-function theSlug(){
-	echo $GLOBALS['gpost']['slug'];
+function theAuthor( $class = "" )
+{
+	echo ( '<a class="'.$class.'" href="'._ROOT.'/users/'.$GLOBALS['grecord']['author'].'">'.$GLOBALS['grecord']['author_name'].'</a>' );
+}
+
+function theSlug()
+{
+	echo $GLOBALS['grecord']['slug'];
 }
  
-function theCategories( $class = '' ){
-	$tags = $GLOBALS['gpost']['categories'];
+function theCategories( $class = '' )
+{
+	$tags = $GLOBALS['grecord']['categories'];
 	$tags = explode(", ", $tags );
 	$tagged = array(); 
 	foreach ($tags as $tag ) {
@@ -1483,7 +1510,7 @@ function theCategories( $class = '' ){
 
 function postCategories( $class = '' )
 {
-	$tags = $GLOBALS['gpost']['categories'];
+	$tags = $GLOBALS['grecord']['categories'];
 	$tags = explode(", ", $tags );
 	$tagged = array(); 
 	foreach ($tags as $tag ) {
@@ -1496,7 +1523,7 @@ function postCategories( $class = '' )
 
 function theTags( $class = "" )
 {
-	$tags = $GLOBALS['gpost']['tags'];
+	$tags = $GLOBALS['grecord']['tags'];
 	$tags = explode(", ", $tags );
 	$tagged = array(); 
 	foreach ($tags as $tag ) {
@@ -1509,7 +1536,7 @@ function theTags( $class = "" )
 
 function postTags()
 {
-	$tags = $GLOBALS['gpost']['tags'];
+	$tags = $GLOBALS['grecord']['tags'];
 	$tags = explode(", ", $tags );
 	$tagged = array(); 
 	foreach ($tags as $tag ) {
@@ -1522,12 +1549,12 @@ function postTags()
 
 function theImage( $width = 500, $height = "", $class = "featured-image" )
 {
-	echo ( '<img src = "'. $GLOBALS['gpost']['avatar'] .'" width = "'.$width.'" height ="'.$height.'" alt="Image for '.$GLOBALS['gpost']['name'].'" class="'.$class.'" >');
+	echo ( '<img src = "'. $GLOBALS['grecord']['avatar'] .'" width = "'.$width.'" height ="'.$height.'" alt="Image for '.$GLOBALS['grecord']['name'].'" class="'.$class.'" >');
 }
 
 function theDate( $format = "M d, Y" )
 {
-	$created = $GLOBALS['gpost']['created'];
+	$created = $GLOBALS['grecord']['created'];
 	$timed = strtotime( $created );
 	$formatted = date( $format, $timed );
 	echo( $formatted );
@@ -1584,6 +1611,9 @@ function headerTitle( $table = "dashboard" )
 	return $text;
 }
 
+/**
+* What makes Jabali apps progressive
+**/
 function head()
 {
 	echo( '
@@ -1623,6 +1653,9 @@ function head()
 <link rel="alternate" type="application/rss+xml" href="'. _ROOT.'/feed/" title="'. getOption( 'name' ) .'">' );
 }
 
+/**
+* Generates a web manifest, making the app addable to homescreen
+**/
 function manifest()
 {
 	$manifest["name"] = getOption('name');
@@ -1643,26 +1676,38 @@ function manifest()
 	return $manifest;
 }
 
+/**
+* Add a submit button to form.
+* Button is a floating action button with an icon in the midde
+**/
 function submitButton( $name = "create", $position = "alignright", $icon = "save", $form = false )
 {	csrf();
 	if ( $form == true ) $form = '</form>'; else $form = '';
 	echo( '<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored '.$position.'" type="submit" name="'.$name.'"><i class="material-icons">'.$icon.'</i></button>'.$form );
 }
 
+/**
+* Show a send button
+**/
 function sendButton( $name = "create", $value = "", $class = "alignright" )
 {	csrf();
 	$value = !empty( $value ) ?? $name;
 	echo( '<button class="'.$class.'" type="submit" name="'.$name.'">'.$value.'</button>' );
 }
 
-
-function hiddenFields( $fields )
+/**
+* Add hidden fields to a form
+**/
+function hiddenFields( array $fields )
 {
 	foreach ($fields as $name => $value) {
 		echo( '<input type="hidden" name="'.$name.'" value="'.$value.'">' );
 	}
 }
 
+/**
+* Check if app is undergoing maintenance and display appropriate message
+**/
 function updatingJabali()
 {
 	if ( file_exists( '.jbl' ) ) {
@@ -1687,6 +1732,9 @@ function updatingJabali()
 	}
 }
 
+/**
+* Get user IP
+* @return IP address
 function userIP()
 {
 	$client = $_SERVER['HTTP_CLIENT_IP'];
@@ -1702,6 +1750,9 @@ function userIP()
 	}
 }
 
+/**
+* Allow or deny direct access to php files
+**/
 function noAccess( $access = null )
 {
 	if ( !is_null( $access ) ) {
@@ -1714,7 +1765,10 @@ function noAccess( $access = null )
 	}
 }
 
-function eMail($receipients, $subject, $message, $cc = null, $attachments = null, $isHTML = true )
+/**
+* Wrapper functio for the PhpMailer library to send emails
+**/
+function eMail( $receipients, $subject, $message, $cc = null, $attachments = null, $isHTML = true )
 {
 	$GLOBALS['MAILER'] -> From = getOption('email');
 	$GLOBALS['MAILER'] -> FromName = getOption('name');
@@ -1751,6 +1805,9 @@ function eMail($receipients, $subject, $message, $cc = null, $attachments = null
 	}
 }
 
+/**
+* Generate keys and authentication salts for Jabali apps
+**/
 function keyGen( string $key )
 {
 	if ( $key == "salt" ) {
@@ -1764,6 +1821,9 @@ function keyGen( string $key )
 	}
 }
 
+/**
+* Wrapper function for the GUZZLE library for sending synchronous and assynchronous requests
+**/
 function guzzler( string $url, string $method, array $auth,  bool $async = false )
 {
 	if ( $async !== false ) {
@@ -1782,6 +1842,9 @@ function guzzler( string $url, string $method, array $auth,  bool $async = false
 	
 }
 
+/**
+* Generates and renders RSS/Atom Feed
+**/
 function feed( $type = "rss" )
 {
 	$title = getOption('name');
@@ -1871,8 +1934,12 @@ RSS;
 		echo( $rssdata );
 	}
 }
-//Users
-function login( $provider ) {
+
+/**
+* Load login providers and form
+**/
+function login( $provider = "jabali" )
+{
 	$theme = getOption( 'activetheme' );
 	if ( file_exists( _ABSTHEMES_ . $theme . '/templates/login.php') ) {
 		$themefile = _ABSTHEMES_ . $theme . '/templates/login.php';
@@ -1940,7 +2007,11 @@ function login( $provider ) {
 	}
 }
 
-function register( $type ){ ?>
+/**
+* Render registration form
+**/
+function register( $type )
+{ ?>
 	<title><?php echo( ucwords( $type ) ); ?> Sign Up - <?php showOption( 'name' ); ?></title><?php
 
 	$theme = getOption( 'activetheme' );
@@ -1973,7 +2044,11 @@ function register( $type ){ ?>
 	}
 }
 
-function forgot() { ?>
+/**
+* Render template for forgot password
+**/
+function forgot()
+{ ?>
   	<title>Forgot Password - <?php showOption( 'name' ); ?></title>
 	<?php
 	$theme = getOption( 'activetheme' );
@@ -1988,7 +2063,11 @@ function forgot() { ?>
 	}
 }
 
-function resetPass( $id, $key ){
+/**
+* Validate password reset key and render appropriate template
+**/
+function resetPass( $id, $key )
+{
     $theUser = $GLOBALS['JBLDB'] -> select( 'users', array( 'id', 'authkey' ), array( 'id' => $id ));
     if ( !isset( $theUser['error'] ) ) {
       while ( $thisuser = $GLOBALS['JBLDB'] -> fetchArray( $theUser) ) {
@@ -2011,15 +2090,11 @@ function resetPass( $id, $key ){
   }
 }
 
-//Posts
-
-function postTypes() {
-	$getTypes = $GLOBALS['JBLDB'] -> query( "SELECT DISTINCT ilk FROM ". _DBPREFIX ."posts");
-	$types = $GLOBALS['JBLDB'] -> fetchArray( $getTypes );
-	return $types;
-}
-
-function fetchPosts( $slug ) {
+/**
+* Fetch and render a single post
+**/
+function fetchPost( $slug )
+{
 	if ( getOption( 'postspage' ) == $slug ) {
 		blog( $slug );
 	} else {
@@ -2029,7 +2104,7 @@ function fetchPosts( $slug ) {
 		} else {
 			$posty = $GLOBALS['POSTS'] -> getPost( $slug );
 		}
-		$GLOBALS['gpost'] = $posty;
+		$GLOBALS['grecord'] = $posty;
 		//resetLoop( 'getSingle', $slug );
 		$post = (object)$posty;
 
@@ -2045,7 +2120,11 @@ function fetchPosts( $slug ) {
 	}
 }
 
-function blog( $title = "Blog" ) {
+/**
+* Fetches and renders ll posts of type article
+**/
+function blog( $title = "Blog", $limit = 10 )
+{
 	$posts = $GLOBALS['POSTS'] -> sweep();
 	if ( $posts['status'] !== "fail" ) {?>
 	<title><?php echo( ucwords($title) ); ?> - <?php showOption( 'name' ); ?></title><?php
@@ -2055,7 +2134,11 @@ function blog( $title = "Blog" ) {
 	}
 }
 
-function authors( $author ) { ?>
+/**
+* Fetches and renders posts by $author
+**/
+function authors( $author )
+{ ?>
 	<title>Author : @<?php echo( $author ); ?> - <?php showOption( 'name' ); ?></title><?php
 	$posts = $GLOBALS['JBLDB'] -> select( 'posts', '*', array( 'state' => 'published', 'ilk' => 'article', 'author' => $author ), array( 'created', 'DESC') );
 	if ( !isset( $post['error'] ) ) {
@@ -2065,13 +2148,21 @@ function authors( $author ) { ?>
 	}
 }
 
-function category( $category ) { ?>
+/**
+* Fetches and renders post items in category
+**/
+function category( $category, $type = "article" )
+{ ?>
 	<title>Category : <?php echo( ucwords( $category ) ); ?> - <?php showOption( 'name' ); ?></title><?php
 	resetLoop( 'getCategories', $category );
 	require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
 }
 
-function portfolio( $elements ) {
+/**
+* Fetches and renders portfolio items and clients
+**/
+function portfolio( $elements )
+{
 
 	if ( empty( $elements[0] )) { ?>
 		<title>Portfolio - <?php showOption( 'name' ); ?></title><?php
@@ -2115,13 +2206,22 @@ function portfolio( $elements ) {
 	}
 }
 
-function tag( $tag ) { ?>
+/**
+* Renders all posts with tag
+**/
+function tag( $tag )
+{ ?>
 	<title>Tag : <?php echo( ucwords( $tag ) ); ?> - <?php showOption( 'name' ); ?></title><?php
 	resetLoop( 'getTags', $tag );
 	require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/archive.php' );
 }
 
-function users( $profile ) {
+/**
+* Returns an array of users or user details and renders an appropriate template.
+* Defaults to the archive template if the theme does not have one for users.
+**/
+function users( $profile )
+{
 	if ( $profile == 'all' || $profile == "" ) { ?>
 		<title>All Users - <?php showOption( 'name' ); ?></title><?php
 		resetLoop( 'getState', 'active', 'users' );
@@ -2134,7 +2234,7 @@ function users( $profile ) {
 		$user = $GLOBALS['USERS'] -> getSingle ( $profile );
 
 		if ( !isset( $user['status'] ) ) {
-			$GLOBALS['gpost'] = $user;
+			$GLOBALS['grecord'] = $user;
 			if( file_exists( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/profile.php' ) ){
 				require_once( _ABSTHEMES_ . getOption( 'activetheme' ) .'/templates/profile.php' );
 			} else {

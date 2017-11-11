@@ -1,8 +1,8 @@
 <?php
 /*!
 * HybridAuth
-* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | https://hybridauth.sourceforge.net/licenses.html 
+* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
+* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html 
 * 
 * Provider writed by xbreaker | https://github.com/xbreaker/hybridauth
 */
@@ -48,7 +48,7 @@ class Hybrid_Providers_Yandex extends Hybrid_Provider_Model_OAuth2
 		$this->user->profile->firstName     = (property_exists($response,'real_name'))?$response->real_name:"";
 		$this->user->profile->lastName      = (property_exists($response,'family_name'))?$response->family_name:"";
 		$this->user->profile->displayName   = (property_exists($response,'display_name'))?$response->display_name:"";
-		$this->user->profile->photoURL      = 'https://upics.yandex.net/'. $this->user->profile->identifier .'/normal';
+		$this->user->profile->photoURL      = 'http://upics.yandex.net/'. $this->user->profile->identifier .'/normal';
 		$this->user->profile->profileURL    = "";
 		$this->user->profile->gender        = (property_exists($response,'sex'))?$response->sex:""; 
 		$this->user->profile->email         = (property_exists($response,'default_email'))?$response->default_email:"";

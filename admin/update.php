@@ -2,9 +2,9 @@
 /**
 * @package Jabali - The Plug-N-Play Framework
 * @subpackage App Update
-* @link https://docs.jabalicms.org/update/
 * @author Mauko Maunde
 * @since 0.17.04
+* @link https://docs.jabalicms.org/update/
 **/
 session_start();
 require_once( '../init.php' );
@@ -12,7 +12,7 @@ require_once( 'header.php' );
 ini_set('max_execution_time',60); ?>
 <title>Update Jabali - <?php showOption( 'name' ); ?></title>
 <div class="mdl-grid">
-	<div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>"><?php
+	<div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp <?php primaryColor(); ?>"><?php
 
 		$jJson = file_get_contents( _ROOT."/package.json" );
 		$jD = json_decode( $jJson, true );
@@ -141,7 +141,7 @@ ini_set('max_execution_time',60); ?>
         _shout_( 'Error: Problem connecting to Jabalicms.org. Please try again later.', 'error');
       } ?>
 	</div>
-	<div class="mdl-cell mdl-cell--4-col mdl-color--<?php primaryColor(); ?> mdl-card"><?php
+	<div class="mdl-cell mdl-cell--4-col <?php primaryColor(); ?> mdl-card"><?php
 		$xJson = file_get_contents( _ABS_."/package.json" );
 		$xD = json_decode( $xJson, true ); ?>
 				<div class="mdl-card__title">

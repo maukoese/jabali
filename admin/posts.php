@@ -2,9 +2,9 @@
 /**
 * @package Jabali - The Plug-N-Play Framework
 * @subpackage Admin Posts
-* @link https://docs.jabalicms.org/posts/
 * @author Mauko Maunde
 * @since 0.17.04
+* @link https://docs.jabalicms.org/posts/
 **/
 session_start();
 require_once( '../init.php' );
@@ -152,6 +152,13 @@ if ( isset( $_POST['create'] ) ) {
       _shout_( "Status: ".$update['status']."<br>Error: ".$update['error'], "error" );
     } else {
       _shout_( "Status: ".$update['status'], "success" );
+    }
+  } elseif ( isset( $_POST['delete'] )) {
+    $delete = $GLOBALS['POSTS'] -> delete( $_POST['delete'] );
+    if ( $delete['status'] == "success" ) {
+      _shout_( 'Post Deleted Successfully', 'success');
+    } else {
+      _shout_( 'Could Not Delete Post', 'error' );
     }
   }
 

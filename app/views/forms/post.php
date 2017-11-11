@@ -5,10 +5,11 @@
 * @link https://docs.jabalicms.org/classes/forms/
 * @author Mauko Maunde
 * @version 0.17.06
+* @license MIT - https://opensource.org/licenses/MIT
 **/ ?>
 <title>New <?php echo ucfirst( $_GET['create'] ); ?> - <?php showOption( 'name' ); ?></title>
 <form enctype="multipart/form-data" name="postForm" method="POST" action="" style="width:100%;" class="mdl-grid">
-  <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp mdl-card--expand mdl-color--<?php primaryColor(); ?>"><br><br>
+  <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-grid mdl-card mdl-shadow--2dp mdl-card--expand <?php primaryColor(); ?>"><br><br>
     <div class="mdl-card__supporting-text mdl-cell mdl-cell--12-col mdl-grid">
       <div class="input-field mdl-cell mdl-cell--12-col">
         <input id="name" type="text" name="name" >
@@ -23,7 +24,7 @@
       <div class="input-field mdl-cell--3-col mdl-js-textfield getmdl-select">
         <i class="material-icons prefix">keyboard_arrow_down</i>
         <input class="mdl-textfield__input" id="ilk" name="template" type="text" readonly tabIndex="-1" value="Select Template" >
-        <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="ilk"><?php
+        <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?>" for="ilk"><?php
           $theme = getOption( 'activetheme' );
           $path = _ABSTHEMES_ . $theme . '/templates/';
           if ( $dh = opendir( $path ) ) {
@@ -51,7 +52,7 @@
   </div>
 
   <?php if ( $_GET['create'] == "page" || $_GET['create'] == "article" || $_GET['create'] == "project" ) { ?>
-  <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-card--expand mdl-color--<?php primaryColor(); ?>">
+  <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--2dp mdl-card--expand <?php primaryColor(); ?>">
     <div class="mdl-card__image">
       <div style="height:0px;overflow:hidden">
         <input type="file" id="avatar" name="new_avatar" />

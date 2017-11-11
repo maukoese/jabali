@@ -5,6 +5,7 @@
 * @author Mauko Maunde
 * @link https://docs.jabalicms.org/data/access/objects/resources/
 * @since 0.17.09
+* @license MIT - https://opensource.org/licenses/MIT
 **/
 
 namespace Jabali\Data\Access\Objects;

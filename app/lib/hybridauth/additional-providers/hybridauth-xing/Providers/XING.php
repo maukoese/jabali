@@ -1,7 +1,7 @@
 <?php
 /*!
 * HybridAuth
-* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+* http://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
 * (c) 2009-2015 HybridAuth authors | hybridauth.sourceforge.net/licenses.html
 */
 
@@ -127,7 +127,7 @@ class Hybrid_Providers_XING extends Hybrid_Provider_Model_OAuth1
         /**
          * Handle the profile data.
          *
-         * @see  https://hybridauth.sourceforge.net/userguide/Profile_Data_User_Profile.html
+         * @see  http://hybridauth.sourceforge.net/userguide/Profile_Data_User_Profile.html
          */
         $this->user->profile->identifier    = (property_exists($oResponse, 'id')) ? $oResponse->id : '';
         $this->user->profile->profileURL    = (property_exists($oResponse, 'permalink')) ? $oResponse->permalink : '';
@@ -207,7 +207,7 @@ class Hybrid_Providers_XING extends Hybrid_Provider_Model_OAuth1
     /**
      * Update the user status.
      *
-     * @see https://hybridauth.sourceforge.net/userguide/Profile_Data_User_Status.html
+     * @see http://hybridauth.sourceforge.net/userguide/Profile_Data_User_Status.html
      */
     function setUserStatus($sMessage) {
         $aParameters = array('oauth_token' => $this->token('access_token'),
@@ -249,7 +249,7 @@ class Hybrid_Providers_XING extends Hybrid_Provider_Model_OAuth1
     /**
      * Load user contacts.
      *
-     * @see https://hybridauth.sourceforge.net/userguide/Profile_Data_User_Contacts.html
+     * @see http://hybridauth.sourceforge.net/userguide/Profile_Data_User_Contacts.html
      *
      * @param string $xingUserPicureSize the requested size of picture to return
      * @return XingUser[]

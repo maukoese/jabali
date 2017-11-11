@@ -2,8 +2,8 @@
 
 /* !
  * HybridAuth
- * https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
- * (c) 2009-2017, HybridAuth authors | https://hybridauth.sourceforge.net/licenses.html
+ * http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
+ * (c) 2009-2017, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
  */
 
 /**

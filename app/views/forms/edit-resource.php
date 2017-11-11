@@ -5,6 +5,7 @@
 * @link https://docs.jabalicms.org/classes/forms/
 * @author Mauko Maunde
 * @version 0.17.06
+* @license MIT - https://opensource.org/licenses/MIT
 **/
 
 $getResourceCode = $GLOBALS['JBLDB'] -> query( "SELECT * FROM ". _DBPREFIX ."resources WHERE id = '".$code."'" );
@@ -15,7 +16,7 @@ if ( $getResourceCode -> num_rows > 0 ) {
     ?><title>Editing <?php echo( $resourceDetails['name']." [ ".showOption( 'name' )." ]</title>" ); ?>
     <form enctype="multipart/form-data" name="registerResource" method="POST" action="<?php echo( _ADMIN.'resource?create' ); ?>" class="mdl-grid" >
       <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
-          <div class="mdl-card mdl-shadow--2dp mdl-color--<?php primaryColor(); ?>">
+          <div class="mdl-card mdl-shadow--2dp <?php primaryColor(); ?>">
 
               <div class="mdl-card__supporting-text mdl-card--expand mdl-grid ">
                 <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
@@ -29,7 +30,7 @@ if ( $getResourceCode -> num_rows > 0 ) {
                   <div class="input-field mdl-js-textfield mdl-textfield--floating-label getmdl-select">
                   <i class="material-icons prefix">business</i>
                    <input class="mdl-textfield__input" id="ilk" name="ilk" type="text" readonly tabIndex="-1" placeholder="<?php echo( ucwords( $resourceDetails['ilk'] ) ); ?>" value="<?php echo( ucwords( $resourceDetails['ilk'] ) ); ?>" >
-                     <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" for="ilk">
+                     <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?>" for="ilk">
                        <li class="mdl-menu__item" data-val="center">Center</li>
                        <li class="mdl-menu__item" data-val="equipment">Equipment</li>
                        <li class="mdl-menu__item" data-val="lab">Lab</li>
@@ -46,7 +47,7 @@ if ( $getResourceCode -> num_rows > 0 ) {
                   <div class="input-field mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
                     <i class="material-icons prefix">room</i>
                   <input class="mdl-textfield__input" type="text" id="counties" name="location" readonly tabIndex="-1" placeholder="<?php echo( ucwords( $resourceDetails['location'] ) ); ?>" value="<?php echo( ucwords( $resourceDetails['location'] ) ); ?>">
-                  <ul for="counties" class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-color--<?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
+                  <ul for="counties" class="mdl-menu mdl-menu--bottom-left mdl-js-menu <?php primaryColor(); ?>" style="max-height: 300px !important; overflow-y: auto;">
                       <?php
                       $county_list = "baringo, bomet, bungoma, busia, elgeyo-marakwet, embu, garissa, homa bay, isiolo, kakamega, kajiado, kapenguria, kericho, kiambu, kilifi, kirinyanga, kisii, kisumu, kitui, kwale, laikipia, lamu, machakos, makueni, mandera, marsabit, meru, migori, mombasa, muranga, nairobi, nakuru, nandi, narok, nyamira, nyandarua, nyeri, ol kalou, samburu, siaya, taita-taveta, tana river, tharaka-nithi, trans-nzoia, turkana, uasin-gishu, vihiga, wajir, west pokot";
                       $counties = explode( ", ", $county_list );

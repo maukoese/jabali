@@ -1,7 +1,7 @@
 <?php
 /*!
 * HybridAuth
-* https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+* http://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
 *  (c) 2009-2011 HybridAuth authors | hybridauth.sourceforge.net/licenses.html
 */
 
@@ -17,7 +17,7 @@
 /**
  * Murmur provider adapter based on OAuth1 protocol
  *
- * https://hybridauth.sourceforge.net/userguide/IDProvider_info_Murmur.html
+ * http://hybridauth.sourceforge.net/userguide/IDProvider_info_Murmur.html
  */
 class Hybrid_Providers_Murmur extends Hybrid_Provider_Model_OAuth1
 {
@@ -26,10 +26,10 @@ class Hybrid_Providers_Murmur extends Hybrid_Provider_Model_OAuth1
 		parent::initialize();
 
 		// Provider api end-points
-		$this->api->api_base_url      = 'https://api.murmur.tw/1/';
-		$this->api->authorize_url     = 'https://api.murmur.tw/oauth/authorize';
-		$this->api->request_token_url = 'https://api.murmur.tw/oauth/request_token';
-		$this->api->access_token_url  = 'https://api.murmur.tw/oauth/access_token';
+		$this->api->api_base_url      = 'http://api.murmur.tw/1/';
+		$this->api->authorize_url     = 'http://api.murmur.tw/oauth/authorize';
+		$this->api->request_token_url = 'http://api.murmur.tw/oauth/request_token';
+		$this->api->access_token_url  = 'http://api.murmur.tw/oauth/access_token';
 	}
 
 	/**
@@ -72,7 +72,7 @@ class Hybrid_Providers_Murmur extends Hybrid_Provider_Model_OAuth1
 		$this->user->profile->description = @ $response->description;
 		$this->user->profile->firstName   = @ $response->name; 
 		$this->user->profile->photoURL    = @ $response->profile_image_url;
-		$this->user->profile->profileURL  = 'https://murmur.tw/' . $response->screen_name;
+		$this->user->profile->profileURL  = 'http://murmur.tw/' . $response->screen_name;
 		$this->user->profile->webSiteURL  = @ $response->url; 
 		$this->user->profile->region      = @ $response->location;
 		$this->user->profile->city        = @ $response->location;
@@ -105,7 +105,7 @@ class Hybrid_Providers_Murmur extends Hybrid_Provider_Model_OAuth1
 
 			$uc->identifier   = @ $item->id;
 			$uc->displayName  = @ $item->name;
-			$uc->profileURL   = 'https://murmur.tw/' . $response->screen_name;
+			$uc->profileURL   = 'http://murmur.tw/' . $response->screen_name;
 			$uc->photoURL     = @ $item->profile_image_url;
 
 			$contacts[] = $uc;
@@ -166,7 +166,7 @@ class Hybrid_Providers_Murmur extends Hybrid_Provider_Model_OAuth1
 				$ua->text               = @ $item->text;
 				$ua->user->identifier   = @ $item->user->id;
 				$ua->user->displayName  = @ $item->user->name;
-				$ua->user->profileURL   = 'https://murmur.tw/' . $item->user->screen_name;
+				$ua->user->profileURL   = 'http://murmur.tw/' . $item->user->screen_name;
 				$ua->user->photoURL     = @ $item->user->profile_image_url;
 				
 				$activities[] = $ua;
@@ -180,7 +180,7 @@ class Hybrid_Providers_Murmur extends Hybrid_Provider_Model_OAuth1
 					$ua->text               = @ $item->status->text;
 					$ua->user->identifier   = @ $item->id;
 					$ua->user->displayName  = @ $item->name;
-					$ua->user->profileURL   = 'https://murmur.tw/' . $item->screen_name;
+					$ua->user->profileURL   = 'http://murmur.tw/' . $item->screen_name;
 					$ua->user->photoURL     = @ $item->profile_image_url;
 					
 					$activities[] = $ua;

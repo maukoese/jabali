@@ -5,6 +5,8 @@
 * @link https://docs.jabalicms.org/views/signup
 * @author Mauko Maunde
 * @since 0.17.09
+* @license MIT - https://opensource.org/licenses/MIT
+*
 **/ ?>
 <div style="padding-top:40px;" class="mdl-grid">
 	<div class="mdl-cell mdl-cell--4-col"></div>
